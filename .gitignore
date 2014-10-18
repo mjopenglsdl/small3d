@@ -1,0 +1,9 @@
+#Documentation from doxygen
+/documentation
+
+#Backup files
+*\~
+*swp
+
+#Annoying thumbs file that appears everywhere :)
+Thumbs.db
