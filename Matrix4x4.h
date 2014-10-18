@@ -76,7 +76,7 @@ namespace small3d {
 		float valueArray[16];
 
 		/**
-		 * @fn	Matrix4x4 Matrix4x4::operator*(Matrix4x4 m) const;
+		 * @fn	Matrix4x4 operator*(const Matrix4x4 &m) const;
 		 *
 		 * @brief	Multiplication operator for other matrices.
 		 *
@@ -85,7 +85,7 @@ namespace small3d {
 		 * @return	The resulting vector of the operation.
 		 */
 
-		Matrix4x4 Matrix4x4::operator*(const Matrix4x4 &m) const;
+		Matrix4x4 operator*(const Matrix4x4 &m) const;
 
 		/**
 		 * @fn	Vector4 operator*( const Vector4 &v ) const;
