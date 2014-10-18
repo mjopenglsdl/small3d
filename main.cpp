@@ -8,6 +8,7 @@
 #include <memory>
 #include <sstream>
 #include "Image.h"
+#include "Model.h"
 
 using namespace small3d;
 using namespace std;
@@ -71,16 +72,15 @@ TEST(EngineLogTest, VisibleOutput) {
 
 TEST(ConfigurationTest, FindCurrentDirectory) {
 	shared_ptr<EngineLog> log(new EngineLog(cout));
-	unique_ptr<Configuration> conf(new Configuration(log));
+	unique_ptr<Configuration> cfg(new Configuration(log));
 }
 
 TEST(ImageTest, LoadImage) {
+
 	shared_ptr<EngineLog> log(new EngineLog(cout));
-	shared_ptr<Configuration> conf(new Configuration(log));
+	shared_ptr<Configuration> cfg(new Configuration(log));
 
-	unique_ptr<Image> image( new Image("../blocks/dimitrikourk/small3d/data/testImage.png", conf, log));
-
-
+	unique_ptr<Image> image( new Image("../blocks/dimitrikourk/small3d/data/testImage.png", cfg, log));
 
 	cout << "Image width " << image->getWidth() << ", height " << image->getHeight() << endl;
 
@@ -111,6 +111,48 @@ TEST(ImageTest, LoadImage) {
 		}
 		++y;
 	}
+}
+
+TEST(ModelTest, LoadModel) {
+	shared_ptr<EngineLog> log(new EngineLog(cout));
+	shared_ptr<Configuration> cfg(new Configuration(log));
+
+
+	unique_ptr<Model> model(new Model());
+	model->init(
+		"../blocks/dimitrikourk/small3d/data/Cube.obj",
+		cfg, log);
+
+	EXPECT_NE(0, model->getVertexDataComponentCount());
+	EXPECT_NE(0, model->getIndexDataIndexCount());
+	EXPECT_NE(0, model->getNormalsDataComponentCount());
+	EXPECT_NE(0, model->getTextureCoordsDataComponentCount());
+
+	cout << "Vertex data component count: "
+		<< model->getVertexDataComponentCount() << endl << "Index count: "
+		<< model->getIndexDataIndexCount() << endl
+		<< "Normals data component count: "
+		<< model->getNormalsDataComponentCount() << endl
+		<< "Texture coordinates count: "
+		<< model->getTextureCoordsDataComponentCount() << endl;
+
+	unique_ptr<Model> modelWithNoTexture(new Model());
+	modelWithNoTexture->init(
+		"../blocks/dimitrikourk/small3d/data/CubeNoTexture.obj",
+		cfg, log);
+
+	EXPECT_NE(0, modelWithNoTexture->getVertexDataComponentCount());
+	EXPECT_NE(0, modelWithNoTexture->getIndexDataIndexCount());
+	EXPECT_NE(0, modelWithNoTexture->getNormalsDataComponentCount());
+	EXPECT_EQ(0, modelWithNoTexture->getTextureCoordsDataComponentCount());
+
+	cout << "Vertex data component count: "
+		<< modelWithNoTexture->getVertexDataComponentCount() << endl << "Index count: "
+		<< modelWithNoTexture->getIndexDataIndexCount() << endl
+		<< "Normals data component count: "
+		<< modelWithNoTexture->getNormalsDataComponentCount() << endl
+		<< "Texture coordinates count: "
+		<< modelWithNoTexture->getTextureCoordsDataComponentCount() << endl;
 
 }
 
