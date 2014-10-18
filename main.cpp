@@ -7,12 +7,13 @@
 #include <iostream>
 #include <memory>
 #include <sstream>
+#include "Image.h"
 
 using namespace small3d;
 using namespace std;
 
 TEST(MatrixTest, Multiply) {
-	
+
 	Matrix4x4 mat(2.0f, 3.0f, 4.0f, 5.0f,
 		2.0f, 3.0f, 4.0f, 5.0f,
 		2.0f, 3.0f, 4.0f, 5.0f,
@@ -49,13 +50,13 @@ TEST(EngineLogTest, LogSomething) {
 	ostringstream oss;
 
 	unique_ptr<EngineLog> log(new EngineLog(oss));
-	
+
 	LOGINFO("It works");
 	EXPECT_TRUE(oss.str().find("It works") != (string::npos));
 
 	LOGERROR("Error test");
 	EXPECT_TRUE(oss.str().find("Error test") != (string::npos));
-	
+
 }
 
 TEST(EngineLogTest, VisibleOutput) {
@@ -71,6 +72,46 @@ TEST(EngineLogTest, VisibleOutput) {
 TEST(ConfigurationTest, FindCurrentDirectory) {
 	shared_ptr<EngineLog> log(new EngineLog(cout));
 	unique_ptr<Configuration> conf(new Configuration(log));
+}
+
+TEST(ImageTest, LoadImage) {
+	shared_ptr<EngineLog> log(new EngineLog(cout));
+	shared_ptr<Configuration> conf(new Configuration(log));
+
+	unique_ptr<Image> image( new Image("../blocks/dimitrikourk/small3d/data/testImage.png", conf, log));
+
+
+
+	cout << "Image width " << image->getWidth() << ", height " << image->getHeight() << endl;
+
+	float *imageData = image->getData();
+
+	int x = 0, y = 0;
+
+	while (y < image->getHeight()) {
+		x = 0;
+		while (x < image->getWidth()) {
+
+			float *colour = &imageData[4 * y * image->getWidth() + 4 * x];
+
+			EXPECT_GE(colour[0], 0.0f);
+			EXPECT_LE(colour[0], 1.0f);
+			EXPECT_GE(colour[1], 0.0f);
+			EXPECT_LE(colour[1], 1.0f);
+			EXPECT_GE(colour[2], 0.0f);
+			EXPECT_LE(colour[2], 1.0f);
+			EXPECT_EQ(1.0f, colour[3]);
+
+			// Uncomment the following to actually see RGB values for each test image pixel
+			// 			cout << "At (" << x << ", " << y << ") R: " << setprecision( 2 ) << colour[0] << endl;
+			// 			cout << "At (" << x << ", " << y << ") G: " << setprecision( 2 ) << colour[1] << endl;
+			// 			cout << "At (" << x << ", " << y << ") B: " << setprecision( 2 ) << colour[2] << endl;
+
+			++x;
+		}
+		++y;
+	}
+
 }
 
 int main(int argc, char **argv) {
