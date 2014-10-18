@@ -3,6 +3,7 @@
 #include "Vector4.h"
 #include "Matrix4x4.h"
 #include "EngineLog.h"
+#include "Configuration.h"
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -65,6 +66,11 @@ TEST(EngineLogTest, VisibleOutput) {
 
 	LOGERROR("This is an error");
 
+}
+
+TEST(ConfigurationTest, FindCurrentDirectory) {
+	shared_ptr<EngineLog> log(new EngineLog(cout));
+	unique_ptr<Configuration> conf(new Configuration(log));
 }
 
 int main(int argc, char **argv) {
