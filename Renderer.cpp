@@ -118,9 +118,9 @@ namespace small3d
 			throw EngineException(string("Unable to initialise SDL"));
 		}
 
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
-		SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
+		//SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
+		//SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
+		//SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 
 		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
@@ -437,7 +437,7 @@ namespace small3d
 		GLenum errorCode = glGetError();
 		if (errorCode != GL_NO_ERROR)
 		{
-			LOGERROR("OpenGL error while rendering text");
+			LOGERROR("OpenGL error while rendering textured quad");
 			throw EngineException(string((char*)gluErrorString(errorCode)));
 		}
 	}

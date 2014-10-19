@@ -112,6 +112,7 @@ public:
      * Initialise renderer (OpenGL, GLEW, etc)
      * @param width The width of the window
      * @param height The height of the window
+     * @param fullScreen	Will the Renderer run in full screen mode?				 
      * @param ttfFontPath	The path to the TrueType font to be used by the Renderer,
      * 						including its filename. It defaults to the font provided
      * 						by the engine but, even if the same one is used for an

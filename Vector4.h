@@ -49,7 +49,7 @@ namespace small3d {
 		 *
 		 * @brief	Fills a 4 element array with the x, y, z and w values.
 		 *
-		 * @param [in,out]	The value array.
+		 * @param [in,out]	valueArray	The value array.
 		 */
 
 		void getValueArray(float *valueArray);
