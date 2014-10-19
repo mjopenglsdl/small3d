@@ -9,6 +9,10 @@
 #include <sstream>
 #include "Image.h"
 #include "Model.h"
+#include "BoundingBoxes.h"
+#include "SceneObject.h"
+#include "Scene.h"
+#include "Renderer.h"
 
 using namespace small3d;
 using namespace std;
@@ -153,6 +157,60 @@ TEST(ModelTest, LoadModel) {
 		<< modelWithNoTexture->getNormalsDataComponentCount() << endl
 		<< "Texture coordinates count: "
 		<< modelWithNoTexture->getTextureCoordsDataComponentCount() << endl;
+
+}
+
+TEST(BoundingBoxesTest, LoadBoundingBoxes) {
+
+	shared_ptr<EngineLog> log(new EngineLog(cout));
+
+	shared_ptr<Configuration> cfg(new Configuration(log));
+
+	unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes(cfg, log));
+
+	bboxes->loadFromFile("../blocks/dimitrikourk/small3d/data/goatBB.obj");
+
+	EXPECT_EQ(16, bboxes->vertices->size());
+	EXPECT_EQ(12, bboxes->facesVertexIndexes->size());
+
+	cout<<"Bounding boxes vertices: "<<endl;
+	for (int idx = 0; idx < 16; idx++)
+	{
+		cout<<bboxes->vertices->at(idx)[0] << ", " <<
+			bboxes->vertices->at(idx)[1] << ", " <<
+			bboxes->vertices->at(idx)[2] << ", " << endl;
+
+	}
+
+	cout<<"Bounding boxes faces vertex indexes: "<<endl;
+	for (int idx = 0; idx < 12; idx++)
+	{
+		cout<<bboxes->facesVertexIndexes->at(idx)[0] << ", " <<
+			bboxes->facesVertexIndexes->at(idx)[1] << ", " <<
+			bboxes->facesVertexIndexes->at(idx)[2] << ", " <<
+			bboxes->facesVertexIndexes->at(idx)[3] << ", " << endl;
+
+	}
+
+	EXPECT_FALSE(bboxes->pointCollides(0.1f, 0.1f, 0.1f, 0.0f, 0.1f, 0.1f, 1.4f));
+
+}
+
+TEST(RendererTest, StartAndUse) {
+	shared_ptr<EngineLog> log(new EngineLog(cout));
+
+	shared_ptr<Configuration> cfg(new Configuration(log));
+
+	shared_ptr<SceneObject> object(
+		new SceneObject("animal",
+		"../blocks/dimitrikourk/small3d/data/UnspecifiedAnimalWithTexture.obj",
+		cfg, log, 1, "../blocks/dimitrikourk/small3d/data/UnspecifiedAnimalWithTextureRedBlackNumbers.png"));
+	shared_ptr<vector<shared_ptr<SceneObject> > > scene(
+		new vector<shared_ptr<SceneObject> >());
+	scene->push_back(object);
+
+	unique_ptr<Renderer> renderer(new Renderer(cfg, log));
+	renderer->init(640, 480, false);
 
 }
 

@@ -8,6 +8,7 @@
 */
 
 #pragma once
+#include <memory>
 
 namespace small3d {
 
@@ -20,7 +21,8 @@ namespace small3d {
 
 	struct Vector3 {
 	private:
-		void sync();
+		float *valueArray;
+	
 	public:
 
 		/**
@@ -43,6 +45,16 @@ namespace small3d {
 		 */
 
 		~Vector3();
+
+		/**
+		 * @fn	float* getValueArray();
+		 *
+		 * @brief	Returns an array of the x, y and z values.
+		 *
+		 * @return	The value array.
+		 */
+
+		float* getValueArray();
 
 		/**
 		 * @brief	The x component.
