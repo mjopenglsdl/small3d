@@ -128,11 +128,12 @@ namespace small3d
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-		// TODO: add full screen option
-		// 
+		Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
+			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+
 		sdlWindow = SDL_CreateWindow("Avoid the Bug 3D", SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED, width, height,
-			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+			flags);
 
 		if (SDL_GL_CreateContext( sdlWindow ) == NULL)
 		{
@@ -142,7 +143,6 @@ namespace small3d
 
 		if (!sdlWindow)
 		{
-
 			LOGERROR(SDL_GetError());
 			throw EngineException("Unable to set video");
 		}
@@ -153,8 +153,7 @@ namespace small3d
 			throw EngineException("Unable to initialise font system");
 		}
 
-		string fontPath = cfg->getHomeDirectory() +
-			"../blocks/dimitrikourk/small3d/Fonts/CrusoeText-Regular.ttf";
+		string fontPath = cfg->getHomeDirectory() + ttfFontPath;
 		LOGINFO("Loading font from " + fontPath);
 
 		font = TTF_OpenFont(fontPath.c_str(), 48);
@@ -226,8 +225,10 @@ namespace small3d
 
 	}
 
-	void Renderer::init(const int width, const int height, const bool fullScreen)
+	void Renderer::init(const int width, const int height, const bool fullScreen, 
+		const string ttfFontPath, const string shadersPath)
 	{
+		this->ttfFontPath = ttfFontPath;
 
 		this->initSDL(width, height, fullScreen);
 
@@ -240,21 +241,21 @@ namespace small3d
 
 		if (isOpenGL33Supported)
 		{
-			vertexShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL33/perspectiveMatrixLightedShader.vert";
-			fragmentShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL33/textureShader.frag";
+			vertexShaderPath = shadersPath + "OpenGL33/perspectiveMatrixLightedShader.vert";
+			fragmentShaderPath = shadersPath + "OpenGL33/textureShader.frag";
 			textVertexShaderPath =
-				"../blocks/dimitrikourk/small3d/Shaders/OpenGL33/textShader.vert";
-			textFragmentShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL33/textShader.frag";
+				shadersPath + "OpenGL33/textShader.vert";
+			textFragmentShaderPath = shadersPath + "OpenGL33/textShader.frag";
 
 		}
 		else
 		{
 			vertexShaderPath =
-				"../blocks/dimitrikourk/small3d/Shaders/OpenGL21/perspectiveMatrixLightedShader.vert";
-			fragmentShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL21/textureShader.frag";
+				shadersPath + "OpenGL21/perspectiveMatrixLightedShader.vert";
+			fragmentShaderPath = shadersPath + "OpenGL21/textureShader.frag";
 			textVertexShaderPath =
-				"../blocks/dimitrikourk/small3d/Shaders/OpenGL21/textShader.vert";
-			textFragmentShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL21/textShader.frag";
+				shadersPath + "OpenGL21/textShader.vert";
+			textFragmentShaderPath = shadersPath + "OpenGL21/textShader.frag";
 		}
 
 		glViewport(0, 0, (GLsizei) width, (GLsizei) height);
@@ -553,12 +554,10 @@ namespace small3d
 			}
 			else
 			{
-
 				// If there is no texture, use the colour of the object
 				float objCol[4];
 				it->get()->getColour()->getValueArray(objCol);
 				glUniform4fv(colourUniform, 1, objCol);
-
 			}
 
 			// Rotation

@@ -51,6 +51,8 @@ private:
 
     TTF_Font *font;
 
+	string ttfFontPath;
+
     GLuint program;
 
     GLuint textProgram;
@@ -110,8 +112,26 @@ public:
      * Initialise renderer (OpenGL, GLEW, etc)
      * @param width The width of the window
      * @param height The height of the window
+     * @param ttfFontPath	The path to the TrueType font to be used by the Renderer,
+     * 						including its filename. It defaults to the font provided
+     * 						by the engine but, even if the same one is used for an
+     * 						game, most probably the path to where it is placed
+     * 						will need to be specified here. Only one font can be used
+     * 						by the engine at present but that will change in the near
+     * 						future.
+     * @param shadersPath   The path where the shaders will be stored, relative
+     * 						to the application's executing directory. It
+     * 						defaults to the path provided by the engine, but
+     * 						it can be changed, so as to accommodate for executables
+     * 						which are going to be using it. Even though the path to
+     * 						the folder can be changed, the folder structure within
+     * 						it and the names of the shaders must remain as provided.
+     * 						The shader code can be changed, provided that their inputs
+     * 						and outputs are maintained the same.
      */
-    void init(const int width, const int height, const bool fullScreen);
+    void init(const int width, const int height, const bool fullScreen, 
+		const string ttfFontPath="../blocks/dimitrikourk/small3d/Fonts/CrusoeText-Regular.ttf",
+		const string shadersPath = "../blocks/dimitrikourk/small3d/Shaders/");
 
 	/**
 	 * Generate a texture in OpenGL, using the given data

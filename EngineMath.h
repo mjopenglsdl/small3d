@@ -43,4 +43,17 @@ namespace small3d {
 	* @return The Z rotation matrix
 	*/
 	Matrix4x4 rotateZ(const float &angle);
+
+	/**
+	 * @fn	float dot(const Vector4 &v1, const Vector4 &v2);
+	 *
+	 * @brief	Dot product of two vectors
+	 *
+	 * @param	v1	The first Vector.
+	 * @param	v2	The second Vector.
+	 *
+	 * @return	The dot product.
+	 */
+
+	float dot(const Vector4 &v1, const Vector4 &v2);
 }
