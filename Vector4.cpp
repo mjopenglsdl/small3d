@@ -21,25 +21,15 @@ namespace small3d {
 	}
 
 	Vector4::~Vector4() {
-		if (valueArray != NULL) {
-			delete[] valueArray;
-		}
+		
 	}
 
-	float* Vector4::getValueArray()
+	void Vector4::getValueArray(float *valueArray)
 	{
-		if (valueArray != NULL) {
-			delete[] valueArray;
-		}
-
-		valueArray = new float[4];
-
 		valueArray[0] = x;
 		valueArray[1] = y;
 		valueArray[2] = z;
 		valueArray[3] = w;
-
-		return valueArray;
 	}
 
 }

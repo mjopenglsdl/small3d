@@ -1,7 +1,6 @@
 #include "Renderer.h"
 #include "EngineException.h"
 #include <fstream>
-//#include <glm/glm.hpp>
 #include <unordered_map>
 #include "EngineMath.h"
 #include "Vector3.h"
@@ -62,16 +61,13 @@ namespace small3d
 		this->cfg = cfg;
 		this->log = log;
 		isOpenGL33Supported = false;
-		screen = NULL;
+		sdlWindow = 0;
 		program = 0;
 		textProgram = 0;
 		textures = new unordered_map<string, GLuint>();
 		font = NULL;
 		noShaders = false;
-		if (sdlWindow != 0)
-		{
-			SDL_DestroyWindow(sdlWindow);
-		}
+		
 	}
 
 	Renderer::~Renderer()
@@ -104,7 +100,10 @@ namespace small3d
 		TTF_CloseFont(font);
 		TTF_Quit();
 
-		SDL_FreeSurface(screen);
+		if (sdlWindow != 0)
+		{
+			SDL_DestroyWindow(sdlWindow);
+		}
 		SDL_Quit();
 	}
 
@@ -119,8 +118,9 @@ namespace small3d
 			throw EngineException(string("Unable to initialise SDL"));
 		}
 
-		/*SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);*/
+		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
+		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
+		SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 
 		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
@@ -128,12 +128,17 @@ namespace small3d
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-
 		// TODO: add full screen option
 		// 
 		sdlWindow = SDL_CreateWindow("Avoid the Bug 3D", SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED, width, height,
 			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+
+		if (SDL_GL_CreateContext( sdlWindow ) == NULL)
+		{
+			LOGERROR(SDL_GetError());
+			throw EngineException(string("Unable to create GL context"));
+		}
 
 		if (!sdlWindow)
 		{
@@ -149,7 +154,7 @@ namespace small3d
 		}
 
 		string fontPath = cfg->getHomeDirectory() +
-			"/Game/Data/Fonts/CrusoeText-Regular.ttf";
+			"../blocks/dimitrikourk/small3d/Fonts/CrusoeText-Regular.ttf";
 		LOGINFO("Loading font from " + fontPath);
 
 		font = TTF_OpenFont(fontPath.c_str(), 48);
@@ -184,8 +189,13 @@ namespace small3d
 
 	void Renderer::detectOpenGLVersion()
 	{
-		if (glewInit() != GLEW_OK)
+		int initResult = glewInit();
+		
+		if (initResult != GLEW_OK)
 		{
+			char resBuf[5];
+			_itoa_s(initResult, resBuf, 5, 10);
+			LOGERROR("Glew initialisation returned " + string(resBuf));
 			throw EngineException("Error initialising GLEW");
 		}
 		else
@@ -230,21 +240,21 @@ namespace small3d
 
 		if (isOpenGL33Supported)
 		{
-			vertexShaderPath = "/Game/Shaders/OpenGL33/perspectiveMatrixLightedShader.vert";
-			fragmentShaderPath = "/Game/Shaders/OpenGL33/textureShader.frag";
+			vertexShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL33/perspectiveMatrixLightedShader.vert";
+			fragmentShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL33/textureShader.frag";
 			textVertexShaderPath =
-				"/Game/Shaders/OpenGL33/textShader.vert";
-			textFragmentShaderPath = "/Game/Shaders/OpenGL33/textShader.frag";
+				"../blocks/dimitrikourk/small3d/Shaders/OpenGL33/textShader.vert";
+			textFragmentShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL33/textShader.frag";
 
 		}
 		else
 		{
 			vertexShaderPath =
-				"/Game/Shaders/OpenGL21/perspectiveMatrixLightedShader.vert";
-			fragmentShaderPath = "/Game/Shaders/OpenGL21/textureShader.frag";
+				"../blocks/dimitrikourk/small3d/Shaders/OpenGL21/perspectiveMatrixLightedShader.vert";
+			fragmentShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL21/textureShader.frag";
 			textVertexShaderPath =
-				"/Game/Shaders/OpenGL21/textShader.vert";
-			textFragmentShaderPath = "/Game/Shaders/OpenGL21/textShader.frag";
+				"../blocks/dimitrikourk/small3d/Shaders/OpenGL21/textShader.vert";
+			textFragmentShaderPath = "../blocks/dimitrikourk/small3d/Shaders/OpenGL21/textShader.frag";
 		}
 
 		glViewport(0, 0, (GLsizei) width, (GLsizei) height);
@@ -492,8 +502,10 @@ namespace small3d
 			Vector3 lightDirection(0.0f, 0.9f, 0.2f);
 			GLuint lightDirectionUniform = glGetUniformLocation(program,
 				"lightDirection");
+			float ld[3];
+			lightDirection.getValueArray(ld);
 			glUniform3fv(lightDirectionUniform, 1,
-				lightDirection.getValueArray());
+				ld);
 
 			// Normals
 			glGenBuffers(1, &normalsBufferObject);
@@ -514,7 +526,9 @@ namespace small3d
 			if (textureObj)
 			{
 				// "Disable" colour since there is a texture
-				glUniform4fv(colourUniform, 1, Vector4(0.0f, 0.0f, 0.0f, 0.0f).getValueArray());
+				float cl[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+
+				glUniform4fv(colourUniform, 1, cl);
 
 				texture = this->getTextureHandle(it->get()->getName());
 
@@ -541,7 +555,9 @@ namespace small3d
 			{
 
 				// If there is no texture, use the colour of the object
-				glUniform4fv(colourUniform, 1, it->get()->getColour()->getValueArray());
+				float objCol[4];
+				it->get()->getColour()->getValueArray(objCol);
+				glUniform4fv(colourUniform, 1, objCol);
 
 			}
 
@@ -559,7 +575,9 @@ namespace small3d
 			glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, rotateZ(it->get()->getRotation()->z).valueArray);
 
 			GLuint offsetUniform = glGetUniformLocation(program, "offset");
-			glUniform3fv(offsetUniform, 1, it->get()->getOffset()->getValueArray());
+			float offs[3];
+			it->get()->getOffset()->getValueArray(offs);
+			glUniform3fv(offsetUniform, 1, offs);
 
 			// Throw an exception if there was an error in OpenGL, during
 			// any of the above.

@@ -11,13 +11,10 @@
 
 #ifndef SDLANDOPENGL
 #define SDLANDOPENGL
-#define GLEW_STATIC
-#define NO_SDL_GLEXT
 #include "glew.h"
 #include <miguel/sdl2/include/SDL_opengl.h>
 #include <miguel/sdl2/include/SDL.h>
 #include <miguel/sdl2_ttf/SDL_ttf.h>
-
 #endif //SDLANDOPENGL
 
 #include <memory>
@@ -53,8 +50,6 @@ private:
 	SDL_Window* sdlWindow;
 
     TTF_Font *font;
-
-    SDL_Surface *screen;
 
     GLuint program;
 

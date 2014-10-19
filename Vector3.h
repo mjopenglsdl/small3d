@@ -20,9 +20,6 @@ namespace small3d {
 	*/
 
 	struct Vector3 {
-	private:
-		float *valueArray;
-	
 	public:
 
 		/**
@@ -47,14 +44,14 @@ namespace small3d {
 		~Vector3();
 
 		/**
-		 * @fn	float* getValueArray();
+		 * @fn	void getValueArray(float *valueArray);
 		 *
-		 * @brief	Returns an array of the x, y and z values.
+		 * @brief	Fills a 3 element array with the x, y, and z values.
 		 *
-		 * @return	The value array.
+		 * @param [in,out]	valueArray	The value array.
 		 */
 
-		float* getValueArray();
+		void getValueArray(float *valueArray);
 
 		/**
 		 * @brief	The x component.

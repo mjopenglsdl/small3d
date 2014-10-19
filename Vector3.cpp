@@ -20,24 +20,14 @@ namespace small3d {
 	}
 
 	Vector3::~Vector3() {
-		if (valueArray != NULL) {
-			delete[] valueArray;
-		}
+
 	}
 
-	float* Vector3::getValueArray()
+	void Vector3::getValueArray(float *valueArray)
 	{
-		if (valueArray != NULL) {
-			delete[] valueArray;
-		}
-
-		valueArray = new float[3];
-		
 		valueArray[0] = x;
 		valueArray[1] = y;
 		valueArray[2] = z;
-
-		return valueArray;
 	}
 
 }
