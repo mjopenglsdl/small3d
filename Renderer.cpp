@@ -5,6 +5,7 @@
 #include "EngineMath.h"
 #include "Vector3.h"
 #include "Vector4.h"
+#include <cstring>
 
 using namespace std;
 
@@ -192,9 +193,6 @@ namespace small3d
 		
 		if (initResult != GLEW_OK)
 		{
-			char resBuf[5];
-			_itoa_s(initResult, resBuf, 5, 10);
-			LOGERROR("Glew initialisation returned " + string(resBuf));
 			throw EngineException("Error initialising GLEW");
 		}
 		else

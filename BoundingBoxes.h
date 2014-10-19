@@ -8,7 +8,6 @@
 */
 
 #pragma once
-
 #include <memory>
 #include "Configuration.h"
 #include "EngineLog.h"

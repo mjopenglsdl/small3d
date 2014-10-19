@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Matrix4x4.h"
+#include <cmath>
 
 /**
 * @def	ROUND_2_DECIMAL(x) (floorf(100 * x + 0.5) / 100)

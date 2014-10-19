@@ -14,7 +14,9 @@
 #include <unordered_map>
 #include "EngineException.h"
 #include "GetTokens.h"
+#include <cstring>
 #include <memory>
+#include <unordered_map>
 
 using namespace std;
 

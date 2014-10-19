@@ -32,12 +32,18 @@ namespace small3d {
 
 		time(&now);
 
-		tm t;
-		localtime_s(&t, &now);
-
+		tm *t;
+#ifdef _WIN32
+		t = new tm();
+		localtime_s(t, &now);
+#else
+		t = localtime(&now);
+#endif
 		char buf[20];
 
-		strftime(buf, 20,"%Y-%m-%d %H:%M:%S", &t);
+		strftime(buf, 20,"%Y-%m-%d %H:%M:%S", t);
+
+		delete t;
 
 		dateTimeOstringstream << buf;
 

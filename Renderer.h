@@ -23,7 +23,6 @@
 #include "Configuration.h"
 #include "EngineLog.h"
 #include <unordered_map>
-#include <gl/GL.h>
 
 //#include <glm/gtc/type_ptr.hpp>
 

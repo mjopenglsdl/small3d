@@ -8,6 +8,7 @@
 */
 
 #include "Matrix4x4.h"
+#include <cstring>
 
 namespace small3d {
 
