@@ -22,7 +22,7 @@ Original branch of the game development project:
 https://github.com/dimitrikourk/CrossPlatform3DLearning
 
 biicode-adapted branch of the game development project, which now uses the engine:
-https://github.com/dimitrikourk/CrossPlatform3DLearning/tree/biicode
+"samplegame" folder within the block (used to be a separate block) 
 
 
 Note about 3D models and textures
