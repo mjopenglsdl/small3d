@@ -43,7 +43,12 @@ namespace small3d {
 
 		strftime(buf, 20,"%Y-%m-%d %H:%M:%S", t);
 
+// localtime (used on Linux) does not allocate memory, but
+// returns a pointer to a pre-existing location. Hence,
+// we should not delete it.
+#ifdef _WIN32
 		delete t;
+#endif
 
 		dateTimeOstringstream << buf;
 
