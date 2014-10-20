@@ -34,8 +34,8 @@ mingw has a bug when using the c++11 switch:
 http://sourceforge.net/p/mingw/bugs/2024/
 
 #ifndef __NO_MINGW_LFS
-__CRT_INLINE off64_t lseek64 (int, off64_t, int);
-__CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
+_CRT_INLINE off64_t lseek64 (int, off64_t, int);
+_CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
   return _lseeki64(fd, (__int64) offset, whence);
 
 By changing all the occurrences of off64_t to _off64_t here, the issue was resolved.
