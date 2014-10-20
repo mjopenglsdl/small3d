@@ -40,7 +40,7 @@ namespace small3d {
 					stringstream ss;
 					ss << setfill('0') << setw(6) << idx + 1;
 					string frameNum = ss.str();
-					model[idx].init(modelPath + "_" + frameNum + ".obj", cfg, log);
+					model[idx].init(modelPath + "_" + frameNum + ".wobj", cfg, log);
 				}
 			}
 			else
