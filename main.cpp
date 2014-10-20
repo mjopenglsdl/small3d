@@ -1,3 +1,15 @@
+/*
+*  main.cpp
+*
+*  Created on: 2014/10/18
+*      Author: Dimitri Kourkoulis
+*              http://dimitros.be
+*     License: GNU LGPL
+*/
+// Without undefining strict ANSI, compilation in MinGW fails when C++11 is enabled
+#ifdef __STRICT_ANSI__
+#undef __STRICT_ANSI__
+#endif
 #include "google/gtest/gtest.h"
 #include "Vector3.h"
 #include "Vector4.h"

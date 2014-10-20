@@ -44,7 +44,9 @@ ADD_BIICODE_TARGETS()
 #            BEFORE calling ADD_BIICODE_TARGETS()
 #
 # Example: how to activate C++11. Uncomment one of this
-#     target_compile_options(${BII_LIB_TARGET} PUBLIC "-std=c++11") # Win, or linux if not gcc problems
+if(MINGW)
+     target_compile_options(${BII_LIB_TARGET} PUBLIC "-std=c++11") # Win, or linux if not gcc problems
+endif()
 #     target_compile_options(${BII_LIB_TARGET} PUBLIC "-std=c++11"  "-stdlib=libc++") # MacOS
 if(NOT WIN32)
 target_compile_options(${BII_LIB_TARGET} PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Ubuntu if gcc problems

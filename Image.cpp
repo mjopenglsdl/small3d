@@ -45,7 +45,7 @@ namespace small3d
 	{
 		// function developed based on example at
 		// http://zarb.org/~gc/html/libpng.html
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
 		FILE *fp;
 		fopen_s(&fp, (cfg->getHomeDirectory() + fileLocation).c_str(), "rb");
 #else

@@ -33,9 +33,11 @@ namespace small3d {
 		time(&now);
 
 		tm *t;
-#ifdef _WIN32
+
+#if defined(_WIN32) && !defined(__MINGW32__)
 		t = new tm();
 		localtime_s(t, &now);
+
 #else
 		t = localtime(&now);
 #endif

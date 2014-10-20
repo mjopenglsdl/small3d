@@ -22,8 +22,23 @@ Original branch of the game development project:
 https://github.com/dimitrikourk/CrossPlatform3DLearning
 
 biicode-adapted branch of the game development project, which now uses the engine:
-"samplegame" folder within the block (used to be a separate block) 
+"samplegame" folder within the block (used to be a separate block)
 
+Note about MinGW
+----------------
+If you are compiling with MinGW, please note that it has a little bug and requires a small modification (at least my installation does, which was downloaded on the 20/10/2014 and runs gcc 4.8.1).
+
+The engine uses certain features which obliged me to enable the C++11 switch in CMakeLists.txt. But then I could not compile. I managed to solve the problem by opening the io.h file, and going to line 300, more or less, where the following code is present:
+
+mingw has a bug when using the c++11 switch:
+http://sourceforge.net/p/mingw/bugs/2024/
+
+#ifndef __NO_MINGW_LFS
+__CRT_INLINE off64_t lseek64 (int, off64_t, int);
+__CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
+  return _lseeki64(fd, (__int64) offset, whence);
+
+By changing all the occurrences of off64_t to _off64_t here, the issue was resolved.
 
 Note about 3D models and textures
 ---------------------------------
