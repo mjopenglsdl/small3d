@@ -8,13 +8,15 @@ This is a free, open-source, minimalistic 3D game engine, developed in C++ and b
 
 It has been derived from a simple game which has been under development for more than a year, as a learning exercise (introduction: http://goo.gl/itn6x5, blog: http://goo.gl/7hCTPA). I have decided to separate the engine from the game already, rather than finishing the project first. I think that this will help the engine mature faster and will simplify the development of the game.
 
-What actually made me take the plunge though, was that I discovered the great C++ dependency management tool and service that is biicode :) So I have configured the engine’s files to be served from there (many thanks to the other biicode members who have set up the libraries I am using from there).
+What actually made me take the plunge though, was that I discovered the great C++ dependency management tool and service that is biicode :) So I have configured the engine’s files to be served from there (many thanks to the other biicode members who have set up the libraries I am using from there). So now my project setup tasks involve something like this: http://goo.gl/CJPnkK, which is much faster and simpler than what I had to do before, which was this: http://goo.gl/fUZbBa
 
 Over time, more information will be provided about this project and how it can be used, but here are some items to begin with:
 
 API documentation: http://small3d.org
 
-Block on biicode : http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master
+Block on biicode: http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master
+
+GitHub source: https://github.com/dimitrikourk/small3d
 
 Original branch of the game development project:
 https://github.com/dimitrikourk/CrossPlatform3DLearning
