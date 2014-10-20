@@ -1,7 +1,26 @@
-small3d
+small3d 
 =======
+*A small, no fuss, 3D game engine*
 
-A small, no fuss, 3D game engine
+![Screen capture from the first game that runs on small3d](https://dimitros.be/media/3DGameDevDiaryEntry11/AvoidTheBug3DWithTree.png)
+
+This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood rather than use a technology that abstracts the low-level details away.
+
+It has been derived from a simple game which has been under development for more than a year, as a learning exercise (introduction: http://goo.gl/itn6x5, blog: http://goo.gl/7hCTPA). I have decided to separate the engine from the game already, rather than finishing the project first. I think that this will help the engine mature faster and will simplify the development of the game.
+
+What actually made me take the plunge though, was that I discovered the great C++ dependency management tool and service that is biicode :) So I have configured the engine’s files to be served from there (many thanks to the other biicode members who have set up the libraries I am using from there).
+
+Over time, more information will be provided about this project and how it can be used, but here are some items to begin with:
+
+API documentation: http://small3d.org
+
+Block on biicode : http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master
+
+Original branch of the game development project:
+https://github.com/dimitrikourk/CrossPlatform3DLearning
+
+biicode-adapted branch of the game development project, which now uses the engine:
+https://github.com/dimitrikourk/CrossPlatform3DLearning/tree/biicode
 
 
 Note about 3D models and textures
@@ -46,4 +65,5 @@ with the options "Apply Modifiers", "Include Edges",
 On the contrary to what is the case when exporting
 the model itself, more than one bounding box objects 
 can be exported to the same Wavefront file.
+
 
