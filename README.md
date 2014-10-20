@@ -12,7 +12,7 @@ What actually made me take the plunge though, was that I discovered the great C+
 
 Over time, more information will be provided about this project and how it can be used, but here are some items to begin with:
 
-API documentation: http://small3d.org
+API documentation: http://small3d.org/namespacesmall3d.html
 
 Block on biicode: http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master
 
