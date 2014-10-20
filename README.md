@@ -33,7 +33,6 @@ The engine uses certain features which obliged me to enable the C++11 switch in 
 mingw has a bug when using the c++11 switch:
 http://sourceforge.net/p/mingw/bugs/2024/
 
-#ifndef __NO_MINGW_LFS
 _CRT_INLINE off64_t lseek64 (int, off64_t, int);
 _CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
   return _lseeki64(fd, (__int64) offset, whence);
