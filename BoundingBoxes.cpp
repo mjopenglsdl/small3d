@@ -15,6 +15,7 @@
 #include "EngineMath.h"
 #include "Matrix4x4.h"
 #include "Vector4.h"
+#include <iostream>
 
 namespace small3d {
 
@@ -159,7 +160,8 @@ namespace small3d {
 				rotatedCoords.x += boxesX;
 				rotatedCoords.y += boxesY;
 				rotatedCoords.z += boxesZ;
-
+				/*cout<<"Checking "<<minX<<" "<<maxX<< " - " << rotatedCoords.x<<", "<<
+				minY<<" "<<maxY<<" - "<<rotatedCoords.y << ", " << minZ <<" "<<maxZ<<" - "<<rotatedCoords.z<<endl;*/
 				if (rotatedCoords.x < minX)
 					minX = rotatedCoords.x;
 				if (rotatedCoords.x > maxX)
