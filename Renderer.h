@@ -7,6 +7,17 @@
 *     License: GNU LGPL
 */
 
+// bii://dimitrikourk/small3d/Fonts/CrusoeText-Regular.ttf
+// bii://dimitrikourk/small3d/Shaders/OpenGL33/perspectiveMatrixLightedShader.vert
+// bii://dimitrikourk/small3d/Shaders/OpenGL33/textureShader.frag
+// bii://dimitrikourk/small3d/Shaders/OpenGL33/textShader.vert
+// bii://dimitrikourk/small3d/Shaders/OpenGL33/textShader.frag
+// bii://dimitrikourk/small3d/Shaders/OpenGL21/perspectiveMatrixLightedShader.vert
+// bii://dimitrikourk/small3d/Shaders/OpenGL21/textureShader.frag
+// bii://dimitrikourk/small3d/Shaders/OpenGL21/textShader.vert
+// bii://dimitrikourk/small3d/Shaders/OpenGL21/textShader.frag
+
+
 #pragma once
 
 #ifndef SDLANDOPENGL
@@ -130,8 +141,8 @@ public:
      * 						and outputs are maintained the same.
      */
     void init(const int width, const int height, const bool fullScreen, 
-		const string ttfFontPath="../blocks/dimitrikourk/small3d/Fonts/CrusoeText-Regular.ttf",
-		const string shadersPath = "../blocks/dimitrikourk/small3d/Shaders/");
+		const string ttfFontPath="dimitrikourk/small3d/Fonts/CrusoeText-Regular.ttf",
+		const string shadersPath = "dimitrikourk/small3d/Shaders/");
 
 	/**
 	 * Generate a texture in OpenGL, using the given data
