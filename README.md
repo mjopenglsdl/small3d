@@ -30,10 +30,8 @@ If you are compiling with MinGW, please note that it has a little bug and requir
 
 The engine uses certain features which obliged me to enable the C++11 switch in CMakeLists.txt. But then I could not compile. I managed to solve the problem by opening the io.h file, and going to line 300, more or less, where the following code is present:
 
-mingw has a bug when using the c++11 switch:
-http://sourceforge.net/p/mingw/bugs/2024/
-
 _CRT_INLINE off64_t lseek64 (int, off64_t, int);
+
 _CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
   return _lseeki64(fd, (__int64) offset, whence);
 
