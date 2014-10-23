@@ -6,37 +6,37 @@
 */
 
 /* bii data directives */
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000001.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000002.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000003.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000004.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000005.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000006.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000007.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000008.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000009.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000010.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000011.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000012.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000013.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000014.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000015.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000016.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000017.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000018.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000019.wobj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000001.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000002.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000003.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000004.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000005.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000006.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000007.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000008.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000009.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000010.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000011.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000012.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000013.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000014.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000015.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000016.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000017.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000018.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim_000019.obj
 // bii://dimitrikourk/small3d/samplegame/Game/Data/Goat/Goat.png
-// bii://dimitrikourk/small3d/samplegame/Game/Data/GoatBB/goatBB.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000001.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000002.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000003.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000004.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000005.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000006.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000007.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000008.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000009.wobj
-// bii://dimitrikourk/small3d/samplegame/Game/Data/Tree/tree.wobj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/GoatBB/goatBB.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000001.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000002.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000003.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000004.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000005.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000006.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000007.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000008.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Bug/bugAnim_000009.obj
+// bii://dimitrikourk/small3d/samplegame/Game/Data/Tree/tree.obj
 // bii://dimitrikourk/small3d/samplegame/Game/Data/Tree/tree.png
 
 #define MAX_Z -2.0f
@@ -78,7 +78,7 @@ namespace AvoidTheBug3D {
 				new SceneObject("goat",
 				"dimitrikourk/small3d/samplegame/Game/Data/Goat/goatAnim",
 				cfg, log, 19, "dimitrikourk/small3d/samplegame/Game/Data/Goat/Goat.png", 
-				"dimitrikourk/small3d/samplegame/Game/Data/GoatBB/goatBB.wobj"));
+				"dimitrikourk/small3d/samplegame/Game/Data/GoatBB/goatBB.obj"));
 
 			bug = shared_ptr<SceneObject> (
 				new SceneObject("bug",
@@ -91,7 +91,7 @@ namespace AvoidTheBug3D {
 
 			tree = shared_ptr<SceneObject> (
 				new SceneObject("tree",
-				"dimitrikourk/small3d/samplegame/Game/Data/Tree/tree.wobj",
+				"dimitrikourk/small3d/samplegame/Game/Data/Tree/tree.obj",
 				cfg, log, 1, "dimitrikourk/small3d/samplegame/Game/Data/Tree/tree.png"));
 
 			tree->setOffset(2.6f, GROUND_Y, -8.0f);

@@ -29,10 +29,10 @@
 /* bii data directives */
 
 // bii://dimitrikourk/small3d/data/testImage.png
-// bii://dimitrikourk/small3d/data/CubeNoTexture.wobj
-// bii://dimitrikourk/small3d/data/Cube.wobj
-// bii://dimitrikourk/small3d/data/goatBB.wobj
-// bii://dimitrikourk/small3d/data/UnspecifiedAnimalWithTexture.wobj
+// bii://dimitrikourk/small3d/data/CubeNoTexture.obj
+// bii://dimitrikourk/small3d/data/Cube.obj
+// bii://dimitrikourk/small3d/data/goatBB.obj
+// bii://dimitrikourk/small3d/data/UnspecifiedAnimalWithTexture.obj
 // bii://dimitrikourk/small3d/data/UnspecifiedAnimalWithTextureRedBlackNumbers.png
 
 using namespace small3d;
@@ -145,7 +145,7 @@ TEST(ModelTest, LoadModel) {
 
 	unique_ptr<Model> model(new Model());
 	model->init(
-		"dimitrikourk/small3d/data/Cube.wobj",
+		"dimitrikourk/small3d/data/Cube.obj",
 		cfg, log);
 
 	EXPECT_NE(0, model->getVertexDataComponentCount());
@@ -163,7 +163,7 @@ TEST(ModelTest, LoadModel) {
 
 	unique_ptr<Model> modelWithNoTexture(new Model());
 	modelWithNoTexture->init(
-		"dimitrikourk/small3d/data/CubeNoTexture.wobj",
+		"dimitrikourk/small3d/data/CubeNoTexture.obj",
 		cfg, log);
 
 	EXPECT_NE(0, modelWithNoTexture->getVertexDataComponentCount());
@@ -189,7 +189,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
 	unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes(cfg, log));
 
-	bboxes->loadFromFile("dimitrikourk/small3d/data/goatBB.wobj");
+	bboxes->loadFromFile("dimitrikourk/small3d/data/goatBB.obj");
 
 	EXPECT_EQ(16, bboxes->vertices->size());
 	EXPECT_EQ(12, bboxes->facesVertexIndexes->size());
@@ -224,7 +224,7 @@ TEST(RendererTest, StartAndUse) {
 
 	shared_ptr<SceneObject> object(
 		new SceneObject("animal",
-		"dimitrikourk/small3d/data/UnspecifiedAnimalWithTexture.wobj",
+		"dimitrikourk/small3d/data/UnspecifiedAnimalWithTexture.obj",
 		cfg, log, 1, "dimitrikourk/small3d/data/UnspecifiedAnimalWithTextureRedBlackNumbers.png"));
 	shared_ptr<vector<shared_ptr<SceneObject> > > scene(
 		new vector<shared_ptr<SceneObject> >());

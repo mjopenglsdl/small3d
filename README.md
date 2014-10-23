@@ -49,9 +49,7 @@ Note about 3D models and textures
 For the time being, the engine can only read 3D
 models from Wavefront .obj files. There are many
 ways to create such a file, but I am exporting them
-from Blender. Note that the extension cannot be .obj,
-because that can confuse bii, so something else should
-be used. I use .wobj.
+from Blender.
 
 When exporting the models to Wavefront .obj files,
 make sure you set the options "Include Normals",
