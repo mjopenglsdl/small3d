@@ -9,13 +9,9 @@
 #include <dimitrikourk/small3d/EngineException.h>
 #include <memory>
 
-// The following include statements use double quotes, just to
-// denote that these files are local to the game and do not 
-// form part of the small3d library
-
-#include "dimitrikourk/small3d/samplegame/GameLogic.h"
-#include "dimitrikourk/small3d/samplegame/PlayerView.h"
-#include "dimitrikourk/small3d/samplegame/KeyInput.h"
+#include <dimitrikourk/small3d/samplegame/GameLogic.h>
+#include <dimitrikourk/small3d/samplegame/PlayerView.h>
+#include <dimitrikourk/small3d/samplegame/KeyInput.h>
 
 using namespace std;
 using namespace AvoidTheBug3D;

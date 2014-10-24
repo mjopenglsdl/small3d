@@ -55,12 +55,13 @@
 #define GOAT_ROTATION_SPEED 0.1f
 #define GOAT_SPEED 0.05f
 
-#include "GameLogic.h"
 #include <memory>
 #include <dimitrikourk/small3d/EngineMath.h>
 #include <dimitrikourk/small3d/EngineException.h>
 #include <dimitrikourk/small3d/EngineMath.h>
 #include <cmath>
+
+#include <dimitrikourk/small3d/samplegame/GameLogic.h>
 
 using namespace small3d;
 

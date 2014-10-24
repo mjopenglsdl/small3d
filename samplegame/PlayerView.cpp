@@ -10,8 +10,9 @@
 // bii://dimitrikourk/small3d/samplegame/Game/Data/OtherTextures/grass.png
 // bii://dimitrikourk/small3d/samplegame/Game/Data/OtherTextures/sky.png
 
-#include "PlayerView.h"
 #include <memory>
+
+#include <dimitrikourk/small3d/samplegame/PlayerView.h>
 
 using namespace small3d;
 

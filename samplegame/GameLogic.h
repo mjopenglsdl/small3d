@@ -1,12 +1,12 @@
-#ifndef GAMELOGIC_H_
-#define GAMELOGIC_H_
+#pragma once
 
 #include <memory>
 #include <dimitrikourk/small3d/Configuration.h>
 #include <dimitrikourk/small3d/EngineLog.h>
 #include <dimitrikourk/small3d/SceneObject.h>
-#include "KeyInput.h"
 #include <dimitrikourk/small3d/Scene.h>
+
+#include <dimitrikourk/small3d/samplegame/KeyInput.h>
 
 using namespace small3d;
 
@@ -78,4 +78,3 @@ namespace AvoidTheBug3D {
 
 } /* namespace AvoidTheBug3D */
 
-#endif /* GAMELOGIC_H_ */
