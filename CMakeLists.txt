@@ -29,6 +29,9 @@ INIT_BIICODE_BLOCK()
 
 
 # Actually create targets: EXEcutables and libraries.
+IF(APPLE)
+	SET(BII_IMPLICIT_RULES_ENABLED FALSE)
+ENDIF()
 ADD_BIICODE_TARGETS()
 # This function creates the following variables:
 #     ${BII_BLOCK_TARGETS} List of targets defined in this block
@@ -47,7 +50,13 @@ ADD_BIICODE_TARGETS()
 #     target_compile_options(${BII_LIB_TARGET} PUBLIC "-std=c++11") # Win, or linux if not gcc problems
 #     target_compile_options(${BII_LIB_TARGET} PUBLIC "-std=c++11"  "-stdlib=libc++") # MacOS
 if(NOT WIN32 OR MINGW)
-target_compile_options(${BII_LIB_TARGET} PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Ubuntu if gcc problems
+	IF(APPLE)
+		FIND_PACKAGE(GLU REQUIRED)
+		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
+		TARGET_LINK_LIBRARIES(${BII_LIB_TARGET} PUBLIC ${GLU_LIBRARY})
+	ELSE()
+		target_compile_options(${BII_LIB_TARGET} PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Ubuntu if gcc problems
+	ENDIF()
 endif()
 # with LLVM, you might need to link the target with "-lc++abi"
 #
