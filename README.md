@@ -20,7 +20,9 @@ Block on biicode: http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/maste
 
 GitHub source: https://github.com/dimitrikourk/small3d
 
-There is also a sample game in the "samplegame" folder within the block, which demonstrates how the existing features of the engine can be used. 
+There is also a sample game in the "samplegame" folder within the block, which demonstrates how the existing features of the engine can be used.
+
+At present, the engine is stable but by no means complete. More features, like sound, will be added soon and a lot of hard-coded values, like the dimensions of the 3D scene will be parameterised.
 
 Compatibility
 -------------
@@ -91,5 +93,4 @@ with the options "Apply Modifiers", "Include Edges",
 On the contrary to what is the case when exporting
 the model itself, more than one bounding box objects 
 can be exported to the same Wavefront file.
-
 
