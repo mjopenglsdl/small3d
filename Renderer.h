@@ -22,7 +22,7 @@
 
 #ifndef SDLANDOPENGL
 #define SDLANDOPENGL
-#include "glew.h"
+#include "dependencies/GLEW/glew.h"
 #include <miguel/sdl2/include/SDL_opengl.h>
 #include <miguel/sdl2/include/SDL.h>
 #include <miguel/sdl2_ttf/SDL_ttf.h>
