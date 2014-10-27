@@ -28,12 +28,12 @@
 
 /* bii data directives */
 
-// bii://dimitrikourk/small3d/data/testImage.png
-// bii://dimitrikourk/small3d/data/CubeNoTexture.obj
-// bii://dimitrikourk/small3d/data/Cube.obj
-// bii://dimitrikourk/small3d/data/goatBB.obj
-// bii://dimitrikourk/small3d/data/UnspecifiedAnimalWithTexture.obj
-// bii://dimitrikourk/small3d/data/UnspecifiedAnimalWithTextureRedBlackNumbers.png
+// bii://dimitrikourk/small3d/resources/images/testImage.png
+// bii://dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj
+// bii://dimitrikourk/small3d/resources/models/Cube/Cube.obj
+// bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/goatBB.obj
+// bii://dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj
+// bii://dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png
 
 using namespace small3d;
 using namespace std;
@@ -105,7 +105,7 @@ TEST(ImageTest, LoadImage) {
 	shared_ptr<EngineLog> log(new EngineLog(cout));
 	shared_ptr<Configuration> cfg(new Configuration(log));
 
-	unique_ptr<Image> image( new Image("dimitrikourk/small3d/data/testImage.png", cfg, log));
+	unique_ptr<Image> image( new Image("dimitrikourk/small3d/resources/images/testImage.png", cfg, log));
 
 	cout << "Image width " << image->getWidth() << ", height " << image->getHeight() << endl;
 
@@ -145,7 +145,7 @@ TEST(ModelTest, LoadModel) {
 
 	unique_ptr<Model> model(new Model());
 	model->init(
-		"dimitrikourk/small3d/data/Cube.obj",
+		"dimitrikourk/small3d/resources/models/Cube/Cube.obj",
 		cfg, log);
 
 	EXPECT_NE(0, model->getVertexDataComponentCount());
@@ -163,7 +163,7 @@ TEST(ModelTest, LoadModel) {
 
 	unique_ptr<Model> modelWithNoTexture(new Model());
 	modelWithNoTexture->init(
-		"dimitrikourk/small3d/data/CubeNoTexture.obj",
+		"dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj",
 		cfg, log);
 
 	EXPECT_NE(0, modelWithNoTexture->getVertexDataComponentCount());
@@ -189,7 +189,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
 	unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes(cfg, log));
 
-	bboxes->loadFromFile("dimitrikourk/small3d/data/goatBB.obj");
+	bboxes->loadFromFile("dimitrikourk/small3d/samplegame/resources/models/goatBB/goatBB.obj");
 
 	EXPECT_EQ(16, bboxes->vertices->size());
 	EXPECT_EQ(12, bboxes->facesVertexIndexes->size());
@@ -224,8 +224,8 @@ TEST(RendererTest, StartAndUse) {
 
 	shared_ptr<SceneObject> object(
 		new SceneObject("animal",
-		"dimitrikourk/small3d/data/UnspecifiedAnimalWithTexture.obj",
-		cfg, log, 1, "dimitrikourk/small3d/data/UnspecifiedAnimalWithTextureRedBlackNumbers.png"));
+		"dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj",
+		cfg, log, 1, "dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png"));
 	shared_ptr<vector<shared_ptr<SceneObject> > > scene(
 		new vector<shared_ptr<SceneObject> >());
 	scene->push_back(object);

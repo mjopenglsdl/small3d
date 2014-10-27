@@ -121,10 +121,14 @@ namespace small3d {
 					}
 				}
 			}
+			file.close();
+			numBoxes = facesVertexIndexes->size() / 6;
 		}
-		file.close();
+		else
+			throw EngineException(
+			"Could not open file " + cfg->getHomeDirectory()
+			+ fileLocation);
 
-		numBoxes = facesVertexIndexes->size() / 6;
 	}
 
 	bool BoundingBoxes::pointCollides( const float &pointX, const float &pointY, const float &pointZ, 
@@ -132,13 +136,13 @@ namespace small3d {
 	{
 		bool collides = false;
 		Matrix4x4 rotationMatrix = rotateY(boxesRotation);
-	
+
 		for (int idx = 0; idx < numBoxes; ++idx) {
 			float minZ, maxZ, minX, maxX, minY, maxY;
 
 			Vector4 coords(vertices->at(idx * 8)[0], vertices->at(idx * 8)[1], vertices->at(idx * 8)[2], 1);
 			Vector4 rotatedCoords(0.0f, 0.0f, 0.0f, 1.0f); 
-			
+
 			rotatedCoords = rotationMatrix * coords;
 
 			rotatedCoords.x += boxesX;
@@ -156,7 +160,7 @@ namespace small3d {
 			{
 				coords = Vector4(vertices->at(checkidx)[0], vertices->at(checkidx)[1], vertices->at(checkidx)[2], 1);
 				rotatedCoords = rotationMatrix * coords;
-				
+
 				rotatedCoords.x += boxesX;
 				rotatedCoords.y += boxesY;
 				rotatedCoords.z += boxesZ;
@@ -183,8 +187,7 @@ namespace small3d {
 					break;
 			}
 		}
-		
+
 		return collides;
 	}
-
 }

@@ -7,15 +7,15 @@
 *     License: GNU LGPL
 */
 
-// bii://dimitrikourk/small3d/Fonts/CrusoeText-Regular.ttf
-// bii://dimitrikourk/small3d/Shaders/OpenGL33/perspectiveMatrixLightedShader.vert
-// bii://dimitrikourk/small3d/Shaders/OpenGL33/textureShader.frag
-// bii://dimitrikourk/small3d/Shaders/OpenGL33/textShader.vert
-// bii://dimitrikourk/small3d/Shaders/OpenGL33/textShader.frag
-// bii://dimitrikourk/small3d/Shaders/OpenGL21/perspectiveMatrixLightedShader.vert
-// bii://dimitrikourk/small3d/Shaders/OpenGL21/textureShader.frag
-// bii://dimitrikourk/small3d/Shaders/OpenGL21/textShader.vert
-// bii://dimitrikourk/small3d/Shaders/OpenGL21/textShader.frag
+// bii://dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/perspectiveMatrixLightedShader.vert
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/textureShader.frag
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/textShader.vert
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/textShader.frag
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/perspectiveMatrixLightedShader.vert
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/textureShader.frag
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/textShader.vert
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/textShader.frag
 
 
 #pragma once
@@ -141,8 +141,8 @@ public:
      * 						and outputs are maintained the same.
      */
     void init(const int width, const int height, const bool fullScreen, 
-		const string ttfFontPath="dimitrikourk/small3d/Fonts/CrusoeText-Regular.ttf",
-		const string shadersPath = "dimitrikourk/small3d/Shaders/");
+		const string ttfFontPath="dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
+		const string shadersPath = "dimitrikourk/small3d/resources/shaders/");
 
 	/**
 	 * Generate a texture in OpenGL, using the given data

@@ -6,9 +6,9 @@
 */
 
 /* bii data directives */
-// bii://dimitrikourk/small3d/samplegame/Game/Data/OtherTextures/startScreen.png
-// bii://dimitrikourk/small3d/samplegame/Game/Data/OtherTextures/grass.png
-// bii://dimitrikourk/small3d/samplegame/Game/Data/OtherTextures/sky.png
+// bii://dimitrikourk/small3d/samplegame/resources/images/startScreen.png
+// bii://dimitrikourk/small3d/samplegame/resources/images/grass.png
+// bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
 
 #include <memory>
 
@@ -28,15 +28,15 @@ namespace AvoidTheBug3D {
 			renderer->init(854, 480, false);
 
 			unique_ptr<Image> startScreenTexture (
-				new Image("dimitrikourk/small3d/samplegame/Game/Data/OtherTextures/startScreen.png", cfg, log));
+				new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png", cfg, log));
 			renderer->generateTexture("startScreen", startScreenTexture->getData(), startScreenTexture->getWidth(), startScreenTexture->getHeight());
 
 			unique_ptr<Image> groundTexture (
-				new Image("dimitrikourk/small3d/samplegame/Game/Data/OtherTextures/grass.png", cfg, log));
+				new Image("dimitrikourk/small3d/samplegame/resources/images/grass.png", cfg, log));
 			renderer->generateTexture("ground", groundTexture->getData(), groundTexture->getWidth(), groundTexture->getHeight());
 
 			unique_ptr<Image> skyTexture (
-				new Image("dimitrikourk/small3d/samplegame/Game/Data/OtherTextures/sky.png", cfg, log));
+				new Image("dimitrikourk/small3d/samplegame/resources/images/sky.png", cfg, log));
 			renderer->generateTexture("sky", skyTexture->getData(), skyTexture->getWidth(), skyTexture->getHeight());
 
 	}
