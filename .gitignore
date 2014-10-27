@@ -4,6 +4,7 @@
 #Backup files
 *\~
 *swp
+*blend[0-9]
 
 #Annoying thumbs file that appears everywhere :)
 Thumbs.db

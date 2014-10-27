@@ -1,0 +1,23 @@
+When exporting the models to Wavefront .obj files,
+make sure you set the options "Include Normals",
+"Triangulate Faces", and "Keep Vertex Order".
+The model has to have been set to have smooth
+shading in Blender and double vertices have
+to have been deleted before the export.
+Otherwise, when rendering with shaders, lighting
+will not work, since there will be multiple
+normals for each vertex and, with indexed drawing,
+the normals listed later in the exported file
+for some vertices will overwrite the previous
+ones.
+If a texture has been created, the option "Include
+UVs" must also be set.The texture should be saved
+as a PNG file since this is the format that can
+be read by the program.
+
+Note that goatBB.blend is not meant to be used as a
+typical model. It just contains two bounding boxes
+for the goat, which have been manually created and
+exported to samplegame/resources/models/GoatBB, only 
+with the options "Apply Modifiers", "Include Edges", 
+"Objects as OBJ Objects" and "Keep Vertex Order".
