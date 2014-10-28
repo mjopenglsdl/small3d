@@ -11,6 +11,7 @@ using namespace std;
 
 namespace small3d
 {
+    string openglErrorToString(GLenum error);
 
 	string Renderer::loadShaderFromFile(const string &fileLocation)
 	{
@@ -118,11 +119,11 @@ namespace small3d
 			LOGERROR(SDL_GetError());
 			throw EngineException(string("Unable to initialise SDL"));
 		}
-
-		//SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-		//SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
-		//SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
-
+#ifdef __APPLE__
+		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
+		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
+		SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
+#endif
 		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
@@ -189,6 +190,9 @@ namespace small3d
 
 	void Renderer::detectOpenGLVersion()
 	{
+#ifdef __APPLE__
+        glewExperimental = GL_TRUE;
+#endif
 		int initResult = glewInit();
 		
 		if (initResult != GLEW_OK)
@@ -200,6 +204,8 @@ namespace small3d
 			string glewVersion = (char*) glewGetString(GLEW_VERSION);
 			LOGINFO("Using GLEW version " + glewVersion);
 		}
+        
+        checkForOpenGLErrors("initialising GLEW", false);
 
 		string glVersion = (char*) glGetString(GL_VERSION);
 		glVersion = "OpenGL version supported by machine: " + glVersion;
@@ -222,6 +228,24 @@ namespace small3d
 		}
 
 	}
+    
+    void Renderer::checkForOpenGLErrors(string when, bool abort) {
+        GLenum errorCode = glGetError();
+        if (errorCode != GL_NO_ERROR)
+        {
+            LOGERROR("OpenGL error while " + when);
+            
+            do
+            {
+                LOGERROR(openglErrorToString(errorCode));
+                errorCode = glGetError();
+            }
+            while(errorCode != GL_NO_ERROR);
+            
+            if (abort)
+                throw EngineException("OpenGL error while " + when);
+        }
+    }
 
 	void Renderer::init(const int width, const int height, const bool fullScreen, 
 		const string ttfFontPath, const string shadersPath)
@@ -382,62 +406,85 @@ namespace small3d
 
 	void Renderer::renderTexturedQuad(const float *vertices, const string &textureName)
 	{
-		GLuint textureHandle = getTextureHandle(textureName);
-
-		if (textureHandle == 0)
-		{
-			throw EngineException("Texture " + textureName + "has not been generated");
-		}
-		glBindTexture(GL_TEXTURE_2D, textureHandle);
-
-		glUseProgram(textProgram);
-
-		glEnableVertexAttribArray(0);
-
-		GLuint boxBuffer = 0;
-		glGenBuffers(1, &boxBuffer);
-
-		glBindBuffer(GL_ARRAY_BUFFER, boxBuffer);
-		glBufferData(GL_ARRAY_BUFFER,
-			sizeof(float) * 16, // 4 times 4 floats
-			vertices,
-			GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-
-		float textureCoords[8] =
-		{
-			1.0f, 0.0f,
-			0.0f, 0.0f,
-			0.0f, 1.0f,
-			1.0f, 1.0f
-		};
-
-		GLuint coordBuffer = 0;
-
-		glGenBuffers(1,&coordBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, coordBuffer);
-		glBufferData(GL_ARRAY_BUFFER,
-			sizeof(textureCoords),
-			&textureCoords,
-			GL_STATIC_DRAW);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-		glDrawArrays(GL_QUADS, 0, 4);
-
-		glDeleteBuffers(1, &boxBuffer);
-		glDeleteBuffers(1, &coordBuffer);
-
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-
-		GLenum errorCode = glGetError();
-		if (errorCode != GL_NO_ERROR)
-		{
-			LOGERROR("OpenGL error while rendering textured quad");
-			throw EngineException(string((char*)gluErrorString(errorCode)));
-		}
+        float triangleVerts[24] =
+        {
+            vertices[0], vertices[1], vertices[2], 1.0f,
+            vertices[4], vertices[5], vertices[6], 1.0f,
+            vertices[12], vertices[13], vertices[14], 1.0f,
+            vertices[12], vertices[13], vertices[14], 1.0f,
+            vertices[4], vertices[5], vertices[6], 1.0f,
+            vertices[8], vertices[9], vertices[10], 1.0f
+        };
+        
+        
+        GLuint textureHandle = getTextureHandle(textureName);
+        
+        if (textureHandle == 0)
+        {
+            throw EngineException("Texture " + textureName + "has not been generated");
+        }
+        
+        GLuint vao = 0;
+        if (isOpenGL33Supported)
+        {
+            // Generate VAO
+            glGenVertexArrays(1, &vao);
+            glBindVertexArray(vao);
+        }
+        
+        glBindTexture(GL_TEXTURE_2D, textureHandle);
+        
+        glUseProgram(textProgram);
+        
+        glEnableVertexAttribArray(0);
+        
+        GLuint boxBuffer = 0;
+        glGenBuffers(1, &boxBuffer);
+        
+        glBindBuffer(GL_ARRAY_BUFFER, boxBuffer);
+        glBufferData(GL_ARRAY_BUFFER,
+                     sizeof(float) * 24,
+                     triangleVerts,
+                     GL_STATIC_DRAW);
+        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+        
+        float textureCoords[12] =
+        {
+            1.0f, 0.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 1.0f,
+            0.0f, 0.0f,
+            0.0f, 1.0f
+        };
+        
+        GLuint coordBuffer = 0;
+        
+        glGenBuffers(1,&coordBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, coordBuffer);
+        glBufferData(GL_ARRAY_BUFFER,
+                     sizeof(float) * 12,
+                     &textureCoords,
+                     GL_DYNAMIC_DRAW);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+        
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        
+        glDeleteBuffers(1, &boxBuffer);
+        glDeleteBuffers(1, &coordBuffer);
+        
+        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        
+        if (isOpenGL33Supported)
+        {
+            glDeleteVertexArrays(1, &vao);
+            glBindVertexArray(0);
+        }
+        
+        checkForOpenGLErrors("rendering textured quad", true);
 	}
 
 	void Renderer::clearScreen()
@@ -491,28 +538,14 @@ namespace small3d
 				it->get()->getModel().getIndexData(),
 				GL_STATIC_DRAW);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-
-
-			// Index attribute array
-			glEnableVertexAttribArray(1);
-
-			// Lighting
-
-			Vector3 lightDirection(0.0f, 0.9f, 0.2f);
-			GLuint lightDirectionUniform = glGetUniformLocation(program,
-				"lightDirection");
-			float ld[3];
-			lightDirection.getValueArray(ld);
-			glUniform3fv(lightDirectionUniform, 1,
-				ld);
-
+			
 			// Normals
 			glGenBuffers(1, &normalsBufferObject);
 			glBindBuffer(GL_ARRAY_BUFFER, normalsBufferObject);
 			glBufferData(GL_ARRAY_BUFFER,
 				it->get()->getModel().getNormalsDataSize(),
 				it->get()->getModel().getNormalsData(), GL_STATIC_DRAW);
-
+            glEnableVertexAttribArray(1);
 			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*) 0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -557,6 +590,16 @@ namespace small3d
 				it->get()->getColour()->getValueArray(objCol);
 				glUniform4fv(colourUniform, 1, objCol);
 			}
+            
+            // Lighting
+            
+            Vector3 lightDirection(0.0f, 0.9f, 0.2f);
+            GLuint lightDirectionUniform = glGetUniformLocation(program,
+                                                                "lightDirection");
+            float ld[3];
+            lightDirection.getValueArray(ld);
+            glUniform3fv(lightDirectionUniform, 1,
+                         ld);
 
 			// Rotation
 
@@ -578,12 +621,7 @@ namespace small3d
 
 			// Throw an exception if there was an error in OpenGL, during
 			// any of the above.
-			GLenum errorCode = glGetError();
-			if (errorCode != GL_NO_ERROR)
-			{
-				LOGERROR("OpenGL error while rendering scene");
-				throw EngineException(string((char*)gluErrorString(errorCode)));
-			}
+            checkForOpenGLErrors("rendering scene", true);
 
 			// Draw
 			glDrawElements(GL_TRIANGLES,
@@ -700,6 +738,42 @@ namespace small3d
 	{
 		SDL_GL_SwapWindow(sdlWindow);
 	}
+    
+    string openglErrorToString(GLenum error)
+    {
+        string errorString;
+        
+        switch(error) {
+            case GL_NO_ERROR:
+                errorString="GL_NO_ERROR: No error has been recorded. The value of this symbolic constant is guaranteed to be 0.";
+                break;
+            case  GL_INVALID_ENUM:
+                errorString="GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument. The offending command is ignored and has no other side effect than to set the error flag.";
+                break;
+            case  GL_INVALID_VALUE:
+                errorString="GL_INVALID_VALUE: A numeric argument is out of range. The offending command is ignored and has no other side effect than to set the error flag.";
+                break;
+            case  GL_INVALID_OPERATION:
+                errorString="GL_INVALID_OPERATION: The specified operation is not allowed in the current state. The offending command is ignored and has no other side effect than to set the error flag.";
+                break;
+            case  GL_INVALID_FRAMEBUFFER_OPERATION:
+                errorString="GL_INVALID_FRAMEBUFFER_OPERATION: The framebuffer object is not complete. The offending command is ignored and has no other side effect than to set the error flag.";
+                break;
+            case  GL_OUT_OF_MEMORY:
+                errorString="GL_OUT_OF_MEMORY: There is not enough memory left to execute the command. The state of the GL is undefined, except for the state of the error flags, after this error is recorded.";
+                break;
+            case  GL_STACK_UNDERFLOW:
+                errorString="GL_STACK_UNDERFLOW: An attempt has been made to perform an operation that would cause an internal stack to underflow.";
+                break;
+            case   GL_STACK_OVERFLOW:
+                errorString="GL_STACK_OVERFLOW: An attempt has been made to perform an operation that would cause an internal stack to overflow.";
+                break;
+            default:
+                errorString="Unknown error";
+                break;
+        }
+        return errorString;
+    }
 
 }
 

@@ -61,8 +61,6 @@ namespace AvoidTheBug3D {
 
 			renderer->renderTexturedQuad(&startScreenVerts[0], "startScreen");
 
-			/*SDL_Color textColour = {255, 255, 0, 255};
-			renderer->renderText("Now it's chasing me! HELP!", textColour, -1.0f, 1.0f, 1.0f, 0.5f);*/
 		}
 		else
 		{
@@ -88,6 +86,9 @@ namespace AvoidTheBug3D {
 			renderer->renderTexturedQuad(&skyVerts[0], "sky");
 
 			renderer->renderSceneObjects(gameScene->sceneObjects);
+            
+            //SDL_Color textColour = {255, 255, 0, 255};
+            //renderer->renderText("Now it's chasing me! HELP!", textColour, -1.0f, 1.0f, 1.0f, 0.5f);
 
 		}
 		

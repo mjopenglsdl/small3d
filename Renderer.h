@@ -101,6 +101,8 @@ private:
      * If neither of the two is supported, an exception is raised.
      */
     void detectOpenGLVersion();
+    
+    void checkForOpenGLErrors(string when, bool abort);
 
     /**
      * Textures used in the scene, each corresponding to the name of one of
