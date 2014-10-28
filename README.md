@@ -43,11 +43,9 @@ _CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
 
 By changing all the occurrences of off64_t to _off64_t here, the code started compiling. However, the game and unit tests still do not always run on my Windows 8 and I have not been able to figure out the pattern by which they do. Sometimes it is after a restart, sometimes it is when I switch off the antivirus software and sometimes just like that, for no reason at all. Also, there is no text output so you cannot see what is happening at startup.
 
-**Mac**: Sadly, the engine does not yet render the models properly on a Mac. The problem was reported via a pull request, for which I am very grateful, because hithwen got it to at least compile on that platform:
+**Mac**: No problems. There used to be an issue (many thanks to hithwen for spotting it and for providing the first successful compilation on a Mac - https://github.com/dimitrikourk/small3d/pull/2) but it has now been corrected. For the moment, **the correction is only available in the DEV version**, so if you would like to execute the project on a Mac, you will have to link to that one. Please have a look here, if you don't know how:
 
-https://github.com/dimitrikourk/small3d/pull/2
-
-Sadly, I do not own a Macbook so I could not have foreseen it. Maybe this is a good excuse for me to buy one! For "professional" reasons :) One way or another, I will do my best to have this resolved as soon as possible. In the meantime, any help from Mac owners will be greatly appreciated!
+http://docs.biicode.com/biicode/configuration_files/policies.html
 
 **Others:** I would expect that the engine and the sample game should work on most other environments with no problems. Before migrating to biicode, I had also spent time developing the engine on Ubuntu and Fedora, so the code is prety mature cross-platform-wise.
 
