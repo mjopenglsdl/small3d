@@ -41,7 +41,7 @@ _CRT_INLINE off64_t lseek64 (int, off64_t, int);
 _CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
   return _lseeki64(fd, (__int64) offset, whence);
 
-By changing all the occurrences of off64_t to _off64_t here, the code started compiling. However, the game and unit tests still do not always run on my Windows 8 and I have not been able to figure out the pattern by which they do. Sometimes it is after a restart, sometimes it is when I switch off the antivirus software and sometimes just like that, for no reason at all. Also, there is no text output so you cannot see what is happening at startup.
+By changing all the occurrences of off64_t to _off64_t here, the code started compiling. It can get a bit confusing though, because there is no text output, so you cannot see what is happening at startup.
 
 **Mac**: No problems. There used to be an issue (many thanks to hithwen for spotting it and for providing the first successful compilation on a Mac - https://github.com/dimitrikourk/small3d/pull/2) but it has now been corrected. For the moment, **the correction is only available in the DEV version**, so if you would like to execute the project on a Mac, you will have to link to that one. Please have a look here, if you don't know how:
 
@@ -91,4 +91,5 @@ with the options "Apply Modifiers", "Include Edges",
 On the contrary to what is the case when exporting
 the model itself, more than one bounding box objects 
 can be exported to the same Wavefront file.
+
 
