@@ -30,7 +30,7 @@ Compatibility
 
 **Debian Wheezy - Command Line**: No problems
 
-**Windows - Visual Studio**: No problems
+**Windows - Visual Studio**: No problems, but make sure you use biicode v7 of google/gtest (check bii/requirements.bii). There are some conflicts when v8 is used. I am working on them.
 
 **Windows - MinGW:** If you are compiling with MinGW, please note that it has a little bug and requires a small modification (at least my installation does, which was downloaded on the 20/10/2014 and runs gcc 4.8.1).
 
@@ -43,9 +43,7 @@ _CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
 
 By changing all the occurrences of off64_t to _off64_t here, the code started compiling. It can get a bit confusing though, because there is no text output, so you cannot see what is happening at startup.
 
-**Mac**: No problems. There used to be an issue (many thanks to hithwen for spotting it and for providing the first successful compilation on a Mac - https://github.com/dimitrikourk/small3d/pull/2) but it has now been corrected. For the moment, **the correction is only available in the DEV version**, so if you would like to execute the project on a Mac, you will have to link to that one. Please have a look here, if you don't know how:
-
-http://docs.biicode.com/biicode/configuration_files/policies.html
+**Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/pull/2) and for testing the block. 
 
 **Others:** I would expect that the engine and the sample game should work on most other environments with no problems. Before migrating to biicode, I had also spent time developing the engine on Ubuntu and Fedora, so the code is prety mature cross-platform-wise.
 
