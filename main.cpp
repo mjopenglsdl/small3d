@@ -28,7 +28,7 @@
 // bii://dimitrikourk/small3d/resources/images/testImage.png
 // bii://dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj
 // bii://dimitrikourk/small3d/resources/models/Cube/Cube.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/goatBB.obj
+// bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj
 // bii://dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj
 // bii://dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png
 
@@ -153,7 +153,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
 	unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes(cfg, log));
 
-	bboxes->loadFromFile("dimitrikourk/small3d/samplegame/resources/models/goatBB/goatBB.obj");
+	bboxes->loadFromFile("dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj");
 
 	EXPECT_EQ(16, bboxes->vertices->size());
 	EXPECT_EQ(12, bboxes->facesVertexIndexes->size());

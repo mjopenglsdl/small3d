@@ -26,7 +26,7 @@
 // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000018.obj
 // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000019.obj
 // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png
-// bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/goatBB.obj
+// bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj
 // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000001.obj
 // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000002.obj
 // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000003.obj
@@ -79,7 +79,7 @@ namespace AvoidTheBug3D {
 				new SceneObject("goat",
 				"dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim",
 				cfg, log, 19, "dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png", 
-				"dimitrikourk/small3d/samplegame/resources/models/GoatBB/goatBB.obj"));
+				"dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj"));
 
 			bug = shared_ptr<SceneObject> (
 				new SceneObject("bug",
