@@ -16,8 +16,7 @@
 #include "Configuration.h"
 #include "Image.h"
 #include "BoundingBoxes.h"
-#include "Vector3.h"
-#include "Vector4.h"
+#include <dimitrikourk/glm/glm/glm.hpp>
 
 using namespace std;
 
@@ -39,9 +38,9 @@ namespace small3d
 		int numFrames;
 		shared_ptr<Image> texture;
 		string name;
-		shared_ptr<Vector4> colour;
-		shared_ptr<Vector3> offset;
-		shared_ptr<Vector3> rotation;
+		shared_ptr<glm::vec4> colour;
+		shared_ptr<glm::vec3> offset;
+		shared_ptr<glm::vec3> rotation;
 		shared_ptr<BoundingBoxes> boundingBoxes;
 
 		void initPropVectors();
@@ -97,7 +96,7 @@ namespace small3d
 		* Get the object's colour.
 		* @return The object's colour.
 		*/
-		const shared_ptr<Vector4>& getColour();
+		const shared_ptr<glm::vec4>& getColour();
 
 		/**
 		* Set the object's colour. This will only have an effect if the
@@ -114,7 +113,7 @@ namespace small3d
 		* Get the offset of the object's position
 		* @return The offset
 		*/
-		const shared_ptr<Vector3>& getOffset() const;
+		const shared_ptr<glm::vec3>& getOffset() const;
 
 		/**
 		* Set the offset of the object's position
@@ -128,7 +127,7 @@ namespace small3d
 		* Get the object's rotation
 		* @return
 		*/
-		const shared_ptr<Vector3>& getRotation() const;
+		const shared_ptr<glm::vec3>& getRotation() const;
 
 		/**
 		* Set the object's rotation

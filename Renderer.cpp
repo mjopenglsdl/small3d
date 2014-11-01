@@ -3,8 +3,8 @@
 #include <fstream>
 #include <unordered_map>
 #include "EngineMath.h"
-#include "Vector3.h"
-#include "Vector4.h"
+#include <dimitrikourk/glm/glm/glm.hpp>
+#include <dimitrikourk/glm/glm/gtc/type_ptr.hpp>
 #include <cstring>
 
 using namespace std;
@@ -157,7 +157,7 @@ namespace small3d
 
 		string fontPath = cfg->getHomeDirectory() + ttfFontPath;
 		LOGINFO("Loading font from " + fontPath);
-
+		
 		font = TTF_OpenFont(fontPath.c_str(), 48);
 
 		if (!font)
@@ -586,20 +586,16 @@ namespace small3d
 			else
 			{
 				// If there is no texture, use the colour of the object
-				float objCol[4];
-				it->get()->getColour()->getValueArray(objCol);
-				glUniform4fv(colourUniform, 1, objCol);
+				glUniform4fv(colourUniform, 1, glm::value_ptr(*it->get()->getColour()));
 			}
             
             // Lighting
             
-            Vector3 lightDirection(0.0f, 0.9f, 0.2f);
+            glm::vec3 lightDirection(0.0f, 0.9f, 0.2f);
             GLuint lightDirectionUniform = glGetUniformLocation(program,
                                                                 "lightDirection");
-            float ld[3];
-            lightDirection.getValueArray(ld);
             glUniform3fv(lightDirectionUniform, 1,
-                         ld);
+                         glm::value_ptr(lightDirection));
 
 			// Rotation
 
@@ -610,14 +606,12 @@ namespace small3d
 			GLuint zRotationMatrixUniform = glGetUniformLocation(program,
 				"zRotationMatrix");
 
-			glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, rotateX(it->get()->getRotation()->x).valueArray);
-			glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, rotateY(it->get()->getRotation()->y).valueArray);
-			glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, rotateZ(it->get()->getRotation()->z).valueArray);
+			glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(it->get()->getRotation()->x)));
+			glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(it->get()->getRotation()->y)));
+			glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(it->get()->getRotation()->z)));
 
 			GLuint offsetUniform = glGetUniformLocation(program, "offset");
-			float offs[3];
-			it->get()->getOffset()->getValueArray(offs);
-			glUniform3fv(offsetUniform, 1, offs);
+			glUniform3fv(offsetUniform, 1, glm::value_ptr(*it->get()->getOffset()));
 
 			// Throw an exception if there was an error in OpenGL, during
 			// any of the above.

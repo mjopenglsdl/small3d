@@ -124,8 +124,8 @@ namespace AvoidTheBug3D {
 
 	void GameLogic::moveGoat( const KeyInput &keyInput )
 	{
-		shared_ptr<Vector3> goatRotation = goat->getRotation();
-		shared_ptr<Vector3> goatOffset = goat->getOffset();
+		shared_ptr<glm::vec3> goatRotation = goat->getRotation();
+		shared_ptr<glm::vec3> goatOffset = goat->getOffset();
 
 		goat->stopAnimating();
 
@@ -179,8 +179,8 @@ namespace AvoidTheBug3D {
 
 	void GameLogic::moveBug()
 	{
-		shared_ptr<Vector3> bugRotation = bug->getRotation();
-		shared_ptr<Vector3> bugOffset = bug->getOffset();
+		shared_ptr<glm::vec3> bugRotation = bug->getRotation();
+		shared_ptr<glm::vec3> bugOffset = bug->getOffset();
 
 		float xDistance = bug->getOffset()->x - goat->getOffset()->x;
 		float yDistance = bug->getOffset()->z - goat->getOffset()->z;

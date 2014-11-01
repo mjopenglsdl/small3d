@@ -13,8 +13,7 @@
 #include "GetTokens.h"
 #include <stdlib.h>
 #include "EngineMath.h"
-#include "Matrix4x4.h"
-#include "Vector4.h"
+#include <dimitrikourk/glm/glm/glm.hpp>
 #include <iostream>
 
 namespace small3d {
@@ -135,13 +134,13 @@ namespace small3d {
 		const float &boxesX, const float &boxesY, const float &boxesZ, const float &boxesRotation)
 	{
 		bool collides = false;
-		Matrix4x4 rotationMatrix = rotateY(boxesRotation);
+		glm::mat4 rotationMatrix = rotateY(boxesRotation);
 
 		for (int idx = 0; idx < numBoxes; ++idx) {
 			float minZ, maxZ, minX, maxX, minY, maxY;
 
-			Vector4 coords(vertices->at(idx * 8)[0], vertices->at(idx * 8)[1], vertices->at(idx * 8)[2], 1);
-			Vector4 rotatedCoords(0.0f, 0.0f, 0.0f, 1.0f); 
+			glm::vec4 coords(vertices->at(idx * 8)[0], vertices->at(idx * 8)[1], vertices->at(idx * 8)[2], 1);
+			glm::vec4 rotatedCoords(0.0f, 0.0f, 0.0f, 1.0f); 
 
 			rotatedCoords = rotationMatrix * coords;
 
@@ -158,7 +157,7 @@ namespace small3d {
 
 			for (int checkidx = idx * 8; checkidx < (idx + 1) * 8; ++checkidx )
 			{
-				coords = Vector4(vertices->at(checkidx)[0], vertices->at(checkidx)[1], vertices->at(checkidx)[2], 1);
+				coords = glm::vec4(vertices->at(checkidx)[0], vertices->at(checkidx)[1], vertices->at(checkidx)[2], 1);
 				rotatedCoords = rotationMatrix * coords;
 
 				rotatedCoords.x += boxesX;

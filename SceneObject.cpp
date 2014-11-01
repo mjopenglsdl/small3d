@@ -13,9 +13,9 @@
 namespace small3d {
 
 	void SceneObject::initPropVectors() {
-		this->colour = shared_ptr<Vector4>(new Vector4(0, 0 ,0, 0));
-		this->offset = shared_ptr<Vector3>(new Vector3(0, 0 ,0));
-		this->rotation = shared_ptr<Vector3>(new Vector3(0, 0 ,0));
+		this->colour = shared_ptr<glm::vec4>(new glm::vec4(0, 0 ,0, 0));
+		this->offset = shared_ptr<glm::vec3>(new glm::vec3(0, 0 ,0));
+		this->rotation = shared_ptr<glm::vec3>(new glm::vec3(0, 0 ,0));
 	}
 
 	SceneObject::SceneObject(const string &name, const string &modelPath,
@@ -79,29 +79,29 @@ namespace small3d {
 		return name;
 	}
 
-	const shared_ptr<Vector4>& SceneObject::getColour() {
+	const shared_ptr<glm::vec4>& SceneObject::getColour() {
 		return colour;
 	}
 
 	void SceneObject::setColour(const float &r, const float &g, const float &b, const float &a) {
-		colour = shared_ptr<Vector4>(new Vector4(r, g ,b, a));
+		colour = shared_ptr<glm::vec4>(new glm::vec4(r, g ,b, a));
 	}
 
-	const shared_ptr<Vector3>& SceneObject::getOffset() const {
+	const shared_ptr<glm::vec3>& SceneObject::getOffset() const {
 		return offset;
 	}
 
 	void SceneObject::setOffset(const float &x, const float &y, const float &z) {
-		offset = shared_ptr<Vector3>(new Vector3(x, y ,z));
+		offset = shared_ptr<glm::vec3>(new glm::vec3(x, y ,z));
 	}
 
-	const shared_ptr<Vector3>& SceneObject::getRotation() const {
+	const shared_ptr<glm::vec3>& SceneObject::getRotation() const {
 		return rotation;
 	}
 
 	void SceneObject::setRotation(const float &x, const float &y,
 		const float &z) {
-			rotation = shared_ptr<Vector3>(new Vector3(x, y ,z));
+			rotation = shared_ptr<glm::vec3>(new glm::vec3(x, y ,z));
 	}
 
 	void SceneObject::startAnimating()

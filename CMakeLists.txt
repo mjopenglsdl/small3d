@@ -59,6 +59,7 @@ if(NOT WIN32 OR MINGW)
 		target_compile_options(${BII_LIB_TARGET} PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Ubuntu if gcc problems
 	ENDIF()
 endif()
+
 # with LLVM, you might need to link the target with "-lc++abi"
 #
 # If you want your code to be portable and activate properly C++11, you have to handle it:

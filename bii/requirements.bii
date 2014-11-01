@@ -3,4 +3,5 @@ google/gtest: 7
 miguel/sdl2: 0
 glenn/png: 0
 miguel/sdl2_ttf: 0
-dimitrikourk/glew: 0
+dimitrikourk/glew: 1
+dimitrikourk/glm: 0

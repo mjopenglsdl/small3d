@@ -9,8 +9,7 @@
 
 #pragma once
 
-#include "Matrix4x4.h"
-#include <cmath>
+#include <dimitrikourk/glm/glm/glm.hpp>
 
 /**
 * @def	ROUND_2_DECIMAL(x) (floorf(100 * x + 0.5) / 100)
@@ -29,32 +28,20 @@ namespace small3d {
 	* @param angle The angle to rotate by, in radians.
 	* @return The X rotation matrix
 	*/
-	Matrix4x4 rotateX(const float &angle);
+	glm::mat4x4 rotateX(const float &angle);
 
 	/**
 	* Rotation transformation for rotating around the Y axis
 	* @param angle The angle to rotate by, in radians.
 	* @return The Y rotation matrix
 	*/
-	Matrix4x4 rotateY(const float &angle);
+	glm::mat4x4 rotateY(const float &angle);
 
 	/**
 	* Rotation transformation for rotating around the Z axis
 	* @param angle The angle to rotate by, in radians.
 	* @return The Z rotation matrix
 	*/
-	Matrix4x4 rotateZ(const float &angle);
+	glm::mat4x4 rotateZ(const float &angle);
 
-	/**
-	 * @fn	float dot(const Vector4 &v1, const Vector4 &v2);
-	 *
-	 * @brief	Dot product of two vectors
-	 *
-	 * @param	v1	The first Vector.
-	 * @param	v2	The second Vector.
-	 *
-	 * @return	The dot product.
-	 */
-
-	float dot(const Vector4 &v1, const Vector4 &v2);
 }
