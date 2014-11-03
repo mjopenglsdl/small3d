@@ -20,5 +20,5 @@ script:
 - mv !(biicode_project) ./biicode_project/blocks/dimitrikourk/small3d
 - cd biicode_project
 - bii find -um
-- bii cpp:build
+- bii cpp:build 
 - "./bin/dimitrikourk_small3d_main"
