@@ -181,6 +181,8 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
 }
 
+/*
+//This cannot run on the CI environment because there is no video device available there.
 TEST(RendererTest, StartAndUse) {
 	shared_ptr<EngineLog> log(new EngineLog(cout));
 
@@ -198,6 +200,7 @@ TEST(RendererTest, StartAndUse) {
 	renderer->init(640, 480, false);
 
 }
+*/
 
 int main(int argc, char **argv) {
 	testing::InitGoogleTest(&argc, argv);

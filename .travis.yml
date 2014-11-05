@@ -22,7 +22,7 @@ script:
 - mkdir -p ./biicode_project/blocks/dimitrikourk/small3d
 - mv !(biicode_project) ./biicode_project/blocks/dimitrikourk/small3d
 - cd biicode_project
-- bii find -um
+- bii find
 - bii cpp:build 
 - "./bin/dimitrikourk_small3d_main"
 after_success:
