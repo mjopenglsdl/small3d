@@ -1,8 +1,7 @@
 small3d 
 =======
-*A small, no fuss, 3D game engine*
-
 [![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
+*A small, no fuss, 3D game engine*
 
 For requests for assistance, comments and suggestions, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
 
