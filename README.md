@@ -45,7 +45,7 @@ Also, with MinGW, the build time is quite long, so I would strongly recommend us
 
 http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop 
 
-**Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/pull/2) and for testing the block. 
+**Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block. 
 
 **Others:** I would expect that the engine and the sample game should work on most other environments with no problems. Before migrating to biicode, I had also spent time developing the engine on Ubuntu and Fedora, so the code is prety mature cross-platform-wise.
 
