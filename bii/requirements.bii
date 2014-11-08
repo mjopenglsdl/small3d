@@ -1,7 +1,7 @@
 # This file contains your block external dependencies references
 google/gtest: 7
-miguel/sdl2: 0
+miguel/sdl2: 1
 glenn/png: 0
-miguel/sdl2_ttf: 0
+miguel/sdl2_ttf: 1
 dimitrikourk/glew: 1
 dimitrikourk/glm: 0

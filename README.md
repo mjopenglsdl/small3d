@@ -43,7 +43,7 @@ _CRT_INLINE off64_t lseek64 (int, off64_t, int);
 _CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
   return _lseeki64(fd, (__int64) offset, whence);
 
-By changing all the occurrences of off64_t to _off64_t here, the code started compiling. It can get a bit confusing though, because there is no text output, so you cannot see what is happening at startup.
+By changing all the occurrences of off64_t to _off64_t here, the code started compiling, but there are still two problems. First, there is no text output, so you cannot see what is happening at startup and, second, sometimes the sample game will not start. I have found some information indicating that this has to do with my MinGW setup and not with the code of the game itself, but I am still looking into it.
 
 **Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/pull/2) and for testing the block. 
 

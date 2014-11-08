@@ -6,10 +6,14 @@
 *              http://dimitros.be
 *     License: GNU LGPL
 */
+
 // Without undefining strict ANSI, compilation in MinGW fails when C++11 is enabled
+#ifdef __MINGW32__
 #ifdef __STRICT_ANSI__
 #undef __STRICT_ANSI__
 #endif
+#endif
+
 #include "google/gtest/gtest.h"
 #include "EngineLog.h"
 #include "Configuration.h"
@@ -21,7 +25,20 @@
 #include "BoundingBoxes.h"
 #include "SceneObject.h"
 #include "Scene.h"
+
+/* MinGW produces the following linking error, if the unit tests
+ * are linked to the renderer:
+ *    undefined reference to `SDL_SetMainReady'
+ * This started occurring when GLEW was removed from the small3d block
+ * and placed in an independent block. It probably has something to do
+ * with the order in which the SDL libraries are linked (see
+ * http://www.cplusplus.com/forum/beginner/110753/). It does not occur
+ * in the sample game, only in these unit tests, when they are built
+ * under MinGW.
+ */
+#ifndef __MINGW32__
 #include "Renderer.h"
+#endif
 
 /* bii data directives */
 
@@ -183,6 +200,9 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
 /*
 //This cannot run on the CI environment because there is no video device available there.
+
+// Cannot run this with MinGW (see comment above Renderer.h include directive)
+#ifndef __MINGW32__
 TEST(RendererTest, StartAndUse) {
 	shared_ptr<EngineLog> log(new EngineLog(cout));
 
@@ -200,6 +220,7 @@ TEST(RendererTest, StartAndUse) {
 	renderer->init(640, 480, false);
 
 }
+#endif
 */
 
 int main(int argc, char **argv) {
