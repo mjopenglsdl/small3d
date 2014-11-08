@@ -32,18 +32,18 @@ Compatibility
 
 **Debian Wheezy - Command Line**: No problems
 
-**Windows - Visual Studio**: No problems, but make sure you use biicode v7 of google/gtest (check bii/requirements.bii). There are some conflicts when v8 is used. I am working on them.
+**Windows - Visual Studio**: No problems, but make sure you use biicode v7 of google/gtest (check bii/requirements.bii). There are some conflicts when v8 is used. I am working on them. Note that, by default, bii will compile projects in Windows using MinGW's compiler. In order to use Visual Studio, issue one of the following commands from the directory of your project, depending on which version you have installed:
 
-**Windows - MinGW:** If you are compiling with MinGW, please note that it has a little bug and requires a small modification (at least my installation does, which was downloaded on the 20/10/2014 and runs gcc 4.8.1).
+bii cpp:configure -G"Visual Studio 10 2010"
 
-The engine uses certain features which obliged me to enable the C++11 switch in CMakeLists.txt. But then I could not compile. I managed to solve the problem by opening the io.h file, and going to line 300, more or less, where the following code is present:
+bii cpp:configure -G"Visual Studio 11 2012"
 
-_CRT_INLINE off64_t lseek64 (int, off64_t, int);
+bii cpp:configure -G"Visual Studio 12 2013"
 
-_CRT_INLINE off64_t lseek64 (int fd, off64_t offset, int whence) {
-  return _lseeki64(fd, (__int64) offset, whence);
+**Windows - MinGW**: The engine and sample game will compile and work under MinGW but support for that environment is a little flaky (see README.MinGW.txt).
+Also, with MinGW, the build time is quite long, so I would strongly recommend using the Visual Studio compiler. You can get Visual Studio Express for free:
 
-By changing all the occurrences of off64_t to _off64_t here, the code started compiling, but there are still two problems. First, there is no text output, so you cannot see what is happening at startup and, second, sometimes the sample game will not start. I have found some information indicating that this has to do with my MinGW setup and not with the code of the game itself, but I am still looking into it.
+http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop 
 
 **Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/pull/2) and for testing the block. 
 
