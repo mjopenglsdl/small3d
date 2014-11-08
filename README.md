@@ -24,7 +24,7 @@ GitHub source: https://github.com/dimitrikourk/small3d
 
 There is also a sample game in the "samplegame" folder within the block, which demonstrates how the existing features of the engine can be used.
 
-```For now, small3d is stable, but I consider it to only be a proof-of-technology. You can definitely do interesting things with it, like the sample game, but it is far from complete. A lot of values are hardcoded, like the dimensions of the 3D scene or the position of the camera. It also needs a few more features, like better control of text rendering and sound. The next version of the block will be the first official release, with all of these matters addressed, a comprehensive, easy to understand API and an architecture that abides to the``` **"Don`t make me use your design"** ```principle. (http://blog.biicode.com/software-design-proposal/)```
+**For now, small3d is stable, but I consider it to only be a proof-of-technology. You can definitely do interesting things with it, like the sample game, but it is far from complete. A lot of values are hardcoded, like the dimensions of the 3D scene or the position of the camera. It also needs a few more features, like better control of text rendering and sound. The next version of the block will be the first official release, with all of these matters addressed, a comprehensive, easy to understand API and an architecture that abides to the "Don`t make me use your design" principle (http://blog.biicode.com/software-design-proposal/).**
 
 
 Compatibility
