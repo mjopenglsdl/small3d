@@ -59,7 +59,7 @@
 
 #include <memory>
 #include <dimitrikourk/small3d/MathFunctions.h>
-#include <dimitrikourk/small3d/EngineException.h>
+#include <dimitrikourk/small3d/Exception.h>
 #include <dimitrikourk/small3d/MathFunctions.h>
 #include <cmath>
 
@@ -321,7 +321,7 @@ namespace AvoidTheBug3D {
 			processGame(keyInput);
 			break;
 		default:
-			throw EngineException("Urecognised game state");
+			throw Exception("Urecognised game state");
 			break;
 		}
 	}

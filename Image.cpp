@@ -9,7 +9,7 @@
 
 #include "Image.h"
 #include <stdio.h>
-#include "EngineException.h"
+#include "Exception.h"
 #include "MathFunctions.h"
 
 using namespace std;
@@ -53,7 +53,7 @@ namespace small3d
 #endif
 		if (!fp)
 		{
-			throw EngineException(
+			throw Exception(
 				"Could not open file " + cfg->getHomeDirectory()
 				+ fileLocation);
 		}
@@ -71,7 +71,7 @@ namespace small3d
 
 		if (png_sig_cmp(header, 0, 8))
 		{
-			throw EngineException(
+			throw Exception(
 				"File " + cfg->getHomeDirectory() + fileLocation
 				+ " is not recognised as a PNG file.");
 		}
@@ -82,7 +82,7 @@ namespace small3d
 		if (!pngStructure)
 		{
 			fclose(fp);
-			throw EngineException("Could not create PNG read structure.");
+			throw Exception("Could not create PNG read structure.");
 		}
 
 		pngInformation = png_create_info_struct(pngStructure);
@@ -91,7 +91,7 @@ namespace small3d
 		{
 			png_destroy_read_struct(&pngStructure, NULL, NULL);
 			fclose(fp);
-			throw EngineException("Could not create PNG information structure.");
+			throw Exception("Could not create PNG information structure.");
 		}
 
 		if (setjmp(png_jmpbuf(pngStructure)))
@@ -100,7 +100,7 @@ namespace small3d
 			pngStructure = NULL;
 			pngInformation = NULL;
 			fclose(fp);
-			throw EngineException("PNG read: Error calling setjmp. (1)");
+			throw Exception("PNG read: Error calling setjmp. (1)");
 		}
 
 		png_init_io(pngStructure, fp);
@@ -122,7 +122,7 @@ namespace small3d
 			pngStructure = NULL;
 			pngInformation = NULL;
 			fclose(fp);
-			throw EngineException("PNG read: Error calling setjmp. (2)");
+			throw Exception("PNG read: Error calling setjmp. (2)");
 		}
 
 		rowPointers = new png_bytep[sizeof(png_bytep) * height];
@@ -137,7 +137,7 @@ namespace small3d
 
 		if (png_get_color_type(pngStructure, pngInformation) != PNG_COLOR_TYPE_RGB)
 		{
-			throw EngineException(
+			throw Exception(
 				"For now, only PNG_COLOR_TYPE_RGB is supported for PNG images.");
 		}
 

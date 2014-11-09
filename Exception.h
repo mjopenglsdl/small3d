@@ -1,5 +1,5 @@
 /*
-*  EngineException.h
+*  Exception.h
 *
 *  Created on: 2014/10/18
 *      Author: Dimitri Kourkoulis
@@ -17,38 +17,38 @@ using namespace std;
 namespace small3d {
 
 	/**
-	 * @class	EngineException
+	 * @class	Exception
 	 *
 	 * @brief	The standard exception for small3d.
 	 *
 	 */
 
-	class EngineException : public exception  {
+	class Exception : public exception  {
 	private:
 		string message;
 	public:
 
 		/**
-		 * @fn	EngineException::EngineException();
+		 * @fn	Exception::Exception();
 		 *
 		 * @brief	Default constructor.
 		 *
 		 */
 
-		EngineException();
+		Exception();
 
 		/**
-		 * @fn	EngineException::EngineException(string message);
+		 * @fn	Exception::Exception(string message);
 		 *
 		 * @brief	Constructor with message.
 		 *
 		 * @param	message	The message.
 		 */
 
-		EngineException(string message);
+		Exception(string message);
 
 		/**
-		 * @fn	virtual const char* EngineException::what() const throw();
+		 * @fn	virtual const char* Exception::what() const throw();
 		 *
 		 * @brief	Returns a null terminated character sequence that can be used to identify the exception.
 		 *
@@ -58,13 +58,13 @@ namespace small3d {
 		virtual const char* what() const throw();
 
 		/**
-		 * @fn	virtual EngineException::~EngineException() throw();
+		 * @fn	virtual Exception::~Exception() throw();
 		 *
 		 * @brief	Destructor.
 		 *
 		 */
 
-		virtual ~EngineException() throw();
+		virtual ~Exception() throw();
 	};
 
 } 

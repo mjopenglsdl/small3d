@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <unordered_map>
-#include "EngineException.h"
+#include "Exception.h"
 #include "GetTokens.h"
 #include <cstring>
 #include <memory>
@@ -90,7 +90,7 @@ namespace small3d
 	{
 		if (vertices->size() != 0)
 		{
-			throw EngineException(
+			throw Exception(
 				"Illegal attempt to reload model. Please use another object.");
 		}
 		ifstream file((cfg->getHomeDirectory() + fileLocation).c_str());
@@ -257,7 +257,7 @@ namespace small3d
 
 		}
 		else
-			throw EngineException(
+			throw Exception(
 			"Could not open file " + cfg->getHomeDirectory()
 			+ fileLocation);
 
@@ -348,7 +348,7 @@ namespace small3d
 
 			if (vertexDataComponentCount == 0)
 			{
-				throw EngineException(
+				throw Exception(
 					"There are no vertices or vertex data has not yet been created.");
 			}
 
@@ -401,7 +401,7 @@ namespace small3d
 
 			if (vertexDataComponentCount == 0)
 			{
-				throw EngineException(
+				throw Exception(
 					"There are no vertices or vertex data has not yet been created.");
 			}
 

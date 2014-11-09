@@ -9,7 +9,7 @@
 
 #include "BoundingBoxes.h"
 #include <fstream>
-#include "EngineException.h"
+#include "Exception.h"
 #include "GetTokens.h"
 #include <stdlib.h>
 #include "MathFunctions.h"
@@ -62,7 +62,7 @@ namespace small3d {
 	{
 		if (vertices->size() != 0)
 		{
-			throw EngineException(
+			throw Exception(
 				"Illegal attempt to reload bounding boxes. Please use another object.");
 		}
 		ifstream file((cfg->getHomeDirectory() + fileLocation).c_str());
@@ -124,7 +124,7 @@ namespace small3d {
 			numBoxes = facesVertexIndexes->size() / 6;
 		}
 		else
-			throw EngineException(
+			throw Exception(
 			"Could not open file " + cfg->getHomeDirectory()
 			+ fileLocation);
 

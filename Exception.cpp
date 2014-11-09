@@ -1,5 +1,5 @@
 /*
-*  EngineException.cpp
+*  Exception.cpp
 *
 *  Created on: 2014/10/18
 *      Author: Dimitri Kourkoulis
@@ -7,25 +7,25 @@
 *     License: MIT
 */
 
-#include "EngineException.h"
+#include "Exception.h"
 
 namespace small3d {
 
-	EngineException::EngineException() {
+	Exception::Exception() {
 
 
 	}
 
-	EngineException::EngineException(string message) {
+	Exception::Exception(string message) {
 		this->message = message;
 	}
 
-	const char* EngineException::what() const throw () {
+	const char* Exception::what() const throw () {
 		return message.c_str();
 	}
 
 
-	EngineException::~EngineException() throw() {
+	Exception::~Exception() throw() {
 		// TODO Auto-generated destructor stub
 	}
 

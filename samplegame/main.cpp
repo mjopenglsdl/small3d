@@ -15,7 +15,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <dimitrikourk/small3d/Logger.h>
-#include <dimitrikourk/small3d/EngineException.h>
+#include <dimitrikourk/small3d/Exception.h>
 #include <memory>
 
 #include <dimitrikourk/small3d/samplegame/GameLogic.h>
@@ -93,7 +93,7 @@ int main(int argc, char** argv)
 		}
 
 	}
-	catch (EngineException &e)
+	catch (Exception &e)
 	{
 		LOGERROR(e.what());
 		return 1;

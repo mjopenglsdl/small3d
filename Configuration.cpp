@@ -10,7 +10,7 @@
 #include "Configuration.h"
 
 #include "miguel/sdl2/include/SDL.h"
-#include "EngineException.h"
+#include "Exception.h"
 
 using namespace std;
 

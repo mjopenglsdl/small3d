@@ -8,7 +8,7 @@
 #include "SceneObject.h"
 #include <sstream>
 #include <iomanip>
-#include "EngineException.h"
+#include "Exception.h"
 
 namespace small3d {
 
@@ -141,7 +141,7 @@ namespace small3d {
 	bool SceneObject::collidesWithPoint( float x, float y, float z )
 	{
 		if (boundingBoxes == NULL) {
-			throw EngineException("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
+			throw Exception("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
 		}
 
 		return boundingBoxes->pointCollides(x, y, z, offset->x, offset->y, offset->z, rotation->y);

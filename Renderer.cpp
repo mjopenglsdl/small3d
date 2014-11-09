@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "EngineException.h"
+#include "Exception.h"
 #include <fstream>
 #include <unordered_map>
 #include "MathFunctions.h"
@@ -45,7 +45,7 @@ namespace small3d
 		if (status == GL_FALSE)
 		{
 
-			throw EngineException(
+			throw Exception(
 				"Failed to compile shader:\n" + shaderSource + "\nInfo: "
 				+ this->getProgramInfoLog(program));
 		}
@@ -117,7 +117,7 @@ namespace small3d
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		{
 			LOGERROR(SDL_GetError());
-			throw EngineException(string("Unable to initialise SDL"));
+			throw Exception(string("Unable to initialise SDL"));
 		}
 #ifdef __APPLE__
 		SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
@@ -140,19 +140,19 @@ namespace small3d
 		if (SDL_GL_CreateContext( sdlWindow ) == NULL)
 		{
 			LOGERROR(SDL_GetError());
-			throw EngineException(string("Unable to create GL context"));
+			throw Exception(string("Unable to create GL context"));
 		}
 
 		if (!sdlWindow)
 		{
 			LOGERROR(SDL_GetError());
-			throw EngineException("Unable to set video");
+			throw Exception("Unable to set video");
 		}
 
 		if(TTF_Init()==-1)
 		{
 			LOGERROR(TTF_GetError());
-			throw EngineException("Unable to initialise font system");
+			throw Exception("Unable to initialise font system");
 		}
 
 		string fontPath = cfg->getHomeDirectory() + ttfFontPath;
@@ -163,7 +163,7 @@ namespace small3d
 		if (!font)
 		{
 			LOGERROR(TTF_GetError());
-			throw EngineException("Failed to load font");
+			throw Exception("Failed to load font");
 		}
 		else
 		{
@@ -197,7 +197,7 @@ namespace small3d
 		
 		if (initResult != GLEW_OK)
 		{
-			throw EngineException("Error initialising GLEW");
+			throw Exception("Error initialising GLEW");
 		}
 		else
 		{
@@ -223,7 +223,7 @@ namespace small3d
 		else
 		{
 			noShaders = true;
-			throw EngineException(
+			throw Exception(
 				"None of the supported OpenGL versions (3.3 nor 2.1) are available.");
 		}
 
@@ -243,7 +243,7 @@ namespace small3d
             while(errorCode != GL_NO_ERROR);
             
             if (abort)
-                throw EngineException("OpenGL error while " + when);
+                throw Exception("OpenGL error while " + when);
         }
     }
 
@@ -305,7 +305,7 @@ namespace small3d
 		glGetProgramiv(program, GL_LINK_STATUS, &status);
 		if (status == GL_FALSE)
 		{
-			throw EngineException("Failed to link program:\n" + this->getProgramInfoLog(program));
+			throw Exception("Failed to link program:\n" + this->getProgramInfoLog(program));
 		}
 		else
 		{
@@ -359,7 +359,7 @@ namespace small3d
 		glGetProgramiv(textProgram, GL_LINK_STATUS, &status);
 		if (status == GL_FALSE)
 		{
-			throw EngineException("Failed to link program:\n" + this->getProgramInfoLog(textProgram));
+			throw Exception("Failed to link program:\n" + this->getProgramInfoLog(textProgram));
 		}
 		else
 		{
@@ -421,7 +421,7 @@ namespace small3d
         
         if (textureHandle == 0)
         {
-            throw EngineException("Texture " + textureName + "has not been generated");
+            throw Exception("Texture " + textureName + "has not been generated");
         }
         
         GLuint vao = 0;
