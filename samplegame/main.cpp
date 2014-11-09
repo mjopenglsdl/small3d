@@ -1,3 +1,12 @@
+/*
+*  main.cpp
+*
+*  Created on: 2014/11/09
+*      Author: Dimitri Kourkoulis
+*              http://dimitros.be
+*     License: MIT
+*/
+
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

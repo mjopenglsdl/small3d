@@ -1,3 +1,12 @@
+/*
+*  GameLogic.h
+*
+*  Created on: 2014/11/09
+*      Author: Dimitri Kourkoulis
+*              http://dimitros.be
+*     License: MIT
+*/
+
 #pragma once
 
 #include <memory>
@@ -11,15 +20,6 @@
 using namespace small3d;
 
 namespace AvoidTheBug3D {
-
-	/**
-	 * @class	GameLogic
-	 *
-	 * @brief	Game logic
-	 *
-	 * @author	Dimitri Kourkoulis
-	 * @date	Dec 26, 2013
-	 */
 
 	class GameLogic {
 

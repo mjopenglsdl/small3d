@@ -1,8 +1,10 @@
 /*
-* PlayerView.cpp
+*  PlayerView.cpp
 *
-*  Created on: Dec 26, 2013
+*  Created on: 2014/11/09
 *      Author: Dimitri Kourkoulis
+*              http://dimitros.be
+*     License: MIT
 */
 
 /* bii data directives */
