@@ -15,7 +15,7 @@
 #endif
 
 #include "google/gtest/gtest.h"
-#include "EngineLog.h"
+#include "Logger.h"
 #include "Configuration.h"
 #include <iostream>
 #include <memory>
@@ -52,11 +52,11 @@
 using namespace small3d;
 using namespace std;
 
-TEST(EngineLogTest, LogSomething) {
+TEST(LoggerTest, LogSomething) {
 
 	ostringstream oss;
 
-	unique_ptr<EngineLog> log(new EngineLog(oss));
+	unique_ptr<Logger> log(new Logger(oss));
 
 	LOGINFO("It works");
 	EXPECT_TRUE(oss.str().find("It works") != (string::npos));
@@ -66,9 +66,9 @@ TEST(EngineLogTest, LogSomething) {
 
 }
 
-TEST(EngineLogTest, VisibleOutput) {
+TEST(LoggerTest, VisibleOutput) {
 
-	unique_ptr<EngineLog> log(new EngineLog(cout));
+	unique_ptr<Logger> log(new Logger(cout));
 
 	LOGINFO("Hello");
 
@@ -77,13 +77,13 @@ TEST(EngineLogTest, VisibleOutput) {
 }
 
 TEST(ConfigurationTest, FindCurrentDirectory) {
-	shared_ptr<EngineLog> log(new EngineLog(cout));
+	shared_ptr<Logger> log(new Logger(cout));
 	unique_ptr<Configuration> cfg(new Configuration(log));
 }
 
 TEST(ImageTest, LoadImage) {
 
-	shared_ptr<EngineLog> log(new EngineLog(cout));
+	shared_ptr<Logger> log(new Logger(cout));
 	shared_ptr<Configuration> cfg(new Configuration(log));
 
 	unique_ptr<Image> image( new Image("dimitrikourk/small3d/resources/images/testImage.png", cfg, log));
@@ -120,7 +120,7 @@ TEST(ImageTest, LoadImage) {
 }
 
 TEST(ModelTest, LoadModel) {
-	shared_ptr<EngineLog> log(new EngineLog(cout));
+	shared_ptr<Logger> log(new Logger(cout));
 	shared_ptr<Configuration> cfg(new Configuration(log));
 
 
@@ -164,7 +164,7 @@ TEST(ModelTest, LoadModel) {
 
 TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
-	shared_ptr<EngineLog> log(new EngineLog(cout));
+	shared_ptr<Logger> log(new Logger(cout));
 
 	shared_ptr<Configuration> cfg(new Configuration(log));
 
@@ -204,7 +204,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 // Cannot run this with MinGW (see comment above Renderer.h include directive)
 #ifndef __MINGW32__
 TEST(RendererTest, StartAndUse) {
-	shared_ptr<EngineLog> log(new EngineLog(cout));
+	shared_ptr<Logger> log(new Logger(cout));
 
 	shared_ptr<Configuration> cfg(new Configuration(log));
 

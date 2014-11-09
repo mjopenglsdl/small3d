@@ -1,5 +1,5 @@
 /*
-*  EngineLog.cpp
+*  Logger.cpp
 *
 *  Created on: 2014/10/18
 *      Author: Dimitri Kourkoulis
@@ -7,7 +7,7 @@
 *     License: MIT
 */
 
-#include "EngineLog.h"
+#include "Logger.h"
 #include <sstream>
 #include <ctime>
 
@@ -15,16 +15,16 @@ using namespace std;
 
 namespace small3d {
 
-	EngineLog::EngineLog(ostream &stream) {
+	Logger::Logger(ostream &stream) {
 		logStream = &stream;
 	}
 
-	EngineLog::~EngineLog() {
+	Logger::~Logger() {
 		this->append(info, "Logger getting destroyed");
 
 	}
 
-	void EngineLog::append(const EngineLogLevel level, const string message) {
+	void Logger::append(const EngineLogLevel level, const string message) {
 
 		ostringstream dateTimeOstringstream;
 

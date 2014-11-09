@@ -19,7 +19,7 @@ namespace small3d {
 	}
 
 	SceneObject::SceneObject(const string &name, const string &modelPath,
-		const shared_ptr<Configuration> cfg, const shared_ptr<EngineLog> log, const int &numFrames, 
+		const shared_ptr<Configuration> cfg, const shared_ptr<Logger> log, const int &numFrames, 
 		const string &texturePath, const string &boundingBoxesPath) {
 			this->name = name;
 			this->log = log;

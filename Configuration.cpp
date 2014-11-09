@@ -16,7 +16,7 @@ using namespace std;
 
 namespace small3d {
 
-	Configuration::Configuration(shared_ptr<EngineLog> log) {
+	Configuration::Configuration(shared_ptr<Logger> log) {
 		this->log = log;
 		LOGINFO("Configuration object initialised");
 		this->findHomeDirectory();

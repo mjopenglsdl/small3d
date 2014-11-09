@@ -32,7 +32,7 @@
 #include "SceneObject.h"
 #include <vector>
 #include "Configuration.h"
-#include "EngineLog.h"
+#include "Logger.h"
 #include <unordered_map>
 
 //#include <glm/gtc/type_ptr.hpp>
@@ -55,7 +55,7 @@ class Renderer
 private:
 
     shared_ptr<Configuration> cfg;
-    shared_ptr<EngineLog> log;
+    shared_ptr<Logger> log;
 
 	SDL_Window* sdlWindow;
 
@@ -118,7 +118,7 @@ public:
      * @param log The game's logging object
      */
     Renderer(const shared_ptr<Configuration> cfg,
-             const shared_ptr<EngineLog> log);
+             const shared_ptr<Logger> log);
 
     /**
      * Initialise renderer (OpenGL, GLEW, etc)

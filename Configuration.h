@@ -11,7 +11,7 @@
 
 #include <string>
 #include <memory>
-#include "EngineLog.h"
+#include "Logger.h"
 
 using namespace std;
 
@@ -27,14 +27,14 @@ namespace small3d {
 
 	class Configuration {
 	private:
-		shared_ptr<EngineLog> log;
+		shared_ptr<Logger> log;
 		string homeDirectory;
 		void findHomeDirectory();
 	public:
 		/**
 		* Constructor
 		*/
-		Configuration(shared_ptr<EngineLog> log);
+		Configuration(shared_ptr<Logger> log);
 
 		/**
 		* Destructor

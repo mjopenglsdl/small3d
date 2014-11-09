@@ -11,7 +11,7 @@
 
 #include <memory>
 #include "Configuration.h"
-#include "EngineLog.h"
+#include "Logger.h"
 #include "SceneObject.h"
 
 namespace small3d {
@@ -27,7 +27,7 @@ namespace small3d {
 	{
 	private:
 		shared_ptr<Configuration> cfg;
-		shared_ptr<EngineLog> log;
+		shared_ptr<Logger> log;
 	public:
 
 		/**
@@ -48,7 +48,7 @@ namespace small3d {
 		* @param	log	The game's logging object.
 		*/
 		Scene(const shared_ptr<Configuration> cfg,
-			const shared_ptr<EngineLog> log);
+			const shared_ptr<Logger> log);
 
 		/**
 		* Destructor

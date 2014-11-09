@@ -1,5 +1,5 @@
 /*
-*  EngineLog.h
+*  Logger.h
 *
 *  Created on: 2014/10/18
 *      Author: Dimitri Kourkoulis
@@ -42,19 +42,19 @@ namespace small3d {
 	};
 
 	/**
-	* @class	EngineLog
+	* @class	Logger
 	*
 	* @brief	The standard logging class for small3d.
 	*
 	*/
 
-	class EngineLog {
+	class Logger {
 	private:
 		ostream *logStream;
 	public:
 
 		/**
-		* @fn	EngineLog::EngineLog(ostream &stream);
+		* @fn	Logger::Logger(ostream &stream);
 		*
 		* @brief	Constructor with stream for output.
 		*
@@ -62,19 +62,19 @@ namespace small3d {
 		* @param [in,out]	stream	The stream to which events will be logged.
 		*/
 
-		EngineLog(ostream &stream);
+		Logger(ostream &stream);
 
 		/**
-		* @fn	EngineLog::~EngineLog();
+		* @fn	Logger::~Logger();
 		*
 		* @brief	Destructor.
 		*
 		*/
 
-		~EngineLog();
+		~Logger();
 
 		/**
-		* @fn	void EngineLog::append(const EngineLogLevel level, const string message);
+		* @fn	void Logger::append(const EngineLogLevel level, const string message);
 		*
 		* @brief	Appends a message to the log.
 		*

@@ -16,7 +16,7 @@
 
 #include <vector>
 #include <memory>
-#include "EngineLog.h"
+#include "Logger.h"
 #include "Configuration.h"
 
 using namespace std;
@@ -30,7 +30,7 @@ namespace small3d
 	private:
 		// Configuration & logging objects
 		shared_ptr<Configuration> cfg;
-		shared_ptr<EngineLog> log;
+		shared_ptr<Logger> log;
 
 		// Basic data read from .obj file
 		vector<float*> *vertices;
@@ -89,7 +89,7 @@ namespace small3d
 		*/
 		void init(const string &filename,
 			const shared_ptr<Configuration> cfg,
-			const shared_ptr<EngineLog> log);
+			const shared_ptr<Logger> log);
 		~Model(void);
 
 		/**

@@ -14,7 +14,7 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <dimitrikourk/small3d/EngineLog.h>
+#include <dimitrikourk/small3d/Logger.h>
 #include <dimitrikourk/small3d/EngineException.h>
 #include <memory>
 
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 
 	KeyInput input;
 
-	shared_ptr<EngineLog> log(new EngineLog(cout));
+	shared_ptr<Logger> log(new Logger(cout));
 
 	shared_ptr<Configuration> cfg(new Configuration(log));
 

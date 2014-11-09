@@ -11,7 +11,7 @@
 
 #include <memory>
 #include <dimitrikourk/small3d/Configuration.h>
-#include <dimitrikourk/small3d/EngineLog.h>
+#include <dimitrikourk/small3d/Logger.h>
 #include <dimitrikourk/small3d/SceneObject.h>
 #include <dimitrikourk/small3d/Scene.h>
 
@@ -26,7 +26,7 @@ namespace AvoidTheBug3D {
 	private:
 
 		shared_ptr<Configuration> cfg;
-		shared_ptr<EngineLog> log;
+		shared_ptr<Logger> log;
 
 		shared_ptr<SceneObject> goat;
 		shared_ptr<SceneObject> bug;
@@ -60,7 +60,7 @@ namespace AvoidTheBug3D {
 		 * @param	log	The game's logging object.
 		 */
 		GameLogic(const shared_ptr<Configuration> cfg,
-			const shared_ptr<EngineLog> log);
+			const shared_ptr<Logger> log);
 
 		/**
 		* Destructor

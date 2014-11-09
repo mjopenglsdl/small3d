@@ -11,7 +11,7 @@
 
 #include <string>
 #include <memory>
-#include "EngineLog.h"
+#include "Logger.h"
 #include "Configuration.h"
 #include <glenn/png/png.h>
 
@@ -25,7 +25,7 @@ namespace small3d {
 	private:
 		// Configuration & logging objects
 		shared_ptr<Configuration> cfg;
-		shared_ptr<EngineLog> log;
+		shared_ptr<Logger> log;
 
 		int width, height;
 		float* imageData;
@@ -41,7 +41,7 @@ namespace small3d {
 		* @param log Game log
 		*/
 		Image(const string &fileLocation, const shared_ptr<Configuration> cfg,
-			const shared_ptr<EngineLog> log);
+			const shared_ptr<Logger> log);
 
 		/**
 		* Destructor

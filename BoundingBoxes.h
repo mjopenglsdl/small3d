@@ -10,7 +10,7 @@
 #pragma once
 #include <memory>
 #include "Configuration.h"
-#include "EngineLog.h"
+#include "Logger.h"
 #include <vector>
 
 using namespace std;
@@ -34,7 +34,7 @@ namespace small3d {
 	private:
 
 		shared_ptr<Configuration> cfg;
-		shared_ptr<EngineLog> log;
+		shared_ptr<Logger> log;
 
 		int numBoxes;
 
@@ -47,7 +47,7 @@ namespace small3d {
 		*/
 
 		BoundingBoxes(const shared_ptr<Configuration> cfg,
-			const shared_ptr<EngineLog> log);
+			const shared_ptr<Logger> log);
 
 		/**
 		* Destructor

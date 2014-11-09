@@ -58,7 +58,7 @@ namespace small3d
 	}
 
 	Renderer::Renderer(const shared_ptr<Configuration> cfg,
-		const shared_ptr<EngineLog> log)
+		const shared_ptr<Logger> log)
 	{
 		this->cfg = cfg;
 		this->log = log;

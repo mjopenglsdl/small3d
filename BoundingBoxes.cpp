@@ -24,7 +24,7 @@ namespace small3d {
 	* @param	cfg	The configuration.
 	* @param	log	The log.
 	*/
-	BoundingBoxes::BoundingBoxes(const shared_ptr<Configuration> cfg, const shared_ptr<EngineLog> log) {
+	BoundingBoxes::BoundingBoxes(const shared_ptr<Configuration> cfg, const shared_ptr<Logger> log) {
 		this->cfg = cfg;
 		this->log = log;
 

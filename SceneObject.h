@@ -12,7 +12,7 @@
 #include <vector>
 #include "Model.h"
 #include <memory>
-#include "EngineLog.h"
+#include "Logger.h"
 #include "Configuration.h"
 #include "Image.h"
 #include "BoundingBoxes.h"
@@ -28,7 +28,7 @@ namespace small3d
 	class SceneObject
 	{
 	private:
-		shared_ptr<EngineLog> log;
+		shared_ptr<Logger> log;
 		shared_ptr<Configuration> cfg;
 		Model* model;
 		bool animating;
@@ -66,7 +66,7 @@ namespace small3d
 		*/
 		SceneObject(const string &name, const string &modelPath,
 			const shared_ptr<Configuration> cfg,
-			const shared_ptr<EngineLog> log, const int &numFrames = 1, const string &texturePath = "",
+			const shared_ptr<Logger> log, const int &numFrames = 1, const string &texturePath = "",
 			const string &boundingBoxesPath = "");
 
 		/**
