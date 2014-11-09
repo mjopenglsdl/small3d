@@ -14,9 +14,7 @@ It has been derived from a simple game which has been under development for more
 
 What actually made me take the plunge though, was that I discovered the great C++ dependency management tool and service that is biicode :) (http://www.biicode.com/) So I have configured the engine’s files to be served from there (many thanks to the other biicode members who have set up the libraries I am using). So now my project setup tasks involve something like this: http://goo.gl/CJPnkK, which is much faster and simpler than what I had to do before, which was this: http://goo.gl/fUZbBa
 
-Over time, more information will be provided about this project and how it can be used. Currently, there is only the API documentation:
-
-API documentation: http://small3d.org/namespacesmall3d.html
+Over time, more information will be provided about this project and how it can be used. Currently, there is only the API documentation: http://small3d.org/namespacesmall3d.html
 
 There is also a sample game in the "samplegame" folder within the block, which demonstrates how the existing features of the engine can be used.
 
