@@ -41,7 +41,7 @@ bii cpp:configure -G"Visual Studio 11 2012"
 
 bii cpp:configure -G"Visual Studio 12 2013"
 
-**Windows - MinGW**: The engine and sample game will compile and work under MinGW but support for that environment is a little flaky (see README.MinGW.txt).
+**Windows - MinGW**: The engine and sample game will compile and work under MinGW but support for that environment is a little flaky (see MinGWreadme.txt).
 Also, with MinGW, the build time is quite long, so I would strongly recommend using the Visual Studio compiler. You can get Visual Studio Express for free:
 
 http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop 
