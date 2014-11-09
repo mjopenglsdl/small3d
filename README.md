@@ -2,7 +2,7 @@ small3d
 =======
 *A small, no fuss, 3D game engine*
 
-[![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
+[![biicode block](http://img.shields.io/badge/dimitrikourk%2Fsmall3d-DEV%3A%204-yellow.svg)](http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master/4) [![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
 
 For requests for assistance, comments and suggestions, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
 
@@ -14,13 +14,7 @@ It has been derived from a simple game which has been under development for more
 
 What actually made me take the plunge though, was that I discovered the great C++ dependency management tool and service that is biicode :) (http://www.biicode.com/) So I have configured the engine’s files to be served from there (many thanks to the other biicode members who have set up the libraries I am using). So now my project setup tasks involve something like this: http://goo.gl/CJPnkK, which is much faster and simpler than what I had to do before, which was this: http://goo.gl/fUZbBa
 
-Over time, more information will be provided about this project and how it can be used, but here are some items to begin with:
-
-API documentation: http://small3d.org/namespacesmall3d.html
-
-Block on biicode: http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master
-
-GitHub source: https://github.com/dimitrikourk/small3d
+Over time, more information will be provided about this project and how it can be used. Currently, there is only the API documentation: http://small3d.org/namespacesmall3d.html
 
 There is also a sample game in the "samplegame" folder within the block, which demonstrates how the existing features of the engine can be used.
 
@@ -92,5 +86,6 @@ with the options "Apply Modifiers", "Include Edges",
 On the contrary to what is the case when exporting
 the model itself, more than one bounding box objects 
 can be exported to the same Wavefront file.
+
 
 
