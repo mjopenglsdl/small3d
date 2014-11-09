@@ -28,6 +28,6 @@ namespace AvoidTheBug3D
 
 	} KeyInput;
 
-}/* namespace AvoidTheBug3D */
+}
 
 #endif /* KEYINPUT_H_ */

@@ -5,6 +5,7 @@
 #include "MathFunctions.h"
 #include <dimitrikourk/glm/glm/glm.hpp>
 #include <dimitrikourk/glm/glm/gtc/type_ptr.hpp>
+#include <miguel/sdl2/include/SDL.h>
 #include <cstring>
 
 using namespace std;
@@ -15,8 +16,9 @@ namespace small3d
 
 	string Renderer::loadShaderFromFile(const string &fileLocation)
 	{
+		initLogger();
 		string shaderSource = "";
-		ifstream file((cfg->getHomeDirectory() + fileLocation).c_str());
+		ifstream file((SDL_GetBasePath() + fileLocation).c_str());
 		string line;
 		if (file.is_open())
 		{
@@ -57,11 +59,8 @@ namespace small3d
 		return shader;
 	}
 
-	Renderer::Renderer(const shared_ptr<Configuration> cfg,
-		const shared_ptr<Logger> log)
+	Renderer::Renderer()
 	{
-		this->cfg = cfg;
-		this->log = log;
 		isOpenGL33Supported = false;
 		sdlWindow = 0;
 		program = 0;
@@ -155,7 +154,7 @@ namespace small3d
 			throw Exception("Unable to initialise font system");
 		}
 
-		string fontPath = cfg->getHomeDirectory() + ttfFontPath;
+		string fontPath = SDL_GetBasePath() + ttfFontPath;
 		LOGINFO("Loading font from " + fontPath);
 		
 		font = TTF_OpenFont(fontPath.c_str(), 48);

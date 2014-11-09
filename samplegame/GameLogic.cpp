@@ -62,31 +62,26 @@
 #include <dimitrikourk/small3d/Exception.h>
 #include <dimitrikourk/small3d/MathFunctions.h>
 #include <cmath>
-
 #include <dimitrikourk/small3d/samplegame/GameLogic.h>
 
 using namespace small3d;
 
 namespace AvoidTheBug3D {
 
-	GameLogic::GameLogic(const shared_ptr<Configuration> cfg,
-		const shared_ptr<Logger> log) {
-
-			this->cfg = cfg;
-			this->log = log;
-
-			gameScene = shared_ptr<Scene>(new Scene(cfg, log));
+	GameLogic::GameLogic() {
+			initLogger();
+			gameScene = shared_ptr<Scene>(new Scene());
 
 			goat = shared_ptr<SceneObject> (
 				new SceneObject("goat",
 				"dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim",
-				cfg, log, 19, "dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png", 
+			    19, "dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png", 
 				"dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj"));
 
 			bug = shared_ptr<SceneObject> (
 				new SceneObject("bug",
 				"dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim",
-				cfg, log, 9));
+				 9));
 			bug->setColour(0.2f, 0.2f, 0.2f, 1.0f);
 			bug->setFrameDelay(2);
 
@@ -95,7 +90,7 @@ namespace AvoidTheBug3D {
 			tree = shared_ptr<SceneObject> (
 				new SceneObject("tree",
 				"dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj",
-				cfg, log, 1, "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png"));
+				 1, "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png"));
 
 			tree->setOffset(2.6f, GROUND_Y, -8.0f);
 			tree->setRotation(0.0f, -0.5f, 0.0f);
@@ -109,7 +104,7 @@ namespace AvoidTheBug3D {
 	}
 
 	GameLogic::~GameLogic() {
-		LOGINFO("GameLogic destructor running");
+		
 	}
 
 	void GameLogic::initGame()
@@ -326,4 +321,4 @@ namespace AvoidTheBug3D {
 		}
 	}
 
-} /* namespace AvoidTheBug3D */
+} 

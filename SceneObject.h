@@ -13,7 +13,6 @@
 #include "Model.h"
 #include <memory>
 #include "Logger.h"
-#include "Configuration.h"
 #include "Image.h"
 #include "BoundingBoxes.h"
 #include <dimitrikourk/glm/glm/glm.hpp>
@@ -28,8 +27,6 @@ namespace small3d
 	class SceneObject
 	{
 	private:
-		shared_ptr<Logger> log;
-		shared_ptr<Configuration> cfg;
 		Model* model;
 		bool animating;
 		int frameDelay;
@@ -65,8 +62,7 @@ namespace small3d
 		* 							path is given, the object cannot be checked for collision detection.
 		*/
 		SceneObject(const string &name, const string &modelPath,
-			const shared_ptr<Configuration> cfg,
-			const shared_ptr<Logger> log, const int &numFrames = 1, const string &texturePath = "",
+			 const int &numFrames = 1, const string &texturePath = "",
 			const string &boundingBoxesPath = "");
 
 		/**

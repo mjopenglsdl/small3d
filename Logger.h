@@ -14,17 +14,18 @@
 * omitted if deactivated.
 */
 
-#define LOGERROR(MESSAGE) log->append(error, MESSAGE)
+#define LOGERROR(MESSAGE) logger->append(error, MESSAGE)
 
-#define LOGINFO(MESSAGE) log->append(info, MESSAGE)
+#define LOGINFO(MESSAGE) logger->append(info, MESSAGE)
 
 #if defined(DEBUG) || defined(_DEBUG)
-#define LOGDEBUG(MESSAGE) log->append(debug, MESSAGE)
+#define LOGDEBUG(MESSAGE) logger->append(debug, MESSAGE)
 #else
 #define LOGDEBUG(MESSAGE)
 #endif
 
 #include <ostream>
+#include <memory>
 
 using namespace std;
 
@@ -76,7 +77,7 @@ namespace small3d {
 		/**
 		* @fn	void Logger::append(const EngineLogLevel level, const string message);
 		*
-		* @brief	Appends a message to the log.
+		* @brief	Appends a message to the logger.
 		*
 		* @param	level  	The logging level (debug, info, etc).
 		* @param	message	The message.
@@ -84,5 +85,13 @@ namespace small3d {
 
 		void append(const EngineLogLevel level, const string message);
 	};
+	
+
+
+	void initLogger();
+
+	void initLogger(ostream &stream);
 }
+
+extern shared_ptr<small3d::Logger> logger;
 

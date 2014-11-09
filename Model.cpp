@@ -17,6 +17,7 @@
 #include <cstring>
 #include <memory>
 #include <unordered_map>
+#include <miguel/sdl2/include/SDL.h>
 
 using namespace std;
 
@@ -24,15 +25,11 @@ namespace small3d
 {
 
 	Model::Model() {
-
+		initLogger();
 	}
 
-	void Model::init(const string &filename,
-		const shared_ptr<Configuration> cfg,
-		const shared_ptr<Logger> log)
+	void Model::init(const string &filename)
 	{
-		this->cfg = cfg;
-		this->log = log;
 
 		vertices = new vector<float *>();
 		vertices->clear();
@@ -93,7 +90,7 @@ namespace small3d
 			throw Exception(
 				"Illegal attempt to reload model. Please use another object.");
 		}
-		ifstream file((cfg->getHomeDirectory() + fileLocation).c_str());
+		ifstream file((SDL_GetBasePath() + fileLocation).c_str());
 		string line;
 		if (file.is_open())
 		{
@@ -258,7 +255,7 @@ namespace small3d
 		}
 		else
 			throw Exception(
-			"Could not open file " + cfg->getHomeDirectory()
+			"Could not open file " + string(SDL_GetBasePath())
 			+ fileLocation);
 
 	}

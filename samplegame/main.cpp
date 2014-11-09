@@ -14,7 +14,6 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <dimitrikourk/small3d/Logger.h>
 #include <dimitrikourk/small3d/Exception.h>
 #include <memory>
 
@@ -33,16 +32,12 @@ int main(int argc, char** argv)
 
 	KeyInput input;
 
-	shared_ptr<Logger> log(new Logger(cout));
-
-	shared_ptr<Configuration> cfg(new Configuration(log));
-
 	try
 	{
 
-		shared_ptr<GameLogic> gameLogic(new GameLogic(cfg, log));
+		shared_ptr<GameLogic> gameLogic(new GameLogic());
 
-		shared_ptr<PlayerView> pv(new PlayerView(cfg, log));
+		shared_ptr<PlayerView> pv(new PlayerView());
 
 		// program main loop
 		bool done = false;

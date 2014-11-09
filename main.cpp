@@ -16,7 +16,6 @@
 
 #include "google/gtest/gtest.h"
 #include "Logger.h"
-#include "Configuration.h"
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -55,8 +54,7 @@ using namespace std;
 TEST(LoggerTest, LogSomething) {
 
 	ostringstream oss;
-
-	unique_ptr<Logger> log(new Logger(oss));
+	initLogger(oss);
 
 	LOGINFO("It works");
 	EXPECT_TRUE(oss.str().find("It works") != (string::npos));
@@ -66,27 +64,9 @@ TEST(LoggerTest, LogSomething) {
 
 }
 
-TEST(LoggerTest, VisibleOutput) {
-
-	unique_ptr<Logger> log(new Logger(cout));
-
-	LOGINFO("Hello");
-
-	LOGERROR("This is an error");
-
-}
-
-TEST(ConfigurationTest, FindCurrentDirectory) {
-	shared_ptr<Logger> log(new Logger(cout));
-	unique_ptr<Configuration> cfg(new Configuration(log));
-}
-
 TEST(ImageTest, LoadImage) {
 
-	shared_ptr<Logger> log(new Logger(cout));
-	shared_ptr<Configuration> cfg(new Configuration(log));
-
-	unique_ptr<Image> image( new Image("dimitrikourk/small3d/resources/images/testImage.png", cfg, log));
+	unique_ptr<Image> image( new Image("dimitrikourk/small3d/resources/images/testImage.png"));
 
 	cout << "Image width " << image->getWidth() << ", height " << image->getHeight() << endl;
 
@@ -120,14 +100,9 @@ TEST(ImageTest, LoadImage) {
 }
 
 TEST(ModelTest, LoadModel) {
-	shared_ptr<Logger> log(new Logger(cout));
-	shared_ptr<Configuration> cfg(new Configuration(log));
-
 
 	unique_ptr<Model> model(new Model());
-	model->init(
-		"dimitrikourk/small3d/resources/models/Cube/Cube.obj",
-		cfg, log);
+	model->init("dimitrikourk/small3d/resources/models/Cube/Cube.obj");
 
 	EXPECT_NE(0, model->getVertexDataComponentCount());
 	EXPECT_NE(0, model->getIndexDataIndexCount());
@@ -144,8 +119,7 @@ TEST(ModelTest, LoadModel) {
 
 	unique_ptr<Model> modelWithNoTexture(new Model());
 	modelWithNoTexture->init(
-		"dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj",
-		cfg, log);
+		"dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj");
 
 	EXPECT_NE(0, modelWithNoTexture->getVertexDataComponentCount());
 	EXPECT_NE(0, modelWithNoTexture->getIndexDataIndexCount());
@@ -164,11 +138,7 @@ TEST(ModelTest, LoadModel) {
 
 TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
-	shared_ptr<Logger> log(new Logger(cout));
-
-	shared_ptr<Configuration> cfg(new Configuration(log));
-
-	unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes(cfg, log));
+	unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes());
 
 	bboxes->loadFromFile("dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj");
 

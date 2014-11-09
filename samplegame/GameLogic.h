@@ -10,7 +10,6 @@
 #pragma once
 
 #include <memory>
-#include <dimitrikourk/small3d/Configuration.h>
 #include <dimitrikourk/small3d/Logger.h>
 #include <dimitrikourk/small3d/SceneObject.h>
 #include <dimitrikourk/small3d/Scene.h>
@@ -24,9 +23,6 @@ namespace AvoidTheBug3D {
 	class GameLogic {
 
 	private:
-
-		shared_ptr<Configuration> cfg;
-		shared_ptr<Logger> log;
 
 		shared_ptr<SceneObject> goat;
 		shared_ptr<SceneObject> bug;
@@ -56,11 +52,8 @@ namespace AvoidTheBug3D {
 
 		/**
 		 * Constructor
-		 * @param	cfg	The game's configuration object.
-		 * @param	log	The game's logging object.
 		 */
-		GameLogic(const shared_ptr<Configuration> cfg,
-			const shared_ptr<Logger> log);
+		GameLogic();
 
 		/**
 		* Destructor

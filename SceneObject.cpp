@@ -19,10 +19,10 @@ namespace small3d {
 	}
 
 	SceneObject::SceneObject(const string &name, const string &modelPath,
-		const shared_ptr<Configuration> cfg, const shared_ptr<Logger> log, const int &numFrames, 
-		const string &texturePath, const string &boundingBoxesPath) {
+		const int &numFrames, const string &texturePath, 
+		const string &boundingBoxesPath) {
+			initLogger();
 			this->name = name;
-			this->log = log;
 			animating = false;
 			framesWaited = 0;
 			frameDelay = 1;
@@ -40,22 +40,22 @@ namespace small3d {
 					stringstream ss;
 					ss << setfill('0') << setw(6) << idx + 1;
 					string frameNum = ss.str();
-					model[idx].init(modelPath + "_" + frameNum + ".obj", cfg, log);
+					model[idx].init(modelPath + "_" + frameNum + ".obj");
 				}
 			}
 			else
 			{
-				model[0].init(modelPath, cfg, log);
+				model[0].init(modelPath);
 			}
 
 			if (texturePath != "") {
 				this->texture = shared_ptr<Image>(
-					new Image(texturePath, cfg, log));
+					new Image(texturePath));
 			}
 			this->initPropVectors();
 
 			if (boundingBoxesPath != "") {
-				boundingBoxes = shared_ptr<BoundingBoxes>(new BoundingBoxes(cfg, log));
+				boundingBoxes = shared_ptr<BoundingBoxes>(new BoundingBoxes());
 				boundingBoxes->loadFromFile(boundingBoxesPath);
 			}
 

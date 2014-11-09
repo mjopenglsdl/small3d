@@ -11,7 +11,6 @@
 #define PLAYERVIEW_H_
 
 #include <memory>
-#include <dimitrikourk/small3d/Configuration.h>
 #include <dimitrikourk/small3d/Logger.h>
 #include <dimitrikourk/small3d/SceneObject.h>
 #include <dimitrikourk/small3d/Renderer.h>
@@ -24,20 +23,15 @@ namespace AvoidTheBug3D {
 	class PlayerView {
 
 	private:
-		shared_ptr<Configuration> cfg;
-		shared_ptr<Logger> log;
-
+	
 		shared_ptr<Renderer> renderer;
 
 	public:
 
 		/**
 		* Constructor
-		* @param cfg The game's configuration object
-		* @param log The game's logging object
 		*/
-		PlayerView(const shared_ptr<Configuration> cfg,
-			const shared_ptr<Logger> log);
+		PlayerView();
 
 		/**
 		* Destructor

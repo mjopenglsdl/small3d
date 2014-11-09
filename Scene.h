@@ -10,7 +10,6 @@
 #pragma once
 
 #include <memory>
-#include "Configuration.h"
 #include "Logger.h"
 #include "SceneObject.h"
 
@@ -25,9 +24,6 @@ namespace small3d {
 
 	struct Scene
 	{
-	private:
-		shared_ptr<Configuration> cfg;
-		shared_ptr<Logger> log;
 	public:
 
 		/**
@@ -44,11 +40,8 @@ namespace small3d {
 
 		/**
 		* Constructor
-		* @param	cfg	The game's configuration object.
-		* @param	log	The game's logging object.
 		*/
-		Scene(const shared_ptr<Configuration> cfg,
-			const shared_ptr<Logger> log);
+		Scene();
 
 		/**
 		* Destructor

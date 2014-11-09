@@ -11,18 +11,16 @@
 #include <stdio.h>
 #include "Exception.h"
 #include "MathFunctions.h"
+#include <miguel/sdl2/include/SDL.h>
 
 using namespace std;
 
 namespace small3d
 {
 
-	Image::Image(const string &fileLocation, const shared_ptr<Configuration> cfg,
-		const shared_ptr<Logger> log)
+	Image::Image(const string &fileLocation)
 	{
-		this->cfg = cfg;
-		this->log = log;
-
+		initLogger();
 		width = 0;
 		height = 0;
 
@@ -47,14 +45,14 @@ namespace small3d
 		// http://zarb.org/~gc/html/libpng.html
 #if defined(_WIN32) && !defined(__MINGW32__)
 		FILE *fp;
-		fopen_s(&fp, (cfg->getHomeDirectory() + fileLocation).c_str(), "rb");
+		fopen_s(&fp, (SDL_GetBasePath() + fileLocation).c_str(), "rb");
 #else
-		FILE *fp = fopen((cfg->getHomeDirectory() + fileLocation).c_str(), "rb");
+		FILE *fp = fopen((SDL_GetBasePath() + fileLocation).c_str(), "rb");
 #endif
 		if (!fp)
 		{
 			throw Exception(
-				"Could not open file " + cfg->getHomeDirectory()
+				"Could not open file " + string(SDL_GetBasePath())
 				+ fileLocation);
 		}
 
@@ -72,7 +70,7 @@ namespace small3d
 		if (png_sig_cmp(header, 0, 8))
 		{
 			throw Exception(
-				"File " + cfg->getHomeDirectory() + fileLocation
+				"File " + string(SDL_GetBasePath()) + fileLocation
 				+ " is not recognised as a PNG file.");
 		}
 

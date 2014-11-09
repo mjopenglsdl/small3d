@@ -14,20 +14,16 @@
 #include <stdlib.h>
 #include "MathFunctions.h"
 #include <dimitrikourk/glm/glm/glm.hpp>
+#include <miguel/sdl2/include/SDL.h>
 #include <iostream>
 
 namespace small3d {
 
 	/**
 	* Constructor
-	* 
-	* @param	cfg	The configuration.
-	* @param	log	The log.
 	*/
-	BoundingBoxes::BoundingBoxes(const shared_ptr<Configuration> cfg, const shared_ptr<Logger> log) {
-		this->cfg = cfg;
-		this->log = log;
-
+	BoundingBoxes::BoundingBoxes() {
+		initLogger();
 		vertices = new vector<float *>();
 		vertices->clear();
 		facesVertexIndexes = new vector<int *>();
@@ -65,7 +61,7 @@ namespace small3d {
 			throw Exception(
 				"Illegal attempt to reload bounding boxes. Please use another object.");
 		}
-		ifstream file((cfg->getHomeDirectory() + fileLocation).c_str());
+		ifstream file((SDL_GetBasePath() + fileLocation).c_str());
 		string line;
 		if (file.is_open())
 		{
@@ -125,7 +121,7 @@ namespace small3d {
 		}
 		else
 			throw Exception(
-			"Could not open file " + cfg->getHomeDirectory()
+			"Could not open file " + string(SDL_GetBasePath())
 			+ fileLocation);
 
 	}

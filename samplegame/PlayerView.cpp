@@ -20,25 +20,22 @@ using namespace small3d;
 
 namespace AvoidTheBug3D {
 
-	PlayerView::PlayerView(const shared_ptr<Configuration> cfg,
-		const shared_ptr<Logger> log) {
+	PlayerView::PlayerView() {
+			initLogger();
 
-			this->cfg = cfg;
-			this->log = log;
-
-			renderer = shared_ptr<Renderer>(new Renderer(cfg, log));
+			renderer = shared_ptr<Renderer>(new Renderer());
 			renderer->init(854, 480, false);
 
 			unique_ptr<Image> startScreenTexture (
-				new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png", cfg, log));
+				new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png"));
 			renderer->generateTexture("startScreen", startScreenTexture->getData(), startScreenTexture->getWidth(), startScreenTexture->getHeight());
 
 			unique_ptr<Image> groundTexture (
-				new Image("dimitrikourk/small3d/samplegame/resources/images/grass.png", cfg, log));
+				new Image("dimitrikourk/small3d/samplegame/resources/images/grass.png"));
 			renderer->generateTexture("ground", groundTexture->getData(), groundTexture->getWidth(), groundTexture->getHeight());
 
 			unique_ptr<Image> skyTexture (
-				new Image("dimitrikourk/small3d/samplegame/resources/images/sky.png", cfg, log));
+				new Image("dimitrikourk/small3d/samplegame/resources/images/sky.png"));
 			renderer->generateTexture("sky", skyTexture->getData(), skyTexture->getWidth(), skyTexture->getHeight());
 
 	}
@@ -93,9 +90,6 @@ namespace AvoidTheBug3D {
             //renderer->renderText("Now it's chasing me! HELP!", textColour, -1.0f, 1.0f, 1.0f, 0.5f);
 
 		}
-		
-		
 		renderer->swapBuffers();
 	}
-
-} /* namespace AvoidTheBug3D */
+}

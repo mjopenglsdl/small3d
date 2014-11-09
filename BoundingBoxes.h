@@ -9,7 +9,6 @@
 
 #pragma once
 #include <memory>
-#include "Configuration.h"
 #include "Logger.h"
 #include <vector>
 
@@ -33,21 +32,15 @@ namespace small3d {
 	struct BoundingBoxes {
 	private:
 
-		shared_ptr<Configuration> cfg;
-		shared_ptr<Logger> log;
-
 		int numBoxes;
 
 	public:
 
 		/**
 		* Constructor
-		* @param	cfg	The configuration
-		* @param	log	The log
 		*/
 
-		BoundingBoxes(const shared_ptr<Configuration> cfg,
-			const shared_ptr<Logger> log);
+		BoundingBoxes();
 
 		/**
 		* Destructor

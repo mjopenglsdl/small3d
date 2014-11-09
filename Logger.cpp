@@ -10,8 +10,11 @@
 #include "Logger.h"
 #include <sstream>
 #include <ctime>
+#include <iostream>
 
 using namespace std;
+
+shared_ptr<small3d::Logger> logger;
 
 namespace small3d {
 
@@ -73,4 +76,11 @@ namespace small3d {
 		*logStream << dateTimeOstringstream.str().c_str() << " - " << indicator << ": " << message.c_str() << endl;
 	}
 
+	void initLogger() {
+		if (!logger) logger = shared_ptr<Logger>(new Logger(cout));
+	}
+
+	void initLogger(ostream &stream) {
+		if (!logger) logger = shared_ptr<Logger>(new Logger(stream));
+	}
 } 

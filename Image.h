@@ -12,7 +12,6 @@
 #include <string>
 #include <memory>
 #include "Logger.h"
-#include "Configuration.h"
 #include <glenn/png/png.h>
 
 using namespace std;
@@ -23,9 +22,6 @@ namespace small3d {
 	/// Image loading class. Only handles RGB encoded data in PNG files for now.
 	class Image {
 	private:
-		// Configuration & logging objects
-		shared_ptr<Configuration> cfg;
-		shared_ptr<Logger> log;
 
 		int width, height;
 		float* imageData;
@@ -37,11 +33,8 @@ namespace small3d {
 		/**
 		* Constructor
 		* @param fileLocation Location of image file
-		* @param cfg Game configuration object
-		* @param log Game log
 		*/
-		Image(const string &fileLocation, const shared_ptr<Configuration> cfg,
-			const shared_ptr<Logger> log);
+		Image(const string &fileLocation);
 
 		/**
 		* Destructor
