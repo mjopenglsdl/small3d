@@ -58,9 +58,9 @@
 #define GOAT_SPEED 0.05f
 
 #include <memory>
-#include <dimitrikourk/small3d/EngineMath.h>
+#include <dimitrikourk/small3d/MathFunctions.h>
 #include <dimitrikourk/small3d/EngineException.h>
-#include <dimitrikourk/small3d/EngineMath.h>
+#include <dimitrikourk/small3d/MathFunctions.h>
 #include <cmath>
 
 #include <dimitrikourk/small3d/samplegame/GameLogic.h>

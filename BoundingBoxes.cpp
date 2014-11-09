@@ -12,7 +12,7 @@
 #include "EngineException.h"
 #include "GetTokens.h"
 #include <stdlib.h>
-#include "EngineMath.h"
+#include "MathFunctions.h"
 #include <dimitrikourk/glm/glm/glm.hpp>
 #include <iostream>
 

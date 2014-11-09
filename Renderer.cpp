@@ -2,7 +2,7 @@
 #include "EngineException.h"
 #include <fstream>
 #include <unordered_map>
-#include "EngineMath.h"
+#include "MathFunctions.h"
 #include <dimitrikourk/glm/glm/glm.hpp>
 #include <dimitrikourk/glm/glm/gtc/type_ptr.hpp>
 #include <cstring>

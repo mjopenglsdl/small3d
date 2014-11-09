@@ -1,5 +1,5 @@
 /*
-*  EngineMath.cpp
+*  MathFunctions.cpp
 *
 *  Created on: 2014/10/18
 *      Author: Dimitri Kourkoulis
@@ -7,7 +7,7 @@
 *     License: MIT
 */
 
-#include "EngineMath.h"
+#include "MathFunctions.h"
 #include <cmath>
 
 namespace small3d {

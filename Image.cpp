@@ -10,7 +10,7 @@
 #include "Image.h"
 #include <stdio.h>
 #include "EngineException.h"
-#include "EngineMath.h"
+#include "MathFunctions.h"
 
 using namespace std;
 
