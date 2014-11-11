@@ -4,22 +4,23 @@ small3d
 
 [![biicode block](http://img.shields.io/badge/dimitrikourk%2Fsmall3d-DEV%3A%204-yellow.svg)](http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master/4) [![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
 
-For requests for assistance, comments and suggestions, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
+(API documentation: http://small3d.org/namespacesmall3d.html)
+
+For requests for assistance, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
 
 ![Screen capture from the first game that runs on small3d](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
 
-This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood rather than use a technology that abstracts the low-level details away.
+This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.
 
-It has been derived from a simple game which has been under development for more than a year, as a learning exercise (introduction: http://goo.gl/itn6x5, blog: http://goo.gl/7hCTPA). I have decided to separate the engine from the game already, rather than finishing the project first. I think that this will help the engine mature faster and will simplify the development of the game.
+It has been derived from a simple game, which has been under development for more than a year, as a learning exercise (introduction: http://goo.gl/itn6x5, blog: http://goo.gl/7hCTPA). I have decided to separate the game from its engine and make the engine available for easy reuse, as a biicode block(http://goo.gl/WKS0Hv). The game is now provided as a sample, in the "samplegame" folder within the block, and it demonstrates how the features of the engine can be used.
 
-What actually made me take the plunge though, was that I discovered the great C++ dependency management tool and service that is biicode :) (http://www.biicode.com/) So I have configured the engine’s files to be served from there (many thanks to the other biicode members who have set up the libraries I am using). So now my project setup tasks involve something like this: http://goo.gl/CJPnkK, which is much faster and simpler than what I had to do before, which was this: http://goo.gl/fUZbBa
+**The current version of small3d is stable but, for the moment, I consider it to be only a proof-of-technology. You can definitely make interesting things with it, but it is not complete. A lot of values are hardcoded, like the dimensions of the 3D scene or the position of the camera. It also needs a few more features, like better control of text rendering and sound. The next version of the block will be the first official release, with all of these matters addressed, a comprehensive, easy to understand API and an architecture that abides to the "Don`t make me use your design" principle (http://blog.biicode.com/software-design-proposal/).
 
-Over time, more information will be provided about this project and how it can be used. Currently, there is only the API documentation: http://small3d.org/namespacesmall3d.html
+Changes towards that version are not published immediately, but are being elaborated in a separate branch:
 
-There is also a sample game in the "samplegame" folder within the block, which demonstrates how the existing features of the engine can be used.
+https://github.com/dimitrikourk/small3d/commits/v4refactoring
 
-**For now, small3d is stable, but I consider it to be only a proof-of-technology. You can definitely make interesting things with it, like the sample game, but it is far from complete. A lot of values are hardcoded, like the dimensions of the 3D scene or the position of the camera. It also needs a few more features, like better control of text rendering and sound. The next version of the block will be the first official release, with all of these matters addressed, a comprehensive, easy to understand API and an architecture that abides to the "Don`t make me use your design" principle (http://blog.biicode.com/software-design-proposal/).**
-
+Feel free to make suggestions! --> http://goo.gl/4XKmy5**
 
 Compatibility
 -------------
