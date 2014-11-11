@@ -14,13 +14,11 @@ This is a free, open-source, minimalistic 3D game engine, developed in C++ and b
 
 It has been derived from a simple game, which has been under development for more than a year, as a learning exercise (introduction: http://goo.gl/itn6x5, blog: http://goo.gl/7hCTPA). I have decided to separate the game from its engine and make the engine available for easy reuse, as a biicode block(http://goo.gl/WKS0Hv). The game is now provided as a sample, in the "samplegame" folder within the block, and it demonstrates how the features of the engine can be used.
 
-**The current version of small3d is stable but, for the moment, I consider it to be only a proof-of-technology. You can definitely make interesting things with it, but it is not complete. A lot of values are hardcoded, like the dimensions of the 3D scene or the position of the camera. It also needs a few more features, like better control of text rendering and sound. The next version of the block will be the first official release, with all of these matters addressed, a comprehensive, easy to understand API and an architecture that abides to the "Don`t make me use your design" principle (http://blog.biicode.com/software-design-proposal/).
+The current version of small3d is stable but, for the moment, I consider it to be only a proof-of-technology. You can definitely make interesting things with it, but it is not complete. A lot of values are hardcoded, like the dimensions of the 3D scene or the position of the camera. It also needs a few more features, like better control of text rendering and sound. The next version of the block will be the first official release, with all of these matters addressed, a comprehensive, easy to understand API and an architecture that abides to the "Don`t make me use your design" principle (http://blog.biicode.com/software-design-proposal/).
 
-Changes towards that version are not published immediately, but are being elaborated in a separate branch:
+Changes towards that version are not published immediately, but are being elaborated in a separate branch: https://github.com/dimitrikourk/small3d/commits/v4refactoring
 
-https://github.com/dimitrikourk/small3d/commits/v4refactoring
-
-Feel free to make suggestions! --> http://goo.gl/4XKmy5**
+Feel free to make suggestions! http://goo.gl/4XKmy5
 
 Compatibility
 -------------
