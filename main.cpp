@@ -23,7 +23,6 @@
 #include "Model.h"
 #include "BoundingBoxes.h"
 #include "SceneObject.h"
-#include "Scene.h"
 
 /* MinGW produces the following linking error, if the unit tests
  * are linked to the renderer:

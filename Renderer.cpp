@@ -12,7 +12,7 @@ using namespace std;
 
 namespace small3d
 {
-    string openglErrorToString(GLenum error);
+	string openglErrorToString(GLenum error);
 
 	string Renderer::loadShaderFromFile(const string &fileLocation)
 	{
@@ -68,7 +68,7 @@ namespace small3d
 		textures = new unordered_map<string, GLuint>();
 		font = NULL;
 		noShaders = false;
-		
+
 	}
 
 	Renderer::~Renderer()
@@ -156,7 +156,7 @@ namespace small3d
 
 		string fontPath = SDL_GetBasePath() + ttfFontPath;
 		LOGINFO("Loading font from " + fontPath);
-		
+
 		font = TTF_OpenFont(fontPath.c_str(), 48);
 
 		if (!font)
@@ -190,10 +190,10 @@ namespace small3d
 	void Renderer::detectOpenGLVersion()
 	{
 #ifdef __APPLE__
-        glewExperimental = GL_TRUE;
+		glewExperimental = GL_TRUE;
 #endif
 		int initResult = glewInit();
-		
+
 		if (initResult != GLEW_OK)
 		{
 			throw Exception("Error initialising GLEW");
@@ -203,8 +203,8 @@ namespace small3d
 			string glewVersion = (char*) glewGetString(GLEW_VERSION);
 			LOGINFO("Using GLEW version " + glewVersion);
 		}
-        
-        checkForOpenGLErrors("initialising GLEW", false);
+
+		checkForOpenGLErrors("initialising GLEW", false);
 
 		string glVersion = (char*) glGetString(GL_VERSION);
 		glVersion = "OpenGL version supported by machine: " + glVersion;
@@ -227,24 +227,24 @@ namespace small3d
 		}
 
 	}
-    
-    void Renderer::checkForOpenGLErrors(string when, bool abort) {
-        GLenum errorCode = glGetError();
-        if (errorCode != GL_NO_ERROR)
-        {
-            LOGERROR("OpenGL error while " + when);
-            
-            do
-            {
-                LOGERROR(openglErrorToString(errorCode));
-                errorCode = glGetError();
-            }
-            while(errorCode != GL_NO_ERROR);
-            
-            if (abort)
-                throw Exception("OpenGL error while " + when);
-        }
-    }
+
+	void Renderer::checkForOpenGLErrors(string when, bool abort) {
+		GLenum errorCode = glGetError();
+		if (errorCode != GL_NO_ERROR)
+		{
+			LOGERROR("OpenGL error while " + when);
+
+			do
+			{
+				LOGERROR(openglErrorToString(errorCode));
+				errorCode = glGetError();
+			}
+			while(errorCode != GL_NO_ERROR);
+
+			if (abort)
+				throw Exception("OpenGL error while " + when);
+		}
+	}
 
 	void Renderer::init(const int width, const int height, const bool fullScreen, 
 		const string ttfFontPath, const string shadersPath)
@@ -405,85 +405,85 @@ namespace small3d
 
 	void Renderer::renderTexturedQuad(const float *vertices, const string &textureName)
 	{
-        float triangleVerts[24] =
-        {
-            vertices[0], vertices[1], vertices[2], 1.0f,
-            vertices[4], vertices[5], vertices[6], 1.0f,
-            vertices[12], vertices[13], vertices[14], 1.0f,
-            vertices[12], vertices[13], vertices[14], 1.0f,
-            vertices[4], vertices[5], vertices[6], 1.0f,
-            vertices[8], vertices[9], vertices[10], 1.0f
-        };
-        
-        
-        GLuint textureHandle = getTextureHandle(textureName);
-        
-        if (textureHandle == 0)
-        {
-            throw Exception("Texture " + textureName + "has not been generated");
-        }
-        
-        GLuint vao = 0;
-        if (isOpenGL33Supported)
-        {
-            // Generate VAO
-            glGenVertexArrays(1, &vao);
-            glBindVertexArray(vao);
-        }
-        
-        glBindTexture(GL_TEXTURE_2D, textureHandle);
-        
-        glUseProgram(textProgram);
-        
-        glEnableVertexAttribArray(0);
-        
-        GLuint boxBuffer = 0;
-        glGenBuffers(1, &boxBuffer);
-        
-        glBindBuffer(GL_ARRAY_BUFFER, boxBuffer);
-        glBufferData(GL_ARRAY_BUFFER,
-                     sizeof(float) * 24,
-                     triangleVerts,
-                     GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-        
-        float textureCoords[12] =
-        {
-            1.0f, 0.0f,
-            0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 1.0f,
-            0.0f, 0.0f,
-            0.0f, 1.0f
-        };
-        
-        GLuint coordBuffer = 0;
-        
-        glGenBuffers(1,&coordBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, coordBuffer);
-        glBufferData(GL_ARRAY_BUFFER,
-                     sizeof(float) * 12,
-                     &textureCoords,
-                     GL_DYNAMIC_DRAW);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-        
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        
-        glDeleteBuffers(1, &boxBuffer);
-        glDeleteBuffers(1, &coordBuffer);
-        
-        glDisableVertexAttribArray(1);
-        glDisableVertexAttribArray(0);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        
-        if (isOpenGL33Supported)
-        {
-            glDeleteVertexArrays(1, &vao);
-            glBindVertexArray(0);
-        }
-        
-        checkForOpenGLErrors("rendering textured quad", true);
+		float triangleVerts[24] =
+		{
+			vertices[0], vertices[1], vertices[2], 1.0f,
+			vertices[4], vertices[5], vertices[6], 1.0f,
+			vertices[12], vertices[13], vertices[14], 1.0f,
+			vertices[12], vertices[13], vertices[14], 1.0f,
+			vertices[4], vertices[5], vertices[6], 1.0f,
+			vertices[8], vertices[9], vertices[10], 1.0f
+		};
+
+
+		GLuint textureHandle = getTextureHandle(textureName);
+
+		if (textureHandle == 0)
+		{
+			throw Exception("Texture " + textureName + "has not been generated");
+		}
+
+		GLuint vao = 0;
+		if (isOpenGL33Supported)
+		{
+			// Generate VAO
+			glGenVertexArrays(1, &vao);
+			glBindVertexArray(vao);
+		}
+
+		glBindTexture(GL_TEXTURE_2D, textureHandle);
+
+		glUseProgram(textProgram);
+
+		glEnableVertexAttribArray(0);
+
+		GLuint boxBuffer = 0;
+		glGenBuffers(1, &boxBuffer);
+
+		glBindBuffer(GL_ARRAY_BUFFER, boxBuffer);
+		glBufferData(GL_ARRAY_BUFFER,
+			sizeof(float) * 24,
+			triangleVerts,
+			GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+		float textureCoords[12] =
+		{
+			1.0f, 0.0f,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			1.0f, 1.0f,
+			0.0f, 0.0f,
+			0.0f, 1.0f
+		};
+
+		GLuint coordBuffer = 0;
+
+		glGenBuffers(1,&coordBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, coordBuffer);
+		glBufferData(GL_ARRAY_BUFFER,
+			sizeof(float) * 12,
+			&textureCoords,
+			GL_DYNAMIC_DRAW);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		glDeleteBuffers(1, &boxBuffer);
+		glDeleteBuffers(1, &coordBuffer);
+
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		if (isOpenGL33Supported)
+		{
+			glDeleteVertexArrays(1, &vao);
+			glBindVertexArray(0);
+		}
+
+		checkForOpenGLErrors("rendering textured quad", true);
 	}
 
 	void Renderer::clearScreen()
@@ -492,173 +492,166 @@ namespace small3d
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void Renderer::renderSceneObjects(const shared_ptr<vector<shared_ptr<SceneObject> > > sceneObjects)
+	void Renderer::renderSceneObject(shared_ptr<SceneObject> sceneObject)
 	{
-
 		// Use the shaders prepared at initialisation
 		glUseProgram(program);
 
-		// Pick up each model in the scene and render it.
-		for (std::vector<shared_ptr<SceneObject> >::iterator it =
-			sceneObjects->begin(); it != sceneObjects->end(); it++)
+		GLuint vao = 0;
+		if (isOpenGL33Supported)
 		{
-			GLuint vao = 0;
-			if (isOpenGL33Supported)
+			// Generate VAO
+			glGenVertexArrays(1, &vao);
+			glBindVertexArray(vao);
+		}
+
+		GLuint positionBufferObject = 0;
+		GLuint indexBufferObject = 0;
+		GLuint normalsBufferObject = 0;
+		GLuint sampler = 0;
+		GLuint texture = 0;
+		GLuint uvBufferObject = 0;
+
+		// Pass the vertex positions to the shaders
+		glGenBuffers(1, &positionBufferObject);
+
+		glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
+		glBufferData(GL_ARRAY_BUFFER,
+			sceneObject->getModel().getVertexDataSize(),
+			sceneObject->getModel().getVertexData(),
+			GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+		// Pass vertex indexes
+
+		glGenBuffers(1, &indexBufferObject);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+			sceneObject->getModel().getIndexDataSize(),
+			sceneObject->getModel().getIndexData(),
+			GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
+
+		// Normals
+		glGenBuffers(1, &normalsBufferObject);
+		glBindBuffer(GL_ARRAY_BUFFER, normalsBufferObject);
+		glBufferData(GL_ARRAY_BUFFER,
+			sceneObject->getModel().getNormalsDataSize(),
+			sceneObject->getModel().getNormalsData(), GL_STATIC_DRAW);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*) 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		// Find the colour uniform
+		GLuint colourUniform = glGetUniformLocation(program, "colour");
+
+		// Add texture if that is contained in the model
+		shared_ptr<Image> textureObj = sceneObject->getTexture();
+
+		if (textureObj)
+		{
+			// "Disable" colour since there is a texture
+			float cl[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+
+			glUniform4fv(colourUniform, 1, cl);
+
+			texture = this->getTextureHandle(sceneObject->getName());
+
+			if (texture == 0)
 			{
-				// Generate VAO
-				glGenVertexArrays(1, &vao);
-				glBindVertexArray(vao);
+				texture = generateTexture(sceneObject->getName(), textureObj->getData(), textureObj->getWidth(), textureObj->getHeight());
 			}
 
-			GLuint positionBufferObject = 0;
-			GLuint indexBufferObject = 0;
-			GLuint normalsBufferObject = 0;
-			GLuint sampler = 0;
-			GLuint texture = 0;
-			GLuint uvBufferObject = 0;
+			glBindTexture(GL_TEXTURE_2D, texture);
 
-			// Pass the vertex positions to the shaders
-			glGenBuffers(1, &positionBufferObject);
+			// UV Coordinates
 
-			glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
+			glGenBuffers(1, &uvBufferObject);
+			glBindBuffer(GL_ARRAY_BUFFER, uvBufferObject);
 			glBufferData(GL_ARRAY_BUFFER,
-				it->get()->getModel().getVertexDataSize(),
-				it->get()->getModel().getVertexData(),
-				GL_STATIC_DRAW);
-			glEnableVertexAttribArray(0);
-			glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-
-			// Pass vertex indexes
-
-			glGenBuffers(1, &indexBufferObject);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-				it->get()->getModel().getIndexDataSize(),
-				it->get()->getModel().getIndexData(),
-				GL_STATIC_DRAW);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-			
-			// Normals
-			glGenBuffers(1, &normalsBufferObject);
-			glBindBuffer(GL_ARRAY_BUFFER, normalsBufferObject);
-			glBufferData(GL_ARRAY_BUFFER,
-				it->get()->getModel().getNormalsDataSize(),
-				it->get()->getModel().getNormalsData(), GL_STATIC_DRAW);
-            glEnableVertexAttribArray(1);
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*) 0);
+				sceneObject->getModel().getTextureCoordsDataSize(),
+				sceneObject->getModel().getTextureCoordsData(), GL_STATIC_DRAW);
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-			// Find the colour uniform
-			GLuint colourUniform = glGetUniformLocation(program, "colour");
+		}
+		else
+		{
+			// If there is no texture, use the colour of the object
+			glUniform4fv(colourUniform, 1, glm::value_ptr(*sceneObject->getColour()));
+		}
 
-			// Add texture if that is contained in the model
-			shared_ptr<Image> textureObj = it->get()->getTexture();
+		// Lighting
 
-			if (textureObj)
-			{
-				// "Disable" colour since there is a texture
-				float cl[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+		glm::vec3 lightDirection(0.0f, 0.9f, 0.2f);
+		GLuint lightDirectionUniform = glGetUniformLocation(program,
+			"lightDirection");
+		glUniform3fv(lightDirectionUniform, 1,
+			glm::value_ptr(lightDirection));
 
-				glUniform4fv(colourUniform, 1, cl);
+		// Rotation
 
-				texture = this->getTextureHandle(it->get()->getName());
+		GLuint xRotationMatrixUniform = glGetUniformLocation(program,
+			"xRotationMatrix");
+		GLuint yRotationMatrixUniform = glGetUniformLocation(program,
+			"yRotationMatrix");
+		GLuint zRotationMatrixUniform = glGetUniformLocation(program,
+			"zRotationMatrix");
 
-				if (texture == 0)
-				{
-					texture = generateTexture(it->get()->getName(), textureObj->getData(), textureObj->getWidth(), textureObj->getHeight());
-				}
+		glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(sceneObject->getRotation()->x)));
+		glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(sceneObject->getRotation()->y)));
+		glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(sceneObject->getRotation()->z)));
 
-				glBindTexture(GL_TEXTURE_2D, texture);
+		GLuint offsetUniform = glGetUniformLocation(program, "offset");
+		glUniform3fv(offsetUniform, 1, glm::value_ptr(*sceneObject->getOffset()));
 
-				// UV Coordinates
+		// Throw an exception if there was an error in OpenGL, during
+		// any of the above.
+		checkForOpenGLErrors("rendering scene", true);
 
-				glGenBuffers(1, &uvBufferObject);
-				glBindBuffer(GL_ARRAY_BUFFER, uvBufferObject);
-				glBufferData(GL_ARRAY_BUFFER,
-					it->get()->getModel().getTextureCoordsDataSize(),
-					it->get()->getModel().getTextureCoordsData(), GL_STATIC_DRAW);
-				glEnableVertexAttribArray(2);
-				glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
-				glBindBuffer(GL_ARRAY_BUFFER, 0);
+		// Draw
+		glDrawElements(GL_TRIANGLES,
+			sceneObject->getModel().getIndexDataIndexCount(),
+			GL_UNSIGNED_INT, 0);
 
-			}
-			else
-			{
-				// If there is no texture, use the colour of the object
-				glUniform4fv(colourUniform, 1, glm::value_ptr(*it->get()->getColour()));
-			}
-            
-            // Lighting
-            
-            glm::vec3 lightDirection(0.0f, 0.9f, 0.2f);
-            GLuint lightDirectionUniform = glGetUniformLocation(program,
-                                                                "lightDirection");
-            glUniform3fv(lightDirectionUniform, 1,
-                         glm::value_ptr(lightDirection));
+		// Clear stuff
+		if (textureObj)
+		{
+			glDisableVertexAttribArray(2);
+		}
 
-			// Rotation
+		if (positionBufferObject != 0)
+		{
+			glDeleteBuffers(1, &positionBufferObject);
+		}
 
-			GLuint xRotationMatrixUniform = glGetUniformLocation(program,
-				"xRotationMatrix");
-			GLuint yRotationMatrixUniform = glGetUniformLocation(program,
-				"yRotationMatrix");
-			GLuint zRotationMatrixUniform = glGetUniformLocation(program,
-				"zRotationMatrix");
+		if ( indexBufferObject != 0)
+		{
+			glDeleteBuffers(1, &indexBufferObject);
+		}
+		if ( normalsBufferObject != 0)
+		{
+			glDeleteBuffers(1, &normalsBufferObject);
+		}
+		if ( sampler != 0)
+		{
+			glDeleteSamplers(1, &sampler);
+		}
+		if ( uvBufferObject != 0)
+		{
+			glDeleteBuffers(1, &uvBufferObject);
+		}
 
-			glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(it->get()->getRotation()->x)));
-			glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(it->get()->getRotation()->y)));
-			glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(it->get()->getRotation()->z)));
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(0);
 
-			GLuint offsetUniform = glGetUniformLocation(program, "offset");
-			glUniform3fv(offsetUniform, 1, glm::value_ptr(*it->get()->getOffset()));
-
-			// Throw an exception if there was an error in OpenGL, during
-			// any of the above.
-            checkForOpenGLErrors("rendering scene", true);
-
-			// Draw
-			glDrawElements(GL_TRIANGLES,
-				it->get()->getModel().getIndexDataIndexCount(),
-				GL_UNSIGNED_INT, 0);
-
-			// Clear stuff
-			if (textureObj)
-			{
-				glDisableVertexAttribArray(2);
-			}
-
-			if (positionBufferObject != 0)
-			{
-				glDeleteBuffers(1, &positionBufferObject);
-			}
-
-			if ( indexBufferObject != 0)
-			{
-				glDeleteBuffers(1, &indexBufferObject);
-			}
-			if ( normalsBufferObject != 0)
-			{
-				glDeleteBuffers(1, &normalsBufferObject);
-			}
-			if ( sampler != 0)
-			{
-				glDeleteSamplers(1, &sampler);
-			}
-			if ( uvBufferObject != 0)
-			{
-				glDeleteBuffers(1, &uvBufferObject);
-			}
-
-			glDisableVertexAttribArray(1);
-			glDisableVertexAttribArray(0);
-
-			if (isOpenGL33Supported)
-			{
-				glDeleteVertexArrays(1, &vao);
-				glBindVertexArray(0);
-			}
-
-		} // for std::vector<SceneObject>::iterator
+		if (isOpenGL33Supported)
+		{
+			glDeleteVertexArrays(1, &vao);
+			glBindVertexArray(0);
+		}
 
 		glUseProgram(0);
 
@@ -731,42 +724,42 @@ namespace small3d
 	{
 		SDL_GL_SwapWindow(sdlWindow);
 	}
-    
-    string openglErrorToString(GLenum error)
-    {
-        string errorString;
-        
-        switch(error) {
-            case GL_NO_ERROR:
-                errorString="GL_NO_ERROR: No error has been recorded. The value of this symbolic constant is guaranteed to be 0.";
-                break;
-            case  GL_INVALID_ENUM:
-                errorString="GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument. The offending command is ignored and has no other side effect than to set the error flag.";
-                break;
-            case  GL_INVALID_VALUE:
-                errorString="GL_INVALID_VALUE: A numeric argument is out of range. The offending command is ignored and has no other side effect than to set the error flag.";
-                break;
-            case  GL_INVALID_OPERATION:
-                errorString="GL_INVALID_OPERATION: The specified operation is not allowed in the current state. The offending command is ignored and has no other side effect than to set the error flag.";
-                break;
-            case  GL_INVALID_FRAMEBUFFER_OPERATION:
-                errorString="GL_INVALID_FRAMEBUFFER_OPERATION: The framebuffer object is not complete. The offending command is ignored and has no other side effect than to set the error flag.";
-                break;
-            case  GL_OUT_OF_MEMORY:
-                errorString="GL_OUT_OF_MEMORY: There is not enough memory left to execute the command. The state of the GL is undefined, except for the state of the error flags, after this error is recorded.";
-                break;
-            case  GL_STACK_UNDERFLOW:
-                errorString="GL_STACK_UNDERFLOW: An attempt has been made to perform an operation that would cause an internal stack to underflow.";
-                break;
-            case   GL_STACK_OVERFLOW:
-                errorString="GL_STACK_OVERFLOW: An attempt has been made to perform an operation that would cause an internal stack to overflow.";
-                break;
-            default:
-                errorString="Unknown error";
-                break;
-        }
-        return errorString;
-    }
+
+	string openglErrorToString(GLenum error)
+	{
+		string errorString;
+
+		switch(error) {
+		case GL_NO_ERROR:
+			errorString="GL_NO_ERROR: No error has been recorded. The value of this symbolic constant is guaranteed to be 0.";
+			break;
+		case  GL_INVALID_ENUM:
+			errorString="GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument. The offending command is ignored and has no other side effect than to set the error flag.";
+			break;
+		case  GL_INVALID_VALUE:
+			errorString="GL_INVALID_VALUE: A numeric argument is out of range. The offending command is ignored and has no other side effect than to set the error flag.";
+			break;
+		case  GL_INVALID_OPERATION:
+			errorString="GL_INVALID_OPERATION: The specified operation is not allowed in the current state. The offending command is ignored and has no other side effect than to set the error flag.";
+			break;
+		case  GL_INVALID_FRAMEBUFFER_OPERATION:
+			errorString="GL_INVALID_FRAMEBUFFER_OPERATION: The framebuffer object is not complete. The offending command is ignored and has no other side effect than to set the error flag.";
+			break;
+		case  GL_OUT_OF_MEMORY:
+			errorString="GL_OUT_OF_MEMORY: There is not enough memory left to execute the command. The state of the GL is undefined, except for the state of the error flags, after this error is recorded.";
+			break;
+		case  GL_STACK_UNDERFLOW:
+			errorString="GL_STACK_UNDERFLOW: An attempt has been made to perform an operation that would cause an internal stack to underflow.";
+			break;
+		case   GL_STACK_OVERFLOW:
+			errorString="GL_STACK_OVERFLOW: An attempt has been made to perform an operation that would cause an internal stack to overflow.";
+			break;
+		default:
+			errorString="Unknown error";
+			break;
+		}
+		return errorString;
+	}
 
 }
 

@@ -70,7 +70,21 @@ namespace AvoidTheBug3D {
 
 	GameLogic::GameLogic() {
 			initLogger();
-			gameScene = shared_ptr<Scene>(new Scene());
+
+			renderer = shared_ptr<Renderer>(new Renderer());
+			renderer->init(854, 480, false);
+
+			unique_ptr<Image> startScreenTexture (
+				new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png"));
+			renderer->generateTexture("startScreen", startScreenTexture->getData(), startScreenTexture->getWidth(), startScreenTexture->getHeight());
+
+			unique_ptr<Image> groundTexture (
+				new Image("dimitrikourk/small3d/samplegame/resources/images/grass.png"));
+			renderer->generateTexture("ground", groundTexture->getData(), groundTexture->getWidth(), groundTexture->getHeight());
+
+			unique_ptr<Image> skyTexture (
+				new Image("dimitrikourk/small3d/samplegame/resources/images/sky.png"));
+			renderer->generateTexture("sky", skyTexture->getData(), skyTexture->getWidth(), skyTexture->getHeight());
 
 			goat = shared_ptr<SceneObject> (
 				new SceneObject("goat",
@@ -94,10 +108,6 @@ namespace AvoidTheBug3D {
 
 			tree->setOffset(2.6f, GROUND_Y, -8.0f);
 			tree->setRotation(0.0f, -0.5f, 0.0f);
-
-			gameScene->sceneObjects->push_back(goat);
-			gameScene->sceneObjects->push_back(bug);
-			gameScene->sceneObjects->push_back(tree);
 
 			gameState = START_SCREEN;
 
@@ -298,10 +308,8 @@ namespace AvoidTheBug3D {
 
 	void GameLogic::processStartScreen( const KeyInput &keyInput )
 	{
-		gameScene->showingStartScreen = true;
 		if (keyInput.enter) {
 			initGame();
-			gameScene->showingStartScreen = false;
 			gameState = PLAYING;
 		}
 	}
@@ -319,6 +327,56 @@ namespace AvoidTheBug3D {
 			throw Exception("Urecognised game state");
 			break;
 		}
+	}
+
+	void GameLogic::render()
+	{
+		renderer->clearScreen();
+
+		if(gameState == START_SCREEN) {
+			float startScreenVerts[16] =
+			{
+				1.0f, 1.0f, 1.0f, 1.0f,
+				-1.0f, 1.0f, 1.0f, 1.0f,
+				-1.0f, -1.0f, 1.0f, 1.0f,
+				1.0f, -1.0f, 1.0f, 1.0f
+			};
+
+			renderer->renderTexturedQuad(&startScreenVerts[0], "startScreen");
+
+		}
+		else
+		{
+			// Draw the background
+
+			float groundVerts[16] =
+			{
+				1.0f, 0.0f, 1.0f, 1.0f,
+				-1.0f, 0.0f, 1.0f, 1.0f,
+				-1.0f, -1.0f, 1.0f, 1.0f,
+				1.0f, -1.0f, 1.0f, 1.0f
+			};
+
+			float skyVerts[16] =
+			{
+				1.0f, 1.0f, 1.0f, 1.0f,
+				-1.0f, 1.0f, 1.0f, 1.0f,
+				-1.0f, 0.0f, 1.0f, 1.0f,
+				1.0f, 0.0f, 1.0f, 1.0f
+			};
+
+			renderer->renderTexturedQuad(&groundVerts[0], "ground");
+			renderer->renderTexturedQuad(&skyVerts[0], "sky");
+			
+			renderer->renderSceneObject(goat);
+			renderer->renderSceneObject(bug);
+			renderer->renderSceneObject(tree);
+
+			//SDL_Color textColour = {255, 255, 0, 255};
+			//renderer->renderText("Now it's chasing me! HELP!", textColour, -1.0f, 1.0f, 1.0f, 0.5f);
+
+		}
+		renderer->swapBuffers();
 	}
 
 } 

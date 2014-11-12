@@ -12,7 +12,7 @@
 #include <memory>
 #include <dimitrikourk/small3d/Logger.h>
 #include <dimitrikourk/small3d/SceneObject.h>
-#include <dimitrikourk/small3d/Scene.h>
+#include <dimitrikourk/small3d/Renderer.h>
 
 #include <dimitrikourk/small3d/samplegame/KeyInput.h>
 
@@ -27,6 +27,8 @@ namespace AvoidTheBug3D {
 		shared_ptr<SceneObject> goat;
 		shared_ptr<SceneObject> bug;
 		shared_ptr<SceneObject> tree;
+
+		shared_ptr<Renderer> renderer;
 
 		enum GameState {START_SCREEN, PLAYING};
 		GameState gameState;
@@ -46,11 +48,6 @@ namespace AvoidTheBug3D {
 	public:
 
 		/**
-		 * @brief	The game scene.
-		 */
-		shared_ptr<Scene> gameScene;
-
-		/**
 		 * Constructor
 		 */
 		GameLogic();
@@ -67,6 +64,15 @@ namespace AvoidTheBug3D {
 		 * @param	keyInput	The keyboard input
 		 */
 		void process(const KeyInput &keyInput);
+
+		/**
+		 * @fn	void GameLogic::render();
+		 *
+		 * @brief	Renders the current state of the game on the screen.
+		 *
+		 */
+
+		void render();
 	};
 
 } /* namespace AvoidTheBug3D */

@@ -18,7 +18,6 @@
 #include <memory>
 
 #include <dimitrikourk/small3d/samplegame/GameLogic.h>
-#include <dimitrikourk/small3d/samplegame/PlayerView.h>
 #include <dimitrikourk/small3d/samplegame/KeyInput.h>
 
 using namespace std;
@@ -36,8 +35,6 @@ int main(int argc, char** argv)
 	{
 
 		shared_ptr<GameLogic> gameLogic(new GameLogic());
-
-		shared_ptr<PlayerView> pv(new PlayerView());
 
 		// program main loop
 		bool done = false;
@@ -83,7 +80,7 @@ int main(int argc, char** argv)
 			{
 				gameLogic->process(input);
 				prevTicks = ticks;
-				pv->render(gameLogic->gameScene);
+				gameLogic->render();
 			}
 		}
 

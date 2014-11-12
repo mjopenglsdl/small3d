@@ -171,11 +171,10 @@ public:
 	void clearScreen();
 
     /**
-     * Render the scene objects
-     * @param sceneObjects The scene objects
+     * Render a scene object
+     * @param sceneObject The scene object
      */
-    void renderSceneObjects(
-        const shared_ptr<vector<shared_ptr<SceneObject> > > sceneObjects);
+    void renderSceneObject(shared_ptr<SceneObject> sceneObject);
 
     /**
      * Render some text on the screen. The text will be rendered at a depth z of 0.5
