@@ -23,6 +23,8 @@
 #include "Model.h"
 #include "BoundingBoxes.h"
 #include "SceneObject.h"
+#include "ModelLoader.h"
+#include "WavefrontLoader.h"
 
 /* MinGW produces the following linking error, if the unit tests
  * are linked to the renderer:
@@ -100,38 +102,44 @@ TEST(ImageTest, LoadImage) {
 
 TEST(ModelTest, LoadModel) {
 
-	unique_ptr<Model> model(new Model());
-	model->init("dimitrikourk/small3d/resources/models/Cube/Cube.obj");
+	Model *model = new Model();
+	unique_ptr<ModelLoader> loader(new WavefrontLoader());
 
-	EXPECT_NE(0, model->getVertexDataComponentCount());
-	EXPECT_NE(0, model->getIndexDataIndexCount());
-	EXPECT_NE(0, model->getNormalsDataComponentCount());
-	EXPECT_NE(0, model->getTextureCoordsDataComponentCount());
+	loader->load("dimitrikourk/small3d/resources/models/Cube/Cube.obj", model);
 
-	cout << "Vertex data component count: "
-		<< model->getVertexDataComponentCount() << endl << "Index count: "
-		<< model->getIndexDataIndexCount() << endl
-		<< "Normals data component count: "
-		<< model->getNormalsDataComponentCount() << endl
-		<< "Texture coordinates count: "
-		<< model->getTextureCoordsDataComponentCount() << endl;
-
-	unique_ptr<Model> modelWithNoTexture(new Model());
-	modelWithNoTexture->init(
-		"dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj");
-
-	EXPECT_NE(0, modelWithNoTexture->getVertexDataComponentCount());
-	EXPECT_NE(0, modelWithNoTexture->getIndexDataIndexCount());
-	EXPECT_NE(0, modelWithNoTexture->getNormalsDataComponentCount());
-	EXPECT_EQ(0, modelWithNoTexture->getTextureCoordsDataComponentCount());
+	EXPECT_NE(0, model->vertexDataComponentCount);
+	EXPECT_NE(0, model->indexDataIndexCount);
+	EXPECT_NE(0, model->normalsDataComponentCount);
+	EXPECT_NE(0, model->textureCoordsDataComponentCount);
 
 	cout << "Vertex data component count: "
-		<< modelWithNoTexture->getVertexDataComponentCount() << endl << "Index count: "
-		<< modelWithNoTexture->getIndexDataIndexCount() << endl
+		<< model->vertexDataComponentCount << endl << "Index count: "
+		<< model->indexDataIndexCount << endl
 		<< "Normals data component count: "
-		<< modelWithNoTexture->getNormalsDataComponentCount() << endl
+		<< model->normalsDataComponentCount << endl
 		<< "Texture coordinates count: "
-		<< modelWithNoTexture->getTextureCoordsDataComponentCount() << endl;
+		<< model->textureCoordsDataComponentCount << endl;
+
+	Model *modelWithNoTexture = new Model();
+
+	loader->load("dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
+	
+
+	EXPECT_NE(0, modelWithNoTexture->vertexDataComponentCount);
+	EXPECT_NE(0, modelWithNoTexture->indexDataIndexCount);
+	EXPECT_NE(0, modelWithNoTexture->normalsDataComponentCount);
+	EXPECT_EQ(0, modelWithNoTexture->textureCoordsDataComponentCount);
+
+	cout << "Vertex data component count: "
+		<< modelWithNoTexture->vertexDataComponentCount << endl << "Index count: "
+		<< modelWithNoTexture->indexDataIndexCount << endl
+		<< "Normals data component count: "
+		<< modelWithNoTexture->normalsDataComponentCount << endl
+		<< "Texture coordinates count: "
+		<< modelWithNoTexture->textureCoordsDataComponentCount << endl;
+
+	delete model;
+	delete modelWithNoTexture;
 
 }
 

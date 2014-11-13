@@ -517,8 +517,8 @@ namespace small3d
 
 		glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
 		glBufferData(GL_ARRAY_BUFFER,
-			sceneObject->getModel().getVertexDataSize(),
-			sceneObject->getModel().getVertexData(),
+			sceneObject->getModel().vertexDataSize,
+			sceneObject->getModel().vertexData,
 			GL_STATIC_DRAW);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
@@ -528,8 +528,8 @@ namespace small3d
 		glGenBuffers(1, &indexBufferObject);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-			sceneObject->getModel().getIndexDataSize(),
-			sceneObject->getModel().getIndexData(),
+			sceneObject->getModel().indexDataSize,
+			sceneObject->getModel().indexData,
 			GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
 
@@ -537,8 +537,8 @@ namespace small3d
 		glGenBuffers(1, &normalsBufferObject);
 		glBindBuffer(GL_ARRAY_BUFFER, normalsBufferObject);
 		glBufferData(GL_ARRAY_BUFFER,
-			sceneObject->getModel().getNormalsDataSize(),
-			sceneObject->getModel().getNormalsData(), GL_STATIC_DRAW);
+			sceneObject->getModel().normalsDataSize,
+			sceneObject->getModel().normalsData, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*) 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -570,8 +570,8 @@ namespace small3d
 			glGenBuffers(1, &uvBufferObject);
 			glBindBuffer(GL_ARRAY_BUFFER, uvBufferObject);
 			glBufferData(GL_ARRAY_BUFFER,
-				sceneObject->getModel().getTextureCoordsDataSize(),
-				sceneObject->getModel().getTextureCoordsData(), GL_STATIC_DRAW);
+				sceneObject->getModel().textureCoordsDataSize,
+				sceneObject->getModel().textureCoordsData, GL_STATIC_DRAW);
 			glEnableVertexAttribArray(2);
 			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -613,7 +613,7 @@ namespace small3d
 
 		// Draw
 		glDrawElements(GL_TRIANGLES,
-			sceneObject->getModel().getIndexDataIndexCount(),
+			sceneObject->getModel().indexDataIndexCount,
 			GL_UNSIGNED_INT, 0);
 
 		// Clear stuff

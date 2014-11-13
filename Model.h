@@ -14,152 +14,111 @@
 #include <windows.h>
 #endif
 
-#include <vector>
-#include <memory>
-#include "Logger.h"
-
-using namespace std;
-
 namespace small3d
 {
 
 	/// A model. It can be a simple object or a game character. It is loaded from a Wavefront .obj file.
-	class Model
+	struct Model
 	{
-	private:
-
-		// Basic data read from .obj file
-		vector<float*> *vertices;
-		vector<int*> *facesVertexIndexes;
-		vector<float*> *normals;
-		vector<int*> *facesNormalIndexes;
-		vector<float*> *textureCoords;
-		vector<int*> *textureCoordsIndexes;
-
-		// Vertex data
-		float *vertexData;
-		int vertexDataSize;
-		int vertexDataComponentCount;
-
-		// Vertex index data
-		unsigned int *indexData;
-		int indexDataSize;
-		int indexDataIndexCount;
-
-		// Normals data
-		float *normalsData;
-		int normalsDataSize;
-		int normalsDataComponentCount;
-
-		// Texture coordinates data
-		float *textureCoordsData;
-		int textureCoordsDataSize;
-		int textureCoordsDataComponentCount;
-
-		// Load model from a Wavefront .obj file
-		void loadFromFile(string fileLocation);
-
-		// Make sure that no texture coordinate information is lost when the data buffers get created (vertexData,
-		// indexData, normalsData and textureCoordsData) by realigning the data vectors, in order to ensure unique
-		// vertex - texture coordinates pairs
-		void correctDataVectors();
-
-		// Delete the buffers to which the information read from the file is initially stored. To be used
-		// in order to free those buffers' memory after the data that will be used by the program has been
-		// generated and in the destructor, just in case.
-		void deleteInitialBuffers();
 
 	public:
 
 		/**
-		* Default constructor
-		*/
+		 * @brief	The vertex data. This is an array, which is to be treated as a 4 column table, holding
+		 * 			the x, y, z values in each column. The fourth column is there to assist in matrix operations.
+		 */
+
+		float *vertexData;
+
+		/**
+		 * @brief	Size of the vertex data, in bytes.
+		 */
+
+		int vertexDataSize;
+
+		/**
+		 * @brief	Total number of components, meaning total number of elements in the vertex data array
+		 */
+
+		int vertexDataComponentCount;
+
+		/**
+		 * @brief	3 column table. Each element refers to a "row" in the vertex data table. Each "row"
+		 * 				in the index data table forms a triangle.
+		 *
+		 */
+
+		unsigned int *indexData;
+
+		/**
+		 * @brief	Size of the index data, in bytes
+		 */
+
+		int indexDataSize;
+
+		/**
+		 * @brief	Total number of elements in the index data array
+		 */
+
+		int indexDataIndexCount;
+
+		/**
+		 * @brief	Array, to be treated as a 3 column table. Each "row" contains the x, y and z components
+		 * 			of the vector representing the normal of a vertex. The position of the "row" in the array
+		 * 			is the same as the position of the corresponding vertex "row" in the vertexData array.
+		 */
+
+		float *normalsData;
+
+		/**
+		 * @brief	Size of the normals data, in bytes.
+		 */
+
+		int normalsDataSize;
+
+		/**
+		 * @brief	Total number of elements in the normals data array
+		 */
+
+		int normalsDataComponentCount;
+
+		/**
+		 * @brief	Array, to be treated as a 2 column table. Each "row" contains the x and y components
+		 * 			of the pixel coordinates on the model's texture image for the vertex in the corresponding
+		 * 			"row" of the vertex data "table"
+		 */
+
+		float *textureCoordsData;
+
+		/**
+		 * @brief	Size of the texture coordinates data, in bytes.
+		 */
+
+		int textureCoordsDataSize;
+
+		/**
+		 * @brief	Number of elements in the texture coordinates array.
+		 */
+
+		int textureCoordsDataComponentCount;
+
+		/**
+		 * @fn	Model();
+		 *
+		 * @brief	Default constructor.
+		 *
+		 */
+
 		Model();
 
 		/**
-		* Initialisation of the model.
-		* @param filename The model file location. This must be a Wavefront .obj file and it must have been
-		* exported from Blender with the options "Triangulate faces" and "Keep Vertex Order" checked
-		* @param cfg The game configuration
-		* @param log The log
-		*/
-		void init(const string &filename);
+		 * @fn	~Model(void);
+		 *
+		 * @brief	Destructor.
+		 *
+		 */
+
 		~Model(void);
-
-		/**
-		* Get the vertex data, e.g. to be sent to glBindBuffer.
-		* The structure of the data can be defined via the Model's state.
-		* @return The vertex data
-		*/
-		float * getVertexData();
-
-		/**
-		* Get the size of the vertex data, in bytes.
-		* @return The size of the vertex data
-		*/
-		int getVertexDataSize() const;
-
-		/**
-		* Get the number of components in the vertex data array
-		* @return The number of vertex data components
-		*/
-		int getVertexDataComponentCount() const;
-
-
-		/**
-		* Get the index data, i.e. the indexes of each vertex to be drawn
-		* when the indexed drawing flag has been set.
-		* @return
-		*/
-		unsigned int * getIndexData();
-
-		/**
-		* Get the size of the index data
-		* @return The size of the index data
-		*/
-		int getIndexDataSize() const;
-
-		/**
-		* Get the number of index data elements
-		* @return The number of index data elements
-		*/
-		int getIndexDataIndexCount() const;
-
-		/**
-		* Get the normals data
-		* @return The normals data
-		*/
-		float* getNormalsData();
-
-		/**
-		* Get the size of the normals data, in bytes
-		* @return The size of the normals data, in bytes
-		*/
-		int getNormalsDataSize() const;
-
-		/**
-		* Get the total number of normals data components
-		* @return The total number of normals data components
-		*/
-		int getNormalsDataComponentCount() const;
-
-		/**
-		* Get the texture coordinates data
-		* @return The texture coordinates data
-		*/
-		float* getTextureCoordsData();
-
-		/**
-		* Get the size of the texture coordinates data, in bytes
-		* @return The size of the texture coordinates data, in bytes
-		*/
-		int getTextureCoordsDataSize() const;
-
-		/**
-		* Get the total number of texture coordinates data components
-		* @return The total number of texture coordinates data components
-		*/
-		int getTextureCoordsDataComponentCount() const;
 
 	};
 

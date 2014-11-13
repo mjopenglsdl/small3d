@@ -9,6 +9,12 @@
 
 #pragma once
 
+/* bii data directives */
+// bii://dimitrikourk/small3d/samplegame/resources/images/startScreen.png
+// bii://dimitrikourk/small3d/samplegame/resources/images/grass.png
+// bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
+
+
 #include <memory>
 #include <dimitrikourk/small3d/Logger.h>
 #include <dimitrikourk/small3d/SceneObject.h>
