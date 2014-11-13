@@ -34,21 +34,25 @@ namespace small3d
 		if (vertexData != NULL)
 		{
 			delete[] vertexData;
+			vertexData = NULL;
 		}
 
 		if (indexData != NULL)
 		{
 			delete[] indexData;
+			indexData = NULL;
 		}
 
 		if (normalsData != NULL)
 		{
 			delete[] normalsData;
+			normalsData = NULL;
 		}
 
 		if (textureCoordsData != NULL)
 		{
 			delete[] textureCoordsData;
+			textureCoordsData = NULL;
 		}
 	}
 

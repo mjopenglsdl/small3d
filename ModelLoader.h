@@ -41,7 +41,7 @@ namespace small3d {
 		 *
 		 */
 
-		~ModelLoader();
+		 virtual ~ModelLoader();
 
 		/**
 		 * @fn	virtual void ModelLoader::load(const string &filename, shared_ptr<Model> model);
