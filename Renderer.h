@@ -120,7 +120,9 @@ namespace small3d
 		* Initialise renderer (OpenGL, GLEW, etc)
 		* @param width The width of the window
 		* @param height The height of the window
-		* @param fullScreen	Will the Renderer run in full screen mode?				 
+		* @param fullScreen	Will the Renderer run in full screen mode? If set to true,
+		* 					the width and height have to correspond to the active screen
+		* 					resolution, in order for the scene to be displayed properly.				 
 		* @param ttfFontPath	The path to the TrueType font to be used by the Renderer,
 		* 						including its filename. It defaults to the font provided
 		* 						by the engine but, even if the same one is used for an
@@ -143,8 +145,8 @@ namespace small3d
 			const string shadersPath = "dimitrikourk/small3d/resources/shaders/");
 
 		/**
-		 * @brief	Vector indicating the direction of the light in the scene.
-		 */
+		* @brief	Vector indicating the direction of the light in the scene.
+		*/
 
 		glm::vec3 lightDirection;
 

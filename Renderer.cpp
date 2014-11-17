@@ -340,7 +340,7 @@ namespace small3d
 		glFrontFace(GL_CCW);
 
 		glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
-		glClearDepth(10.0f);
+		glClearDepth(1.0f);
 
 		// Program (with shaders) for rendering text
 
