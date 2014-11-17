@@ -342,7 +342,7 @@ namespace AvoidTheBug3D {
 				1.0f, -1.0f, 1.0f, 1.0f
 			};
 
-			renderer->renderTexturedQuad(&startScreenVerts[0], "startScreen");
+			renderer->renderImage(&startScreenVerts[0], "startScreen");
 
 		}
 		else
@@ -365,8 +365,8 @@ namespace AvoidTheBug3D {
 				1.0f, 0.0f, 1.0f, 1.0f
 			};
 
-			renderer->renderTexturedQuad(&groundVerts[0], "ground");
-			renderer->renderTexturedQuad(&skyVerts[0], "sky");
+			renderer->renderImage(&groundVerts[0], "ground");
+			renderer->renderImage(&skyVerts[0], "sky");
 			
 			renderer->renderSceneObject(goat);
 			renderer->renderSceneObject(bug);

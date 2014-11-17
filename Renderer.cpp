@@ -3,7 +3,6 @@
 #include <fstream>
 #include <unordered_map>
 #include "MathFunctions.h"
-#include <dimitrikourk/glm/glm/glm.hpp>
 #include <dimitrikourk/glm/glm/gtc/type_ptr.hpp>
 #include <miguel/sdl2/include/SDL.h>
 #include <cstring>
@@ -68,6 +67,7 @@ namespace small3d
 		textures = new unordered_map<string, GLuint>();
 		font = NULL;
 		noShaders = false;
+		lightDirection = glm::vec3(0.0f, 0.9f, 0.2f);
 
 	}
 
@@ -403,7 +403,7 @@ namespace small3d
 	}
 
 
-	void Renderer::renderTexturedQuad(const float *vertices, const string &textureName)
+	void Renderer::renderImage(const float *vertices, const string &textureName)
 	{
 		float triangleVerts[24] =
 		{
@@ -584,8 +584,6 @@ namespace small3d
 		}
 
 		// Lighting
-
-		glm::vec3 lightDirection(0.0f, 0.9f, 0.2f);
 		GLuint lightDirectionUniform = glGetUniformLocation(program,
 			"lightDirection");
 		glUniform3fv(lightDirectionUniform, 1,
@@ -717,7 +715,7 @@ namespace small3d
 			bottomX, bottomY, -0.5f, 1.0f
 		};
 
-		this->renderTexturedQuad(boxVerts, "text_" + text);
+		this->renderImage(boxVerts, "text_" + text);
 	}
 
 	void Renderer::swapBuffers()
