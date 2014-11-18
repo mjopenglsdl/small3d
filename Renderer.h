@@ -173,6 +173,16 @@ namespace small3d
 		GLuint generateTexture(const string &name, const float *texture, const int width, const int height);
 
 		/**
+		 * @fn	void Renderer::deleteTexture(const string &name);
+		 *
+		 * @brief	Deletes the texture indicated by the given name.
+		 *
+		 * @param	name	The name of the texture.
+		 */
+
+		void deleteTexture(const string &name);
+
+		/**
 		* Get the handle of a texture which has already been generated (see generateTexture)
 		* @param name The name of the texture
 		* @return The texture handle (0 if not found)

@@ -389,6 +389,16 @@ namespace small3d
 		return textureHandle;
 	}
 
+	void Renderer::deleteTexture( const string &name )
+	{
+		unordered_map<string, GLuint>::iterator nameTexturePair = textures->find(name);
+
+		if(nameTexturePair != textures->end())
+		{
+			glDeleteTextures(1, &(nameTexturePair->second));
+			textures->erase(name);
+		}
+	}
 
 	GLuint Renderer::getTextureHandle(const string &name)
 	{
