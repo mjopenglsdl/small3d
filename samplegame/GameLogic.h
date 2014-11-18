@@ -9,16 +9,11 @@
 
 #pragma once
 
-/* bii data directives */
-// bii://dimitrikourk/small3d/samplegame/resources/images/startScreen.png
-// bii://dimitrikourk/small3d/samplegame/resources/images/grass.png
-// bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
-
-
 #include <memory>
 #include <dimitrikourk/small3d/Logger.h>
 #include <dimitrikourk/small3d/SceneObject.h>
 #include <dimitrikourk/small3d/Renderer.h>
+#include <miguel/game_utils/SoundPlayer.h>
 
 #include <dimitrikourk/small3d/samplegame/KeyInput.h>
 
@@ -33,6 +28,7 @@ namespace AvoidTheBug3D {
 		shared_ptr<SceneObject> goat;
 		shared_ptr<SceneObject> bug;
 		shared_ptr<SceneObject> tree;
+		shared_ptr<SoundPlayer> soundPlayer;
 
 		shared_ptr<Renderer> renderer;
 

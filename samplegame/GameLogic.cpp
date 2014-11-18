@@ -40,6 +40,10 @@
 // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000009.obj
 // bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj
 // bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png
+// bii://dimitrikourk/small3d/samplegame/resources/images/startScreen.png
+// bii://dimitrikourk/small3d/samplegame/resources/images/grass.png
+// bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
+// bii://dimitrikourk/small3d/samplegame/resources/sounds/GoatBah-SoundBible.com-959734934.wav
 
 #define MAX_Z -2.0f
 #define MIN_Z -24.0f
@@ -63,6 +67,7 @@
 #include <dimitrikourk/small3d/MathFunctions.h>
 #include <cmath>
 #include <dimitrikourk/small3d/samplegame/GameLogic.h>
+
 
 using namespace small3d;
 
@@ -110,6 +115,12 @@ namespace AvoidTheBug3D {
 			tree->setRotation(0.0f, -0.5f, 0.0f);
 
 			gameState = START_SCREEN;
+
+			soundPlayer = shared_ptr<SoundPlayer>(new SoundPlayer());
+			soundPlayer->initAudio();
+			soundPlayer->preloadSound("dimitrikourk/small3d/samplegame/resources/sounds/GoatBah-SoundBible.com-959734934.wav", "bah");
+
+			
 
 	}
 
@@ -216,6 +227,7 @@ namespace AvoidTheBug3D {
 		{
 			if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
 			{
+				soundPlayer->playSound("bah", 1, 128, 1000, 1);
 				gameState = START_SCREEN;
 			}
 
