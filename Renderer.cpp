@@ -68,6 +68,8 @@ namespace small3d
 		font = NULL;
 		noShaders = false;
 		lightDirection = glm::vec3(0.0f, 0.9f, 0.2f);
+		zNear = 1.0f;
+		zFar = 25.0f;
 
 	}
 
@@ -257,16 +259,16 @@ namespace small3d
 
 		string vertexShaderPath;
 		string fragmentShaderPath;
-		string textVertexShaderPath;
-		string textFragmentShaderPath;
+		string simpleVertexShaderPath;
+		string simpleFragmentShaderPath;
 
 		if (isOpenGL33Supported)
 		{
 			vertexShaderPath = shadersPath + "OpenGL33/perspectiveMatrixLightedShader.vert";
 			fragmentShaderPath = shadersPath + "OpenGL33/textureShader.frag";
-			textVertexShaderPath =
-				shadersPath + "OpenGL33/textShader.vert";
-			textFragmentShaderPath = shadersPath + "OpenGL33/textShader.frag";
+			simpleVertexShaderPath =
+				shadersPath + "OpenGL33/simpleShader.vert";
+			simpleFragmentShaderPath = shadersPath + "OpenGL33/simpleShader.frag";
 
 		}
 		else
@@ -274,9 +276,9 @@ namespace small3d
 			vertexShaderPath =
 				shadersPath + "OpenGL21/perspectiveMatrixLightedShader.vert";
 			fragmentShaderPath = shadersPath + "OpenGL21/textureShader.frag";
-			textVertexShaderPath =
-				shadersPath + "OpenGL21/textShader.vert";
-			textFragmentShaderPath = shadersPath + "OpenGL21/textShader.frag";
+			simpleVertexShaderPath =
+				shadersPath + "OpenGL21/simpleShader.vert";
+			simpleFragmentShaderPath = shadersPath + "OpenGL21/simpleShader.frag";
 		}
 
 		glViewport(0, 0, (GLsizei) width, (GLsizei) height);
@@ -320,10 +322,10 @@ namespace small3d
 			float perspectiveMatrix[16];
 			memset(perspectiveMatrix, 0, sizeof(float) * 16);
 			perspectiveMatrix[0] = 1.0f; // frustum scale
-			perspectiveMatrix[5] = 1.8f; // frustum scale
-			perspectiveMatrix[10] = (1.0f + 25.0f) / (1.0f - 25.0f); // (zNear + zFar) / (zNear - zFar)
-			perspectiveMatrix[14] = 2.0f * 1.0f * 25.0f / (1.0f - 25.0f); // 2 * zNear * zFar / (zNear - zFar);
-			perspectiveMatrix[11] = -1.0f; //cameraPos.z? or just the -1 factor...
+			perspectiveMatrix[5] = ROUND_2_DECIMAL(width / height);
+			perspectiveMatrix[10] = (zNear + zFar) / (zNear - zFar); 
+			perspectiveMatrix[14] = 2.0f * zNear * zFar / (zNear - zFar); // 2 * zNear * zFar / (zNear - zFar);
+			perspectiveMatrix[11] = -1.0f; // zCamera
 
 			glUniformMatrix4fv(perspectiveMatrixUniform, 1, GL_FALSE,
 				perspectiveMatrix);
@@ -344,9 +346,9 @@ namespace small3d
 
 		// Program (with shaders) for rendering text
 
-		GLuint textVertexShader = compileShader(textVertexShaderPath,
+		GLuint textVertexShader = compileShader(simpleVertexShaderPath,
 			GL_VERTEX_SHADER);
-		GLuint textFragmentShader = compileShader(textFragmentShaderPath,
+		GLuint textFragmentShader = compileShader(simpleFragmentShaderPath,
 			GL_FRAGMENT_SHADER);
 
 		textProgram = glCreateProgram();

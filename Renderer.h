@@ -10,12 +10,12 @@
 // bii://dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf
 // bii://dimitrikourk/small3d/resources/shaders/OpenGL33/perspectiveMatrixLightedShader.vert
 // bii://dimitrikourk/small3d/resources/shaders/OpenGL33/textureShader.frag
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/textShader.vert
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/textShader.frag
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/simpleShader.vert
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/simpleShader.frag
 // bii://dimitrikourk/small3d/resources/shaders/OpenGL21/perspectiveMatrixLightedShader.vert
 // bii://dimitrikourk/small3d/resources/shaders/OpenGL21/textureShader.frag
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/textShader.vert
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/textShader.frag
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/simpleShader.vert
+// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/simpleShader.frag
 
 
 #pragma once
@@ -149,6 +149,18 @@ namespace small3d
 		*/
 
 		glm::vec3 lightDirection;
+
+		/**
+		 * @brief	The near Z value.
+		 */
+
+		float zNear;
+
+		/**
+		 * @brief	The far Z value.
+		 */
+
+		float zFar;
 
 		/**
 		* Generate a texture in OpenGL, using the given data
