@@ -8,7 +8,7 @@ Quick start guide: http://goo.gl/5TYOv2
 
 For requests for assistance, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
 
-API documentation: http://small3d.org/namespacesmall3d.html
+API documentation: http://small3d.org
 
 ![Screen capture from the first game that runs on small3d](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
 

@@ -48,8 +48,6 @@ namespace small3d
 		* Constructor for object with texture
 		* @param name The name of the object
 		* @param modelPath The path to the file containing the object's model
-		* @param cfg The game configuration file
-		* @param log The game log
 		* @param texturePath The path to the file containing the object's texture. If the object
 		* 					  is animated, it has to be the path up to the name part of the model.
 		* 					  The program will append an underscore, a 6-digit index number and the

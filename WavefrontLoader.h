@@ -78,7 +78,7 @@ namespace small3d {
 		*
 		* @brief	Loads a model from the given wavefront .obj file into the model object.
 		*
-		* @param	filename	Name of the file in which the model is stored.
+		* @param	fileLocation	Path to the file in which the model is stored.
 		* @param	model   	The model.
 		*/
 

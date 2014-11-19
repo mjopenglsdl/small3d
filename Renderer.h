@@ -45,7 +45,7 @@ namespace small3d
 	/**
 	* @class	Renderer
 	*
-	* @brief	Renderer class, which can render using OpenGL v2.1
+	* @brief	Renderer class, which can render using either OpenGL v3.3 or v2.1
 	*
 	*/
 
@@ -111,8 +111,6 @@ namespace small3d
 
 		/**
 		* Constructor
-		* @param cfg The game's configuration object
-		* @param log The game's logging object
 		*/
 		Renderer();
 
