@@ -43,7 +43,7 @@
 // bii://dimitrikourk/small3d/samplegame/resources/images/startScreen.png
 // bii://dimitrikourk/small3d/samplegame/resources/images/grass.png
 // bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
-// bii://dimitrikourk/small3d/samplegame/resources/sounds/GoatBah-SoundBible.com-959734934.wav
+// bii://dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg
 
 #define MAX_Z -2.0f
 #define MIN_Z -24.0f
@@ -117,14 +117,20 @@ namespace AvoidTheBug3D {
 			gameState = START_SCREEN;
 
 			soundPlayer = shared_ptr<SoundPlayer>(new SoundPlayer());
-			soundPlayer->initAudio();
-			soundPlayer->preloadSound("dimitrikourk/small3d/samplegame/resources/sounds/GoatBah-SoundBible.com-959734934.wav", "bah");
+			if (!soundPlayer->initAudio())
+			{
+				throw Exception("Could not initialise audio.");
+			}
 
-			
-
+			if (!soundPlayer->preloadSound(
+				string(SDL_GetBasePath()) + 
+				"dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah")) {
+				throw Exception("Could not load goat sound.");
+			}
 	}
 
 	GameLogic::~GameLogic() {
+		SDL_CloseAudio();
 		
 	}
 
@@ -227,7 +233,7 @@ namespace AvoidTheBug3D {
 		{
 			if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
 			{
-				soundPlayer->playSound("bah", 1, 128, 1000, 1);
+				soundPlayer->playSound("bah");
 				gameState = START_SCREEN;
 			}
 
