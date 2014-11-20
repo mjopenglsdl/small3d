@@ -161,6 +161,18 @@ namespace small3d
 		float zFar;
 
 		/**
+		 * @brief	The camera position.
+		 */
+
+		glm::vec3 cameraPosition;
+
+		/**
+		 * @brief	The camera rotation (around the x, y and z axes)
+		 */
+
+		glm::vec3 cameraRotation;
+
+		/**
 		* Generate a texture in OpenGL, using the given data
 		* @param name The name by which the texture will be known
 		* @param texture The texture data

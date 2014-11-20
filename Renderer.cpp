@@ -70,6 +70,8 @@ namespace small3d
 		lightDirection = glm::vec3(0.0f, 0.9f, 0.2f);
 		zNear = 1.0f;
 		zFar = 25.0f;
+		cameraPosition = glm::vec3(0, 0, 0);
+		cameraRotation = glm::vec3(0, 0, 0);
 
 	}
 
@@ -616,6 +618,24 @@ namespace small3d
 
 		GLuint offsetUniform = glGetUniformLocation(program, "offset");
 		glUniform3fv(offsetUniform, 1, glm::value_ptr(*sceneObject->getOffset()));
+
+		// Camera rotation
+
+		GLuint xCameraRotationMatrixUniform = glGetUniformLocation(program,
+			"xCameraRotationMatrix");
+		GLuint yCameraRotationMatrixUniform = glGetUniformLocation(program,
+			"yCameraRotationMatrix");
+		GLuint zCameraRotationMatrixUniform = glGetUniformLocation(program,
+			"zCameraRotationMatrix");
+
+		glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(cameraRotation.x)));
+		glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(cameraRotation.y)));
+		glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(cameraRotation.z)));
+
+		// Camera position
+
+		GLuint cameraPositionUniform = glGetUniformLocation(program, "cameraPosition");
+		glUniform3fv(cameraPositionUniform, 1, glm::value_ptr(cameraPosition));
 
 		// Throw an exception if there was an error in OpenGL, during
 		// any of the above.
