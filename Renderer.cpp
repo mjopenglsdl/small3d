@@ -48,7 +48,7 @@ namespace small3d
 
 			throw Exception(
 				"Failed to compile shader:\n" + shaderSource + "\nInfo: "
-				+ this->getProgramInfoLog(program));
+				+ this->getProgramInfoLog(perspectiveProgram));
 		}
 		else
 		{
@@ -62,8 +62,8 @@ namespace small3d
 	{
 		isOpenGL33Supported = false;
 		sdlWindow = 0;
-		program = 0;
-		textProgram = 0;
+		perspectiveProgram = 0;
+		orthographicProgram = 0;
 		textures = new unordered_map<string, GLuint>();
 		font = NULL;
 		noShaders = false;
@@ -92,14 +92,14 @@ namespace small3d
 			glUseProgram(0);
 		}
 
-		if(textProgram != 0)
+		if(orthographicProgram != 0)
 		{
-			glDeleteProgram(textProgram);
+			glDeleteProgram(orthographicProgram);
 		}
 
-		if(program != 0)
+		if(perspectiveProgram != 0)
 		{
-			glDeleteProgram(program);
+			glDeleteProgram(perspectiveProgram);
 		}
 
 		TTF_CloseFont(font);
@@ -298,27 +298,27 @@ namespace small3d
 		GLuint fragmentShader = compileShader(fragmentShaderPath,
 			GL_FRAGMENT_SHADER);
 
-		program = glCreateProgram();
-		glAttachShader(program, vertexShader);
-		glAttachShader(program, fragmentShader);
+		perspectiveProgram = glCreateProgram();
+		glAttachShader(perspectiveProgram, vertexShader);
+		glAttachShader(perspectiveProgram, fragmentShader);
 
-		glLinkProgram(program);
+		glLinkProgram(perspectiveProgram);
 
 		GLint status;
-		glGetProgramiv(program, GL_LINK_STATUS, &status);
+		glGetProgramiv(perspectiveProgram, GL_LINK_STATUS, &status);
 		if (status == GL_FALSE)
 		{
-			throw Exception("Failed to link program:\n" + this->getProgramInfoLog(program));
+			throw Exception("Failed to link program:\n" + this->getProgramInfoLog(perspectiveProgram));
 		}
 		else
 		{
 			LOGINFO("Linked main rendering program successfully");
 
-			glUseProgram(program);
+			glUseProgram(perspectiveProgram);
 
 			// Perspective
 
-			GLuint perspectiveMatrixUniform = glGetUniformLocation(program,
+			GLuint perspectiveMatrixUniform = glGetUniformLocation(perspectiveProgram,
 				"perspectiveMatrix");
 
 			float perspectiveMatrix[16];
@@ -334,8 +334,8 @@ namespace small3d
 
 			glUseProgram(0);
 		}
-		glDetachShader(program, vertexShader);
-		glDetachShader(program, fragmentShader);
+		glDetachShader(perspectiveProgram, vertexShader);
+		glDetachShader(perspectiveProgram, fragmentShader);
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
 
@@ -353,16 +353,16 @@ namespace small3d
 		GLuint textFragmentShader = compileShader(simpleFragmentShaderPath,
 			GL_FRAGMENT_SHADER);
 
-		textProgram = glCreateProgram();
-		glAttachShader(textProgram, textVertexShader);
-		glAttachShader(textProgram, textFragmentShader);
+		orthographicProgram = glCreateProgram();
+		glAttachShader(orthographicProgram, textVertexShader);
+		glAttachShader(orthographicProgram, textFragmentShader);
 
-		glLinkProgram(textProgram);
+		glLinkProgram(orthographicProgram);
 
-		glGetProgramiv(textProgram, GL_LINK_STATUS, &status);
+		glGetProgramiv(orthographicProgram, GL_LINK_STATUS, &status);
 		if (status == GL_FALSE)
 		{
-			throw Exception("Failed to link program:\n" + this->getProgramInfoLog(textProgram));
+			throw Exception("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
 		}
 		else
 		{
@@ -373,8 +373,9 @@ namespace small3d
 
 	GLuint Renderer::generateTexture(const string &name, const float *texture, const int width, const int height )
 	{
-		GLuint textureHandle;
 
+		GLuint textureHandle;
+		
 		glGenTextures(1, &textureHandle);
 
 		glBindTexture(GL_TEXTURE_2D, textureHandle);
@@ -416,9 +417,53 @@ namespace small3d
 		return handle;
 	}
 
-
-	void Renderer::renderImage(const float *vertices, const string &textureName)
+	void Renderer::positionSceneObject( const glm::vec3 &offset, const glm::vec3 &rotation )
 	{
+		// Rotation
+
+		GLuint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+			"xRotationMatrix");
+		GLuint yRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+			"yRotationMatrix");
+		GLuint zRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+			"zRotationMatrix");
+
+		glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(rotation.x)));
+		glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(rotation.y)));
+		glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(rotation.z)));
+
+		GLuint offsetUniform = glGetUniformLocation(perspectiveProgram, "offset");
+		glUniform3fv(offsetUniform, 1, glm::value_ptr(offset));
+	}
+
+
+	void Renderer::positionCamera()
+	{
+		// Camera rotation
+
+		GLuint xCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+			"xCameraRotationMatrix");
+		GLuint yCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+			"yCameraRotationMatrix");
+		GLuint zCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+			"zCameraRotationMatrix");
+
+		glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(cameraRotation.x)));
+		glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(cameraRotation.y)));
+		glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(cameraRotation.z)));
+
+		// Camera position
+
+		GLuint cameraPositionUniform = glGetUniformLocation(perspectiveProgram, "cameraPosition");
+		glUniform3fv(cameraPositionUniform, 1, glm::value_ptr(cameraPosition));
+	}
+
+
+	void Renderer::renderImage(const float *vertices, const string &textureName, const bool &perspective)
+	{
+		
+		glUseProgram(perspective? perspectiveProgram : orthographicProgram);
+
 		float triangleVerts[24] =
 		{
 			vertices[0], vertices[1], vertices[2], 1.0f,
@@ -429,14 +474,6 @@ namespace small3d
 			vertices[8], vertices[9], vertices[10], 1.0f
 		};
 
-
-		GLuint textureHandle = getTextureHandle(textureName);
-
-		if (textureHandle == 0)
-		{
-			throw Exception("Texture " + textureName + "has not been generated");
-		}
-
 		GLuint vao = 0;
 		if (isOpenGL33Supported)
 		{
@@ -444,10 +481,6 @@ namespace small3d
 			glGenVertexArrays(1, &vao);
 			glBindVertexArray(vao);
 		}
-
-		glBindTexture(GL_TEXTURE_2D, textureHandle);
-
-		glUseProgram(textProgram);
 
 		glEnableVertexAttribArray(0);
 
@@ -460,6 +493,15 @@ namespace small3d
 			triangleVerts,
 			GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+		GLuint textureHandle = getTextureHandle(textureName);
+
+		if (textureHandle == 0)
+		{
+			throw Exception("Texture " + textureName + "has not been generated");
+		}
+
+		glBindTexture(GL_TEXTURE_2D, textureHandle);
 
 		float textureCoords[12] =
 		{
@@ -482,6 +524,18 @@ namespace small3d
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
+		if (perspective)
+		{
+			// Find the colour uniform
+			GLuint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
+
+			// "Disable" colour since there is a texture
+			glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
+
+			positionSceneObject(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+			positionCamera();
+		}
+
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		glDeleteBuffers(1, &boxBuffer);
@@ -497,19 +551,13 @@ namespace small3d
 			glBindVertexArray(0);
 		}
 
-		checkForOpenGLErrors("rendering textured quad", true);
-	}
-
-	void Renderer::clearScreen()
-	{
-		// Clear the buffers
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		checkForOpenGLErrors("rendering image", true);
 	}
 
 	void Renderer::renderSceneObject(shared_ptr<SceneObject> sceneObject)
 	{
 		// Use the shaders prepared at initialisation
-		glUseProgram(program);
+		glUseProgram(perspectiveProgram);
 
 		GLuint vao = 0;
 		if (isOpenGL33Supported)
@@ -558,7 +606,7 @@ namespace small3d
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		// Find the colour uniform
-		GLuint colourUniform = glGetUniformLocation(program, "colour");
+		GLuint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
 
 		// Add texture if that is contained in the model
 		shared_ptr<Image> textureObj = sceneObject->getTexture();
@@ -566,9 +614,7 @@ namespace small3d
 		if (textureObj)
 		{
 			// "Disable" colour since there is a texture
-			float cl[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-
-			glUniform4fv(colourUniform, 1, cl);
+			glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
 
 			texture = this->getTextureHandle(sceneObject->getName());
 
@@ -598,44 +644,14 @@ namespace small3d
 		}
 
 		// Lighting
-		GLuint lightDirectionUniform = glGetUniformLocation(program,
+		GLuint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
 			"lightDirection");
 		glUniform3fv(lightDirectionUniform, 1,
 			glm::value_ptr(lightDirection));
 
-		// Rotation
+		positionSceneObject(*sceneObject->getOffset(), *sceneObject->getRotation());
 
-		GLuint xRotationMatrixUniform = glGetUniformLocation(program,
-			"xRotationMatrix");
-		GLuint yRotationMatrixUniform = glGetUniformLocation(program,
-			"yRotationMatrix");
-		GLuint zRotationMatrixUniform = glGetUniformLocation(program,
-			"zRotationMatrix");
-
-		glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(sceneObject->getRotation()->x)));
-		glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(sceneObject->getRotation()->y)));
-		glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(sceneObject->getRotation()->z)));
-
-		GLuint offsetUniform = glGetUniformLocation(program, "offset");
-		glUniform3fv(offsetUniform, 1, glm::value_ptr(*sceneObject->getOffset()));
-
-		// Camera rotation
-
-		GLuint xCameraRotationMatrixUniform = glGetUniformLocation(program,
-			"xCameraRotationMatrix");
-		GLuint yCameraRotationMatrixUniform = glGetUniformLocation(program,
-			"yCameraRotationMatrix");
-		GLuint zCameraRotationMatrixUniform = glGetUniformLocation(program,
-			"zCameraRotationMatrix");
-
-		glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(cameraRotation.x)));
-		glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(cameraRotation.y)));
-		glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(cameraRotation.z)));
-
-		// Camera position
-
-		GLuint cameraPositionUniform = glGetUniformLocation(program, "cameraPosition");
-		glUniform3fv(cameraPositionUniform, 1, glm::value_ptr(cameraPosition));
+		positionCamera();
 
 		// Throw an exception if there was an error in OpenGL, during
 		// any of the above.
@@ -748,6 +764,12 @@ namespace small3d
 		};
 
 		this->renderImage(boxVerts, "text_" + text);
+	}
+
+	void Renderer::clearScreen()
+	{
+		// Clear the buffers
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void Renderer::swapBuffers()

@@ -60,9 +60,9 @@ namespace small3d
 
 		string ttfFontPath;
 
-		GLuint program;
+		GLuint perspectiveProgram;
 
-		GLuint textProgram;
+		GLuint orthographicProgram;
 
 		bool isOpenGL33Supported;
 
@@ -200,18 +200,34 @@ namespace small3d
 		GLuint getTextureHandle(const string &name);
 
 		/**
+		 * @fn	void Renderer::positionSceneObject(const glm::vec3 &offset, const glm::vec3 &rotation);
+		 *
+		 * @brief	Positions the scene object (sets offset and rotation)
+		 *
+		 * @param	offset  	The offset (x, y, z values).
+		 * @param	rotation	The rotation (around the x, y and z axes).
+		 */
+
+		void positionSceneObject(const glm::vec3 &offset, const glm::vec3 &rotation);
+
+		/**
+		 * @fn	void Renderer::positionCamera();
+		 *
+		 * @brief	Position the camera.
+		 *
+		 */
+
+		void positionCamera();
+
+		/**
 		* Render an image. The image is in effect a textured quad, since 4 vertex positions are
 		* passed to this method, in order to define its position and size.
 		* @param vertices The vertices
 		* @param textureName The name of the texture, containing the image (must have been loaded with 
 		* 					 generateTexture())
+		* @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
 		*/
-		void renderImage(const float *vertices, const string &textureName);
-
-		/**
-		* Clears the screen.
-		*/
-		void clearScreen();
+		void renderImage(const float *vertices, const string &textureName, const bool &perspective = false);
 
 		/**
 		* Render a scene object
@@ -231,6 +247,11 @@ namespace small3d
 		*/
 		void renderText(const string &text, const SDL_Color &colour, 
 			const float &topX, const float &topY, const float &bottomX, const float &bottomY);
+
+		/**
+		* Clears the screen.
+		*/
+		void clearScreen();
 
 		/**
 		* This is a double buffered system and this commands swaps

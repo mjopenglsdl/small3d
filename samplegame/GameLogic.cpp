@@ -53,7 +53,7 @@
 
 #define BUG_ROTATION_SPEED 0.12f
 #define BUG_DIVE_TILT 0.8f
-#define BUG_SPEED 0.08f
+#define BUG_SPEED 0.03f
 #define BUG_DIVE_DURATION 30
 #define BUG_START_DIVE_DISTANCE 0.1f
 #define BUG_FLIGHT_HEIGHT 1.4f
@@ -315,6 +315,10 @@ namespace AvoidTheBug3D {
 		if (bugOffset->x > -(bugOffset->z)) 
 			bugOffset->x = -(bugOffset->z);
 
+		// Uncomment to see the bug's view of the world
+		// renderer->cameraPosition = *bugOffset;
+		// renderer->cameraRotation = *bugRotation;
+
 		bug->animate();
 	}
 
@@ -365,27 +369,39 @@ namespace AvoidTheBug3D {
 		}
 		else
 		{
-			// Draw the background
-
-			float groundVerts[16] =
-			{
-				1.0f, 0.0f, 1.0f, 1.0f,
-				-1.0f, 0.0f, 1.0f, 1.0f,
-				-1.0f, -1.0f, 1.0f, 1.0f,
-				1.0f, -1.0f, 1.0f, 1.0f
-			};
 
 			float skyVerts[16] =
 			{
 				1.0f, 1.0f, 1.0f, 1.0f,
 				-1.0f, 1.0f, 1.0f, 1.0f,
-				-1.0f, 0.0f, 1.0f, 1.0f,
-				1.0f, 0.0f, 1.0f, 1.0f
+				-1.0f, -1.0f, 1.0f, 1.0f,
+				1.0f, -1.0f, 1.0f, 1.0f
 			};
 
-			renderer->renderImage(&groundVerts[0], "ground");
+
 			renderer->renderImage(&skyVerts[0], "sky");
-			
+
+
+			// Draw the background
+
+			/*float groundVerts[16] =
+			{
+				25.0f, -1.0f, -25.0f, 1.0f,
+				-25.0f, -1.0f, -25.0f, 1.0f,
+				-25.0f, -1.0f, 0.0f, 1.0f,
+				25.0f, -1.0f, 0.0f, 1.0f
+			};*/
+
+			float groundVerts[16] =
+			{
+				25.0f, -1.0f, -25.0f, 1.0f,
+				-25.0f, -1.0f, -25.0f, 1.0f,
+				-25.0f, -1.0f, 0.0f, 1.0f,
+				25.0f, -1.0f, 0.0f, 1.0f
+			};
+
+			renderer->renderImage(&groundVerts[0], "ground", true);
+
 			renderer->renderSceneObject(goat);
 			renderer->renderSceneObject(bug);
 			renderer->renderSceneObject(tree);

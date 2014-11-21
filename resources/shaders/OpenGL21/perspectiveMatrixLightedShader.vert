@@ -23,30 +23,21 @@ varying vec2 textureCoords;
 
 void main()
 {
-    vec4 worldPos = position * zRotationMatrix * xRotationMatrix 
+   vec4 worldPos = position * zRotationMatrix * xRotationMatrix 
 			* yRotationMatrix
 			+ vec4(offset.x, offset.y, offset.z, 0.0);
 
+    // Only turning the camera around the y axis for now
     vec4 cameraPos = (worldPos - vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0.0))
-		     * zCameraRotationMatrix
-                     * xCameraRotationMatrix
-                     * yCameraRotationMatrix;
+			* yCameraRotationMatrix;
 
     gl_Position = perspectiveMatrix * cameraPos;
 
-    vec4 normalInWorld = vec4(normal, 1) * zRotationMatrix * xRotationMatrix 
-			* yRotationMatrix;
-    vec4 normalInCamera = normalInWorld * zCameraRotationMatrix
-                     * xCameraRotationMatrix
-                     * yCameraRotationMatrix;
-
-    vec4 normalCameraSpace = normalize(perspectiveMatrix * normalInCamera);    
+    vec4 normalInWorld = normalize(perspectiveMatrix * (vec4(normal, 1) * zRotationMatrix * xRotationMatrix 
+			* yRotationMatrix));   
     
-    vec4 lightDirectionCameraSpace = normalize(perspectiveMatrix * vec4(lightDirection, 1)  * zCameraRotationMatrix
-                     * xCameraRotationMatrix
-                     * yCameraRotationMatrix);
+    vec4 lightDirectionWorld = normalize(perspectiveMatrix * vec4(lightDirection, 1));
 
-    cosAngIncidence = clamp(dot(normalCameraSpace, lightDirectionCameraSpace), 0, 1);
-    textureCoords = uvCoords;
-    
+    cosAngIncidence = clamp(dot(normalInWorld, lightDirectionWorld), 0, 1);
+    textureCoords = uvCoords; 
 }
