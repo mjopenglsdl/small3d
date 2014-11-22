@@ -228,6 +228,7 @@ namespace small3d
 		* @param textureName The name of the texture, containing the image (must have been loaded with 
 		* 					 generateTexture())
 		* @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
+		* @param offset	The offset (position) at which the quad of the image will be drawn.
 		*/
 		void renderImage(const float *vertices, const string &textureName, const bool &perspective = false, 
 			const glm::vec3 &offset = glm::vec3(0.0f, 0.0f, 0.0f));
