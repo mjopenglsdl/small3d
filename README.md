@@ -62,7 +62,7 @@ will not work, since there will be multiple
 normals for each vertex and, with indexed drawing,
 the normals listed later in the exported file
 for some vertices will overwrite the previous
-ones.
+ones. 
 
 If a texture has been created, the option "Include
 UVs" must also be set. The texture should be saved
