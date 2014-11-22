@@ -68,6 +68,14 @@ namespace small3d
 
 		bool noShaders;
 
+		float frustumScale;
+
+		float zNear;
+
+		float zFar;
+
+		float zOffsetFromCamera;
+
 		/**
 		* Load a shader's source code from a file into a string
 		* @param fileLocation The file's location, relative to the game path
@@ -121,6 +129,10 @@ namespace small3d
 		* @param fullScreen	Will the Renderer run in full screen mode? If set to true,
 		* 					the width and height have to correspond to the active screen
 		* 					resolution, in order for the scene to be displayed properly.				 
+		* @param frustumScale	How much the frustum scales the items rendered
+		* @param zNear			Projection plane z coordinate (use positive value)
+		* @param zFar			Far end of frustum z coordinate (use positive value)
+		* @param zOffsetFromCamera	The position of the projection plane with regard to the camera.
 		* @param ttfFontPath	The path to the TrueType font to be used by the Renderer,
 		* 						including its filename. It defaults to the font provided
 		* 						by the engine but, even if the same one is used for an
@@ -139,6 +151,8 @@ namespace small3d
 		* 						and outputs are maintained the same.
 		*/
 		void init(const int width, const int height, const bool fullScreen, 
+			const float &frustumScale = 1.0f, const float &zNear = 0.1f, 
+			const float &zFar = 25.0f, const float &zOffsetFromCamera = 1.0f,
 			const string ttfFontPath="dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
 			const string shadersPath = "dimitrikourk/small3d/resources/shaders/");
 
@@ -149,19 +163,7 @@ namespace small3d
 		glm::vec3 lightDirection;
 
 		/**
-		 * @brief	The near Z value.
-		 */
-
-		float zNear;
-
-		/**
-		 * @brief	The far Z value.
-		 */
-
-		float zFar;
-
-		/**
-		 * @brief	The camera position.
+		 * @brief	The camera position in world space.
 		 */
 
 		glm::vec3 cameraPosition;
@@ -227,7 +229,8 @@ namespace small3d
 		* 					 generateTexture())
 		* @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
 		*/
-		void renderImage(const float *vertices, const string &textureName, const bool &perspective = false);
+		void renderImage(const float *vertices, const string &textureName, const bool &perspective = false, 
+			const glm::vec3 &offset = glm::vec3(0.0f, 0.0f, 0.0f));
 
 		/**
 		* Render a scene object

@@ -45,7 +45,7 @@
 // bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
 // bii://dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg
 
-#define MAX_Z -2.0f
+#define MAX_Z -1.0f
 #define MIN_Z -24.0f
 
 #define GROUND_Y -1.0f
@@ -53,7 +53,7 @@
 
 #define BUG_ROTATION_SPEED 0.12f
 #define BUG_DIVE_TILT 0.8f
-#define BUG_SPEED 0.03f
+#define BUG_SPEED 0.08f
 #define BUG_DIVE_DURATION 30
 #define BUG_START_DIVE_DISTANCE 0.1f
 #define BUG_FLIGHT_HEIGHT 1.4f
@@ -77,7 +77,8 @@ namespace AvoidTheBug3D {
 			initLogger();
 
 			renderer = shared_ptr<Renderer>(new Renderer());
-			renderer->init(854, 480, false);
+
+			renderer->init(854, 480, false, 1.0f, 1.0f, 24.0f, -1.0f);
 
 			unique_ptr<Image> startScreenTexture (
 				new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png"));
@@ -172,13 +173,13 @@ namespace AvoidTheBug3D {
 		if(keyInput.up) {
 			float a = 
 
-				goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
+			goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
 			goatOffset->z -= sin(goatRotation->y) * GOAT_SPEED;
 
-			if (goatOffset->z < MIN_Z)
-				goatOffset->z = MIN_Z;
-			if (goatOffset->z > MAX_Z) 
-				goatOffset->z = MAX_Z;
+			if (goatOffset->z < MIN_Z +1.0f)
+				goatOffset->z = MIN_Z +1.0f;
+			if (goatOffset->z > MAX_Z -1.0f) 
+				goatOffset->z = MAX_Z -1.0f;
 
 			if (goatOffset->x < goatOffset-> z)
 				goatOffset->x = goatOffset-> z;
@@ -296,8 +297,6 @@ namespace AvoidTheBug3D {
 			bugOffset->y += bugVerticalSpeed;
 		}
 
-
-
 		if (bugRotation->y < -FULL_ROTATION)
 			bugRotation->y = 0.0f;
 
@@ -318,6 +317,7 @@ namespace AvoidTheBug3D {
 		// Uncomment to see the bug's view of the world
 		// renderer->cameraPosition = *bugOffset;
 		// renderer->cameraRotation = *bugRotation;
+		// renderer->cameraRotation.y -= 1.57f;
 
 		bug->animate();
 	}
@@ -358,10 +358,10 @@ namespace AvoidTheBug3D {
 		if(gameState == START_SCREEN) {
 			float startScreenVerts[16] =
 			{
-				1.0f, 1.0f, 1.0f, 1.0f,
-				-1.0f, 1.0f, 1.0f, 1.0f,
 				-1.0f, -1.0f, 1.0f, 1.0f,
-				1.0f, -1.0f, 1.0f, 1.0f
+				1.0f, -1.0f, 1.0f, 1.0f,
+				1.0f, 1.0f, 1.0f, 1.0f,
+				-1.0f, 1.0f, 1.0f, 1.0f
 			};
 
 			renderer->renderImage(&startScreenVerts[0], "startScreen");
@@ -372,35 +372,25 @@ namespace AvoidTheBug3D {
 
 			float skyVerts[16] =
 			{
-				1.0f, 1.0f, 1.0f, 1.0f,
-				-1.0f, 1.0f, 1.0f, 1.0f,
 				-1.0f, -1.0f, 1.0f, 1.0f,
-				1.0f, -1.0f, 1.0f, 1.0f
+				1.0f, -1.0f, 1.0f, 1.0f,
+				1.0f, 1.0f, 1.0f, 1.0f,
+				-1.0f, 1.0f, 1.0f, 1.0f
 			};
-
 
 			renderer->renderImage(&skyVerts[0], "sky");
 
-
 			// Draw the background
-
-			/*float groundVerts[16] =
-			{
-				25.0f, -1.0f, -25.0f, 1.0f,
-				-25.0f, -1.0f, -25.0f, 1.0f,
-				-25.0f, -1.0f, 0.0f, 1.0f,
-				25.0f, -1.0f, 0.0f, 1.0f
-			};*/
 
 			float groundVerts[16] =
 			{
-				25.0f, -1.0f, -25.0f, 1.0f,
-				-25.0f, -1.0f, -25.0f, 1.0f,
-				-25.0f, -1.0f, 0.0f, 1.0f,
-				25.0f, -1.0f, 0.0f, 1.0f
+				-25.0f, GROUND_Y, MAX_Z, 1.0f,
+				25.0f, GROUND_Y, MAX_Z, 1.0f,
+				25.0f, GROUND_Y,  MIN_Z, 1.0f,
+				-25.0f, GROUND_Y, MIN_Z, 1.0f
 			};
 
-			renderer->renderImage(&groundVerts[0], "ground", true);
+			renderer->renderImage(&groundVerts[0], "ground", true, glm::vec3(0.0f, 0.0f, 0.0f));
 
 			renderer->renderSceneObject(goat);
 			renderer->renderSceneObject(bug);

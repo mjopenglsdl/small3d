@@ -68,8 +68,10 @@ namespace small3d
 		font = NULL;
 		noShaders = false;
 		lightDirection = glm::vec3(0.0f, 0.9f, 0.2f);
-		zNear = 1.0f;
-		zFar = 25.0f;
+		frustumScale = 1.0f;
+		zNear = -1.0f;
+		zFar = -25.0f;
+		zOffsetFromCamera = -1.0f;
 		cameraPosition = glm::vec3(0, 0, 0);
 		cameraRotation = glm::vec3(0, 0, 0);
 
@@ -250,12 +252,19 @@ namespace small3d
 		}
 	}
 
-	void Renderer::init(const int width, const int height, const bool fullScreen, 
+	void Renderer::init(const int width, const int height, const bool fullScreen,
+		const float &frustumScale, const float &zNear, 
+		const float &zFar, const float &zOffsetFromCamera,
 		const string ttfFontPath, const string shadersPath)
 	{
 		this->ttfFontPath = ttfFontPath;
 
 		this->initSDL(width, height, fullScreen);
+
+		this->frustumScale = frustumScale;
+		this->zNear = zNear;
+		this->zFar = zFar;
+		this->zOffsetFromCamera = zOffsetFromCamera;
 
 		this->detectOpenGLVersion();
 
@@ -323,11 +332,11 @@ namespace small3d
 
 			float perspectiveMatrix[16];
 			memset(perspectiveMatrix, 0, sizeof(float) * 16);
-			perspectiveMatrix[0] = 1.0f; // frustum scale
-			perspectiveMatrix[5] = ROUND_2_DECIMAL(width / height);
+			perspectiveMatrix[0] = frustumScale;
+			perspectiveMatrix[5] = frustumScale * ROUND_2_DECIMAL(width / height);
 			perspectiveMatrix[10] = (zNear + zFar) / (zNear - zFar); 
-			perspectiveMatrix[14] = 2.0f * zNear * zFar / (zNear - zFar); // 2 * zNear * zFar / (zNear - zFar);
-			perspectiveMatrix[11] = -1.0f; // zCamera
+			perspectiveMatrix[14] = 2.0f * zNear * zFar / (zNear - zFar); 
+			perspectiveMatrix[11] = zOffsetFromCamera;
 
 			glUniformMatrix4fv(perspectiveMatrixUniform, 1, GL_FALSE,
 				perspectiveMatrix);
@@ -346,16 +355,16 @@ namespace small3d
 		glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
 		glClearDepth(1.0f);
 
-		// Program (with shaders) for rendering text
+		// Program (with shaders) for orthographic rendering
 
-		GLuint textVertexShader = compileShader(simpleVertexShaderPath,
+		GLuint simpleVertexShader = compileShader(simpleVertexShaderPath,
 			GL_VERTEX_SHADER);
-		GLuint textFragmentShader = compileShader(simpleFragmentShaderPath,
+		GLuint simpleFragmentShader = compileShader(simpleFragmentShaderPath,
 			GL_FRAGMENT_SHADER);
 
 		orthographicProgram = glCreateProgram();
-		glAttachShader(orthographicProgram, textVertexShader);
-		glAttachShader(orthographicProgram, textFragmentShader);
+		glAttachShader(orthographicProgram, simpleVertexShader);
+		glAttachShader(orthographicProgram, simpleFragmentShader);
 
 		glLinkProgram(orthographicProgram);
 
@@ -448,9 +457,9 @@ namespace small3d
 		GLuint zCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
 			"zCameraRotationMatrix");
 
-		glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(cameraRotation.x)));
-		glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(cameraRotation.y)));
-		glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(cameraRotation.z)));
+		glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(-cameraRotation.x)));
+		glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(-cameraRotation.y)));
+		glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(-cameraRotation.z)));
 
 		// Camera position
 
@@ -459,20 +468,10 @@ namespace small3d
 	}
 
 
-	void Renderer::renderImage(const float *vertices, const string &textureName, const bool &perspective)
+	void Renderer::renderImage(const float *vertices, const string &textureName, const bool &perspective, const glm::vec3 &offset)
 	{
 		
 		glUseProgram(perspective? perspectiveProgram : orthographicProgram);
-
-		float triangleVerts[24] =
-		{
-			vertices[0], vertices[1], vertices[2], 1.0f,
-			vertices[4], vertices[5], vertices[6], 1.0f,
-			vertices[12], vertices[13], vertices[14], 1.0f,
-			vertices[12], vertices[13], vertices[14], 1.0f,
-			vertices[4], vertices[5], vertices[6], 1.0f,
-			vertices[8], vertices[9], vertices[10], 1.0f
-		};
 
 		GLuint vao = 0;
 		if (isOpenGL33Supported)
@@ -489,10 +488,24 @@ namespace small3d
 
 		glBindBuffer(GL_ARRAY_BUFFER, boxBuffer);
 		glBufferData(GL_ARRAY_BUFFER,
-			sizeof(float) * 24,
-			triangleVerts,
+			sizeof(float) * 16,
+			vertices,
 			GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		unsigned int vertexIndices[6] =
+		{
+			0, 1, 2,
+			2, 3, 0
+		};
+
+		GLuint indexBufferObject = 0;
+
+		glGenBuffers(1, &indexBufferObject);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 
+			sizeof(unsigned int) * 6, vertexIndices, GL_STATIC_DRAW);
 
 		GLuint textureHandle = getTextureHandle(textureName);
 
@@ -503,14 +516,12 @@ namespace small3d
 
 		glBindTexture(GL_TEXTURE_2D, textureHandle);
 
-		float textureCoords[12] =
+		float textureCoords[8] =
 		{
+			0.0f, 1.0f,
+			1.0f, 1.0f,
 			1.0f, 0.0f,
-			0.0f, 0.0f,
-			1.0f, 1.0f,
-			1.0f, 1.0f,
-			0.0f, 0.0f,
-			0.0f, 1.0f
+			0.0f, 0.0f
 		};
 
 		GLuint coordBuffer = 0;
@@ -518,11 +529,11 @@ namespace small3d
 		glGenBuffers(1,&coordBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, coordBuffer);
 		glBufferData(GL_ARRAY_BUFFER,
-			sizeof(float) * 12,
-			&textureCoords,
-			GL_DYNAMIC_DRAW);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+			sizeof(float) * 8,
+			textureCoords,
+			GL_STATIC_DRAW);
+		glEnableVertexAttribArray(perspective? 2 : 1);
+		glVertexAttribPointer(perspective? 2 : 1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 		if (perspective)
 		{
@@ -532,16 +543,25 @@ namespace small3d
 			// "Disable" colour since there is a texture
 			glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
 
-			positionSceneObject(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+			// Lighting
+			GLuint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
+				"lightDirection");
+			glUniform3fv(lightDirectionUniform, 1,
+				glm::value_ptr(lightDirection));
+
+			positionSceneObject(offset, glm::vec3(0.0f, 0.0f, 0.0f));
 			positionCamera();
 		}
 
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawElements(GL_TRIANGLES,
+			6, GL_UNSIGNED_INT, 0);
 
+		glDeleteBuffers(1, &indexBufferObject);
 		glDeleteBuffers(1, &boxBuffer);
 		glDeleteBuffers(1, &coordBuffer);
 
-		glDisableVertexAttribArray(1);
+
+		glDisableVertexAttribArray(perspective? 2 : 1);
 		glDisableVertexAttribArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -593,8 +613,7 @@ namespace small3d
 			sceneObject->getModel().indexDataSize,
 			sceneObject->getModel().indexData,
 			GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-
+		
 		// Normals
 		glGenBuffers(1, &normalsBufferObject);
 		glBindBuffer(GL_ARRAY_BUFFER, normalsBufferObject);
