@@ -16,7 +16,7 @@ using namespace std;
 namespace small3d {
 
 	/**
-	* @class	ModelLoader
+	* @class	WavefrontLoader
 	*
 	* @brief	Class that loads a model from a wavefront .obj file, into a Model object.
 	*

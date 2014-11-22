@@ -16,8 +16,12 @@
 
 namespace small3d
 {
+	/**
+	 * @struct	Model
+	 *
+	 * @brief	A 3D model
+	 */
 
-	/// A model. It can be a simple object or a game character. It is loaded from a Wavefront .obj file.
 	struct Model
 	{
 

@@ -21,6 +21,13 @@ using namespace small3d;
 
 namespace AvoidTheBug3D {
 
+	/**
+	 * @class	GameLogic
+	 *
+	 * @brief	The main body of the sample game.
+	 *
+	 */
+
 	class GameLogic {
 
 	private:

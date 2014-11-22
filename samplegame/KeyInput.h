@@ -12,6 +12,11 @@
 
 namespace AvoidTheBug3D
 {
+	/**
+	 * @typedef	struct KeyInput
+	 *
+	 * @brief	Structure holding the state of keys on the keyboard that are related to the game.
+	 */
 
 	typedef struct KeyInput  
 	{
@@ -30,4 +35,4 @@ namespace AvoidTheBug3D
 
 }
 
-#endif /* KEYINPUT_H_ */
+#endif

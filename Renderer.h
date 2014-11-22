@@ -140,7 +140,7 @@ namespace small3d
 		* 						will need to be specified here. Only one font can be used
 		* 						by the engine at present but that will change in the near
 		* 						future.
-		* @param shadersPath   The path where the shaders will be stored, relative
+		* @param shadersPath	The path where the shaders will be stored, relative
 		* 						to the application's executing directory. It
 		* 						defaults to the path provided by the engine, but
 		* 						it can be changed, so as to accommodate for executables

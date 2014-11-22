@@ -22,8 +22,13 @@ using namespace std;
 namespace small3d
 {
 	/**
-	* A world object
-	*/
+	 * @class	SceneObject
+	 *
+	 * @brief	An object that appears on the 3D scene. It is made up of one or more models (the latter for animation),
+	 * 			together with information about positioning and rotation and collision detection functionality.
+	 *	 
+	 */
+
 	class SceneObject
 	{
 	private:

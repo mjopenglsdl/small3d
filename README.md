@@ -10,6 +10,8 @@ For requests for assistance, please open an issue on the project's source code r
 
 API documentation: http://small3d.org
 
+You can also follow small3d on Twitter: https://twitter.com/small_3D
+
 ![Screen capture from the first game that runs on small3d](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.

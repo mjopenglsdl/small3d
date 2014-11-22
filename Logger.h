@@ -33,12 +33,12 @@ using namespace std;
 namespace small3d {
 
 	/**
-	* @enum	EngineLogLevel
+	* @enum	LogLevel
 	*
 	* @brief	Possible logging levels.
 	*/
 
-	enum EngineLogLevel {
+	enum LogLevel {
 		info, debug, error
 	};
 
@@ -75,7 +75,7 @@ namespace small3d {
 		~Logger();
 
 		/**
-		* @fn	void Logger::append(const EngineLogLevel level, const string message);
+		* @fn	void Logger::append(const LogLevel level, const string message);
 		*
 		* @brief	Appends a message to the logger.
 		*
@@ -83,7 +83,7 @@ namespace small3d {
 		* @param	message	The message.
 		*/
 
-		void append(const EngineLogLevel level, const string message);
+		void append(const LogLevel level, const string message);
 	};
 	
 
