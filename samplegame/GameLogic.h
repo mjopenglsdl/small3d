@@ -14,8 +14,10 @@
 #include <dimitrikourk/small3d/SceneObject.h>
 #include <dimitrikourk/small3d/Renderer.h>
 #include <miguel/game_utils/SoundPlayer.h>
+#include <dimitrikourk/small3d/Text.h>
 
 #include <dimitrikourk/small3d/samplegame/KeyInput.h>
+
 
 using namespace small3d;
 
@@ -39,6 +41,8 @@ namespace AvoidTheBug3D {
 
 		shared_ptr<Renderer> renderer;
 
+		shared_ptr<Text> crusoeText48;
+
 		enum GameState {START_SCREEN, PLAYING};
 		GameState gameState;
 
@@ -46,6 +50,9 @@ namespace AvoidTheBug3D {
 		BugState bugState, bugPreviousState;
 		int bugFramesInCurrentState;
 		float bugVerticalSpeed;
+
+		unsigned int startTicks;
+		int seconds;
 
 		void initGame();
 		void processGame(const KeyInput &keyInput);

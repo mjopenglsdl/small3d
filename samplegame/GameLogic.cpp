@@ -75,10 +75,12 @@ namespace AvoidTheBug3D {
 
 	GameLogic::GameLogic() {
 			initLogger();
-
+			
 			renderer = shared_ptr<Renderer>(new Renderer());
 
 			renderer->init(854, 480, false);
+
+			crusoeText48 = shared_ptr<Text>(new Text(renderer));
 
 			unique_ptr<Image> startScreenTexture (
 				new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png"));
@@ -128,6 +130,9 @@ namespace AvoidTheBug3D {
 				"dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah")) {
 				throw Exception("Could not load goat sound.");
 			}
+
+			startTicks = 0;
+			seconds = 0;
 	}
 
 	GameLogic::~GameLogic() {
@@ -145,6 +150,9 @@ namespace AvoidTheBug3D {
 		bugState = FLYING_STRAIGHT;
 		bugPreviousState = FLYING_STRAIGHT;
 		bugFramesInCurrentState = 1;
+
+		startTicks = SDL_GetTicks();
+
 	}
 
 	void GameLogic::moveGoat( const KeyInput &keyInput )
@@ -235,6 +243,7 @@ namespace AvoidTheBug3D {
 			if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
 			{
 				soundPlayer->playSound("bah");
+				seconds = (SDL_GetTicks() - startTicks) / 1000;
 				gameState = START_SCREEN;
 			}
 
@@ -315,7 +324,7 @@ namespace AvoidTheBug3D {
 			bugOffset->x = -(bugOffset->z);
 
 		// Uncomment to see the bug's view of the world
-		 /*renderer->cameraPosition = *bugOffset;
+		/* renderer->cameraPosition = *bugOffset;
 		 renderer->cameraRotation = *bugRotation;
 		 renderer->cameraRotation.y -= 1.57f;*/
 
@@ -366,6 +375,13 @@ namespace AvoidTheBug3D {
 
 			renderer->renderImage(&startScreenVerts[0], "startScreen");
 
+			if (seconds != 0)
+			{
+				SDL_Color textColour = {255, 100, 0, 255};			
+				crusoeText48->renderText("Goat not bitten for " + intToStr(seconds) + " seconds", 
+					textColour, -0.95f, -0.6f, 0.0f, -0.8f);
+			}
+
 		}
 		else
 		{
@@ -395,10 +411,7 @@ namespace AvoidTheBug3D {
 			renderer->renderSceneObject(goat);
 			renderer->renderSceneObject(bug);
 			renderer->renderSceneObject(tree);
-
-			//SDL_Color textColour = {255, 255, 0, 255};
-			//renderer->renderText("Now it's chasing me! HELP!", textColour, -1.0f, 1.0f, 1.0f, 0.5f);
-
+			
 		}
 		renderer->swapBuffers();
 	}

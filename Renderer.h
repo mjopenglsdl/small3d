@@ -7,7 +7,6 @@
 *     License: MIT
 */
 
-// bii://dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf
 // bii://dimitrikourk/small3d/resources/shaders/OpenGL33/perspectiveMatrixLightedShader.vert
 // bii://dimitrikourk/small3d/resources/shaders/OpenGL33/textureShader.frag
 // bii://dimitrikourk/small3d/resources/shaders/OpenGL33/simpleShader.vert
@@ -25,7 +24,6 @@
 #include <dimitrikourk/glew/glew.h>
 #include <miguel/sdl2/include/SDL_opengl.h>
 #include <miguel/sdl2/include/SDL.h>
-#include <miguel/sdl2_ttf/SDL_ttf.h>
 #endif //SDLANDOPENGL
 
 #include <memory>
@@ -34,8 +32,6 @@
 #include "Logger.h"
 #include <unordered_map>
 #include <dimitrikourk/glm/glm/glm.hpp>
-
-//#include <glm/gtc/type_ptr.hpp>
 
 using namespace std;
 
@@ -55,10 +51,6 @@ namespace small3d
 	private:
 
 		SDL_Window* sdlWindow;
-
-		TTF_Font *font;
-
-		string ttfFontPath;
 
 		GLuint perspectiveProgram;
 
@@ -133,13 +125,6 @@ namespace small3d
 		* @param zNear			Projection plane z coordinate (use positive value)
 		* @param zFar			Far end of frustum z coordinate (use positive value)
 		* @param zOffsetFromCamera	The position of the projection plane with regard to the camera.
-		* @param ttfFontPath	The path to the TrueType font to be used by the Renderer,
-		* 						including its filename. It defaults to the font provided
-		* 						by the engine but, even if the same one is used for an
-		* 						game, most probably the path to where it is placed
-		* 						will need to be specified here. Only one font can be used
-		* 						by the engine at present but that will change in the near
-		* 						future.
 		* @param shadersPath	The path where the shaders will be stored, relative
 		* 						to the application's executing directory. It
 		* 						defaults to the path provided by the engine, but
@@ -153,8 +138,7 @@ namespace small3d
 		void init(const int width, const int height, const bool fullScreen, 
 			const float &frustumScale = 1.0f, const float &zNear = 1.0f, 
 			const float &zFar = 24.0f, const float &zOffsetFromCamera = -1.0f,
-			const string ttfFontPath="dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
-			const string shadersPath = "dimitrikourk/small3d/resources/shaders/");
+			const string &shadersPath = "dimitrikourk/small3d/resources/shaders/");
 
 		/**
 		* @brief	Vector indicating the direction of the light in the scene.
@@ -238,19 +222,6 @@ namespace small3d
 		* @param sceneObject The scene object
 		*/
 		void renderSceneObject(shared_ptr<SceneObject> sceneObject);
-
-		/**
-		* Render some text on the screen. The text will be rendered at a depth z of 0.5
-		* in an orthographic coordinate space
-		* @param text The text to be rendered
-		* @param colour The colour in which the text will be rendered
-		* @param topX The top x coordinate of the text rectangle
-		* @param topY The top y coordinate of the text rectangle
-		* @param bottomX The bottom x coordinate of the text rectangle
-		* @param bottomY The bottom y coordinate of the text rectangle
-		*/
-		void renderText(const string &text, const SDL_Color &colour, 
-			const float &topX, const float &topY, const float &bottomX, const float &bottomY);
 
 		/**
 		* Clears the screen.

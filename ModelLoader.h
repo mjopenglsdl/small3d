@@ -17,7 +17,7 @@ namespace small3d {
 	/**
 	 * @class	ModelLoader
 	 *
-	 * @brief	Class that loads a model from a file, into a Model object.
+	 * @brief	Class that loads a model from a file, into a Model object. (abstract class)
 	 *
 	 */
 

@@ -65,7 +65,6 @@ namespace small3d
 		perspectiveProgram = 0;
 		orthographicProgram = 0;
 		textures = new unordered_map<string, GLuint>();
-		font = NULL;
 		noShaders = false;
 		lightDirection = glm::vec3(0.0f, 0.9f, 0.2f);
 		frustumScale = 1.0f;
@@ -79,7 +78,6 @@ namespace small3d
 
 	Renderer::~Renderer()
 	{
-
 		LOGINFO("Renderer destructor running");
 		for (unordered_map<string, GLuint>::iterator it = textures->begin();
 			it != textures->end(); ++it)
@@ -103,9 +101,6 @@ namespace small3d
 		{
 			glDeleteProgram(perspectiveProgram);
 		}
-
-		TTF_CloseFont(font);
-		TTF_Quit();
 
 		if (sdlWindow != 0)
 		{
@@ -152,27 +147,6 @@ namespace small3d
 		{
 			LOGERROR(SDL_GetError());
 			throw Exception("Unable to set video");
-		}
-
-		if(TTF_Init()==-1)
-		{
-			LOGERROR(TTF_GetError());
-			throw Exception("Unable to initialise font system");
-		}
-
-		string fontPath = SDL_GetBasePath() + ttfFontPath;
-		LOGINFO("Loading font from " + fontPath);
-
-		font = TTF_OpenFont(fontPath.c_str(), 48);
-
-		if (!font)
-		{
-			LOGERROR(TTF_GetError());
-			throw Exception("Failed to load font");
-		}
-		else
-		{
-			LOGINFO("TTF font loaded successfully");
 		}
 
 	}
@@ -255,10 +229,8 @@ namespace small3d
 	void Renderer::init(const int width, const int height, const bool fullScreen,
 		const float &frustumScale, const float &zNear, 
 		const float &zFar, const float &zOffsetFromCamera,
-		const string ttfFontPath, const string shadersPath)
+		const string &shadersPath)
 	{
-		this->ttfFontPath = ttfFontPath;
-
 		this->initSDL(width, height, fullScreen);
 
 		this->frustumScale = frustumScale;
@@ -720,69 +692,6 @@ namespace small3d
 
 		glUseProgram(0);
 
-	}
-
-	void Renderer::renderText(const string &text, const SDL_Color &colour, 
-		const float &topX, const float &topY, const float &bottomX, const float &bottomY)
-	{
-
-		GLuint textHandle = getTextureHandle("text_" + text);
-
-		if (textHandle == 0)
-		{
-
-			SDL_Surface *textSurface = TTF_RenderText_Blended(font,
-				text.c_str(), colour);
-			int numPixels = textSurface->h * textSurface->w;
-
-			Uint32 *pix = static_cast<Uint32*>(textSurface->pixels);
-
-			float *texturef = new float[numPixels * 4];
-
-			for (int pidx = 0; pidx < numPixels; ++pidx)
-			{
-				Uint32 r = pix[pidx] & textSurface->format->Rmask;
-				Uint32 g = pix[pidx] & textSurface->format->Gmask;
-				Uint32 b = pix[pidx] & textSurface->format->Bmask;
-				Uint32 a = pix[pidx] & textSurface->format->Amask;
-
-				r = r >> textSurface->format->Rshift;
-				g = g >> textSurface->format->Gshift;
-				b = b >> textSurface->format->Bshift;
-				a = a >> textSurface->format->Ashift;
-
-				float ttuple[4] = {(float)r, // used to be boost::numeric_cast<float, Uint32>
-					(float)g,
-					(float)b,
-					(float)a
-				};
-
-				ttuple[0]= floorf(100.0f * (ttuple[0] / 255.0f) + 0.5f) / 100.0f;
-				ttuple[1]= floorf(100.0f * (ttuple[1] / 255.0f) + 0.5f) / 100.0f;
-				ttuple[2]= floorf(100.0f * (ttuple[2] / 255.0f) + 0.5f) / 100.0f;
-				ttuple[3]= floorf(100.0f * (ttuple[3] / 255.0f) + 0.5f) / 100.0f;
-
-				memcpy(&texturef[pidx * 4], &ttuple, sizeof(ttuple));
-
-			}
-
-			textHandle = generateTexture("text_" + text, texturef, textSurface->w, textSurface->h);
-
-			delete[] texturef;
-			texturef = NULL;
-			SDL_FreeSurface(textSurface);
-
-		}
-
-		float boxVerts[16] =
-		{
-			bottomX, topY, -0.5f, 1.0f,
-			topX, topY, -0.5f, 1.0f,
-			topX, bottomY, -0.5f, 1.0f,
-			bottomX, bottomY, -0.5f, 1.0f
-		};
-
-		this->renderImage(boxVerts, "text_" + text);
 	}
 
 	void Renderer::clearScreen()
