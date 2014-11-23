@@ -78,7 +78,7 @@ namespace AvoidTheBug3D {
 
 			renderer = shared_ptr<Renderer>(new Renderer());
 
-			renderer->init(854, 480, false, 1.0f, 1.0f, 24.0f, -1.0f);
+			renderer->init(854, 480, false);
 
 			unique_ptr<Image> startScreenTexture (
 				new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png"));

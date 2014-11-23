@@ -69,8 +69,8 @@ namespace small3d
 		noShaders = false;
 		lightDirection = glm::vec3(0.0f, 0.9f, 0.2f);
 		frustumScale = 1.0f;
-		zNear = -1.0f;
-		zFar = -25.0f;
+		zNear = 1.0f;
+		zFar = 24.0f;
 		zOffsetFromCamera = -1.0f;
 		cameraPosition = glm::vec3(0, 0, 0);
 		cameraRotation = glm::vec3(0, 0, 0);

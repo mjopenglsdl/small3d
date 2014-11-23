@@ -151,8 +151,8 @@ namespace small3d
 		* 						and outputs are maintained the same.
 		*/
 		void init(const int width, const int height, const bool fullScreen, 
-			const float &frustumScale = 1.0f, const float &zNear = 0.1f, 
-			const float &zFar = 25.0f, const float &zOffsetFromCamera = 1.0f,
+			const float &frustumScale = 1.0f, const float &zNear = 1.0f, 
+			const float &zFar = 24.0f, const float &zOffsetFromCamera = -1.0f,
 			const string ttfFontPath="dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
 			const string shadersPath = "dimitrikourk/small3d/resources/shaders/");
 
