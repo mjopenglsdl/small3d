@@ -20,9 +20,11 @@ namespace small3d {
 	string intToStr( int number )
 	{
 		char buffer[100];
-
+#if defined(_WIN32) && !defined(__MINGW32__)
 		_itoa_s(number, buffer, 10);
-
+#else
+		_itoa(number, buffer, 10);
+#endif
 		return string(buffer);
 	}
 
