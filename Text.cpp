@@ -9,7 +9,8 @@
 
 #include "Text.h"
 #include "Exception.h"
-#include <stdlib.h>
+#include <cstdio>
+#include <cstring>
 
 using namespace std;
 
@@ -20,11 +21,7 @@ namespace small3d {
 	string intToStr( int number )
 	{
 		char buffer[100];
-#if defined(_WIN32) && !defined(__MINGW32__)
-		_itoa_s(number, buffer, 10);
-#else
-		_itoa(number, buffer, 10);
-#endif
+		sprintf(buffer,"%d",number);
 		return string(buffer);
 	}
 
