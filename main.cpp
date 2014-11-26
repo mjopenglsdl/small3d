@@ -175,8 +175,8 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 			bboxes->facesVertexIndexes->at(idx)[3] << ", " << endl;
 
 	}
-
-	EXPECT_FALSE(bboxes->pointIsWithin(0.1f, 0.1f, 0.1f, 0.0f, 0.1f, 0.1f, 1.4f));
+	shared_ptr<glm::vec3> rotation(new glm::vec3(0.0f, 0.0f, 0.0f));
+	EXPECT_FALSE(bboxes->pointIsWithin(0.1f, 0.1f, 0.1f, 0.0f, 0.1f, 0.1f, rotation));
 
 }
 

@@ -96,7 +96,7 @@ namespace small3d {
 		 * 		const float &boxesX, const float &boxesY, const float &boxesZ,
 		 * 		const float &boxesRotation) };
 		 *
-		 * @brief	Check if another set of bounding boxes collides with this set
+		 * @brief	Check if another set of bounding boxes is located with this set (even partly)
 		 *
 		 * @param	otherBoxes		  	The other boxes.
 		 * @param	otherBoxesX		  	The other boxes x coordinate.
