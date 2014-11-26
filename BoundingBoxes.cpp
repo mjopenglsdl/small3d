@@ -159,8 +159,6 @@ namespace small3d {
 				rotatedCoords.x += boxesX;
 				rotatedCoords.y += boxesY;
 				rotatedCoords.z += boxesZ;
-				/*cout<<"Checking "<<minX<<" "<<maxX<< " - " << rotatedCoords.x<<", "<<
-				minY<<" "<<maxY<<" - "<<rotatedCoords.y << ", " << minZ <<" "<<maxZ<<" - "<<rotatedCoords.z<<endl;*/
 				if (rotatedCoords.x < minX)
 					minX = rotatedCoords.x;
 				if (rotatedCoords.x > maxX)
@@ -185,4 +183,37 @@ namespace small3d {
 
 		return collides;
 	}
+
+	bool BoundingBoxes::boxesCollide( shared_ptr<BoundingBoxes> otherBoxes, const float &otherBoxesX, const float &otherBoxesY, 
+		const float &otherBoxesZ, const float &otherBoxesRotation, const float &boxesX, const float &boxesY, 
+		const float &boxesZ, const float &boxesRotation )
+	{
+		bool collides = false;
+
+		glm::mat4 rotationMatrix = rotateY(otherBoxesRotation);
+
+		for(vector<float*>::iterator vertex = otherBoxes->vertices->begin(); vertex != otherBoxes->vertices->end(); vertex++) {
+			
+			glm::vec4 otherCoords((*vertex)[0], (*vertex)[1], (*vertex)[2], 1.0f);
+			glm::vec4 rotatedOtherCoords(0.0f, 0.0f, 0.0f, 1.0f);
+
+			rotatedOtherCoords = rotationMatrix * otherCoords;
+
+			rotatedOtherCoords.x += otherBoxesX;
+			rotatedOtherCoords.y += otherBoxesY;
+			rotatedOtherCoords.z += otherBoxesZ;
+
+			cout << "Checking " << rotatedOtherCoords.x << ", " << rotatedOtherCoords.y << ", " << rotatedOtherCoords.z <<
+				" with " << boxesX << ", " << boxesY << ", " << boxesZ << " rotation " << boxesRotation << endl;
+			if (pointCollides(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z, 
+				boxesX, boxesY, boxesZ, boxesRotation))
+			{
+				
+				collides = true;
+				break;
+			}
+		}
+		return collides;
+	}
+
 }

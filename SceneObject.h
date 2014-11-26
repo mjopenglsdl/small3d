@@ -43,7 +43,7 @@ namespace small3d
 		shared_ptr<glm::vec4> colour;
 		shared_ptr<glm::vec3> offset;
 		shared_ptr<glm::vec3> rotation;
-		shared_ptr<BoundingBoxes> boundingBoxes;
+		
 
 		void initPropVectors();
 
@@ -163,6 +163,12 @@ namespace small3d
 		void animate();
 
 		/**
+		 * @brief	The bounding boxes for the object, used for collision detection.
+		 */
+
+		shared_ptr<BoundingBoxes> boundingBoxes;
+
+		/**
 		* Check if the object collides with a point of the given
 		* coordinates
 		*
@@ -174,6 +180,18 @@ namespace small3d
 		*/
 
 		bool collidesWithPoint(float x, float y, float z);
+
+		/**
+		 * @fn	bool SceneObject::collidesWithSceneObject(SceneObject otherObject);
+		 *
+		 * @brief	Check if the object collides with another given object.
+		 *
+		 * @param	otherObject	The other object.
+		 *
+		 * @return	true if there is a collision, false if not.
+		 */
+
+		bool collidesWithSceneObject(shared_ptr<SceneObject> otherObject);
 
 	};
 

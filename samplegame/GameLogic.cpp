@@ -40,6 +40,7 @@
 // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000009.obj
 // bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj
 // bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png
+// bii://dimitrikourk/small3d/samplegame/resources/models/TreeBB/TreeBB.obj
 // bii://dimitrikourk/small3d/samplegame/resources/images/startScreen.png
 // bii://dimitrikourk/small3d/samplegame/resources/images/grass.png
 // bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
@@ -53,7 +54,7 @@
 
 #define BUG_ROTATION_SPEED 0.12f
 #define BUG_DIVE_TILT 0.8f
-#define BUG_SPEED 0.08f
+#define BUG_SPEED 0.0f
 #define BUG_DIVE_DURATION 30
 #define BUG_START_DIVE_DISTANCE 0.1f
 #define BUG_FLIGHT_HEIGHT 1.4f
@@ -112,7 +113,8 @@ namespace AvoidTheBug3D {
 			tree = shared_ptr<SceneObject> (
 				new SceneObject("tree",
 				"dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj",
-				 1, "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png"));
+				 1, "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png",
+				 "dimitrikourk/small3d/samplegame/resources/models/TreeBB/TreeBB.obj"));
 
 			tree->setOffset(2.6f, GROUND_Y, -8.0f);
 			tree->setRotation(0.0f, -0.5f, 0.0f);
@@ -411,6 +413,11 @@ namespace AvoidTheBug3D {
 			renderer->renderSceneObject(goat);
 			renderer->renderSceneObject(bug);
 			renderer->renderSceneObject(tree);
+
+			if (!goat->collidesWithSceneObject(tree)) {
+				SDL_Color textColour = {255, 100, 0, 255};
+				crusoeText48->renderText("Tree collision", textColour, 0.5f, -0.5f, 0.8f, -0.7f );
+			}
 			
 		}
 		renderer->swapBuffers();

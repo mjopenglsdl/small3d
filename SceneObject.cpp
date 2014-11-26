@@ -153,5 +153,20 @@ namespace small3d {
 		return boundingBoxes->pointCollides(x, y, z, offset->x, offset->y, offset->z, rotation->y);
 	}
 
+	bool SceneObject::collidesWithSceneObject( shared_ptr<SceneObject> otherObject )
+	{
+		if (boundingBoxes == NULL) {
+			throw Exception("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
+		}
+
+		if (otherObject->boundingBoxes == NULL) {
+			throw Exception("No bounding boxes have been provided for " + otherObject->name + ", so collision detection is not enabled.");
+		}
+
+		return boundingBoxes->boxesCollide(otherObject->boundingBoxes, otherObject->offset->x, otherObject->offset->y,
+			otherObject->offset->z, otherObject->rotation->y, offset->x, offset->y, offset->z, rotation->y);
+
+	}
+
 }
 
