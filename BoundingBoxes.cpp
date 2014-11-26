@@ -126,11 +126,11 @@ namespace small3d {
 
 	}
 
-	bool BoundingBoxes::pointCollides( const float &pointX, const float &pointY, const float &pointZ, 
-		const float &boxesX, const float &boxesY, const float &boxesZ, const float &boxesRotation)
+	bool BoundingBoxes::pointIsWithin( const float &pointX, const float &pointY, const float &pointZ, 
+		const float &boxesX, const float &boxesY, const float &boxesZ, shared_ptr<glm::vec3> boxesRotation)
 	{
 		bool collides = false;
-		glm::mat4 rotationMatrix = rotateY(boxesRotation);
+		glm::mat4 rotationMatrix = rotateZ(boxesRotation->z) * rotateX(boxesRotation->x) * rotateY(boxesRotation->y);
 
 		for (int idx = 0; idx < numBoxes; ++idx) {
 			float minZ, maxZ, minX, maxX, minY, maxY;
@@ -191,13 +191,13 @@ namespace small3d {
 		return collides;
 	}
 
-	bool BoundingBoxes::boxesCollide( shared_ptr<BoundingBoxes> otherBoxes, const float &otherBoxesX, const float &otherBoxesY, 
-		const float &otherBoxesZ, const float &otherBoxesRotation, const float &boxesX, const float &boxesY, 
-		const float &boxesZ, const float &boxesRotation )
+	bool BoundingBoxes::boxesAreWithin( shared_ptr<BoundingBoxes> otherBoxes, const float &otherBoxesX, const float &otherBoxesY, 
+		const float &otherBoxesZ, shared_ptr<glm::vec3> otherBoxesRotation, const float &boxesX, const float &boxesY, 
+		const float &boxesZ, shared_ptr<glm::vec3> boxesRotation)
 	{
 		bool collides = false;
 
-		glm::mat4 rotationMatrix = rotateY(otherBoxesRotation);
+		glm::mat4 rotationMatrix = rotateZ(otherBoxesRotation->z) * rotateX(otherBoxesRotation->x) * rotateY(otherBoxesRotation->y);
 
 		for(vector<float*>::iterator vertex = otherBoxes->vertices->begin(); vertex != otherBoxes->vertices->end(); vertex++) {
 			
@@ -212,7 +212,7 @@ namespace small3d {
 
 			/*cout << "Checking " << rotatedOtherCoords.x << ", " << rotatedOtherCoords.y << ", " << rotatedOtherCoords.z <<
 				" with " << boxesX << ", " << boxesY << ", " << boxesZ << " rotation " << boxesRotation << endl;*/
-			if (pointCollides(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z, 
+			if (pointIsWithin(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z, 
 				boxesX, boxesY, boxesZ, boxesRotation))
 			{
 				
@@ -220,6 +220,7 @@ namespace small3d {
 				break;
 			}
 		}
+
 		return collides;
 	}
 

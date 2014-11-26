@@ -176,7 +176,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
 	}
 
-	EXPECT_FALSE(bboxes->pointCollides(0.1f, 0.1f, 0.1f, 0.0f, 0.1f, 0.1f, 1.4f));
+	EXPECT_FALSE(bboxes->pointIsWithin(0.1f, 0.1f, 0.1f, 0.0f, 0.1f, 0.1f, 1.4f));
 
 }
 

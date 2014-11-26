@@ -11,6 +11,7 @@
 #include <memory>
 #include "Logger.h"
 #include <vector>
+#include <dimitrikourk/glm/glm/glm.hpp>
 
 using namespace std;
 
@@ -78,19 +79,19 @@ namespace small3d {
 		* @param	pointX		 	The point x coordinate.
 		* @param	pointY		 	The point y coordinate.
 		* @param	pointZ		 	The point z coordinate.
-		* @param	boxesX		 	The boxes x coordinate.
-		* @param	boxesY		 	The boxes y coordinate.
-		* @param	boxesZ		 	The boxes z coordinate.
-		* @param	boxesRotation	The boxes rotation.
+		* @param	boxesX		 	The boxes' x coordinate.
+		* @param	boxesY		 	The boxes' y coordinate.
+		* @param	boxesZ		 	The boxes' z coordinate.
+		* @param	boxesRotation	The boxes' rotation.
 		*
 		* @return	true if it succeeds, false if it fails.
 		*/
 
-		bool pointCollides(const float &pointX, const float &pointY, const float &pointZ, 
-			const float &boxesX, const float &boxesY, const float &boxesZ, const float &boxesRotation);
+		bool pointIsWithin(const float &pointX, const float &pointY, const float &pointZ, 
+			const float &boxesX, const float &boxesY, const float &boxesZ, shared_ptr<glm::vec3> boxesRotation);
 
 		/**
-		 * @fn	bool boxesCollide(const BoundingBoxes &otherBoxes, const float &otherBoxesX,
+		 * @fn	bool boxesAreWithin(const BoundingBoxes &otherBoxes, const float &otherBoxesX,
 		 * 		const float &otherBoxesY, const float &otherBoxesZ, const float &otherBoxesRotation,
 		 * 		const float &boxesX, const float &boxesY, const float &boxesZ,
 		 * 		const float &boxesRotation) };
@@ -101,18 +102,18 @@ namespace small3d {
 		 * @param	otherBoxesX		  	The other boxes x coordinate.
 		 * @param	otherBoxesY		  	The other boxes y coordinate.
 		 * @param	otherBoxesZ		  	The other boxes z coordinate.
-		 * @param	otherBoxesRotation	The other boxes rotation.
-		 * @param	boxesX			  	The boxes x coordinate.
-		 * @param	boxesY			  	The boxes y coordinate.
-		 * @param	boxesZ			  	The boxes z coordinate.
-		 * @param	boxesRotation	  	The boxes rotation.
+		 * @param	otherBoxesRotation	The other boxes' rotation.
+		 * @param	boxesX			  	The boxes' x coordinate.
+		 * @param	boxesY			  	The boxes' y coordinate.
+		 * @param	boxesZ			  	The boxes' z coordinate.
+		 * @param	boxesRotation	  	The boxes' rotation.
 		 *
 		 * @return	true if it succeeds, false if it fails.
 		 */
 
-		bool boxesCollide(shared_ptr<BoundingBoxes> otherBoxes, const float &otherBoxesX, const float &otherBoxesY,
-			const float &otherBoxesZ, const float &otherBoxesRotation, const float &boxesX, 
-			const float &boxesY, const float &boxesZ, const float &boxesRotation);
+		bool boxesAreWithin(shared_ptr<BoundingBoxes> otherBoxes, const float &otherBoxesX, const float &otherBoxesY,
+			const float &otherBoxesZ, shared_ptr<glm::vec3> otherBoxesRotation, const float &boxesX, 
+			const float &boxesY, const float &boxesZ, shared_ptr<glm::vec3> boxesRotation);
 
 	};
 }

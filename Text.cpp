@@ -21,7 +21,11 @@ namespace small3d {
 	string intToStr( int number )
 	{
 		char buffer[100];
+#if defined(_WIN32) && !defined(__MINGW32__)
+		sprintf_s(buffer,"%d",number);
+#else
 		sprintf(buffer,"%d",number);
+#endif
 		return string(buffer);
 	}
 

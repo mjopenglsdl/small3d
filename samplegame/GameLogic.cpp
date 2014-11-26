@@ -54,9 +54,9 @@
 
 #define BUG_ROTATION_SPEED 0.12f
 #define BUG_DIVE_TILT 0.8f
-#define BUG_SPEED 0.0f
+#define BUG_SPEED 0.08f
 #define BUG_DIVE_DURATION 30
-#define BUG_START_DIVE_DISTANCE 0.1f
+#define BUG_START_DIVE_DISTANCE 0.6f
 #define BUG_FLIGHT_HEIGHT 1.4f
 
 #define GOAT_ROTATION_SPEED 0.1f
@@ -167,6 +167,10 @@ namespace AvoidTheBug3D {
 		if(keyInput.left) {
 			goatRotation->y -= GOAT_ROTATION_SPEED;
 
+			while(goat->collidesWithSceneObject(tree)) {
+				goatRotation->y += GOAT_ROTATION_SPEED;
+			}
+
 			if (goatRotation->y < - FULL_ROTATION)
 				goatRotation->y = 0.0f;
 			goat->startAnimating();
@@ -174,6 +178,11 @@ namespace AvoidTheBug3D {
 		}
 		else if (keyInput.right) {
 			goatRotation->y += GOAT_ROTATION_SPEED;
+
+			while(goat->collidesWithSceneObject(tree)) {
+				goatRotation->y -= GOAT_ROTATION_SPEED;
+			}
+
 
 			if (goatRotation->y > FULL_ROTATION)
 				goatRotation->y = 0.0f;
@@ -186,15 +195,10 @@ namespace AvoidTheBug3D {
 			goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
 			goatOffset->z -= sin(goatRotation->y) * GOAT_SPEED;
 
-			if (goatOffset->z < MIN_Z +1.0f)
-				goatOffset->z = MIN_Z +1.0f;
-			if (goatOffset->z > MAX_Z -1.0f) 
-				goatOffset->z = MAX_Z -1.0f;
-
-			if (goatOffset->x < goatOffset-> z)
-				goatOffset->x = goatOffset-> z;
-			if (goatOffset->x > -(goatOffset->z)) 
-				goatOffset->x = -(goatOffset->z);
+			while(goat->collidesWithSceneObject(tree)) {
+				goatOffset->x += cos(goatRotation->y) * GOAT_SPEED;
+				goatOffset->z += sin(goatRotation->y) * GOAT_SPEED;
+			}
 
 			goat->startAnimating();
 
@@ -203,8 +207,23 @@ namespace AvoidTheBug3D {
 			goatOffset->x += cos(goatRotation->y) * GOAT_SPEED;
 			goatOffset->z += sin(goatRotation->y) * GOAT_SPEED;
 
+			while(goat->collidesWithSceneObject(tree)) {
+				goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
+				goatOffset->z -= sin(goatRotation->y) * GOAT_SPEED;
+			}
+
 			goat->startAnimating();
 		}
+
+		if (goatOffset->z < MIN_Z +1.0f)
+			goatOffset->z = MIN_Z +1.0f;
+		if (goatOffset->z > MAX_Z -1.0f) 
+			goatOffset->z = MAX_Z -1.0f;
+
+		if (goatOffset->x < goatOffset-> z)
+			goatOffset->x = goatOffset-> z;
+		if (goatOffset->x > -(goatOffset->z)) 
+			goatOffset->x = -(goatOffset->z);
 
 		goat->animate();
 
@@ -218,16 +237,16 @@ namespace AvoidTheBug3D {
 		shared_ptr<glm::vec3> bugOffset = bug->getOffset();
 
 		float xDistance = bug->getOffset()->x - goat->getOffset()->x;
-		float yDistance = bug->getOffset()->z - goat->getOffset()->z;
-		float distance = ROUND_2_DECIMAL(sqrt(xDistance * xDistance + yDistance*yDistance));
+		float zDistance = bug->getOffset()->z - goat->getOffset()->z;
+		float distance = ROUND_2_DECIMAL(sqrt(xDistance * xDistance + zDistance*zDistance));
 
 		float goatRelX = ROUND_2_DECIMAL(xDistance / distance);
-		float goatRelY = ROUND_2_DECIMAL(yDistance / distance);
+		float goatRelZ = ROUND_2_DECIMAL(zDistance / distance);
 
 		float bugDirectionX = cos(bug->getRotation()->y);
-		float bugDirectionY = sin(bug->getRotation()->y);
+		float bugDirectionZ = sin(bug->getRotation()->y);
 
-		float dotPosDir = goatRelX * bugDirectionX + goatRelY * bugDirectionY; // dot product
+		float dotPosDir = goatRelX * bugDirectionX + goatRelZ * bugDirectionZ; // dot product
 
 		// Bug state: decide
 		if (bugState == bugPreviousState) {
@@ -269,9 +288,9 @@ namespace AvoidTheBug3D {
 		else
 		{
 
-			if (dotPosDir < 0.98f) 
+			if (distance > BUG_START_DIVE_DISTANCE)
 			{
-				if (abs(xDistance) > BUG_START_DIVE_DISTANCE)
+				if (dotPosDir < 0.98f) 
 				{
 					bugState = TURNING;
 				}
@@ -279,9 +298,9 @@ namespace AvoidTheBug3D {
 				{
 					bugState = FLYING_STRAIGHT;
 				}
-
 			}
-			else {
+			else
+			{
 				bugState = DIVING_DOWN;
 			}
 
@@ -413,11 +432,6 @@ namespace AvoidTheBug3D {
 			renderer->renderSceneObject(goat);
 			renderer->renderSceneObject(bug);
 			renderer->renderSceneObject(tree);
-
-			if (tree->collidesWithSceneObject(goat)) {
-				SDL_Color textColour = {255, 100, 0, 255};
-				crusoeText48->renderText("Tree collision", textColour, 0.5f, -0.5f, 0.8f, -0.7f );
-			}
 			
 		}
 		renderer->swapBuffers();
