@@ -180,8 +180,9 @@ namespace small3d {
 			//cout<<"Checking " << minY<<" "<<maxY<<" - "<<pointY <<endl;
 
 			if (pointX > minX && pointX < maxX &&
-			//	pointY > minY && pointY < maxY &&
+				pointY > minY && pointY < maxY &&
 				pointZ > minZ && pointZ < maxZ) {
+					//cout<<"NOT Checking " << minY<<" "<<maxY<<" - "<<pointY <<endl;
 					collides = true;
 					break;
 			}
