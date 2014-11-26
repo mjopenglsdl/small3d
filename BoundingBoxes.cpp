@@ -159,6 +159,7 @@ namespace small3d {
 				rotatedCoords.x += boxesX;
 				rotatedCoords.y += boxesY;
 				rotatedCoords.z += boxesZ;
+
 				if (rotatedCoords.x < minX)
 					minX = rotatedCoords.x;
 				if (rotatedCoords.x > maxX)
@@ -173,8 +174,13 @@ namespace small3d {
 					maxZ = rotatedCoords.z;
 			}
 
+			/*cout<<"Checking "<<minX<<" "<<maxX<< " - " << pointX<<", "<<
+				minY<<" "<<maxY<<" - "<<pointY << ", " << minZ <<" "<<pointZ<<" - "<<rotatedCoords.z<<endl;*/
+
+			//cout<<"Checking " << minY<<" "<<maxY<<" - "<<pointY <<endl;
+
 			if (pointX > minX && pointX < maxX &&
-				pointY > minY && pointY < maxY &&
+			//	pointY > minY && pointY < maxY &&
 				pointZ > minZ && pointZ < maxZ) {
 					collides = true;
 					break;
@@ -203,8 +209,8 @@ namespace small3d {
 			rotatedOtherCoords.y += otherBoxesY;
 			rotatedOtherCoords.z += otherBoxesZ;
 
-			cout << "Checking " << rotatedOtherCoords.x << ", " << rotatedOtherCoords.y << ", " << rotatedOtherCoords.z <<
-				" with " << boxesX << ", " << boxesY << ", " << boxesZ << " rotation " << boxesRotation << endl;
+			/*cout << "Checking " << rotatedOtherCoords.x << ", " << rotatedOtherCoords.y << ", " << rotatedOtherCoords.z <<
+				" with " << boxesX << ", " << boxesY << ", " << boxesZ << " rotation " << boxesRotation << endl;*/
 			if (pointCollides(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z, 
 				boxesX, boxesY, boxesZ, boxesRotation))
 			{

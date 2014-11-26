@@ -414,7 +414,7 @@ namespace AvoidTheBug3D {
 			renderer->renderSceneObject(bug);
 			renderer->renderSceneObject(tree);
 
-			if (!goat->collidesWithSceneObject(tree)) {
+			if (goat->collidesWithSceneObject(tree)) {
 				SDL_Color textColour = {255, 100, 0, 255};
 				crusoeText48->renderText("Tree collision", textColour, 0.5f, -0.5f, 0.8f, -0.7f );
 			}
