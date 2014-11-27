@@ -18,11 +18,11 @@ This is a free, open-source, minimalistic 3D game engine, developed in C++ and b
 
 It has been derived from a simple game, which has been under development for more than a year, as a learning exercise (introduction: http://goo.gl/itn6x5, blog: http://goo.gl/7hCTPA). I have decided to separate the game from its engine and make the engine available for easy reuse, as a biicode block (http://goo.gl/WKS0Hv). The game is now provided as a sample, in the "samplegame" folder within the block, and it demonstrates how the features of the engine can be used.
 
-The previous version of small3d (3) is stable, but note that it is only a proof-of-technology. You can definitely make interesting things with it, but it is not complete. A lot of values are hardcoded, like the dimensions of the 3D scene or the position of the camera. It also needs a few more features, like better control of text rendering and sound. This version (4) of the block will be the first official release, with all of these matters addressed, a comprehensive, easy to understand API and an architecture that abides to the "Don`t make me use your design" principle (http://blog.biicode.com/software-design-proposal/). At present, it is under heavy development and will be changing a lot.
+The first official version of the block is version 4 (I am following biicode versioning). It is currently in BETA state. That means that the interface will remain stable until the final release, while I fix potential bugs and add just a couple of more features. In order to use it, you need to configure your policies to accept my BETA tagged versions: http://docs.biicode.com/biicode/configuration_files/policies.html
 
-In order to use version 4 already, you need to configure your policies to accept my DEV tagged versions: http://docs.biicode.com/biicode/configuration_files/policies.html
+If you do perform the above configuration, you will be using version 3. That one is stable, but note that it is only a proof-of-technology. A lot of values are hardcoded, like the dimensions of the 3D scene and the position of the camera. It also lacks many features, like good control of text rendering.
 
-Feel free to make suggestions! https://github.com/dimitrikourk/small3d/issues
+I will be using this block to make my own games, but one of the reasons I have decided to open source it is so that I can receive feedback and ideas. So please feel free to make suggestions! https://github.com/dimitrikourk/small3d/issues
 
 Compatibility
 -------------
