@@ -89,6 +89,8 @@ namespace AvoidTheBug3D {
 		 */
 
 		void render();
+
+		float lightModifier; 
 	};
 
 } /* namespace AvoidTheBug3D */

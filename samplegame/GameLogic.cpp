@@ -135,6 +135,8 @@ namespace AvoidTheBug3D {
 
 			startTicks = 0;
 			seconds = 0;
+
+			lightModifier= -0.01f;
 	}
 
 	GameLogic::~GameLogic() {
@@ -384,6 +386,21 @@ namespace AvoidTheBug3D {
 	void GameLogic::render()
 	{
 		renderer->clearScreen();
+		
+		//Uncomment for groovy nightfall effect :)
+		/*renderer->lightIntensity += lightModifier;
+		
+		if (renderer->lightIntensity < 0)
+		{
+			renderer->lightIntensity = 0.0f;
+			lightModifier = 0.01f;
+		}
+
+		if (renderer->lightIntensity > 1.0f)
+		{
+			renderer->lightIntensity = 1.0f;
+			lightModifier = -0.01f;
+		}*/
 
 		if(gameState == START_SCREEN) {
 			float startScreenVerts[16] =

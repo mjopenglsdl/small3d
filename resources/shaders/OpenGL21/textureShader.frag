@@ -4,6 +4,7 @@ varying float cosAngIncidence;
 varying vec2 textureCoords;
 uniform sampler2D textureImage;
 uniform vec4 colour;
+uniform float lightIntensity;
 
 void main()
 {
@@ -11,9 +12,16 @@ void main()
     gl_FragColor = cosAngIncidence * colour;
 }
 else {
-
-  vec4 textureWtLight = cosAngIncidence * texture2D(textureImage, textureCoords);
-  gl_FragColor = vec4(textureWtLight.rgb, 1.0);
+  if (lightIntensity == -1)
+  {
+    gl_FragColor = vec4(texture(textureImage, textureCoords).rgb, 1.0);
+  }
+  else
+  {
+    vec4 textureWtLight = lightIntensity * cosAngIncidence 
+			* texture(textureImage, textureCoords);
+    gl_FragColor = vec4(textureWtLight.rgb, 1.0);
+  }
 }
 
 }

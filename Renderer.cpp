@@ -73,6 +73,7 @@ namespace small3d
 		zOffsetFromCamera = -1.0f;
 		cameraPosition = glm::vec3(0, 0, 0);
 		cameraRotation = glm::vec3(0, 0, 0);
+		lightIntensity = 1.0f;
 
 	}
 
@@ -521,6 +522,9 @@ namespace small3d
 			glUniform3fv(lightDirectionUniform, 1,
 				glm::value_ptr(lightDirection));
 
+			GLuint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
+			glUniform1f(lightIntensityUniform, lightIntensity);
+
 			positionSceneObject(offset, glm::vec3(0.0f, 0.0f, 0.0f));
 			positionCamera();
 		}
@@ -639,6 +643,9 @@ namespace small3d
 			"lightDirection");
 		glUniform3fv(lightDirectionUniform, 1,
 			glm::value_ptr(lightDirection));
+
+		GLuint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
+		glUniform1f(lightIntensityUniform, lightIntensity);
 
 		positionSceneObject(*sceneObject->getOffset(), *sceneObject->getRotation());
 

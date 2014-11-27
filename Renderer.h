@@ -159,6 +159,12 @@ namespace small3d
 		glm::vec3 cameraRotation;
 
 		/**
+		 * @brief	The light intensity (set to -1.0f if no lighting is to be used).
+		 */
+
+		float lightIntensity;
+
+		/**
 		* Generate a texture in OpenGL, using the given data
 		* @param name The name by which the texture will be known
 		* @param texture The texture data
