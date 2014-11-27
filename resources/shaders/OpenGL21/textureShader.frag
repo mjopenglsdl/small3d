@@ -14,12 +14,12 @@ void main()
 else {
   if (lightIntensity == -1)
   {
-    gl_FragColor = vec4(texture(textureImage, textureCoords).rgb, 1.0);
+    gl_FragColor = vec4(texture2D(textureImage, textureCoords).rgb, 1.0);
   }
   else
   {
     vec4 textureWtLight = lightIntensity * cosAngIncidence 
-			* texture(textureImage, textureCoords);
+			* texture2D(textureImage, textureCoords);
     gl_FragColor = vec4(textureWtLight.rgb, 1.0);
   }
 }
