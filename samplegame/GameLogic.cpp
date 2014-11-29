@@ -4,7 +4,7 @@
 *  Created on: 2014/11/09
 *      Author: Dimitri Kourkoulis
 *              http://dimitros.be
-*     License: MIT
+*     License: BSD 3-Clause License (see LICENSE file)
 */
 
 /* bii data directives */
@@ -121,6 +121,7 @@ namespace AvoidTheBug3D {
 
 			gameState = START_SCREEN;
 
+#ifdef SMALL3D_SOUND_ENABLED
 			soundPlayer = shared_ptr<SoundPlayer>(new SoundPlayer());
 			if (!soundPlayer->initAudio())
 			{
@@ -132,6 +133,7 @@ namespace AvoidTheBug3D {
 				"dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah")) {
 				throw Exception("Could not load goat sound.");
 			}
+#endif
 
 			startTicks = 0;
 			seconds = 0;
@@ -140,8 +142,9 @@ namespace AvoidTheBug3D {
 	}
 
 	GameLogic::~GameLogic() {
+#ifdef SMALL3D_SOUND_ENABLED
 		SDL_CloseAudio();
-		
+#endif
 	}
 
 	void GameLogic::initGame()
@@ -265,7 +268,9 @@ namespace AvoidTheBug3D {
 		{
 			if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
 			{
+#ifdef SMALL3D_SOUND_ENABLED
 				soundPlayer->playSound("bah");
+#endif
 				seconds = (SDL_GetTicks() - startTicks) / 1000;
 				gameState = START_SCREEN;
 			}

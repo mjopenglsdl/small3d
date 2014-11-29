@@ -4,7 +4,7 @@
 *  Created on: 2014/11/09
 *      Author: Dimitri Kourkoulis
 *              http://dimitros.be
-*     License: MIT
+*     License: BSD 3-Clause License (see LICENSE file)
 */
 
 #pragma once
@@ -13,8 +13,12 @@
 #include <dimitrikourk/small3d/Logger.h>
 #include <dimitrikourk/small3d/SceneObject.h>
 #include <dimitrikourk/small3d/Renderer.h>
-#include <miguel/game_utils/SoundPlayer.h>
 #include <dimitrikourk/small3d/Text.h>
+
+/* Uncomment the following two lines and execute "bii find" again, 
+   in order to enable sound for the sample game.*/
+//#include <miguel/game_utils/SoundPlayer.h>
+//#define SMALL3D_SOUND_ENABLED
 
 #include <dimitrikourk/small3d/samplegame/KeyInput.h>
 
@@ -37,7 +41,9 @@ namespace AvoidTheBug3D {
 		shared_ptr<SceneObject> goat;
 		shared_ptr<SceneObject> bug;
 		shared_ptr<SceneObject> tree;
+#ifdef SMALL3D_SOUND_ENABLED
 		shared_ptr<SoundPlayer> soundPlayer;
+#endif
 
 		shared_ptr<Renderer> renderer;
 

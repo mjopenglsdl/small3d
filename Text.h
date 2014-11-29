@@ -4,7 +4,7 @@
 *  Created on: 2014/11/23
 *      Author: Dimitri Kourkoulis
 *              http://dimitros.be
-*     License: MIT
+*     License: BSD 3-Clause License (see LICENSE file)
 */
 
 // bii://dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf

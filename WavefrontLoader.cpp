@@ -4,7 +4,7 @@
 *  Created on: 2014/11/12
 *      Author: Dimitri Kourkoulis
 *              http://dimitros.be
-*     License: MIT
+*     License: BSD 3-Clause License (see LICENSE file)
 */
 
 #include "WavefrontLoader.h"

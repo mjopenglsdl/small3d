@@ -4,7 +4,7 @@
 *  Created on: 2014/10/19
 *      Author: Dimitri Kourkoulis
 *              http://dimitros.be
-*     License: MIT
+*     License: BSD 3-Clause License (see LICENSE file)
 */
 
 #pragma once
