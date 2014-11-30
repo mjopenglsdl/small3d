@@ -20,10 +20,6 @@ It has been derived from a simple game, which has been under development for mor
 
 I will be using this block to make my own games, but one of the reasons I have decided to open source it is so that I can receive feedback and ideas. So please feel free to make suggestions! https://github.com/dimitrikourk/small3d/issues
 
-License
--------
-As of (biicode) version 8, small3d is licensed under the BSD 3-Clause License (see LICENSE file)
-
 Compatibility
 -------------
 **Debian Wheezy - Eclipse**: No problems
@@ -47,8 +43,27 @@ http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-window
 
 **Others:** I would expect that the engine and the sample game should work on most other environments with no problems. Before migrating to biicode, I had also spent time developing the engine on Ubuntu and Fedora, so the code is prety mature cross-platform-wise.
 
-Note about 3D models and textures
----------------------------------
+License
+-------
+
+As of (biicode) version 8, small3d is licensed under the BSD 3-Clause License (see LICENSE file).
+
+Reuse and Packaging
+-------------------
+
+Please consider this text (and the whole of this README file for that matter) informative, since I am not a lawyer and I do not accept responsibility for any consequence that may arise from following my indications :)
+
+I would not want there to be any limitations or inconveniences in the use of small3d, so much for free and open source as for commercial and closed source products. This is the reason that I have chosen the BSD 3-Clause License for the engine and I have made sure that all the libraries it is referencing are released under permissive licenses, like BSD, MIT or ZLIB. I have placed the licenses from those libraries in the libsLicenses folder for your convenience during packaging, suffixed with the block versions from which they are being retrieved by the small3d block. In general, there should be no problem in reusing small3d in any manner, provided that you, in SOME cases, reproduce the license text and give credit to the authors of the referenced libraries.
+
+Sound
+-----
+
+Up to this point, I have not developed any features related to sound effects or music in small3d itself. You may have noticed in some demo videos that Avoid the Bug 3D, the sample game distributed with small3d, is playing a sound. Nevertheless, as of (biicode) version 8, sound is disabled by default. You can easily reactivate it for the sample game by uncommenting 2 lines at the top of GameLogic.h, as described there.
+
+The licenses of many sound libraries are often more restrictive than the license of small3d and the components it references. So I will only provide sound through the engine itself when I find a way to do so under a permissive license. I am looking into PortAudio now. I hope it works out! In the meantime, there are very good sound facilities available on biicode, as also elsewhere which you can easily use with small3d, just like I am doing in the sample game.
+
+3D models and textures
+----------------------
 
 For the time being, the engine can only read 3D models from Wavefront .obj files. There are many ways to create such a file, but I am exporting them from Blender.
 
@@ -58,10 +73,3 @@ the normals listed later in the exported file for some vertices will overwrite t
 If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program. The PNG file can have no transparency information stored (in my case, in order to achieve this, I load it in Gimp, select Image > Flatten Image and then re-export it as a PNG file from there).
 
 The engine also supports manually created bounding boxes for collision detection. In order to create these in Blender for example, just place them in the preferred position over the model and export them to Wavefront separately from the model, only with the options "Apply Modifiers", "Include Edges", "Objects as OBJ Objects" and "Keep Vertex Order". On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
-
-Note about sound
-----------------
-
-You may have noticed in some demo videos that Avoid the Bug 3D, the sample game distributed with small3d is playing a sound (a goat bleat :) ). Nevertheless, as of (biicode) version 8, sound is disabled by default. You can reactivate it for the sample game by uncommenting 2 lines at the top of GameLogic.h, as described there.
-
-small3d lets you decide the manner in which you will use sound, be it the way it is optionally used in Avoid the Bug 3D or even using another non-commercial or commercial product, also depending on your chosen method of distribution of your software. There are two reasons for this. Firstly, I find that there are very good sound facilities available on biicode, as also elsewhere, so I would not want the engine to be too tightly coupled with any particular component of the sort, neither is there any added value in providing sound through the engine itself. Moreover, the licenses of many sound libraries are often more restrictive than the license of small3d and the components it references. Keeping sound decoupled from the game engine increases its flexibility for commercial and non-commercial use.
