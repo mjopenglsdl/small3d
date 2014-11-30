@@ -48,7 +48,7 @@ License
 
 As of (biicode) version 8, small3d is licensed under the BSD 3-Clause License (see LICENSE file).
 
-Reuse and Packaging
+Reuse and packaging
 -------------------
 
 Please consider this text (and the whole of this README file for that matter) informative, since I am not a lawyer and I do not accept responsibility for any consequence that may arise from following my indications :)
