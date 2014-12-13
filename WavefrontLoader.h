@@ -1,11 +1,11 @@
 /*
-*  WavefrontLoader.h
-*
-*  Created on: 2014/11/12
-*      Author: Dimitri Kourkoulis
-*              http://dimitros.be
-*     License: BSD 3-Clause License (see LICENSE file)
-*/
+ *  WavefrontLoader.h
+ *
+ *  Created on: 2014/11/12
+ *      Author: Dimitri Kourkoulis
+ *              http://dimitros.be
+ *     License: BSD 3-Clause License (see LICENSE file)
+ */
 #pragma once
 
 #include "ModelLoader.h"
@@ -15,75 +15,75 @@ using namespace std;
 
 namespace small3d {
 
-	/**
-	* @class	WavefrontLoader
-	*
-	* @brief	Class that loads a model from a wavefront .obj file, into a Model object.
-	*
-	*/
+  /**
+   * @class	WavefrontLoader
+   *
+   * @brief	Class that loads a model from a wavefront .obj file, into a Model object.
+   *
+   */
 
-	class WavefrontLoader : public ModelLoader {
-	private:
+  class WavefrontLoader : public ModelLoader {
+  private:
 
-		// The model to which the data is loaded
-		Model* model;
+    // The model to which the data is loaded
+    Model* model;
 
-		// Data read from .obj file
-		vector<float*> *vertices;
-		vector<int*> *facesVertexIndexes;
-		vector<float*> *normals;
-		vector<int*> *facesNormalIndexes;
-		vector<float*> *textureCoords;
-		vector<int*> *textureCoordsIndexes;
+    // Data read from .obj file
+    vector<float*> *vertices;
+    vector<int*> *facesVertexIndexes;
+    vector<float*> *normals;
+    vector<int*> *facesNormalIndexes;
+    vector<float*> *textureCoords;
+    vector<int*> *textureCoordsIndexes;
 
-		void loadVertexData();
+    void loadVertexData();
 
-		void loadIndexData();
+    void loadIndexData();
 
-		void loadNormalsData();
+    void loadNormalsData();
 
-		void loadTextureCoordsData();
+    void loadTextureCoordsData();
 
-		// Make sure that no texture coordinate information is lost when the data buffers get created (vertexData,
-		// indexData, normalsData and textureCoordsData) by realigning the data vectors, in order to ensure unique
-		// vertex - texture coordinates pairs
-		void correctDataVectors();
+    // Make sure that no texture coordinate information is lost when the data buffers get created (vertexData,
+    // indexData, normalsData and textureCoordsData) by realigning the data vectors, in order to ensure unique
+    // vertex - texture coordinates pairs
+    void correctDataVectors();
 
-		void init();
+    void init();
 
-		void clear();
+    void clear();
 
-	public:
+  public:
 
-		/**
-		* @fn	WavefrontLoader::WavefrontLoader();
-		*
-		* @brief	Default constructor.
-		*
-		*/
+    /**
+     * @fn	WavefrontLoader::WavefrontLoader();
+     *
+     * @brief	Default constructor.
+     *
+     */
 
-		WavefrontLoader();
+    WavefrontLoader();
 
-		/**
-		* @fn	WavefrontLoader::~WavefrontLoader();
-		*
-		* @brief	Destructor.
-		*
-		*/
+    /**
+     * @fn	WavefrontLoader::~WavefrontLoader();
+     *
+     * @brief	Destructor.
+     *
+     */
 
-		~WavefrontLoader();
+    ~WavefrontLoader();
 
-		/**
-		* @fn	void WavefrontLoader::load(const string &filename, shared_ptr<Model> model);
-		*
-		* @brief	Loads a model from the given wavefront .obj file into the model object.
-		*
-		* @param	fileLocation	Path to the file in which the model is stored.
-		* @param	model   	The model.
-		*/
+    /**
+     * @fn	void WavefrontLoader::load(const string &filename, shared_ptr<Model> model);
+     *
+     * @brief	Loads a model from the given wavefront .obj file into the model object.
+     *
+     * @param	fileLocation	Path to the file in which the model is stored.
+     * @param	model   	The model.
+     */
 
-		void load(const string &fileLocation, Model *model);
+    void load(const string &fileLocation, Model *model);
 
-	};
+  };
 
 }

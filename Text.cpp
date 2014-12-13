@@ -1,11 +1,11 @@
 /*
-*  Text.cpp
-*
-*  Created on: 2014/11/23
-*      Author: Dimitri Kourkoulis
-*              http://dimitros.be
-*     License: BSD 3-Clause License (see LICENSE file)
-*/
+ *  Text.cpp
+ *
+ *  Created on: 2014/11/23
+ *      Author: Dimitri Kourkoulis
+ *              http://dimitros.be
+ *     License: BSD 3-Clause License (see LICENSE file)
+ */
 
 #include "Text.h"
 #include "Exception.h"
@@ -18,124 +18,124 @@ bool ttfInitialised = false;
 
 namespace small3d {
 
-	string intToStr( int number )
-	{
-		char buffer[100];
+  string intToStr( int number )
+  {
+    char buffer[100];
 #if defined(_WIN32) && !defined(__MINGW32__)
-		sprintf_s(buffer,"%d",number);
+    sprintf_s(buffer,"%d",number);
 #else
-		sprintf(buffer,"%d",number);
+    sprintf(buffer,"%d",number);
 #endif
-		return string(buffer);
-	}
+    return string(buffer);
+  }
 
-	Text::Text(shared_ptr<Renderer> renderer,
-		const string &ttfFontPath, const int &size)
+  Text::Text(shared_ptr<Renderer> renderer,
+	     const string &ttfFontPath, const int &size)
+  {
+    this->renderer = renderer;
+
+    if (!ttfInitialised) {
+
+
+      if(TTF_Init()==-1)
 	{
-		this->renderer = renderer;
-
-		if (!ttfInitialised) {
-
-
-			if(TTF_Init()==-1)
-			{
-				LOGERROR(TTF_GetError());
-				throw Exception("Unable to initialise font system");
-			}
-			else
-			{
-				ttfInitialised = true;
-			}
-		}
-
-		string fontPath = SDL_GetBasePath() + ttfFontPath;
-		LOGINFO("Loading font from " + fontPath);
-
-		font = TTF_OpenFont(fontPath.c_str(), size);
-
-		this->size = size;
-
-		if (!font)
-		{
-			LOGERROR(TTF_GetError());
-			throw Exception("Failed to load font");
-		}
-		else
-		{
-			LOGINFO("TTF font loaded successfully");
-		}
+	  LOGERROR(TTF_GetError());
+	  throw Exception("Unable to initialise font system");
 	}
-
-	Text::~Text()
+      else
 	{
-		TTF_CloseFont(font);
-		//TTF_Quit();
+	  ttfInitialised = true;
 	}
+    }
 
-	void Text::renderText(const string &text, const SDL_Color &colour, 
-		const float &topX, const float &topY, const float &bottomX, const float &bottomY)
-	{
-		GLuint textHandle = renderer->getTextureHandle(intToStr(size) + "text_" + text);
+    string fontPath = SDL_GetBasePath() + ttfFontPath;
+    LOGINFO("Loading font from " + fontPath);
 
-		if (textHandle == 0)
-		{
+    font = TTF_OpenFont(fontPath.c_str(), size);
 
-			SDL_Surface *textSurface = TTF_RenderText_Blended(font,
-				text.c_str(), colour);
-			int numPixels = textSurface->h * textSurface->w;
+    this->size = size;
 
-			Uint32 *pix = static_cast<Uint32*>(textSurface->pixels);
+    if (!font)
+      {
+	LOGERROR(TTF_GetError());
+	throw Exception("Failed to load font");
+      }
+    else
+      {
+	LOGINFO("TTF font loaded successfully");
+      }
+  }
 
-			float *texturef = new float[numPixels * 4];
+  Text::~Text()
+  {
+    TTF_CloseFont(font);
+    //TTF_Quit();
+  }
 
-			for (int pidx = 0; pidx < numPixels; ++pidx)
-			{
-				Uint32 r = pix[pidx] & textSurface->format->Rmask;
-				Uint32 g = pix[pidx] & textSurface->format->Gmask;
-				Uint32 b = pix[pidx] & textSurface->format->Bmask;
-				Uint32 a = pix[pidx] & textSurface->format->Amask;
+  void Text::renderText(const string &text, const SDL_Color &colour, 
+			const float &topX, const float &topY, const float &bottomX, const float &bottomY)
+  {
+    GLuint textHandle = renderer->getTextureHandle(intToStr(size) + "text_" + text);
 
-				r = r >> textSurface->format->Rshift;
-				g = g >> textSurface->format->Gshift;
-				b = b >> textSurface->format->Bshift;
-				a = a >> textSurface->format->Ashift;
+    if (textHandle == 0)
+      {
 
-				float ttuple[4] = {(float)r, 
-					(float)g,
-					(float)b,
-					(float)a
-				};
+	SDL_Surface *textSurface = TTF_RenderText_Blended(font,
+							  text.c_str(), colour);
+	int numPixels = textSurface->h * textSurface->w;
 
-				ttuple[0]= floorf(100.0f * (ttuple[0] / 255.0f) + 0.5f) / 100.0f;
-				ttuple[1]= floorf(100.0f * (ttuple[1] / 255.0f) + 0.5f) / 100.0f;
-				ttuple[2]= floorf(100.0f * (ttuple[2] / 255.0f) + 0.5f) / 100.0f;
-				ttuple[3]= floorf(100.0f * (ttuple[3] / 255.0f) + 0.5f) / 100.0f;
+	Uint32 *pix = static_cast<Uint32*>(textSurface->pixels);
 
-				memcpy(&texturef[pidx * 4], &ttuple, sizeof(ttuple));
+	float *texturef = new float[numPixels * 4];
 
-			}
+	for (int pidx = 0; pidx < numPixels; ++pidx)
+	  {
+	    Uint32 r = pix[pidx] & textSurface->format->Rmask;
+	    Uint32 g = pix[pidx] & textSurface->format->Gmask;
+	    Uint32 b = pix[pidx] & textSurface->format->Bmask;
+	    Uint32 a = pix[pidx] & textSurface->format->Amask;
 
-			textHandle = renderer->generateTexture(intToStr(size) + "text_" + text, texturef, textSurface->w, textSurface->h);
+	    r = r >> textSurface->format->Rshift;
+	    g = g >> textSurface->format->Gshift;
+	    b = b >> textSurface->format->Bshift;
+	    a = a >> textSurface->format->Ashift;
 
-			delete[] texturef;
-			texturef = NULL;
-			SDL_FreeSurface(textSurface);
-		}
+	    float ttuple[4] = {(float)r, 
+			       (float)g,
+			       (float)b,
+			       (float)a
+	    };
 
-		float boxVerts[16] =
-		{
-			topX, bottomY, -0.5f, 1.0f,
-			bottomX, bottomY, -0.5f, 1.0f,
-			bottomX, topY, -0.5f, 1.0f,
-			topX, topY, -0.5f, 1.0f
-		};
+	    ttuple[0]= floorf(100.0f * (ttuple[0] / 255.0f) + 0.5f) / 100.0f;
+	    ttuple[1]= floorf(100.0f * (ttuple[1] / 255.0f) + 0.5f) / 100.0f;
+	    ttuple[2]= floorf(100.0f * (ttuple[2] / 255.0f) + 0.5f) / 100.0f;
+	    ttuple[3]= floorf(100.0f * (ttuple[3] / 255.0f) + 0.5f) / 100.0f;
 
-		renderer->renderImage(boxVerts, intToStr(size) + "text_" + text);		
-	}
+	    memcpy(&texturef[pidx * 4], &ttuple, sizeof(ttuple));
 
-	void Text::deleteTextTexture( const string &text )
-	{
-		renderer->deleteTexture(intToStr(size) + "text_" + text);
-	}
+	  }
+
+	textHandle = renderer->generateTexture(intToStr(size) + "text_" + text, texturef, textSurface->w, textSurface->h);
+
+	delete[] texturef;
+	texturef = NULL;
+	SDL_FreeSurface(textSurface);
+      }
+
+    float boxVerts[16] =
+      {
+	topX, bottomY, -0.5f, 1.0f,
+	bottomX, bottomY, -0.5f, 1.0f,
+	bottomX, topY, -0.5f, 1.0f,
+	topX, topY, -0.5f, 1.0f
+      };
+
+    renderer->renderImage(boxVerts, intToStr(size) + "text_" + text);		
+  }
+
+  void Text::deleteTextTexture( const string &text )
+  {
+    renderer->deleteTexture(intToStr(size) + "text_" + text);
+  }
 
 }
