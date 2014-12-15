@@ -5,3 +5,5 @@ glenn/png: 0
 miguel/sdl2_ttf: 1
 dimitrikourk/glew: 1
 dimitrikourk/glm: 0
+dimitrikourk/portaudio: 1
+miguel/vorbis: 0
