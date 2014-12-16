@@ -22,34 +22,50 @@ namespace small3d {
   }
 
   Sound::~Sound(){
+    
+        for (unordered_map<string, OggVorbis_File>::iterator it = sounds->begin();
+	 it != sounds->end(); ++it)
+      {
+		ov_clear(&it->second);
+	}
+
     delete sounds;
   }
 
   void Sound::load(const string &soundFilePath, const string &soundName){
-
+    OggVorbis_File vorbisFile;
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
+    
     fopen_s(&fp, (SDL_GetBasePath() + soundFilePath).c_str(), "rb");
 #else
     FILE *fp = fopen((SDL_GetBasePath() + soundFilePath).c_str(), "rb");
 #endif
     if (!fp)
       {
-    throw Exception(
-    "Could not open file " + string(SDL_GetBasePath())
-      + soundFilePath);
-  }
+	throw Exception(
+			"Could not open file " + string(SDL_GetBasePath())
+			+ soundFilePath);
+      }
+     if(ov_open_callbacks(fp, &vorbisFile, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0) {
+      throw Exception(
+		      "Could not load sound from file " + string(SDL_GetBasePath())
+		      + soundFilePath);
+		      }
+    
+    sounds->insert(make_pair(soundName, vorbisFile));
+
     fclose(fp);
   }
   
-    void Sound::play(const string &soundName, const bool &repeat){
+  void Sound::play(const string &soundName, const bool &repeat){
   }
 
-    void Sound::stop(const string &soundName){
+  void Sound::stop(const string &soundName){
   }
 
-    void Sound::deleteSound(const string &soundName){
+  void Sound::deleteSound(const string &soundName){
   }
-  }
+}
 
 
