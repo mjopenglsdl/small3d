@@ -25,6 +25,7 @@
 #include "SceneObject.h"
 #include "ModelLoader.h"
 #include "WavefrontLoader.h"
+#include "Sound.h"
 
 /* MinGW produces the following linking error, if the unit tests
  * are linked to the renderer:
@@ -48,6 +49,7 @@
 // bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj
 // bii://dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj
 // bii://dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png
+// bii://dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg
 
 using namespace small3d;
 using namespace std;
@@ -204,6 +206,13 @@ TEST(RendererTest, StartAndUse) {
 }
 #endif
 */
+
+TEST(SoundTest, Load){
+  initLogger();
+  shared_ptr<Sound> snd(new Sound());
+  snd->load("dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah");
+
+}
 
 int main(int argc, char **argv) {
 	testing::InitGoogleTest(&argc, argv);
