@@ -17,12 +17,13 @@
 namespace small3d {
 
   Sound::Sound(){
+    initLogger();
     sounds = new unordered_map<string, OggVorbis_File>();
 
   }
 
   Sound::~Sound(){
-    
+    LOGINFO("Sound object getting destroyed.");
         for (unordered_map<string, OggVorbis_File>::iterator it = sounds->begin();
 	 it != sounds->end(); ++it)
       {

@@ -27,7 +27,7 @@ namespace small3d {
 
   }
 
-  void Logger::append(const LogLevel level, const string message) {
+  void Logger::append(const LogLevel &level, const string &message) {
 
     ostringstream dateTimeOstringstream;
 
