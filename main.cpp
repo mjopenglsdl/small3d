@@ -207,11 +207,11 @@ TEST(RendererTest, StartAndUse) {
 #endif
 */
 
-TEST(SoundTest, Load){
+/*TEST(SoundTest, Load){
   initLogger();
   shared_ptr<Sound> snd(new Sound());
   snd->load("dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah");
-
+*/
 }
 
 int main(int argc, char **argv) {
