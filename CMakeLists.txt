@@ -3,9 +3,6 @@ include(${CMAKE_HOME_DIRECTORY}/biicode.cmake)
 # Initializes block variables
 INIT_BIICODE_BLOCK()
 
-SET(GTEST_HAS_PTHREAD 0)
-SET(gtest_disable_pthreads ON)
-
 IF(APPLE)
 	SET(BII_IMPLICIT_RULES_ENABLED FALSE)
 ENDIF()
