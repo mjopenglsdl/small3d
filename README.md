@@ -2,7 +2,7 @@ small3d
 =======
 *A small, no fuss, 3D game engine*
 
-[![biicode block](http://img.shields.io/badge/dimitrikourk%2Fsmall3d-DEV%3A%208-yellow.svg)](http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master/8) [![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
+[![biicode block](http://img.shields.io/badge/dimitrikourk%2Fsmall3d-STABLE%3A%209-green.svg)](http://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master/9) [![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
 
 Quick start guide: http://goo.gl/5TYOv2
 
@@ -35,9 +35,9 @@ bii cpp:configure -G"Visual Studio 11 2012"
 bii cpp:configure -G"Visual Studio 12 2013"
 
 **Windows - MinGW**: The engine and sample game will compile and work under MinGW but support for that environment is a little flaky (see https://github.com/dimitrikourk/small3d/blob/master/aboutMinGW.txt).
-Also, with MinGW, the build time is quite long, so I would strongly recommend using the Visual Studio compiler. You can get Visual Studio Express for free:
+Also, with MinGW, the build time is quite long, so I would strongly recommend using the Visual Studio compiler. You can get Visual Studio Community for free:
 
-http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-desktop
+http://www.visualstudio.com/
 
 **Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block.
 

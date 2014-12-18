@@ -14,8 +14,8 @@ before_install:
 install:
 - mkdir installation
 - cd installation
-- wget http://apt.biicode.com/install.sh 
-- chmod +x install.sh 
+- wget http://apt.biicode.com/install.sh
+- chmod +x install.sh
 - sudo ./install.sh
 - bii setup:cpp
 - cd ..
@@ -27,12 +27,11 @@ script:
 - mv !(biicode_project) ./biicode_project/blocks/dimitrikourk/small3d
 - cd biicode_project
 - bii find
-- bii cpp:build 
+- bii cpp:build
 - "./bin/dimitrikourk_small3d_main"
 after_success:
 - bii user dimitrikourk -p $PASSWORD
-- bii publish
+- bii publish --tag STABLE
 env:
   global:
-    secure: "E+yzdH1oE4TthA0PUeVBRdyeCDdXPIZeIUGVthmpA1H/t5c2ThFgHnAnx29p2LvGl7bO4mw3257pmUoLRenLmxrvRFjLRVAj5sUCTPmsViZca4AhhxPT7xHTP1Vx+KiLJgvildj0k/5mP4BsQmx9GhONYOzZm5APSViGBQM3pns=" 
-
+    secure: "E+yzdH1oE4TthA0PUeVBRdyeCDdXPIZeIUGVthmpA1H/t5c2ThFgHnAnx29p2LvGl7bO4mw3257pmUoLRenLmxrvRFjLRVAj5sUCTPmsViZca4AhhxPT7xHTP1Vx+KiLJgvildj0k/5mP4BsQmx9GhONYOzZm5APSViGBQM3pns="
