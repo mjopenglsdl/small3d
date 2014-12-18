@@ -1,11 +1,11 @@
 /*
-*  main.cpp
-*
-*  Created on: 2014/10/18
-*      Author: Dimitri Kourkoulis
-*              http://dimitros.be
-*     License: BSD 3-Clause License (see LICENSE file)
-*/
+ *  main.cpp
+ *
+ *  Created on: 2014/10/18
+ *      Author: Dimitri Kourkoulis
+ *              http://dimitros.be
+ *     License: BSD 3-Clause License (see LICENSE file)
+ */
 
 // Without undefining strict ANSI, compilation in MinGW fails when C++11 is enabled
 #ifdef __MINGW32__
@@ -25,7 +25,7 @@
 #include "SceneObject.h"
 #include "ModelLoader.h"
 #include "WavefrontLoader.h"
-//#include "Sound.h"
+#include "Sound.h"
 
 /* MinGW produces the following linking error, if the unit tests
  * are linked to the renderer:
@@ -59,126 +59,127 @@ using namespace std;
 // CMakelists.txt file, but I have not managed to get it to work
 #ifdef _WIN32
 TEST(LoggerTest, LogSomething) {
+  deleteLogger();
+  ostringstream oss;
+  initLogger(oss);
 
-	ostringstream oss;
-	initLogger(oss);
+  LOGINFO("It works");
+  EXPECT_TRUE(oss.str().find("It works") != (string::npos));
 
-	LOGINFO("It works");
-	EXPECT_TRUE(oss.str().find("It works") != (string::npos));
-
-	LOGERROR("Error test");
-	EXPECT_TRUE(oss.str().find("Error test") != (string::npos));
+  LOGERROR("Error test");
+  EXPECT_TRUE(oss.str().find("Error test") != (string::npos));
+  deleteLogger();
 
 }
 #endif
 
 TEST(ImageTest, LoadImage) {
 
-	unique_ptr<Image> image( new Image("dimitrikourk/small3d/resources/images/testImage.png"));
+  unique_ptr<Image> image( new Image("dimitrikourk/small3d/resources/images/testImage.png"));
 
-	cout << "Image width " << image->getWidth() << ", height " << image->getHeight() << endl;
+  cout << "Image width " << image->getWidth() << ", height " << image->getHeight() << endl;
 
-	float *imageData = image->getData();
+  float *imageData = image->getData();
 
-	int x = 0, y = 0;
+  int x = 0, y = 0;
 
-	while (y < image->getHeight()) {
-		x = 0;
-		while (x < image->getWidth()) {
+  while (y < image->getHeight()) {
+    x = 0;
+    while (x < image->getWidth()) {
 
-			float *colour = &imageData[4 * y * image->getWidth() + 4 * x];
+      float *colour = &imageData[4 * y * image->getWidth() + 4 * x];
 
-			EXPECT_GE(colour[0], 0.0f);
-			EXPECT_LE(colour[0], 1.0f);
-			EXPECT_GE(colour[1], 0.0f);
-			EXPECT_LE(colour[1], 1.0f);
-			EXPECT_GE(colour[2], 0.0f);
-			EXPECT_LE(colour[2], 1.0f);
-			EXPECT_EQ(1.0f, colour[3]);
+      EXPECT_GE(colour[0], 0.0f);
+      EXPECT_LE(colour[0], 1.0f);
+      EXPECT_GE(colour[1], 0.0f);
+      EXPECT_LE(colour[1], 1.0f);
+      EXPECT_GE(colour[2], 0.0f);
+      EXPECT_LE(colour[2], 1.0f);
+      EXPECT_EQ(1.0f, colour[3]);
 
-			// Uncomment the following to actually see RGB values for each test image pixel
-			// 			cout << "At (" << x << ", " << y << ") R: " << setprecision( 2 ) << colour[0] << endl;
-			// 			cout << "At (" << x << ", " << y << ") G: " << setprecision( 2 ) << colour[1] << endl;
-			// 			cout << "At (" << x << ", " << y << ") B: " << setprecision( 2 ) << colour[2] << endl;
+      // Uncomment the following to actually see RGB values for each test image pixel
+      // 			cout << "At (" << x << ", " << y << ") R: " << setprecision( 2 ) << colour[0] << endl;
+      // 			cout << "At (" << x << ", " << y << ") G: " << setprecision( 2 ) << colour[1] << endl;
+      // 			cout << "At (" << x << ", " << y << ") B: " << setprecision( 2 ) << colour[2] << endl;
 
-			++x;
-		}
-		++y;
-	}
+      ++x;
+    }
+    ++y;
+  }
 }
 
 TEST(ModelTest, LoadModel) {
 
-	Model *model = new Model();
-	unique_ptr<ModelLoader> loader(new WavefrontLoader());
+  Model *model = new Model();
+  unique_ptr<ModelLoader> loader(new WavefrontLoader());
 
-	loader->load("dimitrikourk/small3d/resources/models/Cube/Cube.obj", model);
+  loader->load("dimitrikourk/small3d/resources/models/Cube/Cube.obj", model);
 
-	EXPECT_NE(0, model->vertexDataComponentCount);
-	EXPECT_NE(0, model->indexDataIndexCount);
-	EXPECT_NE(0, model->normalsDataComponentCount);
-	EXPECT_NE(0, model->textureCoordsDataComponentCount);
+  EXPECT_NE(0, model->vertexDataComponentCount);
+  EXPECT_NE(0, model->indexDataIndexCount);
+  EXPECT_NE(0, model->normalsDataComponentCount);
+  EXPECT_NE(0, model->textureCoordsDataComponentCount);
 
-	cout << "Vertex data component count: "
-		<< model->vertexDataComponentCount << endl << "Index count: "
-		<< model->indexDataIndexCount << endl
-		<< "Normals data component count: "
-		<< model->normalsDataComponentCount << endl
-		<< "Texture coordinates count: "
-		<< model->textureCoordsDataComponentCount << endl;
+  cout << "Vertex data component count: "
+       << model->vertexDataComponentCount << endl << "Index count: "
+       << model->indexDataIndexCount << endl
+       << "Normals data component count: "
+       << model->normalsDataComponentCount << endl
+       << "Texture coordinates count: "
+       << model->textureCoordsDataComponentCount << endl;
 
-	Model *modelWithNoTexture = new Model();
+  Model *modelWithNoTexture = new Model();
 
-	loader->load("dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
+  loader->load("dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
 	
 
-	EXPECT_NE(0, modelWithNoTexture->vertexDataComponentCount);
-	EXPECT_NE(0, modelWithNoTexture->indexDataIndexCount);
-	EXPECT_NE(0, modelWithNoTexture->normalsDataComponentCount);
-	EXPECT_EQ(0, modelWithNoTexture->textureCoordsDataComponentCount);
+  EXPECT_NE(0, modelWithNoTexture->vertexDataComponentCount);
+  EXPECT_NE(0, modelWithNoTexture->indexDataIndexCount);
+  EXPECT_NE(0, modelWithNoTexture->normalsDataComponentCount);
+  EXPECT_EQ(0, modelWithNoTexture->textureCoordsDataComponentCount);
 
-	cout << "Vertex data component count: "
-		<< modelWithNoTexture->vertexDataComponentCount << endl << "Index count: "
-		<< modelWithNoTexture->indexDataIndexCount << endl
-		<< "Normals data component count: "
-		<< modelWithNoTexture->normalsDataComponentCount << endl
-		<< "Texture coordinates count: "
-		<< modelWithNoTexture->textureCoordsDataComponentCount << endl;
+  cout << "Vertex data component count: "
+       << modelWithNoTexture->vertexDataComponentCount << endl << "Index count: "
+       << modelWithNoTexture->indexDataIndexCount << endl
+       << "Normals data component count: "
+       << modelWithNoTexture->normalsDataComponentCount << endl
+       << "Texture coordinates count: "
+       << modelWithNoTexture->textureCoordsDataComponentCount << endl;
 
-	delete model;
-	delete modelWithNoTexture;
+  delete model;
+  delete modelWithNoTexture;
 
 }
 
 TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
-	unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes());
+  unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes());
 
-	bboxes->loadFromFile("dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj");
+  bboxes->loadFromFile("dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj");
 
-	EXPECT_EQ(16, bboxes->vertices->size());
-	EXPECT_EQ(12, bboxes->facesVertexIndexes->size());
+  EXPECT_EQ(16, bboxes->vertices->size());
+  EXPECT_EQ(12, bboxes->facesVertexIndexes->size());
 
-	cout<<"Bounding boxes vertices: "<<endl;
-	for (int idx = 0; idx < 16; idx++)
-	{
-		cout<<bboxes->vertices->at(idx)[0] << ", " <<
-			bboxes->vertices->at(idx)[1] << ", " <<
-			bboxes->vertices->at(idx)[2] << ", " << endl;
+  cout<<"Bounding boxes vertices: "<<endl;
+  for (int idx = 0; idx < 16; idx++)
+    {
+      cout<<bboxes->vertices->at(idx)[0] << ", " <<
+	bboxes->vertices->at(idx)[1] << ", " <<
+	bboxes->vertices->at(idx)[2] << ", " << endl;
 
-	}
+    }
 
-	cout<<"Bounding boxes faces vertex indexes: "<<endl;
-	for (int idx = 0; idx < 12; idx++)
-	{
-		cout<<bboxes->facesVertexIndexes->at(idx)[0] << ", " <<
-			bboxes->facesVertexIndexes->at(idx)[1] << ", " <<
-			bboxes->facesVertexIndexes->at(idx)[2] << ", " <<
-			bboxes->facesVertexIndexes->at(idx)[3] << ", " << endl;
+  cout<<"Bounding boxes faces vertex indexes: "<<endl;
+  for (int idx = 0; idx < 12; idx++)
+    {
+      cout<<bboxes->facesVertexIndexes->at(idx)[0] << ", " <<
+	bboxes->facesVertexIndexes->at(idx)[1] << ", " <<
+	bboxes->facesVertexIndexes->at(idx)[2] << ", " <<
+	bboxes->facesVertexIndexes->at(idx)[3] << ", " << endl;
 
-	}
-	shared_ptr<glm::vec3> rotation(new glm::vec3(0.0f, 0.0f, 0.0f));
-	EXPECT_FALSE(bboxes->pointIsWithin(0.1f, 0.1f, 0.1f, 0.0f, 0.1f, 0.1f, rotation));
+    }
+  shared_ptr<glm::vec3> rotation(new glm::vec3(0.0f, 0.0f, 0.0f));
+  EXPECT_FALSE(bboxes->pointIsWithin(0.1f, 0.1f, 0.1f, 0.0f, 0.1f, 0.1f, rotation));
 
 }
 
@@ -188,33 +189,32 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 // Cannot run this with MinGW (see comment above Renderer.h include directive)
 #ifndef __MINGW32__
 TEST(RendererTest, StartAndUse) {
-	shared_ptr<Logger> log(new Logger(cout));
+shared_ptr<Logger> log(new Logger(cout));
 
-	shared_ptr<Configuration> cfg(new Configuration(log));
+shared_ptr<Configuration> cfg(new Configuration(log));
 
-	shared_ptr<SceneObject> object(
-		new SceneObject("animal",
-		"dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj",
-		cfg, log, 1, "dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png"));
-	shared_ptr<vector<shared_ptr<SceneObject> > > scene(
-		new vector<shared_ptr<SceneObject> >());
-	scene->push_back(object);
+shared_ptr<SceneObject> object(
+new SceneObject("animal",
+"dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj",
+cfg, log, 1, "dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png"));
+shared_ptr<vector<shared_ptr<SceneObject> > > scene(
+new vector<shared_ptr<SceneObject> >());
+scene->push_back(object);
 
-	unique_ptr<Renderer> renderer(new Renderer(cfg, log));
-	renderer->init(640, 480, false);
+unique_ptr<Renderer> renderer(new Renderer(cfg, log));
+renderer->init(640, 480, false);
 
 }
 #endif
 */
 
-/*TEST(SoundTest, Load){
-  initLogger();
+TEST(SoundTest, Load){
   shared_ptr<Sound> snd(new Sound());
   snd->load("dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah");
 
-}*/
+}
 
 int main(int argc, char **argv) {
-	testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

@@ -86,11 +86,11 @@ namespace small3d {
     void append(const LogLevel level, const string message);
   };
 	
-
-
   void initLogger();
 
   void initLogger(ostream &stream);
+
+  void deleteLogger();
 }
 
 extern shared_ptr<small3d::Logger> logger;

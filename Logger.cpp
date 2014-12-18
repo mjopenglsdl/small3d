@@ -24,11 +24,12 @@ namespace small3d {
 
   Logger::~Logger() {
     this->append(info, "Logger getting destroyed");
+    logStream = NULL;
 
   }
 
   void Logger::append(const LogLevel level, const string message) {
-
+    if (!logger) return;
     ostringstream dateTimeOstringstream;
 
     time_t now;
@@ -82,5 +83,9 @@ namespace small3d {
 
   void initLogger(ostream &stream) {
     if (!logger) logger = shared_ptr<Logger>(new Logger(stream));
+  }
+
+  void deleteLogger() {
+    logger = NULL;
   }
 } 
