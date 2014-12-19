@@ -8,7 +8,7 @@
  */
 
 #include "Sound.h"
-#include <miguel/vorbis/include/vorbis/codec.h>
+#include <dimitrikourk/vorbis/include/vorbis/codec.h>
 #include <dimitrikourk/portaudio/include/portaudio.h>
 #include <cstdio>
 #include "Exception.h"

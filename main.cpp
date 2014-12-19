@@ -54,10 +54,6 @@
 using namespace small3d;
 using namespace std;
 
-// This will cause a segmentation fault in Linux. I have found some
-// information about adding set(gtest_disable_pthreads ON) in the
-// CMakelists.txt file, but I have not managed to get it to work
-#ifdef _WIN32
 TEST(LoggerTest, LogSomething) {
   deleteLogger();
   ostringstream oss;
@@ -71,7 +67,6 @@ TEST(LoggerTest, LogSomething) {
   deleteLogger();
 
 }
-#endif
 
 TEST(ImageTest, LoadImage) {
 
