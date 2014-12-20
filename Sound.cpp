@@ -9,7 +9,6 @@
 
 #include "Sound.h"
 #include <miguel/vorbis/include/vorbis/codec.h>
-#include <dimitrikourk/portaudio/include/portaudio.h>
 #include <cstdio>
 #include "Exception.h"
 #include <miguel/sdl2/include/SDL.h>
@@ -23,6 +22,8 @@ namespace small3d {
     if (error != paNoError) {
       throw Exception("PortAudio failed to initialise: " + string(Pa_GetErrorText(error)));
     }
+    
+    defaultOutput = Pa_GetDefaultOutputDevice();
   }
 
   Sound::~Sound(){
@@ -74,6 +75,16 @@ namespace small3d {
   }
   
   void Sound::play(const string &soundName, const bool &repeat){
+    if (defaultOutput == paNoDevice) {
+      throw Exception("No default sound output device.");
+    }
+
+    unordered_map<string, OggVorbis_File>::iterator nameSoundPair = sounds->find(soundName);
+
+    if(nameSoundPair == sounds->end()) {
+      throw Exception("Sound '" + soundName + "' has not been loaded.");
+    }
+    
 
   }
 
