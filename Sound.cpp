@@ -15,6 +15,14 @@
 
 namespace small3d {
 
+  int audioCallback(const void *input, void *output, 
+		    unsigned long frameCount,
+		    PaStreamCallbackTimeInfo *timeInfo,
+		    PaStreamCallbackFlags statusFlags,
+		    void *userData) {
+    return paContinue;
+  }
+
   Sound::Sound(){
     sounds = new unordered_map<string, OggVorbis_File>();
     
