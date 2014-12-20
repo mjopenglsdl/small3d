@@ -18,7 +18,11 @@ namespace small3d {
 
   Sound::Sound(){
     sounds = new unordered_map<string, OggVorbis_File>();
-
+    
+    PaError error = Pa_Initialize();
+    if (error != paNoError) {
+      throw Exception("PortAudio failed to initialise: " + string(Pa_GetErrorText(error)));
+    }
   }
 
   Sound::~Sound(){
@@ -31,6 +35,7 @@ namespace small3d {
       }
 
     delete sounds;
+    Pa_Terminate();
   }
 
   void Sound::load(const string &soundFilePath, const string &soundName){
@@ -69,12 +74,22 @@ namespace small3d {
   }
   
   void Sound::play(const string &soundName, const bool &repeat){
+
   }
 
   void Sound::stop(const string &soundName){
+    throw Exception("Stopping sounds has not been implemented yet.");
   }
 
   void Sound::deleteSound(const string &soundName){
+
+    unordered_map<string, OggVorbis_File>::iterator nameSoundPair = sounds->find(soundName);
+
+    if(nameSoundPair != sounds->end())
+      {
+	ov_clear(&nameSoundPair->second);
+	sounds->erase(soundName);
+      }
   }
 }
 
