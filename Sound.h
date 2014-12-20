@@ -30,7 +30,8 @@ namespace small3d {
 
   private:
     
-    unordered_map<string, OggVorbis_File> *sounds; 
+    unordered_map<string, OggVorbis_File> *sounds;
+    unordered_map<int, PaStream*> *streams;
 
     PaDeviceIndex defaultOutput;
 
@@ -65,9 +66,11 @@ namespace small3d {
      *
      * @repeat    Once the sound is finished playing, repeat
      *            if set to true. Otherwise, stop playing it.
+     * 
+     * @return    The id of the stream playing the sound
      *
      */ 
-    void play(const string &soundName, const bool &repeat);
+    int play(const string &soundName, const bool &repeat);
 
     /** 
      * Stop playing a sound.
@@ -75,7 +78,7 @@ namespace small3d {
      * @soundName The name of the sound to be stopped.
      *
      */
-    void stop(const string &soundName);
+    void stop(const int &streamId);
 
     /**
      * Delete a sound from memory.

@@ -25,6 +25,7 @@ namespace small3d {
 
   Sound::Sound(){
     sounds = new unordered_map<string, OggVorbis_File>();
+    streams = new unordered_map<int, PaStream*>();
     
     PaError error = Pa_Initialize();
     if (error != paNoError) {
@@ -35,6 +36,13 @@ namespace small3d {
   }
 
   Sound::~Sound(){
+
+    for (unordered_map<int, PaStream*>::iterator it = streams->begin(); it != streams->end(); ++it) {
+      Pa_StopStream(it->second);
+      Pa_CloseStream(it->second);
+    }
+    
+    delete streams;
     
     for (unordered_map<string, OggVorbis_File>::iterator it = sounds->begin();
 	 it != sounds->end(); ++it)
@@ -76,13 +84,30 @@ namespace small3d {
 	    vi->channels, vi->rate, (long)ov_pcm_total(&vorbisFile,-1));
     
     LOGINFO(string(soundInfo));
+
+    char pcmout[4096];
+    int current_section;
+    long ret = 0;
+    do{
+      ret=ov_read(&vorbisFile,pcmout,sizeof(pcmout),0,2,1,&current_section);
+      if (ret < 0) {
+	LOGERROR("Error in sound stream.");
+      } else if (ret > 0) {
+	/* we don't bother dealing with sample rate changes, etc, but
+	   you'll have to*/
+	LOGINFO("read sound");
+      }
+    }
+    while(ret !=0);
+
     
-    sounds->insert(make_pair(soundName, vorbisFile));
+      sounds->insert(make_pair(soundName, vorbisFile));
 
     fclose(fp);
   }
   
-  void Sound::play(const string &soundName, const bool &repeat){
+  int Sound::play(const string &soundName, const bool &repeat){
+    
     if (defaultOutput == paNoDevice) {
       throw Exception("No default sound output device.");
     }
@@ -92,11 +117,29 @@ namespace small3d {
     if(nameSoundPair == sounds->end()) {
       throw Exception("Sound '" + soundName + "' has not been loaded.");
     }
+
+    /*  vorbis_info *vi=ov_info(&nameSoundPair.second,-1);
+
+	PaStream *stream;
+
+	PaStreamParameters outputParams;
+
     
 
+	memset(&outputParams, 0, sizeof(PaStreamParameters));
+	outputParams.device = defaultOutput;
+	outputParams.channelCount = vi->channels;
+	outputParams.sampleFormat = paInt32;
+
+	PaError error = Pa_OpenStream(&stream, NULL, &outputParams, vi->rate, 
+	(long)ov_pcm_total(&vorbisFile,-1), paNoFlag,
+	audioCallback, 
+    
+    */
+ 
   }
 
-  void Sound::stop(const string &soundName){
+  void Sound::stop(const int &streamId){
     throw Exception("Stopping sounds has not been implemented yet.");
   }
 
