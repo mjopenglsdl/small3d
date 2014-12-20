@@ -22,12 +22,13 @@ namespace small3d {
   }
 
   Sound::~Sound(){
-    LOGINFO("Sound object destructor running");
-        for (unordered_map<string, OggVorbis_File>::iterator it = sounds->begin();
+    
+    for (unordered_map<string, OggVorbis_File>::iterator it = sounds->begin();
 	 it != sounds->end(); ++it)
       {
-		ov_clear(&it->second);
-	}
+	LOGINFO("Deleting sound " + it->first);
+	ov_clear(&it->second);
+      }
 
     delete sounds;
   }
@@ -47,11 +48,20 @@ namespace small3d {
 			"Could not open file " + string(SDL_GetBasePath())
 			+ soundFilePath);
       }
-     if(ov_open_callbacks(fp, &vorbisFile, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0) {
+    if(ov_open_callbacks(fp, &vorbisFile, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0) {
       throw Exception(
 		      "Could not load sound from file " + string(SDL_GetBasePath())
 		      + soundFilePath);
-		      }
+    }
+
+    vorbis_info *vi=ov_info(&vorbisFile,-1);
+
+    char soundInfo[100];
+
+    sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %d", soundName.c_str(), 
+	    vi->channels, vi->rate, (long)ov_pcm_total(&vorbisFile,-1));
+    
+    LOGINFO(string(soundInfo));
     
     sounds->insert(make_pair(soundName, vorbisFile));
 
