@@ -13,15 +13,42 @@
 #include <cstring>
 #include "Exception.h"
 #include <miguel/sdl2/include/SDL.h>
+#include <iostream>
+
+using namespace std;
 
 namespace small3d {
 
-  int audioCallback(const void *input, void *output, 
-		    unsigned long frameCount,
-		    PaStreamCallbackTimeInfo *timeInfo,
-		    PaStreamCallbackFlags statusFlags,
-		    void *userData) {
-    return paContinue;
+  static int audioCallback( const void *inputBuffer, void *outputBuffer,
+                            unsigned long framesPerBuffer,
+                            const PaStreamCallbackTimeInfo* timeInfo,
+                            PaStreamCallbackFlags statusFlags,
+                            void *userData )
+  {
+
+    int result = paContinue;
+   
+    SoundData *soundData = (SoundData*)userData;
+    short *out = (short*)outputBuffer;
+    unsigned long startPos = soundData -> currentFrame * soundData-> channels;
+    unsigned long endPos = startPos + framesPerBuffer * soundData-> channels;
+
+    if (endPos > (unsigned long) soundData->samples * 2 * soundData->channels) {
+      endPos = (unsigned long) soundData->samples * 2 * soundData->channels;
+      result = paAbort;
+      memset(out, 0, endPos - startPos);
+      cout<<"COMPLETE"<<endl;
+    }
+
+    for( unsigned long i= startPos; i< endPos; i += soundData->channels )
+      {
+	for(int c = 0; c < soundData->channels; ++c)
+	  {
+	    *out++ = ((short*)soundData->data)[i + c];
+	  }
+      }
+    soundData->currentFrame += framesPerBuffer;
+    return result;
   }
 
   Sound::Sound(){
@@ -72,8 +99,6 @@ namespace small3d {
 
     vorbis_info *vi=ov_info(&vorbisFile,-1);
 
-    char soundInfo[100];
-
     SoundData *soundData = new SoundData();
     
     soundData->channels = vi->channels;
@@ -122,7 +147,7 @@ namespace small3d {
 
     ov_clear(&vorbisFile);
     fclose(fp);
-
+    char soundInfo[100];
     sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %d - size in bytes %d", soundName.c_str(), 
 	    soundData->channels, soundData->rate, soundData->samples, soundData->
 	    size);    
@@ -148,21 +173,29 @@ namespace small3d {
     memset(&outputParams, 0, sizeof(PaStreamParameters));
     outputParams.device = defaultOutput;
     outputParams.channelCount = soundData->channels;
+    outputParams.suggestedLatency = Pa_GetDeviceInfo( outputParams.device )->defaultLowOutputLatency;
+    outputParams.hostApiSpecificStreamInfo = NULL;
 
     // Vorbis has produced 16-bit integers I guess...
     // (http://www.nothings.org/stb_vorbis/)
-    outputParams.sampleFormat = paUInt8;
+    outputParams.sampleFormat = paInt16;
 
     PaStream *stream;
+    
+    soundData->currentFrame = 0;
 
     PaError error = Pa_OpenStream(&stream, NULL, &outputParams, soundData->rate,
-				  (unsigned long)soundData->samples, paNoFlag,
-				  NULL, soundData->data);
+				  32, paNoFlag,
+				  audioCallback, soundData);
     if (error != paNoError){
-       throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
+      throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
     }
     LOGINFO("Playing..");
-    Pa_StartStream(stream);
+    error = Pa_StartStream(stream);
+    if (error != paNoError){
+      throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
+    }
+    Pa_Sleep(2*1000);
     LOGINFO("Done");
     Pa_CloseStream(stream);
     

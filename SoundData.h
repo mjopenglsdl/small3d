@@ -24,6 +24,8 @@ namespace small3d {
     long samples;
     long size;
 
+    unsigned long currentFrame;
+
     char *data;
 
     /**
