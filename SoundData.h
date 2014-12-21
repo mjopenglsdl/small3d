@@ -23,6 +23,8 @@ namespace small3d {
     int rate;
     long samples;
     long size;
+    double duration;
+    double startTime;
 
     unsigned long currentFrame;
 

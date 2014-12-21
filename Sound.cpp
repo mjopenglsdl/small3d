@@ -15,6 +15,7 @@
 #include <miguel/sdl2/include/SDL.h>
 #include <iostream>
 
+
 #define WORD_SIZE 2
 #define PORTAUDIO_SAMPLE_FORMAT paInt16
 #define SAMPLE_DATATYPE short
@@ -29,10 +30,15 @@ namespace small3d {
                             PaStreamCallbackFlags statusFlags,
                             void *userData )
   {
-
     int result = paContinue;
-   
     SoundData *soundData = (SoundData*)userData;
+    if (soundData->startTime == 0) {
+      soundData->startTime = timeInfo->currentTime - 0.1;
+    }
+    else if (timeInfo->currentTime - soundData->startTime > soundData->duration)
+      {
+	return paAbort;
+      }
     SAMPLE_DATATYPE *out = (SAMPLE_DATATYPE*)outputBuffer;
     unsigned long startPos = soundData -> currentFrame * soundData-> channels;
     unsigned long endPos = startPos + framesPerBuffer * soundData-> channels;
@@ -111,7 +117,8 @@ namespace small3d {
     soundData->rate = vi->rate;
     soundData->samples = (long)ov_pcm_total(&vorbisFile,-1);
     soundData->size = soundData->channels * soundData->samples * WORD_SIZE;
-
+    soundData->duration = (double)soundData->samples / (double)soundData->rate;
+    
     char pcmout[4096];
     soundData->data = new char[soundData->size];
     //memset(soundData->data, 0, soundData->size);
@@ -128,7 +135,7 @@ namespace small3d {
 
       } else if (ret > 0) {
 	
-	memcpy(&soundData->data[pos], pcmout, ret);
+       	memcpy(&soundData->data[pos], pcmout, ret);
 	pos += ret;
 
 	/*
@@ -145,9 +152,10 @@ namespace small3d {
     ov_clear(&vorbisFile);
     fclose(fp);
     char soundInfo[100];
-    sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %d - size in bytes %d - length %d sec", soundName.c_str(), 
+    
+    sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %d - size in bytes %d", soundName.c_str(), 
 	    soundData->channels, soundData->rate, soundData->samples, soundData->
-	    size, soundData->samples / soundData->rate);    
+	    size );    
 	    LOGINFO(string(soundInfo));
 
   }
@@ -171,7 +179,7 @@ namespace small3d {
     memset(&outputParams, 0, sizeof(PaStreamParameters));
     outputParams.device = defaultOutput;
     outputParams.channelCount = soundData->channels;
-    //outputParams.suggestedLatency = Pa_GetDeviceInfo( outputParams.device )->defaultLowOutputLatency;
+    //outputParams.suggestedLatency = 0;
     outputParams.hostApiSpecificStreamInfo = NULL;
 
     outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
@@ -179,6 +187,7 @@ namespace small3d {
     PaStream *stream;
     
     soundData->currentFrame = 0;
+    soundData->startTime = 0;
 
     PaError error = Pa_OpenStream(&stream, NULL, &outputParams, soundData->rate,
 				  1024, paNoFlag,
@@ -191,7 +200,7 @@ namespace small3d {
     if (error != paNoError){
       throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
     }
-    Pa_Sleep(5*1000);
+    Pa_Sleep(3*1000);
     LOGINFO("Done");
     Pa_CloseStream(stream);
     
