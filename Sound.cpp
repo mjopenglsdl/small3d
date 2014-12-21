@@ -199,11 +199,7 @@ namespace small3d {
     error = Pa_StartStream(stream);
     if (error != paNoError){
       throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
-    }
-    Pa_Sleep(3*1000);
-    LOGINFO("Done");
-    Pa_CloseStream(stream);
-    
+    }   
   }
 
   void Sound::stop(const int &streamId){

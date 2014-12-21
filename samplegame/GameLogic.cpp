@@ -120,20 +120,9 @@ namespace AvoidTheBug3D {
     tree->setRotation(0.0f, -0.5f, 0.0f);
 
     gameState = START_SCREEN;
-
-#ifdef SMALL3D_SOUND_ENABLED
-    soundPlayer = shared_ptr<SoundPlayer>(new SoundPlayer());
-    if (!soundPlayer->initAudio())
-      {
-	throw Exception("Could not initialise audio.");
-      }
-
-    if (!soundPlayer->preloadSound(
-				   string(SDL_GetBasePath()) + 
-				   "dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah")) {
-      throw Exception("Could not load goat sound.");
-    }
-#endif
+    
+    sound = shared_ptr<Sound>(new Sound());
+    sound->load("dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah");
 
     startTicks = 0;
     seconds = 0;
@@ -142,9 +131,7 @@ namespace AvoidTheBug3D {
   }
 
   GameLogic::~GameLogic() {
-#ifdef SMALL3D_SOUND_ENABLED
-    SDL_CloseAudio();
-#endif
+
   }
 
   void GameLogic::initGame()
@@ -268,9 +255,8 @@ namespace AvoidTheBug3D {
       {
 	if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
 	  {
-#ifdef SMALL3D_SOUND_ENABLED
-	    soundPlayer->playSound("bah");
-#endif
+	    sound->play("bah", false);
+
 	    seconds = (SDL_GetTicks() - startTicks) / 1000;
 	    gameState = START_SCREEN;
 	  }

@@ -14,14 +14,9 @@
 #include <dimitrikourk/small3d/SceneObject.h>
 #include <dimitrikourk/small3d/Renderer.h>
 #include <dimitrikourk/small3d/Text.h>
-
-/* Uncomment the following two lines and execute "bii find" again, 
-   in order to enable sound for the sample game.*/
-//#include <miguel/game_utils/SoundPlayer.h>
-//#define SMALL3D_SOUND_ENABLED
+#include <dimitrikourk/small3d/Sound.h>
 
 #include <dimitrikourk/small3d/samplegame/KeyInput.h>
-
 
 using namespace small3d;
 
@@ -41,13 +36,12 @@ namespace AvoidTheBug3D {
     shared_ptr<SceneObject> goat;
     shared_ptr<SceneObject> bug;
     shared_ptr<SceneObject> tree;
-#ifdef SMALL3D_SOUND_ENABLED
-    shared_ptr<SoundPlayer> soundPlayer;
-#endif
 
     shared_ptr<Renderer> renderer;
 
     shared_ptr<Text> crusoeText48;
+
+    shared_ptr<Sound> sound;
 
     enum GameState {START_SCREEN, PLAYING};
     GameState gameState;
