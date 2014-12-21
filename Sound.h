@@ -50,28 +50,26 @@ namespace small3d {
      * Loads a sound from a file. For the moment, the file can
      * only be an .ogg file.
      *
-     * @soundFilePath The path to the file, relative to the
-     *                directory of execution.
+     * @param soundFilePath The path to the file, relative to the
+     *                      directory of execution.
      * 
-     * @soundName     The name by which the loaded sound will
-     *                be identified.
+     * @param soundName     The name by which the loaded sound will
+     *                      be identified.
      */
     void load(const string &soundFilePath, const string &soundName);
 
     /**
      * Plays a sound.
      *
-     * @soundName The name of the sound to be played.
-     *
-     * @return    The id of the stream playing the sound
+     * @param soundName The name of the sound to be played.
      *
      */ 
-    int play(const string &soundName);
+    void play(const string &soundName);
 
     /**
      * Delete a sound from memory.
      *
-     * @soundName The name of the sound to be deleted.
+     * @param soundName The name of the sound to be deleted.
      *
      */
     void deleteSound(const string &soundName);

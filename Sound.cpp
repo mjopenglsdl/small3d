@@ -160,7 +160,7 @@ namespace small3d {
 
   }
   
-  int Sound::play(const string &soundName){
+  void Sound::play(const string &soundName){
     
     if (defaultOutput == paNoDevice) {
       throw Exception("No default sound output device.");
