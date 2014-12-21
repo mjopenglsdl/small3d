@@ -10,6 +10,7 @@
 #include "Sound.h"
 #include <miguel/vorbis/include/vorbis/codec.h>
 #include <cstdio>
+#include <cstring>
 #include "Exception.h"
 #include <miguel/sdl2/include/SDL.h>
 
@@ -78,6 +79,15 @@ namespace small3d {
     soundData->channels = vi->channels;
     soundData->rate = vi->rate;
     soundData->samples = (long)ov_pcm_total(&vorbisFile,-1);
+
+    /*
+      I have made some assumptions here that seem to work for the
+      time being. I multiply the samples by the number of channels
+      because, if I have understood correctly, vorbis will interleave
+      the samples if there are more than 1 channels. And then I
+      multiply by 2 because vorbis assumes a 16-bit buffer
+      destination. (http://www.nothings.org/stb_vorbis/)
+    */
     soundData->size = soundData->channels * soundData->samples * 2;
 
     char pcmout[4096];
@@ -100,9 +110,9 @@ namespace small3d {
 	pos += ret;
 
 	/*
-	char readResult[100];
-	sprintf(readResult, "Read %d bytes and copied them up to position %d", ret, pos);
-	LOGINFO(string(readResult));
+	  char readResult[100];
+	  sprintf(readResult, "Read %d bytes and copied them up to position %d", ret, pos);
+	  LOGINFO(string(readResult));
 	*/
       }
     }
@@ -115,7 +125,7 @@ namespace small3d {
 
     sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %d - size in bytes %d", soundName.c_str(), 
 	    soundData->channels, soundData->rate, soundData->samples, soundData->
-size);    
+	    size);    
     LOGINFO(string(soundInfo));
   }
   
@@ -131,25 +141,31 @@ size);
       throw Exception("Sound '" + soundName + "' has not been loaded.");
     }
 
-    /*  vorbis_info *vi=ov_info(&nameSoundPair.second,-1);
+    SoundData *soundData = nameSoundPair->second;
+      
+    PaStreamParameters outputParams;
 
-	PaStream *stream;
+    memset(&outputParams, 0, sizeof(PaStreamParameters));
+    outputParams.device = defaultOutput;
+    outputParams.channelCount = soundData->channels;
 
-	PaStreamParameters outputParams;
+    // Vorbis has produced 16-bit integers I guess...
+    // (http://www.nothings.org/stb_vorbis/)
+    outputParams.sampleFormat = paUInt8;
 
+    PaStream *stream;
+
+    PaError error = Pa_OpenStream(&stream, NULL, &outputParams, soundData->rate,
+				  (unsigned long)soundData->samples, paNoFlag,
+				  NULL, soundData->data);
+    if (error != paNoError){
+       throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
+    }
+    LOGINFO("Playing..");
+    Pa_StartStream(stream);
+    LOGINFO("Done");
+    Pa_CloseStream(stream);
     
-
-	memset(&outputParams, 0, sizeof(PaStreamParameters));
-	outputParams.device = defaultOutput;
-	outputParams.channelCount = vi->channels;
-	outputParams.sampleFormat = paUInt8;
-
-	PaError error = Pa_OpenStream(&stream, NULL, &outputParams, vi->rate, 
-	(long)ov_pcm_total(&vorbisFile,-1), paNoFlag,
-	audioCallback, 
-    
-    */
- 
   }
 
   void Sound::stop(const int &streamId){

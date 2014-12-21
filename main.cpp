@@ -206,6 +206,7 @@ renderer->init(640, 480, false);
 TEST(SoundTest, Load){
   shared_ptr<Sound> snd(new Sound());
   snd->load("dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah");
+  //snd->play("bah", false);
 
 }
 
