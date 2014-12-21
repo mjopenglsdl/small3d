@@ -24,10 +24,10 @@ namespace small3d {
   }
 
   Sound::Sound(){
-    sounds = new unordered_map<string, OggVorbis_File>();
-    streams = new unordered_map<int, PaStream*>();
+    sounds = new unordered_map<string, SoundData*>();
     
     PaError error = Pa_Initialize();
+
     if (error != paNoError) {
       throw Exception("PortAudio failed to initialise: " + string(Pa_GetErrorText(error)));
     }
@@ -36,19 +36,12 @@ namespace small3d {
   }
 
   Sound::~Sound(){
-
-    for (unordered_map<int, PaStream*>::iterator it = streams->begin(); it != streams->end(); ++it) {
-      Pa_StopStream(it->second);
-      Pa_CloseStream(it->second);
-    }
     
-    delete streams;
-    
-    for (unordered_map<string, OggVorbis_File>::iterator it = sounds->begin();
+    for (unordered_map<string, SoundData*>::iterator it = sounds->begin();
 	 it != sounds->end(); ++it)
       {
-	LOGINFO("Deleting sound " + it->first);
-	ov_clear(&it->second);
+	LOGINFO("Deleting sound '" + it->first +"'.");
+	delete it->second;
       }
 
     delete sounds;
@@ -59,7 +52,6 @@ namespace small3d {
     OggVorbis_File vorbisFile;
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
-    
     fopen_s(&fp, (SDL_GetBasePath() + soundFilePath).c_str(), "rb");
 #else
     FILE *fp = fopen((SDL_GetBasePath() + soundFilePath).c_str(), "rb");
@@ -70,6 +62,7 @@ namespace small3d {
 			"Could not open file " + string(SDL_GetBasePath())
 			+ soundFilePath);
       }
+
     if(ov_open_callbacks(fp, &vorbisFile, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0) {
       throw Exception(
 		      "Could not load sound from file " + string(SDL_GetBasePath())
@@ -80,30 +73,50 @@ namespace small3d {
 
     char soundInfo[100];
 
-    sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %d", soundName.c_str(), 
-	    vi->channels, vi->rate, (long)ov_pcm_total(&vorbisFile,-1));
+    SoundData *soundData = new SoundData();
     
-    LOGINFO(string(soundInfo));
+    soundData->channels = vi->channels;
+    soundData->rate = vi->rate;
+    soundData->samples = (long)ov_pcm_total(&vorbisFile,-1);
+    soundData->size = soundData->channels * soundData->samples * 2;
 
     char pcmout[4096];
+    soundData->data = new char[soundData->size];
+
     int current_section;
     long ret = 0;
+    long pos = 0;
+
     do{
       ret=ov_read(&vorbisFile,pcmout,sizeof(pcmout),0,2,1,&current_section);
+
       if (ret < 0) {
+
 	LOGERROR("Error in sound stream.");
+
       } else if (ret > 0) {
-	/* we don't bother dealing with sample rate changes, etc, but
-	   you'll have to*/
-	LOGINFO("read sound");
+	
+	memcpy(&soundData->data[pos], pcmout, ret);
+	pos += ret;
+
+	/*
+	char readResult[100];
+	sprintf(readResult, "Read %d bytes and copied them up to position %d", ret, pos);
+	LOGINFO(string(readResult));
+	*/
       }
     }
     while(ret !=0);
 
-    
-      sounds->insert(make_pair(soundName, vorbisFile));
+    sounds->insert(make_pair(soundName, soundData));
 
+    ov_clear(&vorbisFile);
     fclose(fp);
+
+    sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %d - size in bytes %d", soundName.c_str(), 
+	    soundData->channels, soundData->rate, soundData->samples, soundData->
+size);    
+    LOGINFO(string(soundInfo));
   }
   
   int Sound::play(const string &soundName, const bool &repeat){
@@ -112,7 +125,7 @@ namespace small3d {
       throw Exception("No default sound output device.");
     }
 
-    unordered_map<string, OggVorbis_File>::iterator nameSoundPair = sounds->find(soundName);
+    unordered_map<string, SoundData*>::iterator nameSoundPair = sounds->find(soundName);
 
     if(nameSoundPair == sounds->end()) {
       throw Exception("Sound '" + soundName + "' has not been loaded.");
@@ -129,7 +142,7 @@ namespace small3d {
 	memset(&outputParams, 0, sizeof(PaStreamParameters));
 	outputParams.device = defaultOutput;
 	outputParams.channelCount = vi->channels;
-	outputParams.sampleFormat = paInt32;
+	outputParams.sampleFormat = paUInt8;
 
 	PaError error = Pa_OpenStream(&stream, NULL, &outputParams, vi->rate, 
 	(long)ov_pcm_total(&vorbisFile,-1), paNoFlag,
@@ -145,11 +158,11 @@ namespace small3d {
 
   void Sound::deleteSound(const string &soundName){
 
-    unordered_map<string, OggVorbis_File>::iterator nameSoundPair = sounds->find(soundName);
+    unordered_map<string, SoundData*>::iterator nameSoundPair = sounds->find(soundName);
 
     if(nameSoundPair != sounds->end())
       {
-	ov_clear(&nameSoundPair->second);
+	delete nameSoundPair->second;
 	sounds->erase(soundName);
       }
   }

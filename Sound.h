@@ -15,7 +15,7 @@
 #include <memory>
 #include <unordered_map>
 #include <dimitrikourk/portaudio/include/portaudio.h>
-
+#include "SoundData.h"
 using namespace std;
 
 namespace small3d {
@@ -30,8 +30,7 @@ namespace small3d {
 
   private:
     
-    unordered_map<string, OggVorbis_File> *sounds;
-    unordered_map<int, PaStream*> *streams;
+    unordered_map<string, SoundData*> *sounds;
 
     PaDeviceIndex defaultOutput;
 
