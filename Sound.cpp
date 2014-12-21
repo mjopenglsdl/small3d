@@ -160,7 +160,7 @@ namespace small3d {
 
   }
   
-  int Sound::play(const string &soundName, const bool &repeat){
+  int Sound::play(const string &soundName){
     
     if (defaultOutput == paNoDevice) {
       throw Exception("No default sound output device.");
@@ -200,10 +200,6 @@ namespace small3d {
     if (error != paNoError){
       throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
     }   
-  }
-
-  void Sound::stop(const int &streamId){
-    throw Exception("Stopping sounds has not been implemented yet.");
   }
 
   void Sound::deleteSound(const string &soundName){

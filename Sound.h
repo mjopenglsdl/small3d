@@ -63,21 +63,10 @@ namespace small3d {
      *
      * @soundName The name of the sound to be played.
      *
-     * @repeat    Once the sound is finished playing, repeat
-     *            if set to true. Otherwise, stop playing it.
-     * 
      * @return    The id of the stream playing the sound
      *
      */ 
-    int play(const string &soundName, const bool &repeat);
-
-    /** 
-     * Stop playing a sound.
-     * 
-     * @soundName The name of the sound to be stopped.
-     *
-     */
-    void stop(const int &streamId);
+    int play(const string &soundName);
 
     /**
      * Delete a sound from memory.
