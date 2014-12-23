@@ -46,7 +46,7 @@ http://www.visualstudio.com/
 License
 -------
 
-As of (biicode) version 8, small3d is licensed under the BSD 3-Clause License (see LICENSE file).
+small3d is licensed under the BSD 3-Clause License (see LICENSE file).
 
 Reuse and packaging
 -------------------
