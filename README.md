@@ -26,7 +26,7 @@ Compatibility
 
 **Debian Wheezy - Command Line**: No problems
 
-**Windows - Visual Studio**: No problems, but make sure you use biicode v7 of google/gtest (check bii/requirements.bii). There are some conflicts when v8 is used. I am working on them. Note that, by default, bii will compile projects in Windows using MinGW's compiler. In order to use Visual Studio, issue one of the following commands from the directory of your project, depending on which version you have installed:
+**Windows - Visual Studio**: No problems. Note that, by default, bii will compile projects in Windows using MinGW's compiler. In order to use Visual Studio, issue one of the following commands from the directory of your project, depending on which version you have installed:
 
 bii cpp:configure -G"Visual Studio 10 2010"
 
