@@ -34,8 +34,7 @@ bii cpp:configure -G"Visual Studio 11 2012"
 
 bii cpp:configure -G"Visual Studio 12 2013"
 
-**Windows - MinGW**: The engine and sample game will compile and work under MinGW but support for that environment is a little flaky (see https://github.com/dimitrikourk/small3d/blob/master/aboutMinGW.txt).
-Also, with MinGW, the build time is quite long, so I would strongly recommend using the Visual Studio compiler. You can get Visual Studio Community for free:
+**Windows - MinGW**: I have been trying to get the block to work properly under MinGW. At times I was successful but, right now, even though it can be compiled, it produces segmentation faults. I would strongly recommend using the Visual Studio compiler on Windows. You can get Visual Studio Community for free:
 
 http://www.visualstudio.com/
 
