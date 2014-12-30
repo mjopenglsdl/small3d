@@ -149,8 +149,11 @@ namespace small3d {
     if (boundingBoxes == NULL) {
       throw Exception("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
+    
+    boundingBoxes->offset = *this->offset;
+    boundingBoxes->rotation = *this->rotation;
 
-    return boundingBoxes->pointIsWithin(x, y, z, offset->x, offset->y, offset->z, rotation);
+    return boundingBoxes->pointIsWithin(x, y, z);
   }
 
   bool SceneObject::collidesWithSceneObject( shared_ptr<SceneObject> otherObject )
@@ -162,11 +165,15 @@ namespace small3d {
     if (otherObject->boundingBoxes == NULL) {
       throw Exception("No bounding boxes have been provided for " + otherObject->name + ", so collision detection is not enabled.");
     }
+
+    boundingBoxes->offset = *offset;
+    boundingBoxes->rotation = *rotation;
+
+    otherObject->boundingBoxes->offset = *otherObject->offset;
+    otherObject->boundingBoxes->rotation = *otherObject->rotation;
+
     // Checking whether the boxes of this object are within the boxes of the other object or vice versa
-    return boundingBoxes->boxesAreWithin(otherObject->boundingBoxes, otherObject->offset->x, otherObject->offset->y,
-					 otherObject->offset->z, otherObject->rotation, offset->x, offset->y, offset->z, rotation) || 
-      otherObject->boundingBoxes->boxesAreWithin(boundingBoxes, offset->x, offset->y, offset->z, rotation,
-						 otherObject->offset->x, otherObject->offset->y, otherObject->offset->z, otherObject->rotation);
+    return boundingBoxes->boxesAreWithin(otherObject->boundingBoxes) || otherObject->boundingBoxes->boxesAreWithin(boundingBoxes);
   }
 
 }

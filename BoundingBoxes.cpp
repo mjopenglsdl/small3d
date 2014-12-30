@@ -126,11 +126,10 @@ namespace small3d {
 
   }
 
-  bool BoundingBoxes::pointIsWithin( const float &pointX, const float &pointY, const float &pointZ, 
-				     const float &boxesX, const float &boxesY, const float &boxesZ, shared_ptr<glm::vec3> boxesRotation)
+  bool BoundingBoxes::pointIsWithin( const float &pointX, const float &pointY, const float &pointZ)
   {
     bool collides = false;
-    glm::mat4 rotationMatrix = rotateZ(boxesRotation->z) * rotateX(boxesRotation->x) * rotateY(boxesRotation->y);
+    glm::mat4 rotationMatrix = rotateZ(rotation.z) * rotateX(rotation.x) * rotateY(rotation.y);
 
     for (int idx = 0; idx < numBoxes; ++idx) {
       float minZ, maxZ, minX, maxX, minY, maxY;
@@ -140,9 +139,9 @@ namespace small3d {
 
       rotatedCoords = rotationMatrix * coords;
 
-      rotatedCoords.x += boxesX;
-      rotatedCoords.y += boxesY;
-      rotatedCoords.z += boxesZ;
+      rotatedCoords.x += offset.x;
+      rotatedCoords.y += offset.y;
+      rotatedCoords.z += offset.z;
 
       minX = rotatedCoords.x;
       maxX = rotatedCoords.x;
@@ -156,9 +155,9 @@ namespace small3d {
 	  coords = glm::vec4(vertices->at(checkidx)[0], vertices->at(checkidx)[1], vertices->at(checkidx)[2], 1);
 	  rotatedCoords = rotationMatrix * coords;
 
-	  rotatedCoords.x += boxesX;
-	  rotatedCoords.y += boxesY;
-	  rotatedCoords.z += boxesZ;
+	  rotatedCoords.x += offset.x;
+	  rotatedCoords.y += offset.y;
+	  rotatedCoords.z += offset.z;
 
 	  if (rotatedCoords.x < minX)
 	    minX = rotatedCoords.x;
@@ -191,13 +190,11 @@ namespace small3d {
     return collides;
   }
 
-  bool BoundingBoxes::boxesAreWithin( shared_ptr<BoundingBoxes> otherBoxes, const float &otherBoxesX, const float &otherBoxesY, 
-				      const float &otherBoxesZ, shared_ptr<glm::vec3> otherBoxesRotation, const float &boxesX, const float &boxesY, 
-				      const float &boxesZ, shared_ptr<glm::vec3> boxesRotation)
+  bool BoundingBoxes::boxesAreWithin(shared_ptr<BoundingBoxes> otherBoxes)
   {
     bool collides = false;
 
-    glm::mat4 rotationMatrix = rotateZ(otherBoxesRotation->z) * rotateX(otherBoxesRotation->x) * rotateY(otherBoxesRotation->y);
+    glm::mat4 rotationMatrix = rotateZ(otherBoxes->rotation.z) * rotateX(otherBoxes->rotation.x) * rotateY(otherBoxes->rotation.y);
 
     for(vector<float*>::iterator vertex = otherBoxes->vertices->begin(); vertex != otherBoxes->vertices->end(); vertex++) {
 			
@@ -206,14 +203,13 @@ namespace small3d {
 
       rotatedOtherCoords = rotationMatrix * otherCoords;
 
-      rotatedOtherCoords.x += otherBoxesX;
-      rotatedOtherCoords.y += otherBoxesY;
-      rotatedOtherCoords.z += otherBoxesZ;
+      rotatedOtherCoords.x += otherBoxes->offset.x;
+      rotatedOtherCoords.y += otherBoxes->offset.y;
+      rotatedOtherCoords.z += otherBoxes->offset.z;
 
       /*cout << "Checking " << rotatedOtherCoords.x << ", " << rotatedOtherCoords.y << ", " << rotatedOtherCoords.z <<
 	" with " << boxesX << ", " << boxesY << ", " << boxesZ << " rotation " << boxesRotation << endl;*/
-      if (pointIsWithin(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z, 
-			boxesX, boxesY, boxesZ, boxesRotation))
+      if (pointIsWithin(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z))
 	{
 				
 	  collides = true;

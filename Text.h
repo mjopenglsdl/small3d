@@ -38,8 +38,6 @@ namespace small3d {
     TTF_Font *font;
     int size;
 
-    string ttfFontPath;
-
   public:
 
     /**

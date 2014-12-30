@@ -24,7 +24,8 @@ namespace small3d {
    * 			to that of the Model class, BoundingBoxes is a separate class with
    * 			a separate loading function, because it loads a Wavefront file
    * 			exported with a different set of options (see README.md).
-   * 			Even though there can be more than one bounding boxes, these are
+   * 			Each BoundingBoxes class may contain more than one bounding boxes,
+   *                    which means that it is a set of bounding boxes. These are
    * 			not separated into different structures because each has a set of
    * 			six faces and this fact can be used to separate them at runtime.
    *
@@ -36,6 +37,18 @@ namespace small3d {
     int numBoxes;
 
   public:
+
+    /**
+     * The offset of the set of bounding boxes (their position on the scene).
+     */
+
+    glm::vec3 offset;
+
+    /**
+     * The roation (around the x, y and z axes) of the set of bounding boxes.
+     */
+
+    glm::vec3 rotation;
 
     /**
      * Constructor
@@ -79,16 +92,11 @@ namespace small3d {
      * @param	pointX		 	The point x coordinate.
      * @param	pointY		 	The point y coordinate.
      * @param	pointZ		 	The point z coordinate.
-     * @param	boxesX		 	The boxes' x coordinate.
-     * @param	boxesY		 	The boxes' y coordinate.
-     * @param	boxesZ		 	The boxes' z coordinate.
-     * @param	boxesRotation	The boxes' rotation.
      *
      * @return	true if it succeeds, false if it fails.
      */
 
-    bool pointIsWithin(const float &pointX, const float &pointY, const float &pointZ, 
-		       const float &boxesX, const float &boxesY, const float &boxesZ, shared_ptr<glm::vec3> boxesRotation);
+    bool pointIsWithin(const float &pointX, const float &pointY, const float &pointZ); 
 
     /**
      * @fn	bool boxesAreWithin(const BoundingBoxes &otherBoxes, const float &otherBoxesX,
@@ -98,22 +106,10 @@ namespace small3d {
      *
      * @brief	Check if another set of bounding boxes is located with this set (even partly)
      *
-     * @param	otherBoxes		  	The other boxes.
-     * @param	otherBoxesX		  	The other boxes x coordinate.
-     * @param	otherBoxesY		  	The other boxes y coordinate.
-     * @param	otherBoxesZ		  	The other boxes z coordinate.
-     * @param	otherBoxesRotation	The other boxes' rotation.
-     * @param	boxesX			  	The boxes' x coordinate.
-     * @param	boxesY			  	The boxes' y coordinate.
-     * @param	boxesZ			  	The boxes' z coordinate.
-     * @param	boxesRotation	  	The boxes' rotation.
-     *
      * @return	true if it succeeds, false if it fails.
      */
 
-    bool boxesAreWithin(shared_ptr<BoundingBoxes> otherBoxes, const float &otherBoxesX, const float &otherBoxesY,
-			const float &otherBoxesZ, shared_ptr<glm::vec3> otherBoxesRotation, const float &boxesX, 
-			const float &boxesY, const float &boxesZ, shared_ptr<glm::vec3> boxesRotation);
+    bool boxesAreWithin(shared_ptr<BoundingBoxes> otherBoxes);
 
   };
 }
