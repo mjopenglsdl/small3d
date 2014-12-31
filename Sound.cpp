@@ -195,7 +195,6 @@ namespace small3d {
     if (error != paNoError){
       throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
     }
-    LOGINFO("Playing..");
     error = Pa_StartStream(stream);
     if (error != paNoError){
       throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));

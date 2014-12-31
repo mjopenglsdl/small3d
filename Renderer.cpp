@@ -114,12 +114,15 @@ namespace small3d
   {
     sdlWindow = 0;
 
+    
+
     // initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
       {
 	LOGERROR(SDL_GetError());
 	throw Exception(string("Unable to initialise SDL"));
       }
+
 #ifdef __APPLE__
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
     SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
@@ -131,7 +134,7 @@ namespace small3d
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
+    Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN :
       SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
     sdlWindow = SDL_CreateWindow("Avoid the Bug 3D", SDL_WINDOWPOS_CENTERED,

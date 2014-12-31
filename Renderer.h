@@ -119,21 +119,21 @@ namespace small3d
      * @param width The width of the window
      * @param height The height of the window
      * @param fullScreen	Will the Renderer run in full screen mode? If set to true,
-     * 					the width and height have to correspond to the active screen
-     * 					resolution, in order for the scene to be displayed properly.				 
+     * 				the width and height have to correspond to a resolution supported
+     *                          by the user's screen in order for the scene to be displayed properly.			   
      * @param frustumScale	How much the frustum scales the items rendered
-     * @param zNear			Projection plane z coordinate (use positive value)
-     * @param zFar			Far end of frustum z coordinate (use positive value)
+     * @param zNear		Projection plane z coordinate (use positive value)
+     * @param zFar		Far end of frustum z coordinate (use positive value)
      * @param zOffsetFromCamera	The position of the projection plane with regard to the camera.
      * @param shadersPath	The path where the shaders will be stored, relative
-     * 						to the application's executing directory. It
-     * 						defaults to the path provided by the engine, but
-     * 						it can be changed, so as to accommodate for executables
-     * 						which are going to be using it. Even though the path to
-     * 						the folder can be changed, the folder structure within
-     * 						it and the names of the shaders must remain as provided.
-     * 						The shader code can be changed, provided that their inputs
-     * 						and outputs are maintained the same.
+     * 				to the application's executing directory. It
+     * 				defaults to the path provided by the engine, but
+     * 				it can be changed, so as to accommodate for executables
+     * 				which are going to be using it. Even though the path to
+     * 				the folder can be changed, the folder structure within
+     * 				it and the names of the shaders must remain as provided.
+     * 				The shader code can be changed, provided that their inputs
+     * 				and outputs are maintained the same.
      */
     void init(const int width, const int height, const bool fullScreen, 
 	      const float &frustumScale = 1.0f, const float &zNear = 1.0f, 
