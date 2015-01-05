@@ -52,7 +52,7 @@ namespace small3d {
     // localtime (used on Linux) does not allocate memory, but
     // returns a pointer to a pre-existing location. Hence,
     // we should not delete it.
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(__MINGW32__)
     delete t;
 #endif
 

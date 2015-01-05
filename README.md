@@ -34,9 +34,7 @@ bii cpp:configure -G"Visual Studio 11 2012"
 
 bii cpp:configure -G"Visual Studio 12 2013"
 
-**Windows - MinGW**: I have been trying to get the block to work properly under MinGW. At times I was successful but, right now, even though it can be compiled, it produces segmentation faults. I would strongly recommend using the Visual Studio compiler on Windows. You can get Visual Studio Community for free:
-
-http://www.visualstudio.com/
+**Windows - MinGW**: The block compiles and runs but no text output is produced from the unit tests or the sample game's logger.
 
 **Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block.
 
