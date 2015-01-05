@@ -18,7 +18,7 @@ using namespace std;
 namespace small3d {
 
   /**
-   * @struct	BoundingBoxes
+   * @class	BoundingBoxes
    *
    * @brief	Bounding boxes for a model. Even though the loading logic is similar
    * 			to that of the Model class, BoundingBoxes is a separate class with
@@ -31,7 +31,7 @@ namespace small3d {
    *
    */
 
-  struct BoundingBoxes {
+  class BoundingBoxes {
   private:
 
     int numBoxes;

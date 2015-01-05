@@ -28,6 +28,7 @@ namespace small3d {
     vertices->clear();
     facesVertexIndexes = new vector<int *>();
     facesVertexIndexes->clear();
+    numBoxes = 0;
   }
 
   BoundingBoxes::~BoundingBoxes() {
@@ -196,7 +197,7 @@ namespace small3d {
 
     glm::mat4 rotationMatrix = rotateZ(otherBoxes->rotation.z) * rotateX(otherBoxes->rotation.x) * rotateY(otherBoxes->rotation.y);
 
-    for(vector<float*>::iterator vertex = otherBoxes->vertices->begin(); vertex != otherBoxes->vertices->end(); vertex++) {
+    for(vector<float*>::iterator vertex = otherBoxes->vertices->begin(); vertex != otherBoxes->vertices->end(); ++vertex) {
 			
       glm::vec4 otherCoords((*vertex)[0], (*vertex)[1], (*vertex)[2], 1.0f);
       glm::vec4 rotatedOtherCoords(0.0f, 0.0f, 0.0f, 1.0f);

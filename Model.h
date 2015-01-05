@@ -17,12 +17,12 @@
 namespace small3d
 {
   /**
-   * @struct	Model
+   * @class	Model
    *
    * @brief	A 3D model
    */
 
-  struct Model
+  class Model
   {
 
   public:

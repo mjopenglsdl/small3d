@@ -182,7 +182,6 @@ namespace AvoidTheBug3D {
     }
 
     if(keyInput.up) {
-      float a = 
 
 	goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
       goatOffset->z -= sin(goatRotation->y) * GOAT_SPEED;
