@@ -34,7 +34,7 @@ bii cpp:configure -G"Visual Studio 11 2012"
 
 bii cpp:configure -G"Visual Studio 12 2013"
 
-**Windows - MinGW**: The block compiles and runs but no text output is produced from the unit tests or the sample game's logger.
+**Windows - MinGW**: No problems, but there is no console text output for the logger and the unit tests, most likely due to the mwindows linker flag.
 
 **Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block.
 
