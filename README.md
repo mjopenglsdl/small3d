@@ -34,7 +34,7 @@ bii cpp:configure -G"Visual Studio 11 2012"
 
 bii cpp:configure -G"Visual Studio 12 2013"
 
-**Windows - MinGW**: No problems. Many thanks to @foonathan (on Twitter) for showing me how to solve my console output issue on that platform.
+**Windows - MinGW**: No problems. Many thanks to @foonathan (Twitter & GitHub) for showing me how to solve my console output issue on that platform.
 
 **Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block.
 
