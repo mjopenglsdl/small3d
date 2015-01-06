@@ -63,11 +63,11 @@
 #define GOAT_SPEED 0.05f
 
 #include <memory>
-#include <dimitrikourk/small3d/MathFunctions.h>
-#include <dimitrikourk/small3d/Exception.h>
-#include <dimitrikourk/small3d/MathFunctions.h>
+#include <dimitrikourk/small3d/MathFunctions.hpp>
+#include <dimitrikourk/small3d/Exception.hpp>
+#include <dimitrikourk/small3d/MathFunctions.hpp>
 #include <cmath>
-#include <dimitrikourk/small3d/samplegame/GameLogic.h>
+#include <dimitrikourk/small3d/samplegame/GameLogic.hpp>
 
 
 using namespace small3d;

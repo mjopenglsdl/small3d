@@ -7,13 +7,13 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "WavefrontLoader.h"
-#include "Exception.h"
+#include "WavefrontLoader.hpp"
+#include "Exception.hpp"
 #include <fstream>
 #include <stdlib.h>
 #include <algorithm>
 #include <unordered_map>
-#include "GetTokens.h"
+#include "GetTokens.hpp"
 #include <cstring>
 #include <miguel/sdl2/include/SDL.h>
 

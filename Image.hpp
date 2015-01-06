@@ -1,5 +1,5 @@
 /*
- *  Image.h
+ *  Image.hpp
  *
  *  Created on: 2014/10/18
  *      Author: Dimitri Kourkoulis
@@ -11,7 +11,7 @@
 
 #include <string>
 #include <memory>
-#include "Logger.h"
+#include "Logger.hpp"
 #include <glenn/png/png.h>
 
 using namespace std;

@@ -7,11 +7,11 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "Sound.h"
+#include "Sound.hpp"
 #include <miguel/vorbis/include/vorbis/codec.h>
 #include <cstdio>
 #include <cstring>
-#include "Exception.h"
+#include "Exception.hpp"
 #include <miguel/sdl2/include/SDL.h>
 #include <iostream>
 
@@ -47,7 +47,7 @@ namespace small3d {
       endPos = (unsigned long) soundData->samples * WORD_SIZE * soundData->channels;
       result = paAbort;
       //memset(out, 0, endPos - startPos);
-      cout<<"COMPLETE at "<< endPos << endl;
+
     }
     
 

@@ -7,10 +7,10 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "Image.h"
+#include "Image.hpp"
 #include <stdio.h>
-#include "Exception.h"
-#include "MathFunctions.h"
+#include "Exception.hpp"
+#include "MathFunctions.hpp"
 #include <miguel/sdl2/include/SDL.h>
 
 using namespace std;

@@ -1,8 +1,17 @@
-#include "Renderer.h"
-#include "Exception.h"
+/*
+ * Renderer.cpp
+ *
+ *  Created on: 2014/10/19
+ *      Author: Dimitri Kourkoulis
+ *              http://dimitros.be
+ *     License: BSD 3-Clause License (see LICENSE file)
+ */
+
+#include "Renderer.hpp"
+#include "Exception.hpp"
 #include <fstream>
 #include <unordered_map>
-#include "MathFunctions.h"
+#include "MathFunctions.hpp"
 #include <dimitrikourk/glm/glm/gtc/type_ptr.hpp>
 #include <miguel/sdl2/include/SDL.h>
 #include <cstring>

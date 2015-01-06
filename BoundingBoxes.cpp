@@ -7,12 +7,12 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "BoundingBoxes.h"
+#include "BoundingBoxes.hpp"
 #include <fstream>
-#include "Exception.h"
-#include "GetTokens.h"
+#include "Exception.hpp"
+#include "GetTokens.hpp"
 #include <stdlib.h>
-#include "MathFunctions.h"
+#include "MathFunctions.hpp"
 #include <dimitrikourk/glm/glm/glm.hpp>
 #include <miguel/sdl2/include/SDL.h>
 #include <iostream>

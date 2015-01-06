@@ -7,7 +7,7 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "SoundData.h"
+#include "SoundData.hpp"
 
 namespace small3d {
 

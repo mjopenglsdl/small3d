@@ -1,5 +1,5 @@
 /*
- *  Renderer.h
+ *  Renderer.hpp
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
@@ -27,9 +27,9 @@
 #endif //SDLANDOPENGL
 
 #include <memory>
-#include "SceneObject.h"
+#include "SceneObject.hpp"
 #include <vector>
-#include "Logger.h"
+#include "Logger.hpp"
 #include <unordered_map>
 #include <dimitrikourk/glm/glm/glm.hpp>
 

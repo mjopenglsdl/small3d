@@ -7,8 +7,8 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "Text.h"
-#include "Exception.h"
+#include "Text.hpp"
+#include "Exception.hpp"
 #include <cstdio>
 #include <cstring>
 

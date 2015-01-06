@@ -1,5 +1,5 @@
 /*
- *  GameLogic.h
+ *  GameLogic.hpp
  *
  *  Created on: 2014/11/09
  *      Author: Dimitri Kourkoulis
@@ -10,13 +10,13 @@
 #pragma once
 
 #include <memory>
-#include <dimitrikourk/small3d/Logger.h>
-#include <dimitrikourk/small3d/SceneObject.h>
-#include <dimitrikourk/small3d/Renderer.h>
-#include <dimitrikourk/small3d/Text.h>
-#include <dimitrikourk/small3d/Sound.h>
+#include <dimitrikourk/small3d/Logger.hpp>
+#include <dimitrikourk/small3d/SceneObject.hpp>
+#include <dimitrikourk/small3d/Renderer.hpp>
+#include <dimitrikourk/small3d/Text.hpp>
+#include <dimitrikourk/small3d/Sound.hpp>
 
-#include <dimitrikourk/small3d/samplegame/KeyInput.h>
+#include <dimitrikourk/small3d/samplegame/KeyInput.hpp>
 
 using namespace small3d;
 

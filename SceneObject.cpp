@@ -1,16 +1,18 @@
 /*
  * SceneObject.cpp
  *
- *  Created on: Dec 26, 2013
+ *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
+ *              http://dimitros.be
+ *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "SceneObject.h"
+#include "SceneObject.hpp"
 #include <sstream>
 #include <iomanip>
-#include "Exception.h"
-#include "ModelLoader.h"
-#include "WavefrontLoader.h"
+#include "Exception.hpp"
+#include "ModelLoader.hpp"
+#include "WavefrontLoader.hpp"
 #include <memory>
 
 using namespace std;

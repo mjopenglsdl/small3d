@@ -1,5 +1,5 @@
 /*
- *  Text.h
+ *  Text.hpp
  *
  *  Created on: 2014/11/23
  *      Author: Dimitri Kourkoulis
@@ -10,7 +10,7 @@
 // bii://dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf
 
 #include <string>
-#include "Renderer.h"
+#include "Renderer.hpp"
 #include <memory>
 #include <miguel/sdl2_ttf/SDL_ttf.h>
 

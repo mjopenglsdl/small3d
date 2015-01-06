@@ -1,5 +1,5 @@
 /*
- *  WavefrontLoader.h
+ *  WavefrontLoader.hpp
  *
  *  Created on: 2014/11/12
  *      Author: Dimitri Kourkoulis
@@ -8,7 +8,7 @@
  */
 #pragma once
 
-#include "ModelLoader.h"
+#include "ModelLoader.hpp"
 #include <vector>
 
 using namespace std;

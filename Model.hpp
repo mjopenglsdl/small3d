@@ -1,5 +1,5 @@
 /*
- *  Model.h
+ *  Model.hpp
  *
  *  Created on: 2014/10/18
  *      Author: Dimitri Kourkoulis

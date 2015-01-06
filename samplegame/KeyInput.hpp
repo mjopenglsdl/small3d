@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * KeyInput.h
+ * KeyInput.hpp
  *
  *  Created on: 23 Sept 2014
  *      Author: Dimitri Kourkoulis

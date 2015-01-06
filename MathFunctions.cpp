@@ -7,7 +7,7 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "MathFunctions.h"
+#include "MathFunctions.hpp"
 #include <cmath>
 
 namespace small3d {

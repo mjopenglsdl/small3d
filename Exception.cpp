@@ -7,7 +7,7 @@
 *     License: BSD 3-Clause License (see LICENSE file)
 */
 
-#include "Exception.h"
+#include "Exception.hpp"
 
 namespace small3d {
 

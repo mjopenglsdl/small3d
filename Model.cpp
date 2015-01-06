@@ -7,7 +7,7 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "Model.h"
+#include "Model.hpp"
 
 using namespace std;
 

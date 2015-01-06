@@ -15,17 +15,17 @@
 #endif
 
 #include "google/gtest/gtest.h"
-#include "Logger.h"
+#include "Logger.hpp"
 #include <iostream>
 #include <memory>
 #include <sstream>
-#include "Image.h"
-#include "Model.h"
-#include "BoundingBoxes.h"
-#include "SceneObject.h"
-#include "ModelLoader.h"
-#include "WavefrontLoader.h"
-#include "Sound.h"
+#include "Image.hpp"
+#include "Model.hpp"
+#include "BoundingBoxes.hpp"
+#include "SceneObject.hpp"
+#include "ModelLoader.hpp"
+#include "WavefrontLoader.hpp"
+#include "Sound.hpp"
 
 /* MinGW produces the following linking error, if the unit tests
  * are linked to the renderer:
@@ -38,7 +38,7 @@
  * under MinGW.
  */
 #ifndef __MINGW32__
-#include "Renderer.h"
+#include "Renderer.hpp"
 #endif
 
 /* bii data directives */

@@ -1,5 +1,5 @@
 /*
- *  GetTokens.h
+ *  GetTokens.hpp
  *
  *  Created on: 2014/10/18
  *      Author: Dimitri Kourkoulis

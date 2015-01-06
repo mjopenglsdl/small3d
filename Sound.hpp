@@ -1,5 +1,5 @@
 /*
- *  Sound.h
+ *  Sound.hpp
  *
  *  Created on: 2014-12-14
  *      Author: Dimitri Kourkoulis
@@ -9,13 +9,13 @@
 
 #pragma once
 
-#include "Logger.h"
+#include "Logger.hpp"
 #include <string>
 #include <miguel/vorbis/include/vorbis/vorbisfile.h>
 #include <memory>
 #include <unordered_map>
 #include <dimitrikourk/portaudio/include/portaudio.h>
-#include "SoundData.h"
+#include "SoundData.hpp"
 using namespace std;
 
 namespace small3d {

@@ -7,7 +7,7 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "Logger.h"
+#include "Logger.hpp"
 #include <sstream>
 #include <ctime>
 #include <iostream>

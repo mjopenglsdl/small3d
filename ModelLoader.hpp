@@ -1,5 +1,5 @@
 /*
- *  ModelLoader.h
+ *  ModelLoader.hpp
  *
  *  Created on: 2014/11/12
  *      Author: Dimitri Kourkoulis
@@ -9,8 +9,8 @@
 #pragma once
 
 #include <memory>
-#include "Logger.h"
-#include "Model.h"
+#include "Logger.hpp"
+#include "Model.hpp"
 
 namespace small3d {
 

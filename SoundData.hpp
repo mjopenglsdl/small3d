@@ -1,5 +1,5 @@
 /*
- *  SoundData.h
+ *  SoundData.hpp
  *
  *  Created on: 2014-12-21
  *      Author: Dimitri Kourkoulis

@@ -1,5 +1,5 @@
 /*
- *  SceneObject.h
+ *  SceneObject.hpp
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
@@ -10,11 +10,11 @@
 #pragma once
 
 #include <vector>
-#include "Model.h"
+#include "Model.hpp"
 #include <memory>
-#include "Logger.h"
-#include "Image.h"
-#include "BoundingBoxes.h"
+#include "Logger.hpp"
+#include "Image.hpp"
+#include "BoundingBoxes.hpp"
 #include <dimitrikourk/glm/glm/glm.hpp>
 
 using namespace std;

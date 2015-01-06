@@ -7,7 +7,7 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "GetTokens.h"
+#include "GetTokens.hpp"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 /*
- *  BoundingBoxes.h
+ *  BoundingBoxes.hpp
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
@@ -9,7 +9,7 @@
 
 #pragma once
 #include <memory>
-#include "Logger.h"
+#include "Logger.hpp"
 #include <vector>
 #include <dimitrikourk/glm/glm/glm.hpp>
 
