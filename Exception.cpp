@@ -16,8 +16,8 @@ namespace small3d {
 
 	}
 
-	Exception::Exception(string message) {
-		this->message = message;
+  Exception::Exception(string message):message(message) {
+	
 	}
 
 	const char* Exception::what() const throw () {

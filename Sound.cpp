@@ -153,7 +153,7 @@ namespace small3d {
     fclose(fp);
     char soundInfo[100];
     
-    sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %d - size in bytes %d", soundName.c_str(), 
+    sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %ld - size in bytes %ld", soundName.c_str(), 
 	    soundData->channels, soundData->rate, soundData->samples, soundData->
 	    size );    
 	    LOGINFO(string(soundInfo));

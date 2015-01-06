@@ -217,6 +217,14 @@ TEST(SoundTest, Load){
 }
 
 int main(int argc, char **argv) {
+  // Set up a console, if using MinGW
+  // This is because the mwindows linker flag,
+  // used by blocks referenced by small3d,
+  // eliminates the default one.
+#ifdef __MINGW32__
+  AllocConsole();
+  freopen("CONOUT$", "w", stdout);
+#endif
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

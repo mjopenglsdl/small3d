@@ -30,7 +30,7 @@ namespace small3d {
     model->vertexData = new float[model->vertexDataComponentCount];
 
     int idx = 0;
-    for(vector<float*>::iterator vertex = vertices->begin(); vertex != vertices->end(); vertex++)
+    for(vector<float*>::iterator vertex = vertices->begin(); vertex != vertices->end(); ++vertex)
       {
 	for (int coordIdx = 0; coordIdx != 3; ++coordIdx)
 	  {
@@ -52,7 +52,7 @@ namespace small3d {
 
     model->indexDataIndexCount = 0;
 
-    for(vector<int*>::iterator face = facesVertexIndexes->begin(); face != facesVertexIndexes->end(); face++)
+    for(vector<int*>::iterator face = facesVertexIndexes->begin(); face != facesVertexIndexes->end(); ++face)
       {
 
 	for (int indexIdx = 0; indexIdx != 3; ++indexIdx)

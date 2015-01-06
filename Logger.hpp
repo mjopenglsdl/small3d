@@ -83,7 +83,7 @@ namespace small3d {
      * @param	message	The message.
      */
 
-    void append(const LogLevel level, const string message);
+    void append(const LogLevel level, const string &message);
   };
 	
   void initLogger();

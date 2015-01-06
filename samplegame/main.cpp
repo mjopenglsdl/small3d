@@ -28,68 +28,76 @@ const GLuint frameRate = 60;
 
 int main(int argc, char** argv)
 {
+  // Set up a console, if using MinGW
+  // This is because the mwindows linker flag,
+  // used by blocks referenced by small3d,
+  // eliminates the default one.
+#ifdef __MINGW32__
+  AllocConsole();
+  freopen("CONOUT$", "w", stdout);
+#endif
 
   KeyInput input;
 
   try
     {
 
-      shared_ptr<GameLogic> gameLogic(new GameLogic());
+  shared_ptr<GameLogic> gameLogic(new GameLogic());
 
-      // program main loop
-      bool done = false;
+  // program main loop
+  bool done = false;
 
-      // ticks for setting the frame rate
-      GLuint ticks = SDL_GetTicks();
-      GLuint prevTicks = ticks;
-      GLuint ticksInterval = 1000 / frameRate;
+  // ticks for setting the frame rate
+  GLuint ticks = SDL_GetTicks();
+  GLuint prevTicks = ticks;
+  GLuint ticksInterval = 1000 / frameRate;
 
-      while (!done)
-	{
+  while (!done)
+    {
 
-	  SDL_Event event;
-	  if (SDL_PollEvent(&event))
-	    {
+  SDL_Event event;
+  if (SDL_PollEvent(&event))
+    {
 
-	      const Uint8 *keyState = SDL_GetKeyboardState(NULL);
+  const Uint8 *keyState = SDL_GetKeyboardState(NULL);
 
-	      input.up = keyState[SDL_SCANCODE_UP] == 1;
-	      input.down = keyState[SDL_SCANCODE_DOWN] == 1;
-	      input.left = keyState[SDL_SCANCODE_LEFT] == 1;
-	      input.right = keyState[SDL_SCANCODE_RIGHT] == 1;
-	      input.enter = keyState[SDL_SCANCODE_RETURN] == 1;
+  input.up = keyState[SDL_SCANCODE_UP] == 1;
+  input.down = keyState[SDL_SCANCODE_DOWN] == 1;
+  input.left = keyState[SDL_SCANCODE_LEFT] == 1;
+  input.right = keyState[SDL_SCANCODE_RIGHT] == 1;
+  input.enter = keyState[SDL_SCANCODE_RETURN] == 1;
 
-	      switch (event.type)
-		{
+  switch (event.type)
+    {
 
-		case SDL_QUIT:
-		  done = true;
-		  break;
+ case SDL_QUIT:
+   done = true;
+   break;
 
-		case SDL_KEYDOWN:
-		  {
-		    if (event.key.keysym.sym == SDLK_ESCAPE)
-		      done = true;
-		    break;
-		  }
-		}
-	    }
+ case SDL_KEYDOWN:
+   {
+  if (event.key.keysym.sym == SDLK_ESCAPE)
+    done = true;
+  break;
+}
+}
+}
 
-	  ticks = SDL_GetTicks();
-	  if (ticks - prevTicks > ticksInterval)
-	    {
-	      gameLogic->process(input);
-	      prevTicks = ticks;
-	      gameLogic->render();
-	    }
-	}
+  ticks = SDL_GetTicks();
+  if (ticks - prevTicks > ticksInterval)
+    {
+  gameLogic->process(input);
+  prevTicks = ticks;
+  gameLogic->render();
+}
+}
 
-    }
+}
   catch (Exception &e)
     {
-      LOGERROR(e.what());
-      return 1;
-    }
+  LOGERROR(e.what());
+  return 1;
+}
 
   return 0;
 }

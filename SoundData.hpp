@@ -12,11 +12,11 @@
 namespace small3d {
   
   /**
-   * @struct SoundData
+   * @class SoundData
    *
    * @brief Decoded sound data
    */
-  struct SoundData {
+  class SoundData {
   public:
 
     int channels;
