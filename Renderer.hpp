@@ -21,7 +21,7 @@
 
 #ifndef SDLANDOPENGL
 #define SDLANDOPENGL
-#include <dimitrikourk/glew/glew.h>
+#include <dimitrikourk/glew/include/GL/glew.h>
 #include <miguel/sdl2/include/SDL_opengl.h>
 #include <miguel/sdl2/include/SDL.h>
 #endif //SDLANDOPENGL
