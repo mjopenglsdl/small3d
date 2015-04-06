@@ -4,7 +4,7 @@ small3d
 
 [![Build Status](https://webapi.biicode.com/v1/badges/dimitrikourk/dimitrikourk/small3d/master)](https://www.biicode.com/dimitrikourk/small3d) [![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
 
-Quick start guide: http://goo.gl/5TYOv2
+Quick start guide and build instructions: http://goo.gl/5TYOv2
 
 For requests for assistance, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
 
