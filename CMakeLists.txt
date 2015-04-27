@@ -1,8 +1,5 @@
 include(${CMAKE_HOME_DIRECTORY}/biicode.cmake)
 
-# Initializes block variables
-INIT_BIICODE_BLOCK()
-
 IF(APPLE)
   SET(BII_IMPLICIT_RULES_ENABLED FALSE)
 ENDIF()
