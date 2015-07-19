@@ -220,6 +220,12 @@ namespace AvoidTheBug3D {
 
     goat->setRotation(0.0f, goatRotation->y, 0.0f);
 
+    // Uncomment to see the goat's view of the world
+    /* renderer->cameraPosition = *goatOffset;
+    renderer->cameraPosition.y += 1.0f;
+    renderer->cameraRotation = *goatRotation;
+    renderer->cameraRotation.y -= 1.57f; */
+
   }
 
   void GameLogic::moveBug()
