@@ -5,7 +5,7 @@ IF(APPLE)
 ENDIF()
 
 # Actually create targets: EXEcutables and libraries.
-ADD_BIICODE_TARGETS()
+ADD_BII_TARGETS()
 
 # Link OpenGL things and set to use C++11
 if(NOT WIN32 OR MINGW)

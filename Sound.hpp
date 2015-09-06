@@ -22,26 +22,26 @@ namespace small3d {
 
   /**
    * @class Sound
-   * 
+   *
    * @brief Sound management class
-   */ 
+   */
 
   class Sound {
 
   private:
-    
+
     unordered_map<string, SoundData*> *sounds;
 
     PaDeviceIndex defaultOutput;
 
   public:
 
-    /** 
+    /**
      * Constructor
      */
     Sound();
-    
-    /** 
+
+    /**
      * Destructor
      */
     ~Sound();
@@ -52,7 +52,7 @@ namespace small3d {
      *
      * @param soundFilePath The path to the file, relative to the
      *                      directory of execution.
-     * 
+     *
      * @param soundName     The name by which the loaded sound will
      *                      be identified.
      */
@@ -63,7 +63,7 @@ namespace small3d {
      *
      * @param soundName The name of the sound to be played.
      *
-     */ 
+     */
     void play(const string &soundName);
 
     /**
@@ -74,7 +74,7 @@ namespace small3d {
      */
     void deleteSound(const string &soundName);
 
-    
   };
+
 
 }

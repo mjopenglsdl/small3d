@@ -13,7 +13,6 @@ namespace small3d {
 
 	Exception::Exception() {
 
-
 	}
 
   Exception::Exception(string message):message(message) {
@@ -30,4 +29,3 @@ namespace small3d {
 	}
 
 }
-

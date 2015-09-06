@@ -40,64 +40,64 @@ int main(int argc, char** argv)
   KeyInput input;
 
   try
+  {
+
+    shared_ptr<GameLogic> gameLogic(new GameLogic());
+
+    // program main loop
+    bool done = false;
+
+    // ticks for setting the frame rate
+    GLuint ticks = SDL_GetTicks();
+    GLuint prevTicks = ticks;
+    GLuint ticksInterval = 1000 / frameRate;
+
+    while (!done)
     {
 
-  shared_ptr<GameLogic> gameLogic(new GameLogic());
+      SDL_Event event;
+      if (SDL_PollEvent(&event))
+      {
 
-  // program main loop
-  bool done = false;
+        const Uint8 *keyState = SDL_GetKeyboardState(NULL);
 
-  // ticks for setting the frame rate
-  GLuint ticks = SDL_GetTicks();
-  GLuint prevTicks = ticks;
-  GLuint ticksInterval = 1000 / frameRate;
+        input.up = keyState[SDL_SCANCODE_UP] == 1;
+        input.down = keyState[SDL_SCANCODE_DOWN] == 1;
+        input.left = keyState[SDL_SCANCODE_LEFT] == 1;
+        input.right = keyState[SDL_SCANCODE_RIGHT] == 1;
+        input.enter = keyState[SDL_SCANCODE_RETURN] == 1;
 
-  while (!done)
-    {
+        switch (event.type)
+        {
 
-  SDL_Event event;
-  if (SDL_PollEvent(&event))
-    {
+        case SDL_QUIT:
+          done = true;
+          break;
 
-  const Uint8 *keyState = SDL_GetKeyboardState(NULL);
+        case SDL_KEYDOWN:
+        {
+          if (event.key.keysym.sym == SDLK_ESCAPE)
+            done = true;
+          break;
+        }
+        }
+      }
 
-  input.up = keyState[SDL_SCANCODE_UP] == 1;
-  input.down = keyState[SDL_SCANCODE_DOWN] == 1;
-  input.left = keyState[SDL_SCANCODE_LEFT] == 1;
-  input.right = keyState[SDL_SCANCODE_RIGHT] == 1;
-  input.enter = keyState[SDL_SCANCODE_RETURN] == 1;
+      ticks = SDL_GetTicks();
+      if (ticks - prevTicks > ticksInterval)
+      {
+        gameLogic->process(input);
+        prevTicks = ticks;
+        gameLogic->render();
+      }
+    }
 
-  switch (event.type)
-    {
-
- case SDL_QUIT:
-   done = true;
-   break;
-
- case SDL_KEYDOWN:
-   {
-  if (event.key.keysym.sym == SDLK_ESCAPE)
-    done = true;
-  break;
-}
-}
-}
-
-  ticks = SDL_GetTicks();
-  if (ticks - prevTicks > ticksInterval)
-    {
-  gameLogic->process(input);
-  prevTicks = ticks;
-  gameLogic->render();
-}
-}
-
-}
+  }
   catch (Exception &e)
-    {
-  LOGERROR(e.what());
-  return 1;
-}
+  {
+    LOGERROR(e.what());
+    return 1;
+  }
 
   return 0;
 }
