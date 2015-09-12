@@ -158,9 +158,9 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
   cout<<"Bounding boxes vertices: "<<endl;
   for (int idx = 0; idx < 16; idx++)
     {
-      cout<<bboxes->vertices->at(idx)[0] << ", " <<
-	bboxes->vertices->at(idx)[1] << ", " <<
-	bboxes->vertices->at(idx)[2] << ", " << endl;
+      cout<<bboxes->vertices->[idx][0] << ", " <<
+	bboxes->vertices->[idx][1] << ", " <<
+	bboxes->vertices->[idx][2] << ", " << endl;
 
     }
 

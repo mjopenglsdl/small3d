@@ -65,7 +65,7 @@ namespace small3d {
      * @brief	Vertex coordinates read from Wavefront .obj file
      */
 
-    vector<float*> *vertices;
+    vector< vector<float> > vertices;
 
     /**
      * @brief	Faces vertex indexes read from Wavefront .obj file

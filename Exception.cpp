@@ -11,21 +11,21 @@
 
 namespace small3d {
 
-	Exception::Exception() {
+  Exception::Exception() {
 
-	}
+  }
 
-  Exception::Exception(string message):message(message) {
-	
-	}
+  Exception::Exception(string message) : message(message) {
 
-	const char* Exception::what() const throw () {
-		return message.c_str();
-	}
+  }
+
+  const char *Exception::what() const throw() {
+    return message.c_str();
+  }
 
 
-	Exception::~Exception() throw() {
-		// TODO Auto-generated destructor stub
-	}
+  Exception::~Exception() throw() {
+    // TODO Auto-generated destructor stub
+  }
 
 }
