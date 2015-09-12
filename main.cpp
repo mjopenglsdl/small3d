@@ -152,15 +152,15 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
   bboxes->loadFromFile("dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj");
 
-  EXPECT_EQ(16, bboxes->vertices->size());
+  EXPECT_EQ(16, bboxes->vertices.size());
   EXPECT_EQ(12, bboxes->facesVertexIndexes->size());
 
   cout<<"Bounding boxes vertices: "<<endl;
   for (int idx = 0; idx < 16; idx++)
     {
-      cout<<bboxes->vertices->[idx][0] << ", " <<
-	bboxes->vertices->[idx][1] << ", " <<
-	bboxes->vertices->[idx][2] << ", " << endl;
+      cout<<bboxes->vertices[idx][0] << ", " <<
+	bboxes->vertices[idx][1] << ", " <<
+	bboxes->vertices[idx][2] << ", " << endl;
 
     }
 
