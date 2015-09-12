@@ -38,7 +38,9 @@
  * under MinGW.
  */
 #ifndef __MINGW32__
+
 #include "Renderer.hpp"
+
 #endif
 
 /* bii data directives */
@@ -70,7 +72,7 @@ TEST(LoggerTest, LogSomething) {
 
 TEST(ImageTest, LoadImage) {
 
-  unique_ptr<Image> image( new Image("dimitrikourk/small3d/resources/images/testImage.png"));
+  unique_ptr<Image> image(new Image("dimitrikourk/small3d/resources/images/testImage.png"));
 
   cout << "Image width " << image->getWidth() << ", height " << image->getHeight() << endl;
 
@@ -116,17 +118,17 @@ TEST(ModelTest, LoadModel) {
   EXPECT_NE(0, model->textureCoordsDataComponentCount);
 
   cout << "Vertex data component count: "
-       << model->vertexDataComponentCount << endl << "Index count: "
-       << model->indexDataIndexCount << endl
-       << "Normals data component count: "
-       << model->normalsDataComponentCount << endl
-       << "Texture coordinates count: "
-       << model->textureCoordsDataComponentCount << endl;
+  << model->vertexDataComponentCount << endl << "Index count: "
+  << model->indexDataIndexCount << endl
+  << "Normals data component count: "
+  << model->normalsDataComponentCount << endl
+  << "Texture coordinates count: "
+  << model->textureCoordsDataComponentCount << endl;
 
   Model *modelWithNoTexture = new Model();
 
   loader->load("dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
-	
+
 
   EXPECT_NE(0, modelWithNoTexture->vertexDataComponentCount);
   EXPECT_NE(0, modelWithNoTexture->indexDataIndexCount);
@@ -134,12 +136,12 @@ TEST(ModelTest, LoadModel) {
   EXPECT_EQ(0, modelWithNoTexture->textureCoordsDataComponentCount);
 
   cout << "Vertex data component count: "
-       << modelWithNoTexture->vertexDataComponentCount << endl << "Index count: "
-       << modelWithNoTexture->indexDataIndexCount << endl
-       << "Normals data component count: "
-       << modelWithNoTexture->normalsDataComponentCount << endl
-       << "Texture coordinates count: "
-       << modelWithNoTexture->textureCoordsDataComponentCount << endl;
+  << modelWithNoTexture->vertexDataComponentCount << endl << "Index count: "
+  << modelWithNoTexture->indexDataIndexCount << endl
+  << "Normals data component count: "
+  << modelWithNoTexture->normalsDataComponentCount << endl
+  << "Texture coordinates count: "
+  << modelWithNoTexture->textureCoordsDataComponentCount << endl;
 
   delete model;
   delete modelWithNoTexture;
@@ -153,32 +155,30 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
   bboxes->loadFromFile("dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj");
 
   EXPECT_EQ(16, bboxes->vertices.size());
-  EXPECT_EQ(12, bboxes->facesVertexIndexes->size());
+  EXPECT_EQ(12, bboxes->facesVertexIndexes.size());
 
-  cout<<"Bounding boxes vertices: "<<endl;
-  for (int idx = 0; idx < 16; idx++)
-    {
-      cout<<bboxes->vertices[idx][0] << ", " <<
-	bboxes->vertices[idx][1] << ", " <<
-	bboxes->vertices[idx][2] << ", " << endl;
+  cout << "Bounding boxes vertices: " << endl;
+  for (int idx = 0; idx < 16; idx++) {
+    cout << bboxes->vertices[idx][0] << ", " <<
+    bboxes->vertices[idx][1] << ", " <<
+    bboxes->vertices[idx][2] << ", " << endl;
 
-    }
+  }
 
-  cout<<"Bounding boxes faces vertex indexes: "<<endl;
-  for (int idx = 0; idx < 12; idx++)
-    {
-      cout<<bboxes->facesVertexIndexes->at(idx)[0] << ", " <<
-	bboxes->facesVertexIndexes->at(idx)[1] << ", " <<
-	bboxes->facesVertexIndexes->at(idx)[2] << ", " <<
-	bboxes->facesVertexIndexes->at(idx)[3] << ", " << endl;
+  cout << "Bounding boxes faces vertex indexes: " << endl;
+  for (int idx = 0; idx < 12; idx++) {
+    cout << bboxes->facesVertexIndexes[idx][0] << ", " <<
+    bboxes->facesVertexIndexes[idx][1] << ", " <<
+    bboxes->facesVertexIndexes[idx][2] << ", " <<
+    bboxes->facesVertexIndexes[idx][3] << ", " << endl;
 
-    }
- 
+  }
+
   bboxes->offset.x = 0.0f;
   bboxes->offset.y = 0.1f;
   bboxes->offset.z = 0.1f;
   bboxes->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
- 
+
   EXPECT_FALSE(bboxes->pointIsWithin(0.1f, 0.1f, 0.1f));
 
 }
@@ -208,7 +208,7 @@ renderer->init(640, 480, false);
 #endif
 */
 
-TEST(SoundTest, Load){
+TEST(SoundTest, Load) {
   shared_ptr<Sound> snd(new Sound());
   snd->load("dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah");
   //snd->play("bah");

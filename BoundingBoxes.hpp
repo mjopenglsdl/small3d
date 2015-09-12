@@ -71,7 +71,7 @@ namespace small3d {
      * @brief	Faces vertex indexes read from Wavefront .obj file
      */
 
-    vector<int*> *facesVertexIndexes;
+    vector< vector<int> > facesVertexIndexes;
 
     /**
      * Load the bounding boxes from a Wavefront file.

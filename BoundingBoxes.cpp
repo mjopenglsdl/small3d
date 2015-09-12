@@ -25,21 +25,12 @@ namespace small3d {
   BoundingBoxes::BoundingBoxes() {
     initLogger();
     vertices.clear();
-    facesVertexIndexes = new vector<int *>();
-    facesVertexIndexes->clear();
+    facesVertexIndexes.clear();
     numBoxes = 0;
   }
 
   BoundingBoxes::~BoundingBoxes() {
 
-    if (facesVertexIndexes != NULL) {
-      for (int i = 0; i != facesVertexIndexes->size(); ++i) {
-        delete[] facesVertexIndexes->at(i);
-      }
-      facesVertexIndexes->clear();
-      delete facesVertexIndexes;
-      facesVertexIndexes = NULL;
-    }
   }
 
   void BoundingBoxes::loadFromFile(string fileLocation) {
@@ -75,17 +66,17 @@ namespace small3d {
           }
           else {
             // get vertex index
-            int *v = new int[4];
+            vector<int> v;
 
             for (int tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is face indicator
               {
-                v[idx - 1] = atoi(t.c_str());
+                v.push_back(atoi(t.c_str()));
               }
               ++idx;
             }
-            facesVertexIndexes->push_back(v);
+            facesVertexIndexes.push_back(v);
 
           }
 
@@ -95,7 +86,7 @@ namespace small3d {
         }
       }
       file.close();
-      numBoxes = facesVertexIndexes->size() / 6;
+      numBoxes = facesVertexIndexes.size() / 6;
     }
     else
       throw Exception(
