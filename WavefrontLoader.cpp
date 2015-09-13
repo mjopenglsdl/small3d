@@ -23,14 +23,14 @@ namespace small3d {
 
   void WavefrontLoader::loadVertexData() {
     // 4 components per vertex
-    model->vertexDataSize = 4 * vertices->size() * sizeof(float);
+    model->vertexDataSize = 4 * vertices.size() * sizeof(float);
 
     model->vertexData.clear();
 
     int idx = 0;
-    for (vector<float *>::iterator vertex = vertices->begin(); vertex != vertices->end(); ++vertex) {
+    for (vector< vector<float> >::iterator vertex = vertices.begin(); vertex != vertices.end(); ++vertex) {
       for (int coordIdx = 0; coordIdx != 3; ++coordIdx) {
-        model->vertexData.push_back((*vertex)[coordIdx]);
+        model->vertexData.push_back(vertex->at(coordIdx));
         ++idx;
       }
       model->vertexData.push_back(1.0f);
@@ -71,9 +71,9 @@ namespace small3d {
     // is passed to OpenGL, so normals data will be aligned to vertex data according to the
     // vertex index)
 
-    model->normalsDataSize = 3 * vertices->size() * sizeof(float);
+    model->normalsDataSize = 3 * vertices.size() * sizeof(float);
 
-    model->normalsData = vector<float>(3 * vertices->size(), 0.0f);
+    model->normalsData = vector<float>(3 * vertices.size(), 0.0f);
 
     int faceVertexArrayIndex = 0;
     for (vector<int *>::iterator faceVertexIndex = facesVertexIndexes->begin();
@@ -106,9 +106,9 @@ namespace small3d {
       // 2 components per vertex (a single index for vertices, normals and texture coordinates
       // is passed to OpenGL, so texture coordinates data will be aligned to vertex data according
       // to the vertex index)
-      model->textureCoordsDataSize = 2 * vertices->size() * sizeof(float);
+      model->textureCoordsDataSize = 2 * vertices.size() * sizeof(float);
 
-      model->textureCoordsData = vector<float>(2 * vertices->size());
+      model->textureCoordsData = vector<float>(2 * vertices.size());
 
       int faceVertexArrayIndex = 0;
 
@@ -147,13 +147,15 @@ namespace small3d {
         if (vertexUVPair != vertexUVPairs->end()) {
           if (vertexUVPair->second != textureCoordsIndexes->at(idx)[vertexIndex]) {
             // duplicate corresponding vertex data entry and point the vertex index to the new tuple
-            float *v = new float[3];
+            vector<float> v;
             // -1 because at this stage the indexes are still as exported from Blender, meaning 1-based
             // and not 0-based
-            memcpy(v, vertices->at(faceVertexIndex[vertexIndex] - 1), 3 * sizeof(float));
-            vertices->push_back(v);
+            v.push_back(vertices[faceVertexIndex[vertexIndex] - 1][0]);
+            v.push_back(vertices[faceVertexIndex[vertexIndex] - 1][1]);
+            v.push_back(vertices[faceVertexIndex[vertexIndex] - 1][2]);
+            vertices.push_back(v);
 
-            faceVertexIndex[vertexIndex] = vertices->size();
+            faceVertexIndex[vertexIndex] = vertices.size();
 
             vertexUVPairs->insert(make_pair(faceVertexIndex[vertexIndex], textureCoordsIndexes->at(idx)[vertexIndex]));
           }
@@ -171,8 +173,7 @@ namespace small3d {
   }
 
   void WavefrontLoader::init() {
-    vertices = new vector<float *>();
-    vertices->clear();
+    vertices.clear();
     facesVertexIndexes = new vector<int *>();
     facesVertexIndexes->clear();
     normals = new vector<float *>();
@@ -187,14 +188,7 @@ namespace small3d {
   }
 
   void WavefrontLoader::clear() {
-    if (vertices != NULL) {
-      for (int i = 0; i != vertices->size(); ++i) {
-        delete[] vertices->at(i);
-      }
-      vertices->clear();
-      delete vertices;
-      vertices = NULL;
-    }
+    vertices.clear();
 
     if (facesVertexIndexes != NULL) {
       for (int i = 0; i != facesVertexIndexes->size(); ++i) {
@@ -303,17 +297,17 @@ namespace small3d {
           }
           else if (line[0] == 'v') {
             // get vertex
-            float *v = new float[3];
+            vector<float> v;
 
             for (int tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex indicator
               {
-                v[idx - 1] = (float) atof(t.c_str());
+                v.push_back((float) atof(t.c_str()));
               }
               ++idx;
             }
-            vertices->push_back(v);
+            vertices.push_back(v);
           }
           else {
             // get vertex index

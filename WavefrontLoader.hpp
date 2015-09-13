@@ -29,7 +29,7 @@ namespace small3d {
     Model* model;
 
     // Data read from .obj file
-    vector<float*> *vertices;
+    vector< vector<float> > vertices;
     vector<int*> *facesVertexIndexes;
     vector<float*> *normals;
     vector<int*> *facesNormalIndexes;
