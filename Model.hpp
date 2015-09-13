@@ -9,21 +9,23 @@
 #pragma once
 
 #include <string>
+#include <vector>
+
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
 
-namespace small3d
-{
+using namespace std;
+
+namespace small3d {
   /**
    * @class	Model
    *
    * @brief	A 3D model
    */
 
-  class Model
-  {
+  class Model {
 
   public:
 
@@ -32,7 +34,7 @@ namespace small3d
      * 			the x, y, z values in each column. The fourth column is there to assist in matrix operations.
      */
 
-    float *vertexData;
+    vector<float> vertexData;
 
     /**
      * @brief	Size of the vertex data, in bytes.
@@ -41,18 +43,12 @@ namespace small3d
     int vertexDataSize;
 
     /**
-     * @brief	Total number of components, meaning total number of elements in the vertex data array
-     */
-
-    int vertexDataComponentCount;
-
-    /**
      * @brief	3 column table. Each element refers to a "row" in the vertex data table. Each "row"
      * 				in the index data table forms a triangle.
      *
      */
 
-    unsigned int *indexData;
+    vector<unsigned int> indexData;
 
     /**
      * @brief	Size of the index data, in bytes
@@ -61,30 +57,18 @@ namespace small3d
     int indexDataSize;
 
     /**
-     * @brief	Total number of elements in the index data array
-     */
-
-    int indexDataIndexCount;
-
-    /**
      * @brief	Array, to be treated as a 3 column table. Each "row" contains the x, y and z components
      * 			of the vector representing the normal of a vertex. The position of the "row" in the array
      * 			is the same as the position of the corresponding vertex "row" in the vertexData array.
      */
 
-    float *normalsData;
+    vector<float> normalsData;
 
     /**
      * @brief	Size of the normals data, in bytes.
      */
 
     int normalsDataSize;
-
-    /**
-     * @brief	Total number of elements in the normals data array
-     */
-
-    int normalsDataComponentCount;
 
     /**
      * @brief	Array, to be treated as a 2 column table. Each "row" contains the x and y components

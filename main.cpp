@@ -112,16 +112,16 @@ TEST(ModelTest, LoadModel) {
 
   loader->load("dimitrikourk/small3d/resources/models/Cube/Cube.obj", model);
 
-  EXPECT_NE(0, model->vertexDataComponentCount);
-  EXPECT_NE(0, model->indexDataIndexCount);
-  EXPECT_NE(0, model->normalsDataComponentCount);
+  EXPECT_NE(0, model->vertexData.size());
+  EXPECT_NE(0, model->indexData.size());
+  EXPECT_NE(0, model->normalsData.size());
   EXPECT_NE(0, model->textureCoordsDataComponentCount);
 
   cout << "Vertex data component count: "
-  << model->vertexDataComponentCount << endl << "Index count: "
-  << model->indexDataIndexCount << endl
+  << model->vertexData.size() << endl << "Index count: "
+  << model->indexData.size() << endl
   << "Normals data component count: "
-  << model->normalsDataComponentCount << endl
+  << model->normalsData.size() << endl
   << "Texture coordinates count: "
   << model->textureCoordsDataComponentCount << endl;
 
@@ -130,16 +130,16 @@ TEST(ModelTest, LoadModel) {
   loader->load("dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
 
 
-  EXPECT_NE(0, modelWithNoTexture->vertexDataComponentCount);
-  EXPECT_NE(0, modelWithNoTexture->indexDataIndexCount);
-  EXPECT_NE(0, modelWithNoTexture->normalsDataComponentCount);
+  EXPECT_NE(0, modelWithNoTexture->vertexData.size());
+  EXPECT_NE(0, modelWithNoTexture->indexData.size());
+  EXPECT_NE(0, modelWithNoTexture->normalsData.size());
   EXPECT_EQ(0, modelWithNoTexture->textureCoordsDataComponentCount);
 
   cout << "Vertex data component count: "
-  << modelWithNoTexture->vertexDataComponentCount << endl << "Index count: "
-  << modelWithNoTexture->indexDataIndexCount << endl
+  << modelWithNoTexture->vertexData.size() << endl << "Index count: "
+  << modelWithNoTexture->indexData.size() << endl
   << "Normals data component count: "
-  << modelWithNoTexture->normalsDataComponentCount << endl
+  << modelWithNoTexture->normalsData.size() << endl
   << "Texture coordinates count: "
   << modelWithNoTexture->textureCoordsDataComponentCount << endl;
 

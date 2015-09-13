@@ -8,6 +8,7 @@
  */
 
 #pragma once
+
 #include <memory>
 #include "Logger.hpp"
 #include <vector>
@@ -65,13 +66,13 @@ namespace small3d {
      * @brief	Vertex coordinates read from Wavefront .obj file
      */
 
-    vector< vector<float> > vertices;
+    vector<vector<float> > vertices;
 
     /**
      * @brief	Faces vertex indexes read from Wavefront .obj file
      */
 
-    vector< vector<int> > facesVertexIndexes;
+    vector<vector<int> > facesVertexIndexes;
 
     /**
      * Load the bounding boxes from a Wavefront file.
@@ -96,7 +97,7 @@ namespace small3d {
      * @return	true if it succeeds, false if it fails.
      */
 
-    bool pointIsWithin(const float &pointX, const float &pointY, const float &pointZ); 
+    bool pointIsWithin(const float &pointX, const float &pointY, const float &pointZ);
 
     /**
      * @fn	bool boxesAreWithin(const BoundingBoxes &otherBoxes, const float &otherBoxesX,
