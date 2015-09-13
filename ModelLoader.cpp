@@ -22,7 +22,7 @@ namespace small3d {
 
   }
 
-  void ModelLoader::load( const string &filename, Model* model )
+  void ModelLoader::load( const string &filename, Model &model )
   {
 
   }

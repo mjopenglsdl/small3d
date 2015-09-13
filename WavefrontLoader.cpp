@@ -254,13 +254,13 @@ namespace small3d {
     clear();
   }
 
-  void WavefrontLoader::load(const string &fileLocation, Model *model) {
+  void WavefrontLoader::load(const string &fileLocation, Model &model) {
 
     ifstream file((SDL_GetBasePath() + fileLocation).c_str());
     string line;
     if (file.is_open()) {
       init();
-      this->model = model;
+      this->model = &model;
 
       while (getline(file, line)) {
         if (line[0] == 'v' || line[0] == 'f') {

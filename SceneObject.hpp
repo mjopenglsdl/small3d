@@ -32,7 +32,7 @@ namespace small3d
   class SceneObject
   {
   private:
-    Model* model;
+    vector<Model> model;
     bool animating;
     int frameDelay;
     int currentFrame;
@@ -77,7 +77,7 @@ namespace small3d
      * Get the object's model
      * @return The object's model
      */
-    Model& getModel() const;
+    Model& getModel() ;
 
     /**
      * Get the object's texture

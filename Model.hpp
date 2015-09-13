@@ -88,8 +88,6 @@ namespace small3d {
      * @brief	Number of elements in the texture coordinates array.
      */
 
-    int textureCoordsDataComponentCount;
-
     /**
      * @fn	Model();
      *

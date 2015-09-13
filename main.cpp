@@ -107,44 +107,41 @@ TEST(ImageTest, LoadImage) {
 
 TEST(ModelTest, LoadModel) {
 
-  Model *model = new Model();
+  Model model;
   unique_ptr<ModelLoader> loader(new WavefrontLoader());
 
   loader->load("dimitrikourk/small3d/resources/models/Cube/Cube.obj", model);
 
-  EXPECT_NE(0, model->vertexData.size());
-  EXPECT_NE(0, model->indexData.size());
-  EXPECT_NE(0, model->normalsData.size());
-  EXPECT_NE(0, model->textureCoordsData.size());
+  EXPECT_NE(0, model.vertexData.size());
+  EXPECT_NE(0, model.indexData.size());
+  EXPECT_NE(0, model.normalsData.size());
+  EXPECT_NE(0, model.textureCoordsData.size());
 
   cout << "Vertex data component count: "
-  << model->vertexData.size() << endl << "Index count: "
-  << model->indexData.size() << endl
+  << model.vertexData.size() << endl << "Index count: "
+  << model.indexData.size() << endl
   << "Normals data component count: "
-  << model->normalsData.size() << endl
+  << model.normalsData.size() << endl
   << "Texture coordinates count: "
-  << model->textureCoordsData.size() << endl;
+  << model.textureCoordsData.size() << endl;
 
-  Model *modelWithNoTexture = new Model();
+  Model modelWithNoTexture;
 
   loader->load("dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
 
 
-  EXPECT_NE(0, modelWithNoTexture->vertexData.size());
-  EXPECT_NE(0, modelWithNoTexture->indexData.size());
-  EXPECT_NE(0, modelWithNoTexture->normalsData.size());
-  EXPECT_EQ(0, modelWithNoTexture->textureCoordsData.size());
+  EXPECT_NE(0, modelWithNoTexture.vertexData.size());
+  EXPECT_NE(0, modelWithNoTexture.indexData.size());
+  EXPECT_NE(0, modelWithNoTexture.normalsData.size());
+  EXPECT_EQ(0, modelWithNoTexture.textureCoordsData.size());
 
   cout << "Vertex data component count: "
-  << modelWithNoTexture->vertexData.size() << endl << "Index count: "
-  << modelWithNoTexture->indexData.size() << endl
+  << modelWithNoTexture.vertexData.size() << endl << "Index count: "
+  << modelWithNoTexture.indexData.size() << endl
   << "Normals data component count: "
-  << modelWithNoTexture->normalsData.size() << endl
+  << modelWithNoTexture.normalsData.size() << endl
   << "Texture coordinates count: "
-  << modelWithNoTexture->textureCoordsData.size() << endl;
-
-  delete model;
-  delete modelWithNoTexture;
+  << modelWithNoTexture.textureCoordsData.size() << endl;
 
 }
 

@@ -82,7 +82,7 @@ namespace small3d {
      * @param	model   	The model.
      */
 
-    void load(const string &fileLocation, Model *model);
+    void load(const string &fileLocation, Model &model);
 
   };
 
