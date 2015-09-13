@@ -106,10 +106,9 @@ namespace small3d {
       // 2 components per vertex (a single index for vertices, normals and texture coordinates
       // is passed to OpenGL, so texture coordinates data will be aligned to vertex data according
       // to the vertex index)
-      model->textureCoordsDataComponentCount = 2 * vertices->size();
-      model->textureCoordsDataSize = model->textureCoordsDataComponentCount * sizeof(float);
+      model->textureCoordsDataSize = 2 * vertices->size() * sizeof(float);
 
-      model->textureCoordsData = new float[model->textureCoordsDataComponentCount];
+      model->textureCoordsData = vector<float>(2 * vertices->size());
 
       int faceVertexArrayIndex = 0;
 

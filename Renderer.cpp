@@ -590,7 +590,7 @@ namespace small3d {
       glBindBuffer(GL_ARRAY_BUFFER, uvBufferObject);
       glBufferData(GL_ARRAY_BUFFER,
                    sceneObject->getModel().textureCoordsDataSize,
-                   sceneObject->getModel().textureCoordsData, GL_STATIC_DRAW);
+                   sceneObject->getModel().textureCoordsData.data(), GL_STATIC_DRAW);
       glEnableVertexAttribArray(2);
       glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
       glBindBuffer(GL_ARRAY_BUFFER, 0);

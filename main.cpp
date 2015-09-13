@@ -115,7 +115,7 @@ TEST(ModelTest, LoadModel) {
   EXPECT_NE(0, model->vertexData.size());
   EXPECT_NE(0, model->indexData.size());
   EXPECT_NE(0, model->normalsData.size());
-  EXPECT_NE(0, model->textureCoordsDataComponentCount);
+  EXPECT_NE(0, model->textureCoordsData.size());
 
   cout << "Vertex data component count: "
   << model->vertexData.size() << endl << "Index count: "
@@ -123,7 +123,7 @@ TEST(ModelTest, LoadModel) {
   << "Normals data component count: "
   << model->normalsData.size() << endl
   << "Texture coordinates count: "
-  << model->textureCoordsDataComponentCount << endl;
+  << model->textureCoordsData.size() << endl;
 
   Model *modelWithNoTexture = new Model();
 
@@ -133,7 +133,7 @@ TEST(ModelTest, LoadModel) {
   EXPECT_NE(0, modelWithNoTexture->vertexData.size());
   EXPECT_NE(0, modelWithNoTexture->indexData.size());
   EXPECT_NE(0, modelWithNoTexture->normalsData.size());
-  EXPECT_EQ(0, modelWithNoTexture->textureCoordsDataComponentCount);
+  EXPECT_EQ(0, modelWithNoTexture->textureCoordsData.size());
 
   cout << "Vertex data component count: "
   << modelWithNoTexture->vertexData.size() << endl << "Index count: "
@@ -141,7 +141,7 @@ TEST(ModelTest, LoadModel) {
   << "Normals data component count: "
   << modelWithNoTexture->normalsData.size() << endl
   << "Texture coordinates count: "
-  << modelWithNoTexture->textureCoordsDataComponentCount << endl;
+  << modelWithNoTexture->textureCoordsData.size() << endl;
 
   delete model;
   delete modelWithNoTexture;

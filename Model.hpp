@@ -76,7 +76,7 @@ namespace small3d {
      * 			"row" of the vertex data "table"
      */
 
-    float *textureCoordsData;
+    vector<float> textureCoordsData;
 
     /**
      * @brief	Size of the texture coordinates data, in bytes.

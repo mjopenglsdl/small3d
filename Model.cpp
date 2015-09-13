@@ -20,17 +20,12 @@ namespace small3d {
     indexDataSize = 0;
     normalsData.clear();
     normalsDataSize = 0;
-    textureCoordsData = NULL;
+    textureCoordsData.clear();
     textureCoordsDataSize = 0;
-    textureCoordsDataComponentCount = 0;
   }
 
   Model::~Model(void) {
 
-    if (textureCoordsData != NULL) {
-      delete[] textureCoordsData;
-      textureCoordsData = NULL;
-    }
   }
 
 }
