@@ -85,7 +85,7 @@ namespace small3d {
           model->normalsData[3 * ((*faceVertexIndex)[vertexIndex] - 1)
                              + normalsDataComponent] =
               normals.at(
-                  facesNormalIndexes->at(faceVertexArrayIndex)[vertexIndex]
+                  facesNormalIndexes.at(faceVertexArrayIndex)[vertexIndex]
                   - 1)[normalsDataComponent];
         }
       }
@@ -177,8 +177,7 @@ namespace small3d {
     facesVertexIndexes = new vector<int *>();
     facesVertexIndexes->clear();
     normals.clear();
-    facesNormalIndexes = new vector<int *>();
-    facesNormalIndexes->clear();
+    facesNormalIndexes.clear();
     textureCoords = new vector<float *>();
     textureCoords->clear();
     textureCoordsIndexes = new vector<int *>();
@@ -199,15 +198,8 @@ namespace small3d {
     }
 
     normals.clear();
+    facesNormalIndexes.clear();
 
-    if (facesNormalIndexes != NULL) {
-      for (int i = 0; i != facesNormalIndexes->size(); ++i) {
-        delete[] facesNormalIndexes->at(i);
-      }
-      facesNormalIndexes->clear();
-      delete facesNormalIndexes;
-      facesNormalIndexes = NULL;
-    }
 
     if (textureCoords != NULL) {
       for (int i = 0; i != textureCoords->size(); ++i) {
@@ -304,7 +296,7 @@ namespace small3d {
           else {
             // get vertex index
             int *v = new int[3];
-            int *n = NULL;
+            vector<int> n;
             int *textC = NULL;
 
             for (int tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
@@ -314,21 +306,19 @@ namespace small3d {
               {
                 if (t.find("//") != string::npos)   // normal index contained in the string
                 {
-                  // and texture coordinate index is missing
-                  if (n == NULL)
-                    n = new int[3];
+
 
                   v[idx - 1] = atoi(
                       t.substr(0, t.find("//")).c_str());
-                  n[idx - 1] = atoi(
-                      t.substr(t.find("//") + 2).c_str());
+                  n.push_back(atoi(
+                      t.substr(t.find("//") + 2).c_str()));
                 }
                 else if (t.find("/") != string::npos
                          && t.find("//") == string::npos)   // normal and texture coordinate index are
+                                                            // contained in the string
                 {
-                  // contained in the string
-                  if (n == NULL)
-                    n = new int[3];
+
+
                   if (textC == NULL)
                     textC = new int[3];
 
@@ -348,7 +338,7 @@ namespace small3d {
                             component.c_str());
                         break;
                       case 2:
-                        n[idx - 1] = atoi(component.c_str());
+                        n.push_back(atoi(component.c_str()));
                         break;
                     }
                     ++componentIdx;
@@ -367,8 +357,8 @@ namespace small3d {
               ++idx;
             }
             facesVertexIndexes->push_back(v);
-            if (n != NULL)
-              facesNormalIndexes->push_back(n);
+            if (!n.empty())
+              facesNormalIndexes.push_back(n);
             if (textC != NULL)
               textureCoordsIndexes->push_back(textC);
           }

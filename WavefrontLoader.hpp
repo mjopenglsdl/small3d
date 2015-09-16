@@ -32,7 +32,7 @@ namespace small3d {
     vector< vector<float> > vertices;
     vector<int*> *facesVertexIndexes;
     vector<vector<float> > normals;
-    vector<int*> *facesNormalIndexes;
+    vector<vector<int> > facesNormalIndexes;
     vector<float*> *textureCoords;
     vector<int*> *textureCoordsIndexes;
 
