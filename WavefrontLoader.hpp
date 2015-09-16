@@ -30,7 +30,7 @@ namespace small3d {
 
     // Data read from .obj file
     vector< vector<float> > vertices;
-    vector<int*> *facesVertexIndices;
+    vector<vector<int> > facesVertexIndices;
     vector<vector<float> > normals;
     vector<vector<int> > facesNormalIndices;
     vector<vector<float> > textureCoords;

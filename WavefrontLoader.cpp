@@ -10,11 +10,8 @@
 #include "WavefrontLoader.hpp"
 #include "Exception.hpp"
 #include <fstream>
-#include <stdlib.h>
-#include <algorithm>
 #include <unordered_map>
 #include "GetTokens.hpp"
-#include <cstring>
 #include <miguel/sdl2/include/SDL.h>
 
 using namespace std;
@@ -23,12 +20,12 @@ namespace small3d {
 
   void WavefrontLoader::loadVertexData() {
     // 4 components per vertex
-    model->vertexDataSize = 4 * vertices.size() * sizeof(float);
+    model->vertexDataSize = (int) (4 * vertices.size() * sizeof(float));
 
     model->vertexData.clear();
 
     int idx = 0;
-    for (vector< vector<float> >::iterator vertex = vertices.begin(); vertex != vertices.end(); ++vertex) {
+    for (vector<vector<float> >::iterator vertex = vertices.begin(); vertex != vertices.end(); ++vertex) {
       for (int coordIdx = 0; coordIdx != 3; ++coordIdx) {
         model->vertexData.push_back(vertex->at(coordIdx));
         ++idx;
@@ -40,19 +37,18 @@ namespace small3d {
 
   void WavefrontLoader::loadIndexData() {
     // 3 indices per face
-    int numIndexes = facesVertexIndices->size() * 3;
+    int numIndexes = facesVertexIndices.size() * 3;
     model->indexDataSize = numIndexes * sizeof(int);
 
     model->indexData.clear();
 
-    for (vector<int *>::iterator face = facesVertexIndices->begin(); face != facesVertexIndices->end(); ++face) {
+    for (vector<vector<int> >::iterator face = facesVertexIndices.begin(); face != facesVertexIndices.end(); ++face) {
 
       for (int indexIdx = 0; indexIdx != 3; ++indexIdx) {
-        model->indexData.push_back((*face)[indexIdx] - 1); // -1 because Wavefront indexes
+        model->indexData.push_back(face->at(indexIdx) - 1); // -1 because Wavefront indexes
         // are not 0 based
 
       }
-
     }
   }
 
@@ -71,18 +67,18 @@ namespace small3d {
     // is passed to OpenGL, so normals data will be aligned to vertex data according to the
     // vertex index)
 
-    model->normalsDataSize = 3 * vertices.size() * sizeof(float);
+    model->normalsDataSize = (int) (3 * vertices.size() * sizeof(float));
 
     model->normalsData = vector<float>(3 * vertices.size(), 0.0f);
 
     int faceVertexArrayIndex = 0;
-    for (vector<int *>::iterator faceVertexIndex = facesVertexIndices->begin();
-         faceVertexIndex != facesVertexIndices->end(); ++faceVertexIndex) {
+    for (vector<vector<int> >::iterator faceVertexIndex = facesVertexIndices.begin();
+         faceVertexIndex != facesVertexIndices.end(); ++faceVertexIndex) {
       for (int vertexIndex = 0; vertexIndex != 3; ++vertexIndex) {
 
         for (int normalsDataComponent = 0; normalsDataComponent != 3;
              ++normalsDataComponent) {
-          model->normalsData[3 * ((*faceVertexIndex)[vertexIndex] - 1)
+          model->normalsData[3 * (faceVertexIndex->at(vertexIndex) - 1)
                              + normalsDataComponent] =
               normals.at(
                   facesNormalIndices.at(faceVertexArrayIndex)[vertexIndex]
@@ -112,18 +108,18 @@ namespace small3d {
 
       int faceVertexArrayIndex = 0;
 
-      for (vector<int *>::iterator faceVertexIndex = facesVertexIndices->begin();
-           faceVertexIndex != facesVertexIndices->end();
+      for (vector<vector<int> >::iterator faceVertexIndex = facesVertexIndices.begin();
+           faceVertexIndex != facesVertexIndices.end();
            ++faceVertexIndex) {
         for (int vertexIndex = 0; vertexIndex != 3; ++vertexIndex) {
 
           for (int textureCoordsComponent = 0;
                textureCoordsComponent != 2; ++textureCoordsComponent) {
-            model->textureCoordsData[2 * ((*faceVertexIndex)[vertexIndex] - 1)
+            model->textureCoordsData[2 * (faceVertexIndex->at(vertexIndex) - 1)
                                      + textureCoordsComponent] =
                 textureCoords.at(
                     (unsigned long) (textureCoordsIndices.at(faceVertexArrayIndex)[vertexIndex]
-                                        - 1))[textureCoordsComponent];
+                                     - 1))[textureCoordsComponent];
           }
         }
         ++faceVertexArrayIndex;
@@ -135,38 +131,36 @@ namespace small3d {
 
     unique_ptr<unordered_map<int, int> > vertexUVPairs(new unordered_map<int, int>());
 
-    int numIndexes = facesVertexIndices->size();
+    int numIndexes = (int) facesVertexIndices.size();
 
     for (int idx = 0; idx < numIndexes; ++idx) {
 
-      int *faceVertexIndex = facesVertexIndices->at(idx);
-
       for (int vertexIndex = 0; vertexIndex != 3; ++vertexIndex) {
 
-        unordered_map<int, int>::iterator vertexUVPair = vertexUVPairs->find(faceVertexIndex[vertexIndex]);
+        unordered_map<int, int>::iterator vertexUVPair = vertexUVPairs->find(facesVertexIndices[idx][vertexIndex]);
         if (vertexUVPair != vertexUVPairs->end()) {
           if (vertexUVPair->second != textureCoordsIndices.at(idx)[vertexIndex]) {
             // duplicate corresponding vertex data entry and point the vertex index to the new tuple
             vector<float> v;
             // -1 because at this stage the indexes are still as exported from Blender, meaning 1-based
             // and not 0-based
-            v.push_back(vertices[faceVertexIndex[vertexIndex] - 1][0]);
-            v.push_back(vertices[faceVertexIndex[vertexIndex] - 1][1]);
-            v.push_back(vertices[faceVertexIndex[vertexIndex] - 1][2]);
+            v.push_back(vertices[facesVertexIndices[idx][vertexIndex] - 1][0]);
+            v.push_back(vertices[facesVertexIndices[idx][vertexIndex] - 1][1]);
+            v.push_back(vertices[facesVertexIndices[idx][vertexIndex] - 1][2]);
             vertices.push_back(v);
 
-            faceVertexIndex[vertexIndex] = vertices.size();
+            facesVertexIndices[idx][vertexIndex] = (int) vertices.size();
 
-            vertexUVPairs->insert(make_pair(faceVertexIndex[vertexIndex], textureCoordsIndices.at(idx)[vertexIndex]));
+            vertexUVPairs->insert(
+                make_pair(facesVertexIndices[idx][vertexIndex], textureCoordsIndices[idx][vertexIndex]));
           }
           // So we don't add a pair if the exact same pair already exists. We do if it does not (see below) or if
           // the vertex index number exists in a pair with a different texture coordinates index number (see above)
         }
         else {
-          vertexUVPairs->insert(make_pair(faceVertexIndex[vertexIndex], textureCoordsIndices.at(idx)[vertexIndex]));
+          vertexUVPairs->insert(
+              make_pair(facesVertexIndices[idx][vertexIndex], textureCoordsIndices[idx][vertexIndex]));
         }
-
-
       }
     }
 
@@ -174,8 +168,7 @@ namespace small3d {
 
   void WavefrontLoader::init() {
     vertices.clear();
-    facesVertexIndices = new vector<int *>();
-    facesVertexIndices->clear();
+    facesVertexIndices.clear();
     normals.clear();
     facesNormalIndices.clear();
     textureCoords.clear();
@@ -185,16 +178,7 @@ namespace small3d {
 
   void WavefrontLoader::clear() {
     vertices.clear();
-
-    if (facesVertexIndices != NULL) {
-      for (int i = 0; i != facesVertexIndices->size(); ++i) {
-        delete[] facesVertexIndices->at(i);
-      }
-      facesVertexIndices->clear();
-      delete facesVertexIndices;
-      facesVertexIndices = NULL;
-    }
-
+    facesVertexIndices.clear();
     normals.clear();
     facesNormalIndices.clear();
     textureCoords.clear();
@@ -223,8 +207,7 @@ namespace small3d {
 
       while (getline(file, line)) {
         if (line[0] == 'v' || line[0] == 'f') {
-          string *tokens = new string[4]; // Max 4 such tokens in the specific kind of
-          // Wavefront file
+          string tokens[4]; // Max 4 such tokens in the specific kind of Wavefront file
 
           int numTokens = getTokens(line, ' ', tokens);
 
@@ -276,7 +259,7 @@ namespace small3d {
           }
           else {
             // get vertex index
-            int *v = new int[3];
+            vector<int> v = vector<int>(3, 0);
             vector<int> n;
             vector<int> textC;
 
@@ -294,9 +277,9 @@ namespace small3d {
                 }
                 else if (t.find("/") != string::npos
                          && t.find("//") == string::npos)   // normal and texture coordinate index are
-                                                            // contained in the string
+                  // contained in the string
                 {
-                  string *components = new string[3]; // Max 3 such components in Wavefront files
+                  string components[3]; // Max 3 such components in Wavefront files
                   int numComponents = getTokens(t, '/', components);
 
                   int componentIdx = 0;
@@ -318,9 +301,6 @@ namespace small3d {
                     ++componentIdx;
                   }
 
-                  if (components != NULL) {
-                    delete[] components;
-                  }
                 }
 
                 else   // just the vertex index is contained in the string
@@ -330,16 +310,13 @@ namespace small3d {
               }
               ++idx;
             }
-            facesVertexIndices->push_back(v);
+            facesVertexIndices.push_back(v);
             if (!n.empty())
               facesNormalIndices.push_back(n);
             if (!textC.empty())
               textureCoordsIndices.push_back(textC);
           }
 
-          if (tokens != NULL) {
-            delete[] tokens;
-          }
         }
       }
       file.close();
