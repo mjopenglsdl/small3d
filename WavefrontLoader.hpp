@@ -30,11 +30,11 @@ namespace small3d {
 
     // Data read from .obj file
     vector< vector<float> > vertices;
-    vector<int*> *facesVertexIndexes;
+    vector<int*> *facesVertexIndices;
     vector<vector<float> > normals;
-    vector<vector<int> > facesNormalIndexes;
+    vector<vector<int> > facesNormalIndices;
     vector<vector<float> > textureCoords;
-    vector<int*> *textureCoordsIndexes;
+    vector<vector<int> > textureCoordsIndices;
 
     void loadVertexData();
 
