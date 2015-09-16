@@ -94,7 +94,7 @@ namespace small3d {
   }
 
   void WavefrontLoader::loadTextureCoordsData() {
-    if (textureCoords->size() > 0) {
+    if (!textureCoords.empty()) {
       // Create an array of texture coordinates components which corresponds
       // by index to the array of vertex components
 
@@ -121,7 +121,7 @@ namespace small3d {
                textureCoordsComponent != 2; ++textureCoordsComponent) {
             model->textureCoordsData[2 * ((*faceVertexIndex)[vertexIndex] - 1)
                                      + textureCoordsComponent] =
-                textureCoords->at(
+                textureCoords.at(
                     textureCoordsIndexes->at(faceVertexArrayIndex)[vertexIndex]
                     - 1)[textureCoordsComponent];
           }
@@ -178,8 +178,7 @@ namespace small3d {
     facesVertexIndexes->clear();
     normals.clear();
     facesNormalIndexes.clear();
-    textureCoords = new vector<float *>();
-    textureCoords->clear();
+    textureCoords.clear();
     textureCoordsIndexes = new vector<int *>();
     textureCoordsIndexes->clear();
     this->model = NULL;
@@ -199,16 +198,7 @@ namespace small3d {
 
     normals.clear();
     facesNormalIndexes.clear();
-
-
-    if (textureCoords != NULL) {
-      for (int i = 0; i != textureCoords->size(); ++i) {
-        delete[] textureCoords->at(i);
-      }
-      textureCoords->clear();
-      delete textureCoords;
-      textureCoords = NULL;
-    }
+    textureCoords.clear();
 
     if (textureCoordsIndexes != NULL) {
       for (int i = 0; i != textureCoordsIndexes->size(); ++i) {
@@ -264,20 +254,20 @@ namespace small3d {
             normals.push_back(vn);
           }
           else if (line[0] == 'v' && line[1] == 't') {
-            float *vt = new float[2];
+            vector<float> vt;
 
             for (int tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex texture coordinate indicator
               {
-                vt[idx - 1] = (float) atof(t.c_str());
+                vt.push_back((float) atof(t.c_str()));
               }
               ++idx;
             }
 
             vt[1] = 1.0f - vt[1]; // OpenGL's y direction for textures is the opposite of that
             // of Blender's, so an inversion is needed
-            textureCoords->push_back(vt);
+            textureCoords.push_back(vt);
           }
           else if (line[0] == 'v') {
             // get vertex
@@ -370,7 +360,7 @@ namespace small3d {
       }
       file.close();
 
-      if (textureCoords->size() > 0) {
+      if (textureCoords.size() > 0) {
         this->correctDataVectors();
       }
 
