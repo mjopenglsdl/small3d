@@ -84,7 +84,7 @@ namespace small3d {
              ++normalsDataComponent) {
           model->normalsData[3 * ((*faceVertexIndex)[vertexIndex] - 1)
                              + normalsDataComponent] =
-              normals->at(
+              normals.at(
                   facesNormalIndexes->at(faceVertexArrayIndex)[vertexIndex]
                   - 1)[normalsDataComponent];
         }
@@ -176,8 +176,7 @@ namespace small3d {
     vertices.clear();
     facesVertexIndexes = new vector<int *>();
     facesVertexIndexes->clear();
-    normals = new vector<float *>();
-    normals->clear();
+    normals.clear();
     facesNormalIndexes = new vector<int *>();
     facesNormalIndexes->clear();
     textureCoords = new vector<float *>();
@@ -199,14 +198,7 @@ namespace small3d {
       facesVertexIndexes = NULL;
     }
 
-    if (normals != NULL) {
-      for (int i = 0; i != normals->size(); ++i) {
-        delete[] normals->at(i);
-      }
-      normals->clear();
-      delete normals;
-      normals = NULL;
-    }
+    normals.clear();
 
     if (facesNormalIndexes != NULL) {
       for (int i = 0; i != facesNormalIndexes->size(); ++i) {
@@ -267,17 +259,17 @@ namespace small3d {
 
           if (line[0] == 'v' && line[1] == 'n') {
             // get vertex normal
-            float *vn = new float[3];
+            vector<float> vn;
 
             for (int tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex normal indicator
               {
-                vn[idx - 1] = (float) atof(t.c_str());
+                vn.push_back((float) atof(t.c_str()));
               }
               ++idx;
             }
-            normals->push_back(vn);
+            normals.push_back(vn);
           }
           else if (line[0] == 'v' && line[1] == 't') {
             float *vt = new float[2];
