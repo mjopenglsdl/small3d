@@ -31,7 +31,6 @@ namespace small3d {
     int width, height;
     float* imageData;
 
-    // Load image from a .png file
     void loadFromFile(const string &fileLocation);
 
   public:

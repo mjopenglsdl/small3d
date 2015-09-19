@@ -46,14 +46,14 @@ namespace small3d {
 #endif
     if (!fp) {
       throw Exception(
-          "Could not open file " + string(SDL_GetBasePath())
-          + fileLocation);
+        "Could not open file " + string(SDL_GetBasePath())
+        + fileLocation);
     }
 
     png_infop pngInformation = NULL;
     png_structp pngStructure = NULL;
-    png_byte colorType = (png_byte) 0;
-    png_byte bitDepth = (png_byte) 0;
+    png_byte colorType = static_cast<png_byte>(0);
+    png_byte bitDepth = static_cast<png_byte>(0);
     int numberOfPasses = 0;
     png_bytep *rowPointers = NULL;
 
@@ -63,12 +63,12 @@ namespace small3d {
 
     if (png_sig_cmp(header, 0, 8)) {
       throw Exception(
-          "File " + string(SDL_GetBasePath()) + fileLocation
-          + " is not recognised as a PNG file.");
+        "File " + string(SDL_GetBasePath()) + fileLocation
+        + " is not recognised as a PNG file.");
     }
 
     pngStructure = png_create_read_struct(PNG_LIBPNG_VER_STRING,
-                                          NULL, NULL, NULL);
+      NULL, NULL, NULL);
 
     if (!pngStructure) {
       fclose(fp);
@@ -96,12 +96,12 @@ namespace small3d {
 
     png_read_info(pngStructure, pngInformation);
 
-    width = png_get_image_width(pngStructure, pngInformation);
-    height = png_get_image_height(pngStructure, pngInformation);
+    width = static_cast<int>(png_get_image_width(pngStructure, pngInformation));
+    height = static_cast<int>(png_get_image_height(pngStructure, pngInformation));
 
-    colorType = png_get_color_type(pngStructure, pngInformation);
-    bitDepth = png_get_bit_depth(pngStructure, pngInformation);
-    numberOfPasses = png_set_interlace_handling(pngStructure);
+    colorType = static_cast<png_byte>(png_get_color_type(pngStructure, pngInformation));
+    bitDepth = static_cast<png_byte>(png_get_bit_depth(pngStructure, pngInformation));
+    numberOfPasses = static_cast<int>(png_set_interlace_handling(pngStructure));
 
     png_read_update_info(pngStructure, pngInformation);
 
@@ -117,14 +117,14 @@ namespace small3d {
 
     for (int y = 0; y < height; y++) {
       rowPointers[y] = new png_byte[png_get_rowbytes(pngStructure,
-                                                     pngInformation)];
+        pngInformation)];
     }
 
     png_read_image(pngStructure, rowPointers);
 
     if (png_get_color_type(pngStructure, pngInformation) != PNG_COLOR_TYPE_RGB) {
       throw Exception(
-          "For now, only PNG_COLOR_TYPE_RGB is supported for PNG images.");
+        "For now, only PNG_COLOR_TYPE_RGB is supported for PNG images.");
     }
 
     imageData = new float[4 * width * height];
@@ -139,13 +139,13 @@ namespace small3d {
 
         float rgb[3];
 
-        rgb[0] = (float) (ptr[0]); // used to be boost::numeric_cast<float, png_byte>
-        rgb[1] = (float) (ptr[1]);
-        rgb[2] = (float) (ptr[2]);
+        rgb[0] = static_cast<float>(ptr[0]); 
+        rgb[1] = static_cast<float>(ptr[1]);
+        rgb[2] = static_cast<float>(ptr[2]);
 
-        imageData[y * width * 4 + x * 4] = ROUND_2_DECIMAL(rgb[0] / 255.0f);
-        imageData[y * width * 4 + x * 4 + 1] = ROUND_2_DECIMAL(rgb[1] / 255.0f);
-        imageData[y * width * 4 + x * 4 + 2] = ROUND_2_DECIMAL(rgb[2] / 255.0f);
+        imageData[y * width * 4 + x * 4] = static_cast<float>(ROUND_2_DECIMAL(rgb[0] / 255.0f));
+        imageData[y * width * 4 + x * 4 + 1] = static_cast<float>(ROUND_2_DECIMAL(rgb[1] / 255.0f));
+        imageData[y * width * 4 + x * 4 + 2] = static_cast<float>(ROUND_2_DECIMAL(rgb[2] / 255.0f));
         imageData[y * width * 4 + x * 4 + 3] = 1.0f;
 
       }

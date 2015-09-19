@@ -58,7 +58,7 @@ namespace small3d {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex indicator
               {
-                v.push_back((float) atof(t.c_str()));
+                v.push_back(static_cast<float>(atof(t.c_str())));
               }
               ++idx;
             }
@@ -102,7 +102,8 @@ namespace small3d {
     for (int idx = 0; idx < numBoxes; ++idx) {
       float minZ, maxZ, minX, maxX, minY, maxY;
 
-      glm::vec4 coords(vertices[idx * 8][0], vertices[idx * 8][1], vertices[idx * 8][2], 1);
+      glm::vec4 coords(vertices[static_cast<unsigned int>(idx * 8)][0], vertices[static_cast<unsigned int>(idx * 8)][1], 
+        vertices[static_cast<unsigned int>(idx * 8)][2], 1);
       glm::vec4 rotatedCoords(0.0f, 0.0f, 0.0f, 1.0f);
 
       rotatedCoords = rotationMatrix * coords;
@@ -119,7 +120,8 @@ namespace small3d {
       maxZ = rotatedCoords.z;
 
       for (int checkidx = idx * 8; checkidx < (idx + 1) * 8; ++checkidx) {
-        coords = glm::vec4(vertices[checkidx][0], vertices[checkidx][1], vertices[checkidx][2], 1);
+        coords = glm::vec4(vertices[static_cast<unsigned int>(checkidx)][0], vertices[static_cast<unsigned int>(checkidx)][1], 
+          vertices[static_cast<unsigned int>(checkidx)][2], 1);
         rotatedCoords = rotationMatrix * coords;
 
         rotatedCoords.x += offset.x;

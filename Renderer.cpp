@@ -165,19 +165,19 @@ namespace small3d {
 #ifdef __APPLE__
     glewExperimental = GL_TRUE;
 #endif
-    int initResult = glewInit();
+    GLenum initResult = glewInit();
 
     if (initResult != GLEW_OK) {
       throw Exception("Error initialising GLEW");
     }
     else {
-      string glewVersion = (char *) glewGetString(GLEW_VERSION);
+      string glewVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glewGetString(GLEW_VERSION)));
       LOGINFO("Using GLEW version " + glewVersion);
     }
 
     checkForOpenGLErrors("initialising GLEW", false);
 
-    string glVersion = (char *) glGetString(GL_VERSION);
+    string glVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)));
     glVersion = "OpenGL version supported by machine: " + glVersion;
     LOGINFO(glVersion);
 
@@ -247,7 +247,7 @@ namespace small3d {
       simpleFragmentShaderPath = shadersPath + "OpenGL21/simpleShader.frag";
     }
 
-    glViewport(0, 0, (GLsizei) width, (GLsizei) height);
+    glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
 
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
@@ -666,6 +666,11 @@ namespace small3d {
     SDL_GL_SwapWindow(sdlWindow);
   }
 
+  
+  /**
+  * Convert error enum returned from OpenGL to a readable string error message.
+  * @param error The error code returned from OpenGL
+  */
   string openglErrorToString(GLenum error) {
     string errorString;
 

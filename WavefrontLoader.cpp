@@ -20,7 +20,7 @@ namespace small3d {
 
   void WavefrontLoader::loadVertexData() {
     // 4 components per vertex
-    model->vertexDataSize = (int) (4 * vertices.size() * sizeof(float));
+    model->vertexDataSize = static_cast<int>(4 * vertices.size() * sizeof(float));
 
     model->vertexData.clear();
 
@@ -67,7 +67,7 @@ namespace small3d {
     // is passed to OpenGL, so normals data will be aligned to vertex data according to the
     // vertex index)
 
-    model->normalsDataSize = (int) (3 * vertices.size() * sizeof(float));
+    model->normalsDataSize = static_cast<int>(3 * vertices.size() * sizeof(float));
 
     model->normalsData = vector<float>(3 * vertices.size(), 0.0f);
 
@@ -118,7 +118,7 @@ namespace small3d {
             model->textureCoordsData[2 * (faceVertexIndex->at(vertexIndex) - 1)
                                      + textureCoordsComponent] =
                 textureCoords.at(
-                    (unsigned long) (textureCoordsIndices.at(faceVertexArrayIndex)[vertexIndex]
+                    static_cast<unsigned long>(textureCoordsIndices.at(faceVertexArrayIndex)[vertexIndex]
                                      - 1))[textureCoordsComponent];
           }
         }
@@ -131,7 +131,7 @@ namespace small3d {
 
     unique_ptr<unordered_map<int, int> > vertexUVPairs(new unordered_map<int, int>());
 
-    int numIndexes = (int) facesVertexIndices.size();
+    int numIndexes = static_cast<int>(facesVertexIndices.size());
 
     for (int idx = 0; idx < numIndexes; ++idx) {
 
@@ -149,7 +149,7 @@ namespace small3d {
             v.push_back(vertices[facesVertexIndices[idx][vertexIndex] - 1][2]);
             vertices.push_back(v);
 
-            facesVertexIndices[idx][vertexIndex] = (int) vertices.size();
+            facesVertexIndices[idx][vertexIndex] = static_cast<int>(vertices.size());
 
             vertexUVPairs->insert(
                 make_pair(facesVertexIndices[idx][vertexIndex], textureCoordsIndices[idx][vertexIndex]));
@@ -221,7 +221,7 @@ namespace small3d {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex normal indicator
               {
-                vn.push_back((float) atof(t.c_str()));
+                vn.push_back(static_cast<float>(atof(t.c_str())));
               }
               ++idx;
             }
@@ -234,7 +234,7 @@ namespace small3d {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex texture coordinate indicator
               {
-                vt.push_back((float) atof(t.c_str()));
+                vt.push_back(static_cast<float>(atof(t.c_str())));
               }
               ++idx;
             }
@@ -251,7 +251,7 @@ namespace small3d {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex indicator
               {
-                v.push_back((float) atof(t.c_str()));
+                v.push_back(static_cast<float>(atof(t.c_str())));
               }
               ++idx;
             }

@@ -75,6 +75,4 @@ namespace small3d {
     void deleteSound(const string &soundName);
 
   };
-
-
 }

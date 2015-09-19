@@ -7,44 +7,44 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-/* bii data directives */
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000001.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000002.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000003.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000004.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000005.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000006.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000007.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000008.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000009.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000010.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000011.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000012.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000013.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000014.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000015.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000016.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000017.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000018.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000019.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png
-// bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000001.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000002.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000003.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000004.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000005.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000006.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000007.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000008.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000009.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png
-// bii://dimitrikourk/small3d/samplegame/resources/models/TreeBB/TreeBB.obj
-// bii://dimitrikourk/small3d/samplegame/resources/images/startScreen.png
-// bii://dimitrikourk/small3d/samplegame/resources/images/grass.png
-// bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
-// bii://dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg
+ /* bii data directives */
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000001.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000002.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000003.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000004.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000005.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000006.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000007.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000008.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000009.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000010.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000011.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000012.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000013.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000014.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000015.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000016.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000017.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000018.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000019.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png
+ // bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000001.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000002.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000003.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000004.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000005.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000006.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000007.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000008.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000009.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png
+ // bii://dimitrikourk/small3d/samplegame/resources/models/TreeBB/TreeBB.obj
+ // bii://dimitrikourk/small3d/samplegame/resources/images/startScreen.png
+ // bii://dimitrikourk/small3d/samplegame/resources/images/grass.png
+ // bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
+ // bii://dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg
 
 #define MAX_Z -1.0f
 #define MIN_Z -24.0f
@@ -76,58 +76,58 @@ namespace AvoidTheBug3D {
 
   GameLogic::GameLogic() {
     initLogger();
-			
+
     renderer = shared_ptr<Renderer>(new Renderer());
 
     renderer->init(854, 480, false);
 
     crusoeText48 = shared_ptr<Text>(new Text(renderer));
 
-    unique_ptr<Image> startScreenTexture (
-					  new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png"));
+    unique_ptr<Image> startScreenTexture(
+      new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png"));
     renderer->generateTexture("startScreen", startScreenTexture->getData(), startScreenTexture->getWidth(), startScreenTexture->getHeight());
 
-    unique_ptr<Image> groundTexture (
-				     new Image("dimitrikourk/small3d/samplegame/resources/images/grass.png"));
+    unique_ptr<Image> groundTexture(
+      new Image("dimitrikourk/small3d/samplegame/resources/images/grass.png"));
     renderer->generateTexture("ground", groundTexture->getData(), groundTexture->getWidth(), groundTexture->getHeight());
 
-    unique_ptr<Image> skyTexture (
-				  new Image("dimitrikourk/small3d/samplegame/resources/images/sky.png"));
+    unique_ptr<Image> skyTexture(
+      new Image("dimitrikourk/small3d/samplegame/resources/images/sky.png"));
     renderer->generateTexture("sky", skyTexture->getData(), skyTexture->getWidth(), skyTexture->getHeight());
 
-    goat = shared_ptr<SceneObject> (
-				    new SceneObject("goat",
-						    "dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim",
-						    19, "dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png", 
-						    "dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj"));
+    goat = shared_ptr<SceneObject>(
+      new SceneObject("goat",
+        "dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim",
+        19, "dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png",
+        "dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj"));
 
-    bug = shared_ptr<SceneObject> (
-				   new SceneObject("bug",
-						   "dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim",
-						   9));
+    bug = shared_ptr<SceneObject>(
+      new SceneObject("bug",
+        "dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim",
+        9));
     bug->setColour(0.2f, 0.2f, 0.2f, 1.0f);
     bug->setFrameDelay(2);
 
     bugVerticalSpeed = ROUND_2_DECIMAL(BUG_FLIGHT_HEIGHT / BUG_DIVE_DURATION);
 
-    tree = shared_ptr<SceneObject> (
-				    new SceneObject("tree",
-						    "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj",
-						    1, "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png",
-						    "dimitrikourk/small3d/samplegame/resources/models/TreeBB/TreeBB.obj"));
+    tree = shared_ptr<SceneObject>(
+      new SceneObject("tree",
+        "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj",
+        1, "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png",
+        "dimitrikourk/small3d/samplegame/resources/models/TreeBB/TreeBB.obj"));
 
     tree->setOffset(2.6f, GROUND_Y, -8.0f);
     tree->setRotation(0.0f, -0.5f, 0.0f);
 
     gameState = START_SCREEN;
-    
+
     sound = shared_ptr<Sound>(new Sound());
     sound->load("dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah");
 
     startTicks = 0;
     seconds = 0;
 
-    lightModifier= -0.01f;
+    lightModifier = -0.01f;
   }
 
   GameLogic::~GameLogic() {
@@ -149,46 +149,46 @@ namespace AvoidTheBug3D {
 
   }
 
-  void GameLogic::moveGoat( const KeyInput &keyInput )
+  void GameLogic::moveGoat(const KeyInput &keyInput)
   {
     shared_ptr<glm::vec3> goatRotation = goat->getRotation();
     shared_ptr<glm::vec3> goatOffset = goat->getOffset();
 
     goat->stopAnimating();
 
-    if(keyInput.left) {
+    if (keyInput.left) {
       goatRotation->y -= GOAT_ROTATION_SPEED;
 
-      while(goat->collidesWithSceneObject(tree)) {
-	goatRotation->y += GOAT_ROTATION_SPEED;
+      while (goat->collidesWithSceneObject(tree)) {
+        goatRotation->y += GOAT_ROTATION_SPEED;
       }
 
-      if (goatRotation->y < - FULL_ROTATION)
-	goatRotation->y = 0.0f;
+      if (goatRotation->y < -FULL_ROTATION)
+        goatRotation->y = 0.0f;
       goat->startAnimating();
 
     }
     else if (keyInput.right) {
       goatRotation->y += GOAT_ROTATION_SPEED;
 
-      while(goat->collidesWithSceneObject(tree)) {
-	goatRotation->y -= GOAT_ROTATION_SPEED;
+      while (goat->collidesWithSceneObject(tree)) {
+        goatRotation->y -= GOAT_ROTATION_SPEED;
       }
 
 
       if (goatRotation->y > FULL_ROTATION)
-	goatRotation->y = 0.0f;
+        goatRotation->y = 0.0f;
       goat->startAnimating();
     }
 
-    if(keyInput.up) {
+    if (keyInput.up) {
 
-	goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
+      goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
       goatOffset->z -= sin(goatRotation->y) * GOAT_SPEED;
 
-      while(goat->collidesWithSceneObject(tree)) {
-	goatOffset->x += cos(goatRotation->y) * GOAT_SPEED;
-	goatOffset->z += sin(goatRotation->y) * GOAT_SPEED;
+      while (goat->collidesWithSceneObject(tree)) {
+        goatOffset->x += cos(goatRotation->y) * GOAT_SPEED;
+        goatOffset->z += sin(goatRotation->y) * GOAT_SPEED;
       }
 
       goat->startAnimating();
@@ -198,22 +198,22 @@ namespace AvoidTheBug3D {
       goatOffset->x += cos(goatRotation->y) * GOAT_SPEED;
       goatOffset->z += sin(goatRotation->y) * GOAT_SPEED;
 
-      while(goat->collidesWithSceneObject(tree)) {
-	goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
-	goatOffset->z -= sin(goatRotation->y) * GOAT_SPEED;
+      while (goat->collidesWithSceneObject(tree)) {
+        goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
+        goatOffset->z -= sin(goatRotation->y) * GOAT_SPEED;
       }
 
       goat->startAnimating();
     }
 
-    if (goatOffset->z < MIN_Z +1.0f)
-      goatOffset->z = MIN_Z +1.0f;
-    if (goatOffset->z > MAX_Z -1.0f) 
-      goatOffset->z = MAX_Z -1.0f;
+    if (goatOffset->z < MIN_Z + 1.0f)
+      goatOffset->z = MIN_Z + 1.0f;
+    if (goatOffset->z > MAX_Z - 1.0f)
+      goatOffset->z = MAX_Z - 1.0f;
 
-    if (goatOffset->x < goatOffset-> z)
-      goatOffset->x = goatOffset-> z;
-    if (goatOffset->x > -(goatOffset->z)) 
+    if (goatOffset->x < goatOffset->z)
+      goatOffset->x = goatOffset->z;
+    if (goatOffset->x > -(goatOffset->z))
       goatOffset->x = -(goatOffset->z);
 
     goat->animate();
@@ -250,80 +250,80 @@ namespace AvoidTheBug3D {
       ++bugFramesInCurrentState;
     }
     else
-      {
-	bugFramesInCurrentState = 1;
-      }
+    {
+      bugFramesInCurrentState = 1;
+    }
 
     bugPreviousState = bugState;
 
     if (bugState == DIVING_DOWN)
+    {
+      if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
       {
-	if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
-	  {
-	    sound->play("bah");
+        sound->play("bah");
 
-	    seconds = (SDL_GetTicks() - startTicks) / 1000;
-	    gameState = START_SCREEN;
-	  }
-
-	if (bugFramesInCurrentState > BUG_DIVE_DURATION / 2)
-	  {
-	    bugState = DIVING_UP;
-	  }
+        seconds = (SDL_GetTicks() - startTicks) / 1000;
+        gameState = START_SCREEN;
       }
+
+      if (bugFramesInCurrentState > BUG_DIVE_DURATION / 2)
+      {
+        bugState = DIVING_UP;
+      }
+    }
     else if (bugState == DIVING_UP)
+    {
+      if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
       {
-	if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
-	  {
-	    gameState = START_SCREEN;
-	  }
-
-	if (bugFramesInCurrentState > BUG_DIVE_DURATION / 2) {
-	  bugState = FLYING_STRAIGHT;
-	  bugOffset->y = GROUND_Y + BUG_FLIGHT_HEIGHT; // Correction of possible rounding errors
-	}
+        gameState = START_SCREEN;
       }
+
+      if (bugFramesInCurrentState > BUG_DIVE_DURATION / 2) {
+        bugState = FLYING_STRAIGHT;
+        bugOffset->y = GROUND_Y + BUG_FLIGHT_HEIGHT; // Correction of possible rounding errors
+      }
+    }
     else
+    {
+
+      if (distance > BUG_START_DIVE_DISTANCE)
       {
-
-	if (distance > BUG_START_DIVE_DISTANCE)
-	  {
-	    if (dotPosDir < 0.98f) 
-	      {
-		bugState = TURNING;
-	      }
-	    else
-	      {
-		bugState = FLYING_STRAIGHT;
-	      }
-	  }
-	else
-	  {
-	    bugState = DIVING_DOWN;
-	  }
-
+        if (dotPosDir < 0.98f)
+        {
+          bugState = TURNING;
+        }
+        else
+        {
+          bugState = FLYING_STRAIGHT;
+        }
       }
+      else
+      {
+        bugState = DIVING_DOWN;
+      }
+
+    }
 
     // Bug state: represent
 
     bugRotation->z = 0;
 
     if (bugState == TURNING)
-      {
+    {
 
-	bugRotation->y -= BUG_ROTATION_SPEED;
+      bugRotation->y -= BUG_ROTATION_SPEED;
 
-      }
+    }
     else if (bugState == DIVING_DOWN)
-      {
-	bugRotation->z = -BUG_DIVE_TILT;
-	bugOffset->y -= bugVerticalSpeed;
-      }
+    {
+      bugRotation->z = -BUG_DIVE_TILT;
+      bugOffset->y -= bugVerticalSpeed;
+    }
     else if (bugState == DIVING_UP)
-      {
-	bugRotation->z = BUG_DIVE_TILT;
-	bugOffset->y += bugVerticalSpeed;
-      }
+    {
+      bugRotation->z = BUG_DIVE_TILT;
+      bugOffset->y += bugVerticalSpeed;
+    }
 
     if (bugRotation->y < -FULL_ROTATION)
       bugRotation->y = 0.0f;
@@ -334,12 +334,12 @@ namespace AvoidTheBug3D {
 
     if (bugOffset->z < MIN_Z)
       bugOffset->z = MIN_Z;
-    if (bugOffset->z > MAX_Z) 
+    if (bugOffset->z > MAX_Z)
       bugOffset->z = MAX_Z;
 
-    if (bugOffset->x < bugOffset-> z)
-      bugOffset->x = bugOffset-> z;
-    if (bugOffset->x > -(bugOffset->z)) 
+    if (bugOffset->x < bugOffset->z)
+      bugOffset->x = bugOffset->z;
+    if (bugOffset->x > -(bugOffset->z))
       bugOffset->x = -(bugOffset->z);
 
     // Uncomment to see the bug's view of the world
@@ -350,13 +350,13 @@ namespace AvoidTheBug3D {
     bug->animate();
   }
 
-  void GameLogic::processGame( const KeyInput &keyInput )
+  void GameLogic::processGame(const KeyInput &keyInput)
   {
     moveBug();
     moveGoat(keyInput);
   }
 
-  void GameLogic::processStartScreen( const KeyInput &keyInput )
+  void GameLogic::processStartScreen(const KeyInput &keyInput)
   {
     if (keyInput.enter) {
       initGame();
@@ -364,9 +364,9 @@ namespace AvoidTheBug3D {
     }
   }
 
-  void GameLogic::process( const KeyInput &keyInput )
+  void GameLogic::process(const KeyInput &keyInput)
   {
-    switch(gameState) {
+    switch (gameState) {
     case START_SCREEN:
       processStartScreen(keyInput);
       break;
@@ -382,10 +382,10 @@ namespace AvoidTheBug3D {
   void GameLogic::render()
   {
     renderer->clearScreen();
-		
+
     //Uncomment for groovy nightfall effect :)
     /*renderer->lightIntensity += lightModifier;
-		
+
       if (renderer->lightIntensity < 0)
       {
       renderer->lightIntensity = 0.0f;
@@ -398,56 +398,56 @@ namespace AvoidTheBug3D {
       lightModifier = -0.01f;
       }*/
 
-    if(gameState == START_SCREEN) {
+    if (gameState == START_SCREEN) {
       float startScreenVerts[16] =
-	{
-	  -1.0f, -1.0f, 1.0f, 1.0f,
-	  1.0f, -1.0f, 1.0f, 1.0f,
-	  1.0f, 1.0f, 1.0f, 1.0f,
-	  -1.0f, 1.0f, 1.0f, 1.0f
-	};
+      {
+        -1.0f, -1.0f, 1.0f, 1.0f,
+        1.0f, -1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f, 1.0f, 1.0f
+      };
 
       renderer->renderImage(&startScreenVerts[0], "startScreen");
 
       if (seconds != 0)
-	{
-	  SDL_Color textColour = {255, 100, 0, 255};			
-	  crusoeText48->renderText("Goat not bitten for " + intToStr(seconds) + " seconds", 
-				   textColour, -0.95f, -0.6f, 0.0f, -0.8f);
-	}
+      {
+        SDL_Color textColour = { 255, 100, 0, 255 };
+        crusoeText48->renderText("Goat not bitten for " + intToStr(seconds) + " seconds",
+          textColour, -0.95f, -0.6f, 0.0f, -0.8f);
+      }
 
     }
     else
+    {
+
+      float skyVerts[16] =
       {
+        -1.0f, -1.0f, 1.0f, 1.0f,
+        1.0f, -1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f, 1.0f, 1.0f
+      };
 
-	float skyVerts[16] =
-	  {
-	    -1.0f, -1.0f, 1.0f, 1.0f,
-	    1.0f, -1.0f, 1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f, 1.0f, 1.0f
-	  };
+      renderer->renderImage(&skyVerts[0], "sky");
 
-	renderer->renderImage(&skyVerts[0], "sky");
+      // Draw the background
 
-	// Draw the background
+      float groundVerts[16] =
+      {
+        -25.0f, GROUND_Y, MAX_Z, 1.0f,
+        25.0f, GROUND_Y, MAX_Z, 1.0f,
+        25.0f, GROUND_Y,  MIN_Z, 1.0f,
+        -25.0f, GROUND_Y, MIN_Z, 1.0f
+      };
 
-	float groundVerts[16] =
-	  {
-	    -25.0f, GROUND_Y, MAX_Z, 1.0f,
-	    25.0f, GROUND_Y, MAX_Z, 1.0f,
-	    25.0f, GROUND_Y,  MIN_Z, 1.0f,
-	    -25.0f, GROUND_Y, MIN_Z, 1.0f
-	  };
+      renderer->renderImage(&groundVerts[0], "ground", true, glm::vec3(0.0f, 0.0f, 0.0f));
 
-	renderer->renderImage(&groundVerts[0], "ground", true, glm::vec3(0.0f, 0.0f, 0.0f));
+      renderer->renderSceneObject(goat);
+      renderer->renderSceneObject(bug);
+      renderer->renderSceneObject(tree);
 
-	renderer->renderSceneObject(goat);
-	renderer->renderSceneObject(bug);
-	renderer->renderSceneObject(tree);
-			
-      }
+    }
     renderer->swapBuffers();
   }
 
-} 
+}

@@ -100,10 +100,10 @@ namespace small3d {
 	    b = b >> textSurface->format->Bshift;
 	    a = a >> textSurface->format->Ashift;
 
-	    float ttuple[4] = {(float)r, 
-			       (float)g,
-			       (float)b,
-			       (float)a
+	    float ttuple[4] = {static_cast<float>(r), 
+        static_cast<float>(g),
+        static_cast<float>(b),
+        static_cast<float>(a)
 	    };
 
 	    ttuple[0]= floorf(100.0f * (ttuple[0] / 255.0f) + 0.5f) / 100.0f;
