@@ -31,7 +31,7 @@ script:
 - "./bin/dimitrikourk_small3d_main"
 after_success:
 - bii user dimitrikourk -p $PASSWORD
-- bii publish --tag STABLE --versiontag=1.0.2
+# - bii publish --tag STABLE --versiontag=1.0.2
 env:
   global:
     secure: "E+yzdH1oE4TthA0PUeVBRdyeCDdXPIZeIUGVthmpA1H/t5c2ThFgHnAnx29p2LvGl7bO4mw3257pmUoLRenLmxrvRFjLRVAj5sUCTPmsViZca4AhhxPT7xHTP1Vx+KiLJgvildj0k/5mP4BsQmx9GhONYOzZm5APSViGBQM3pns="
