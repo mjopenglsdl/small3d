@@ -12,8 +12,6 @@ Quick start guide and build instructions: http://small3d.org/biicodegame/
 
 For requests for assistance, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
 
-Engine website: http://small3d.org
-
 You can also follow small3d on Twitter: https://twitter.com/small_3D
 
 ![Screen capture from the first game that runs on small3d](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
