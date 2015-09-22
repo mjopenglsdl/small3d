@@ -1,14 +1,18 @@
 small3d
 =======
-*A small, no fuss, 3D game engine*
+*A small, no fuss, 3D game engine* - http://small3d.org
 
-[![Build Status](https://webapi.biicode.com/v1/badges/dimitrikourk/dimitrikourk/small3d/master)](https://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master/2) [![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
+[![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
 
-Quick start guide and build instructions: http://goo.gl/5TYOv2
+This is a development version. The latest stable version is this one:
+
+[![Build Status](https://webapi.biicode.com/v1/badges/dimitrikourk/dimitrikourk/small3d/master)](https://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master/2)
+
+Quick start guide and build instructions: http://small3d.org/biicodegame/
 
 For requests for assistance, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
 
-API documentation: http://small3d.org
+Engine website: http://small3d.org
 
 You can also follow small3d on Twitter: https://twitter.com/small_3D
 
@@ -22,9 +26,11 @@ I will be using this block to make my own games, but one of the reasons I have d
 
 Compatibility
 -------------
-**Debian Wheezy - Eclipse**: No problems
+**Debian - Eclipse**: ok (but see below)
 
-**Debian Wheezy - Command Line**: No problems
+**Debian - Command Line**: ok (but see below)
+
+*I have recently been having some problems with sound on Linux. PortAudio, used by the engine's Sound class, produces some noise or crashes. As far as I have been able to find out, this is associated with PusleAudio, which comes preinstalled in many Linux distributions now. I have not had time to look into it, but you might want to use another sound library if you are developing for Linux. *
 
 **Windows - Visual Studio**: No problems. Note that, by default, bii will compile projects in Windows using MinGW's compiler. In order to use Visual Studio, issue one of the following commands from the directory of your project, depending on which version you have installed:
 
@@ -33,6 +39,10 @@ bii cpp:configure -G"Visual Studio 10 2010"
 bii cpp:configure -G"Visual Studio 11 2012"
 
 bii cpp:configure -G"Visual Studio 12 2013"
+
+bii cpp:configure -G"Visual Studio 14 2015"
+
+*If you are using VS2015, install the latest version of CMake and make sure you use it. The one currently deployed with bii does not support VS2015.*
 
 **Windows - MinGW**: No problems. Many thanks to foonathan (Twitter & GitHub) for showing me how to solve my console output issue on that platform.
 
