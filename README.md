@@ -28,7 +28,7 @@ Compatibility
 
 **Debian - Command Line**: ok (but see below)
 
-*I have recently been having some problems with sound on Linux. PortAudio, used by the engine's Sound class, produces some noise or crashes. As far as I have been able to find out, this is associated with PusleAudio, which comes preinstalled in many Linux distributions now. I have not had time to look into it, but you might want to use another sound library if you are developing for Linux. *
+*I have recently been having some problems with sound on Linux. PortAudio, used by the engine's Sound class, produces some noise or crashes. As far as I have been able to find out, this is associated with PusleAudio, which comes preinstalled in many Linux distributions now. I have not had time to look into it, but you might want to use another sound library if you are developing for Linux.*
 
 **Windows - Visual Studio**: No problems. Note that, by default, bii will compile projects in Windows using MinGW's compiler. In order to use Visual Studio, issue one of the following commands from the directory of your project, depending on which version you have installed:
 
