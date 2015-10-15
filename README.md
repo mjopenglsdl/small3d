@@ -75,4 +75,12 @@ The engine also supports manually created bounding boxes for collision detection
 Sound
 -----
 
-small3d can play sounds from .ogg files. This is newly developed functionality, so there are still a few glitches, but it will be improved soon. In the meantime, note that the sound facilities of small3d are not tightly coupled at all with the rest of the engine. You can always choose to use an external sound library, if you require more features.
+small3d can play sounds from .ogg files. This works well on Windows and OSX but there seem to be some problems on Linux. It may have something to do with the way PortAudio, which is used by small3d, functions in an environment where PulseAudio is installed but I am not sure yet. The problem is that on Debian  some errors like the following appear:
+
+**ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred**
+
+Also, the sound gets corrupted. On an Ubuntu installation on which I have tested the game, no default audio device can be found by PortAudio and the sample game exits the first time an attempt is made to produce a sound.
+
+I have been trying to resolve these problems but I have not been successful so far. In the meantime, note that the sound facilities of small3d are not tightly coupled at all with the rest of the engine. You can always choose to use an external sound library, if you require more features.
+
+I used SDL2_mixer at some point and it worked much better. It is also [available on Biicode](https://www.biicode.com/miguel/sdl2_mixer). The reason I have not incorporated it into small3d is that its license is not compatible with small3d's license as far as I have been able to find out (small3d is more permissive). 
