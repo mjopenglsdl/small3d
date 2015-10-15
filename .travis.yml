@@ -31,6 +31,7 @@ script:
 - "./bin/dimitrikourk_small3d_main"
 after_success:
 - bii user dimitrikourk -p $PASSWORD
+- bii publish
 # - bii publish --tag STABLE --versiontag=1.0.2
 env:
   global:
