@@ -24,11 +24,9 @@ I will be using this block to make my own games, but one of the reasons I have d
 
 Compatibility
 -------------
-**Debian - Eclipse**: ok (but see below)
+**Debian - Eclipse**: ok (but see section about sound, below)
 
-**Debian - Command Line**: ok (but see below)
-
-*I have recently been having some problems with sound on Linux. PortAudio, used by the engine's Sound class, produces some noise or crashes. As far as I have been able to find out, this is associated with PusleAudio, which comes preinstalled in many Linux distributions now. I have not had time to look into it, but you might want to use another sound library if you are developing for Linux.*
+**Debian - Command Line**: ok (but see section about sound, below)
 
 **Windows - Visual Studio**: No problems. Note that, by default, bii will compile projects in Windows using MinGW's compiler. In order to use Visual Studio, issue one of the following commands from the directory of your project, depending on which version you have installed:
 
@@ -83,4 +81,4 @@ Also, the sound gets corrupted. On an Ubuntu installation on which I have tested
 
 I have been trying to resolve these problems but I have not been successful so far. In the meantime, note that the sound facilities of small3d are not tightly coupled at all with the rest of the engine. You can always choose to use an external sound library, if you require more features.
 
-I used SDL2_mixer at some point and it worked much better. It is also [available on Biicode](https://www.biicode.com/miguel/sdl2_mixer). The reason I have not incorporated it into small3d is that its license is not compatible with small3d's license as far as I have been able to find out (small3d is more permissive). 
+I used SDL2_mixer at some point and it worked much better. It is also [available on Biicode](https://www.biicode.com/miguel/sdl2_mixer). The reason I have not incorporated it into small3d is that its license is not compatible with small3d's license as far as I have been able to find out (small3d is more permissive).
