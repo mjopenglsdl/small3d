@@ -1,6 +1,6 @@
 small3d
 =======
-*A small, no fuss, 3D game engine*
+*A small, no fuss, 3D game engine* http://small3d.org
 
 [![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
 
@@ -9,6 +9,8 @@ This is a development version. The latest stable version is this one:
 [![Build Status](https://webapi.biicode.com/v1/badges/dimitrikourk/dimitrikourk/small3d/master)](https://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master/2)
 
 Quick start guide and build instructions: http://small3d.org/biicodegame/
+
+Questions, support: https://github.com/dimitrikourk/small3d/issues
 
 For requests for assistance, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
 
