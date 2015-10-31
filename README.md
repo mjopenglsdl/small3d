@@ -16,9 +16,7 @@ For requests for assistance, please open an issue on the project's source code r
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.
 
-It has been derived from a simple game, which has been under development for more than a year, as a learning exercise (introduction: http://goo.gl/itn6x5, blog: http://goo.gl/7hCTPA). I have decided to separate the game from its engine and make the engine available for easy reuse, as a biicode block (http://goo.gl/WKS0Hv). The game is now provided as a sample, in the "samplegame" folder within the block, and it demonstrates how the features of the engine can be used.
-
-I will be using this block to make my own games, but one of the reasons I have decided to open source it is so that I can receive feedback and ideas. So please feel free to make suggestions! https://github.com/dimitrikourk/small3d/issues
+It has been derived from a simple game, which has been under development for more than a year, as a learning exercise (introduction: http://goo.gl/itn6x5, blog: http://goo.gl/7hCTPA). In the end, I decided to separate the game from its engine and make the engine available for easy reuse, as a [biicode block](http://goo.gl/WKS0Hv). The game is now provided as a sample, in the "samplegame" folder within the block, and it demonstrates how the features of the engine can be used.
 
 Compatibility
 -------------
