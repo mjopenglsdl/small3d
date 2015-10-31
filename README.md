@@ -10,8 +10,6 @@ This is a development version. The latest stable version is this one:
 
 Quick start guide and build instructions: http://small3d.org/biicodegame/
 
-Questions, support: https://github.com/dimitrikourk/small3d/issues
-
 For requests for assistance, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
 
 ![Screen capture from the first game that runs on small3d](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
