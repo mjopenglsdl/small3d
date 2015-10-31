@@ -38,7 +38,7 @@ bii cpp:configure -G"Visual Studio 14 2015"
 
 **Windows - MinGW**: No problems. Many thanks to foonathan (Twitter & GitHub) for showing me how to solve my console output issue on that platform.
 
-**Mac**: No problems up to OS X Yosemite. I have not been able to install biicode on El Capitan, so I cannot get it to work there. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block.
+**Mac**: No problems up to OS X Yosemite. I have not been able to install biicode on El Capitan, so I cannot get it to work there. Many thanks to hithwen for for providing the [first successful compilation on a Mac](https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block.
 
 **Others:** I would expect that the engine and the sample game should work on most other environments with no problems. Before migrating to biicode, I had also spent time developing the engine on Ubuntu and Fedora, so the code is prety mature cross-platform-wise.
 
