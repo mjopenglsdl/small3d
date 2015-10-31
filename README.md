@@ -1,6 +1,6 @@
 small3d
 =======
-*A small, no fuss, 3D game engine* - http://small3d.org
+*A small, no fuss, 3D game engine*
 
 [![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
 
@@ -11,8 +11,6 @@ This is a development version. The latest stable version is this one:
 Quick start guide and build instructions: http://small3d.org/biicodegame/
 
 For requests for assistance, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
-
-You can also follow small3d on Twitter: https://twitter.com/small_3D
 
 ![Screen capture from the first game that runs on small3d](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
 
@@ -42,7 +40,7 @@ bii cpp:configure -G"Visual Studio 14 2015"
 
 **Windows - MinGW**: No problems. Many thanks to foonathan (Twitter & GitHub) for showing me how to solve my console output issue on that platform.
 
-**Mac**: No problems. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block.
+**Mac**: No problems up to OS X Yosemite. I have not been able to install biicode on El Capitan, so I cannot get it to work there. Many thanks to hithwen for for providing the first successful compilation on a Mac (https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block.
 
 **Others:** I would expect that the engine and the sample game should work on most other environments with no problems. Before migrating to biicode, I had also spent time developing the engine on Ubuntu and Fedora, so the code is prety mature cross-platform-wise.
 
