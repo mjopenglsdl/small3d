@@ -1,46 +1,17 @@
 small3d
 =======
-*A small, no fuss, 3D game engine* http://small3d.org
-
-[![Build Status](https://travis-ci.org/dimitrikourk/small3d.svg?branch=master)](https://travis-ci.org/dimitrikourk/small3d)
-
-This is a development version. The latest stable version is this one:
-
-[![Build Status](https://webapi.biicode.com/v1/badges/dimitrikourk/dimitrikourk/small3d/master)](https://www.biicode.com/dimitrikourk/dimitrikourk/small3d/master/2)
-
-Quick start guide and build instructions: http://small3d.org/biicodegame/
-
-For requests for assistance, please open an issue on the project's source code repository: https://github.com/dimitrikourk/small3d/issues
-
-![Screen capture from the first game that runs on small3d](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
+*A small, no fuss, 3D game engine*
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.
 
-It has been derived from a simple game, which has been under development for more than a year, as a learning exercise (introduction: http://goo.gl/itn6x5, blog: http://goo.gl/7hCTPA). In the end, I decided to separate the game from its engine and make the engine available for easy reuse, as a [biicode block](http://goo.gl/WKS0Hv). The game is now provided as a sample, in the "samplegame" folder within the block, and it demonstrates how the features of the engine can be used.
+It has been derived from a simple game, which has been under development for more than a year, as a [learning exercise](http://goo.gl/itn6x5). In the end, I decided to separate the game from its engine and make the engine available for easy reuse, as a biicode block. The game was then provided as a sample, in the "samplegame" folder within the block, and it demonstrated how the features of the engine can be used.
+
+*Unfortunately the biicode service has been taken offline, so the source code can no longer be compiled, in its present state. I have left it here in case it is ever useful for me or anyone else. I may try produce a new build at some point.*
 
 Compatibility
 -------------
-**Debian - Eclipse**: ok (but see section about sound, below)
 
-**Debian - Command Line**: ok (but see section about sound, below)
-
-**Windows - Visual Studio**: No problems. Note that, by default, bii will compile projects in Windows using MinGW's compiler. In order to use Visual Studio, issue one of the following commands from the directory of your project, depending on which version you have installed:
-
-bii cpp:configure -G"Visual Studio 10 2010"
-
-bii cpp:configure -G"Visual Studio 11 2012"
-
-bii cpp:configure -G"Visual Studio 12 2013"
-
-bii cpp:configure -G"Visual Studio 14 2015"
-
-*If you are using VS2015, install the latest version of CMake and make sure you use it. The one currently deployed with bii does not support VS2015.*
-
-**Windows - MinGW**: No problems. Many thanks to foonathan (Twitter & GitHub) for showing me how to solve my console output issue on that platform.
-
-**Mac**: No problems up to OS X Yosemite. I have not been able to install biicode on El Capitan, so I cannot get it to work there. Many thanks to hithwen for for providing the [first successful compilation on a Mac](https://github.com/dimitrikourk/small3d/commit/26b85780a3ef03c9d5c11f1527803173feaadd1c) and for testing the block.
-
-**Others:** I would expect that the engine and the sample game should work on most other environments with no problems. Before migrating to biicode, I had also spent time developing the engine on Ubuntu and Fedora, so the code is prety mature cross-platform-wise.
+When biicode was available, the engine would successfully compile and run on Windows, Debian and OSX.
 
 License
 -------
