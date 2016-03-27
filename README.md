@@ -6,7 +6,7 @@ This is a free, open-source, minimalistic 3D game engine, developed in C++ and b
 
 It has been derived from a simple game, which has been under development for more than a year, as a [learning exercise](http://goo.gl/itn6x5). In the end, I decided to separate the game from its engine and make the engine available for easy reuse, as a biicode block. The game was then provided as a sample, in the "samplegame" folder within the block, and it demonstrated how the features of the engine can be used.
 
-*Unfortunately the biicode service has been taken offline, so the source code can no longer be compiled, in its present state. I have left it here in case it is ever useful for me or anyone else. I may try produce a new build at some point.*
+*Unfortunately the biicode service has been taken offline, so the source code can no longer be compiled, in its present state. I have left it here in case it is ever useful for me or anyone else. Maybe I'll produce a new build that doesn't require biicode at some point, but I am not sure.*
 
 Compatibility
 -------------
