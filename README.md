@@ -48,4 +48,4 @@ Also, the sound gets corrupted. On an Ubuntu installation on which I have tested
 
 I have been trying to resolve these problems but I have not been successful so far. In the meantime, note that the sound facilities of small3d are not tightly coupled at all with the rest of the engine. You can always choose to use an external sound library, if you require more features.
 
-I used SDL2_mixer at some point and it worked much better. It is also [available on Biicode](https://www.biicode.com/miguel/sdl2_mixer). The reason I have not incorporated it into small3d is that its license is not compatible with small3d's license as far as I have been able to find out (small3d is more permissive).
+I used SDL2_mixer at some point and it worked much better. It was also available on Biicode. The reason I have not incorporated it into small3d is that its license is not compatible with small3d's license as far as I have been able to find out (small3d is more permissive).
