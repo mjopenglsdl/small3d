@@ -6,7 +6,7 @@ This is a free, open-source, minimalistic 3D game engine, developed in C++ and b
 
 It has been derived from a simple game, which has been under development for more than a year, as a [learning exercise](http://goo.gl/itn6x5). In the end, I decided to separate the game from its engine and make the engine available for easy reuse, as a biicode block. The game was then provided as a sample, in the "samplegame" folder within the block, and it demonstrated how the features of the engine can be used.
 
-*Unfortunately the biicode service has been taken offline. I am in the process of producing an independent build for small3d. For the moment, only the unit tests can be compiled and executed on OSX.*
+*Unfortunately the biicode service has been taken offline. I am in the process of producing an independent build for small3d. For the moment, the library and sample game work on OSX. I am now cleaning up the code and updating the documentation. I will then provide builds for Windows and Linux.*
 
 Compatibility
 -------------
@@ -40,4 +40,4 @@ The engine also supports manually created bounding boxes for collision detection
 Sound
 -----
 
-small3d used to have sound capabilities, but they have been disabled for now.
+small3d's sound capabilities have beed disabled for the time being, but they will be reintroduced soon.
