@@ -14,18 +14,19 @@
 #endif
 #endif
 
-#include "google/gtest/gtest.h"
+#include <gtest/gtest.h>
 #include "Logger.hpp"
 #include <iostream>
-#include <memory>
 #include <sstream>
 #include "Image.hpp"
 #include "Model.hpp"
 #include "BoundingBoxes.hpp"
-#include "SceneObject.hpp"
 #include "ModelLoader.hpp"
 #include "WavefrontLoader.hpp"
-#include "Sound.hpp"
+#include "SceneObject.hpp"
+#include "Renderer.hpp"
+
+
 
 /* MinGW produces the following linking error, if the unit tests
  * are linked to the renderer:
@@ -39,19 +40,7 @@
  */
 #ifndef __MINGW32__
 
-#include "Renderer.hpp"
-
 #endif
-
-/* bii data directives */
-
-// bii://dimitrikourk/small3d/resources/images/testImage.png
-// bii://dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj
-// bii://dimitrikourk/small3d/resources/models/Cube/Cube.obj
-// bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj
-// bii://dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj
-// bii://dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png
-// bii://dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg
 
 using namespace small3d;
 using namespace std;
@@ -72,7 +61,7 @@ TEST(LoggerTest, LogSomething) {
 
 TEST(ImageTest, LoadImage) {
 
-  unique_ptr<Image> image(new Image("dimitrikourk/small3d/resources/images/testImage.png"));
+  unique_ptr<Image> image(new Image("resources/images/testImage.png"));
 
   cout << "Image width " << image->getWidth() << ", height " << image->getHeight() << endl;
 
@@ -110,7 +99,7 @@ TEST(ModelTest, LoadModel) {
   Model model;
   unique_ptr<ModelLoader> loader(new WavefrontLoader());
 
-  loader->load("dimitrikourk/small3d/resources/models/Cube/Cube.obj", model);
+  loader->load("resources/models/Cube/Cube.obj", model);
 
   EXPECT_NE(0, model.vertexData.size());
   EXPECT_NE(0, model.indexData.size());
@@ -127,7 +116,7 @@ TEST(ModelTest, LoadModel) {
 
   Model modelWithNoTexture;
 
-  loader->load("dimitrikourk/small3d/resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
+  loader->load("resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
 
 
   EXPECT_NE(0, modelWithNoTexture.vertexData.size());
@@ -149,7 +138,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
   unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes());
 
-  bboxes->loadFromFile("dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj");
+  bboxes->loadFromFile("samplegame/resources/models/GoatBB/GoatBB.obj");
 
   EXPECT_EQ(16, bboxes->vertices.size());
   EXPECT_EQ(12, bboxes->facesVertexIndexes.size());
@@ -180,7 +169,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
 }
 
-/*
+
 //This cannot run on the CI environment because there is no video device available there.
 
 // Cannot run this with MinGW (see comment above Renderer.h include directive)
@@ -188,30 +177,23 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 TEST(RendererTest, StartAndUse) {
 shared_ptr<Logger> log(new Logger(cout));
 
-shared_ptr<Configuration> cfg(new Configuration(log));
+//shared_ptr<Configuration> cfg(new Configuration(log));
 
 shared_ptr<SceneObject> object(
 new SceneObject("animal",
-"dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj",
-cfg, log, 1, "dimitrikourk/small3d/resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png"));
+"resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj", 1,
+                "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png"));
 shared_ptr<vector<shared_ptr<SceneObject> > > scene(
 new vector<shared_ptr<SceneObject> >());
 scene->push_back(object);
 
-unique_ptr<Renderer> renderer(new Renderer(cfg, log));
+unique_ptr<Renderer> renderer(new Renderer());
 renderer->init(640, 480, false);
 
 }
 #endif
-*/
 
-TEST(SoundTest, Load) {
-  shared_ptr<Sound> snd(new Sound());
-  snd->load("dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah");
-  //snd->play("bah");
-  //Pa_Sleep(3*1000);
 
-}
 
 int main(int argc, char **argv) {
   // Set up a console, if using MinGW

@@ -12,8 +12,8 @@
 #include <fstream>
 #include <unordered_map>
 #include "MathFunctions.hpp"
-#include <dimitrikourk/glm/glm/gtc/type_ptr.hpp>
-#include <miguel/sdl2/include/SDL.h>
+#include <glm/gtc/type_ptr.hpp>
+#include <SDL.h>
 #include <cstring>
 
 using namespace std;
@@ -108,8 +108,6 @@ namespace small3d {
   void Renderer::initSDL(int width, int height, bool fullScreen) {
     sdlWindow = 0;
 
-
-
     // initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
       LOGERROR(SDL_GetError());
@@ -119,7 +117,7 @@ namespace small3d {
 #ifdef __APPLE__
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  SDL_GL_CONTEXT_PROFILE_CORE);
 #endif
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);

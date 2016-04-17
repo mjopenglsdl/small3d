@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include <dimitrikourk/glm/glm/glm.hpp>
+#include <glm/glm.hpp>
 
 /**
  * @def	ROUND_2_DECIMAL(x) (floorf(100 * x + 0.5) / 100)

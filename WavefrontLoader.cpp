@@ -12,7 +12,7 @@
 #include <fstream>
 #include <unordered_map>
 #include "GetTokens.hpp"
-#include <miguel/sdl2/include/SDL.h>
+#include <SDL.h>
 
 using namespace std;
 

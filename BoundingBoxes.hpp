@@ -12,7 +12,7 @@
 #include <memory>
 #include "Logger.hpp"
 #include <vector>
-#include <dimitrikourk/glm/glm/glm.hpp>
+#include <glm/glm.hpp>
 
 using namespace std;
 

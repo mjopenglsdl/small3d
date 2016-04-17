@@ -15,7 +15,7 @@
 #include "Logger.hpp"
 #include "Image.hpp"
 #include "BoundingBoxes.hpp"
-#include <dimitrikourk/glm/glm/glm.hpp>
+#include <glm/glm.hpp>
 
 using namespace std;
 

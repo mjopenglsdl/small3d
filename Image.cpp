@@ -8,10 +8,9 @@
  */
 
 #include "Image.hpp"
-#include <stdio.h>
 #include "Exception.hpp"
 #include "MathFunctions.hpp"
-#include <miguel/sdl2/include/SDL.h>
+#include "SDL.h"
 
 using namespace std;
 

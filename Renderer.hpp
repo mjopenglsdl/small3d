@@ -21,9 +21,9 @@
 
 #ifndef SDLANDOPENGL
 #define SDLANDOPENGL
-#include <dimitrikourk/glew/include/GL/glew.h>
-#include <miguel/sdl2/include/SDL_opengl.h>
-#include <miguel/sdl2/include/SDL.h>
+#include <GL/glew.h>
+#include <SDL_opengl.h>
+#include <SDL.h>
 #endif //SDLANDOPENGL
 
 #include <memory>
@@ -31,7 +31,7 @@
 #include <vector>
 #include "Logger.hpp"
 #include <unordered_map>
-#include <dimitrikourk/glm/glm/glm.hpp>
+#include <glm/glm.hpp>
 
 using namespace std;
 
@@ -138,7 +138,7 @@ namespace small3d
     void init(const int width, const int height, const bool fullScreen, 
 	      const float &frustumScale = 1.0f, const float &zNear = 1.0f, 
 	      const float &zFar = 24.0f, const float &zOffsetFromCamera = -1.0f,
-	      const string &shadersPath = "dimitrikourk/small3d/resources/shaders/");
+	      const string &shadersPath = "resources/shaders/");
 
     /**
      * @brief	Vector indicating the direction of the light in the scene.

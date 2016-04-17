@@ -12,7 +12,7 @@
 #include <string>
 #include <memory>
 #include "Logger.hpp"
-#include <glenn/png/png.h>
+#include <png.h>
 
 using namespace std;
 

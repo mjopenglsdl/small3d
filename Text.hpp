@@ -12,7 +12,7 @@
 #include <string>
 #include "Renderer.hpp"
 #include <memory>
-#include <miguel/sdl2_ttf/SDL_ttf.h>
+#include <SDL_ttf.h>
 
 using namespace std;
 

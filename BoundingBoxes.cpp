@@ -11,11 +11,8 @@
 #include <fstream>
 #include "Exception.hpp"
 #include "GetTokens.hpp"
-#include <stdlib.h>
 #include "MathFunctions.hpp"
-#include <dimitrikourk/glm/glm/glm.hpp>
-#include <miguel/sdl2/include/SDL.h>
-#include <iostream>
+#include "SDL.h"
 
 namespace small3d {
 
