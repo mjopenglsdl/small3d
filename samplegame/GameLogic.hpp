@@ -10,13 +10,12 @@
 #pragma once
 
 #include <memory>
-#include <dimitrikourk/small3d/Logger.hpp>
-#include <dimitrikourk/small3d/SceneObject.hpp>
-#include <dimitrikourk/small3d/Renderer.hpp>
-#include <dimitrikourk/small3d/Text.hpp>
-#include <dimitrikourk/small3d/Sound.hpp>
+#include <Logger.hpp>
+#include <SceneObject.hpp>
+#include <Renderer.hpp>
+#include <Text.hpp>
 
-#include <dimitrikourk/small3d/samplegame/KeyInput.hpp>
+#include "KeyInput.hpp"
 
 using namespace small3d;
 
@@ -40,8 +39,6 @@ namespace AvoidTheBug3D {
     shared_ptr<Renderer> renderer;
 
     shared_ptr<Text> crusoeText48;
-
-    shared_ptr<Sound> sound;
 
     enum GameState {START_SCREEN, PLAYING};
     GameState gameState;

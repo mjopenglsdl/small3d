@@ -7,44 +7,6 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
- /* bii data directives */
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000001.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000002.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000003.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000004.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000005.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000006.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000007.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000008.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000009.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000010.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000011.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000012.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000013.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000014.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000015.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000016.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000017.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000018.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim_000019.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png
- // bii://dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000001.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000002.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000003.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000004.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000005.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000006.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000007.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000008.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim_000009.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj
- // bii://dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png
- // bii://dimitrikourk/small3d/samplegame/resources/models/TreeBB/TreeBB.obj
- // bii://dimitrikourk/small3d/samplegame/resources/images/startScreen.png
- // bii://dimitrikourk/small3d/samplegame/resources/images/grass.png
- // bii://dimitrikourk/small3d/samplegame/resources/images/sky.png
- // bii://dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg
 
 #define MAX_Z -1.0f
 #define MIN_Z -24.0f
@@ -63,11 +25,11 @@
 #define GOAT_SPEED 0.05f
 
 #include <memory>
-#include <dimitrikourk/small3d/MathFunctions.hpp>
-#include <dimitrikourk/small3d/Exception.hpp>
-#include <dimitrikourk/small3d/MathFunctions.hpp>
+#include <MathFunctions.hpp>
+#include <Exception.hpp>
+#include <MathFunctions.hpp>
 #include <cmath>
-#include <dimitrikourk/small3d/samplegame/GameLogic.hpp>
+#include "GameLogic.hpp"
 
 
 using namespace small3d;
@@ -84,26 +46,26 @@ namespace AvoidTheBug3D {
     crusoeText48 = shared_ptr<Text>(new Text(renderer));
 
     unique_ptr<Image> startScreenTexture(
-      new Image("dimitrikourk/small3d/samplegame/resources/images/startScreen.png"));
+      new Image("resources/images/startScreen.png"));
     renderer->generateTexture("startScreen", startScreenTexture->getData(), startScreenTexture->getWidth(), startScreenTexture->getHeight());
 
     unique_ptr<Image> groundTexture(
-      new Image("dimitrikourk/small3d/samplegame/resources/images/grass.png"));
+      new Image("resources/images/grass.png"));
     renderer->generateTexture("ground", groundTexture->getData(), groundTexture->getWidth(), groundTexture->getHeight());
 
     unique_ptr<Image> skyTexture(
-      new Image("dimitrikourk/small3d/samplegame/resources/images/sky.png"));
+      new Image("resources/images/sky.png"));
     renderer->generateTexture("sky", skyTexture->getData(), skyTexture->getWidth(), skyTexture->getHeight());
 
     goat = shared_ptr<SceneObject>(
       new SceneObject("goat",
-        "dimitrikourk/small3d/samplegame/resources/models/Goat/goatAnim",
-        19, "dimitrikourk/small3d/samplegame/resources/models/Goat/Goat.png",
-        "dimitrikourk/small3d/samplegame/resources/models/GoatBB/GoatBB.obj"));
+        "resources/models/Goat/goatAnim",
+        19, "resources/models/Goat/Goat.png",
+        "resources/models/GoatBB/GoatBB.obj"));
 
     bug = shared_ptr<SceneObject>(
       new SceneObject("bug",
-        "dimitrikourk/small3d/samplegame/resources/models/Bug/bugAnim",
+        "resources/models/Bug/bugAnim",
         9));
     bug->setColour(0.2f, 0.2f, 0.2f, 1.0f);
     bug->setFrameDelay(2);
@@ -112,17 +74,14 @@ namespace AvoidTheBug3D {
 
     tree = shared_ptr<SceneObject>(
       new SceneObject("tree",
-        "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.obj",
-        1, "dimitrikourk/small3d/samplegame/resources/models/Tree/tree.png",
-        "dimitrikourk/small3d/samplegame/resources/models/TreeBB/TreeBB.obj"));
+        "resources/models/Tree/tree.obj",
+        1, "resources/models/Tree/tree.png",
+        "resources/models/TreeBB/TreeBB.obj"));
 
     tree->setOffset(2.6f, GROUND_Y, -8.0f);
     tree->setRotation(0.0f, -0.5f, 0.0f);
 
     gameState = START_SCREEN;
-
-    sound = shared_ptr<Sound>(new Sound());
-    sound->load("dimitrikourk/small3d/samplegame/resources/sounds/bah.ogg", "bah");
 
     startTicks = 0;
     seconds = 0;
@@ -260,7 +219,6 @@ namespace AvoidTheBug3D {
     {
       if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
       {
-        sound->play("bah");
 
         seconds = (SDL_GetTicks() - startTicks) / 1000;
         gameState = START_SCREEN;

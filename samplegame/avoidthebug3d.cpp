@@ -14,11 +14,11 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <dimitrikourk/small3d/Exception.hpp>
+#include <Exception.hpp>
 #include <memory>
 
-#include <dimitrikourk/small3d/samplegame/GameLogic.hpp>
-#include <dimitrikourk/small3d/samplegame/KeyInput.hpp>
+#include "GameLogic.hpp"
+#include "KeyInput.hpp"
 
 using namespace std;
 using namespace AvoidTheBug3D;

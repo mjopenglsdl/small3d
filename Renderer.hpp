@@ -7,15 +7,6 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/perspectiveMatrixLightedShader.vert
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/textureShader.frag
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/simpleShader.vert
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL33/simpleShader.frag
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/perspectiveMatrixLightedShader.vert
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/textureShader.frag
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/simpleShader.vert
-// bii://dimitrikourk/small3d/resources/shaders/OpenGL21/simpleShader.frag
-
 
 #pragma once
 

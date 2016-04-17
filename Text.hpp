@@ -7,8 +7,6 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-// bii://dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf
-
 #include <string>
 #include "Renderer.hpp"
 #include <memory>
@@ -42,7 +40,7 @@ namespace small3d {
 
     /**
      * @fn	Text( shared_ptr<Renderer> renderer,
-     * 		const string &ttfFontPath="dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
+     * 		const string &ttfFontPath="resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
      * 		const int &size = 48);
      *
      * @brief	Constructor.
@@ -61,7 +59,7 @@ namespace small3d {
 
     Text(
 	 shared_ptr<Renderer> renderer,
-	 const string &ttfFontPath="dimitrikourk/small3d/samplegame/resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
+	 const string &ttfFontPath="resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
 	 const int &size = 48);
 
     /**
