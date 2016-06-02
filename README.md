@@ -12,7 +12,7 @@ This engine had initially been published as a [biicode](https://github.com/biico
 
 Building
 --------
-Download and install cmake. Then, download the following dependencies:
+Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 - SDL2
 - SDL2_ttf
 - GLEW
