@@ -4,26 +4,52 @@ small3d
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.
 
-It has been derived from a simple game, which has been under development for more than a year, as a [learning exercise](http://goo.gl/itn6x5). In the end, I decided to separate the game from its engine and make the engine available for easy reuse, as a biicode block. The game was then provided as a sample, in the "samplegame" folder within the block, and it demonstrated how the features of the engine can be used.
-
-*Unfortunately the biicode service has been taken offline. I am in the process of producing an independent build for small3d. For the moment, the library and sample game work on OSX. I am now cleaning up the code and updating the documentation. I will then provide builds for Windows and Linux.*
+It has been derived from a simple game, which has been under development for more than a year, as a [learning exercise](http://goo.gl/itn6x5). In the end, I decided to separate the game from its engine and make the engine available for easy reuse. The game is now provided as a sample, in the "samplegame" folder, and it demonstrates how the features of the engine can be used.
 
 Compatibility
 -------------
+This engine had initially been published as a [biicode](https://github.com/biicode/) block. Unfortunately the biicode service has been taken offline. So now the code can be compiled independenty, using cmake. When biicode was available, the engine would successfully compile and run on Windows, Debian and OSX, but I have only compiled the independent build on OSX so far. You should be able to build it on other platforms as well, since the code had been written accordingly.
 
-When biicode was available, the engine would successfully compile and run on Windows, Debian and OSX.
+Building
+--------
+Download and install cmake. Then, download the following dependencies:
+- SDL2
+- SDL2_ttf
+- GLEW
+- GLM
+- Google Test
 
-License
--------
+For SDL2 and SDL2_ttf, download the binary packages. Then you need to build GLEW and Google Test according to the instructions provided in their distributions. Don't run *make install* on them. We are going to place them in a specific directory. GLM does not require compiling.
 
-small3d is licensed under the BSD 3-Clause License (see LICENSE file).
+Once the above is done, create a directory called *deps* inside the small3d directory. Copy the libraries and compiled packages there. The only exception is the glm header files, which you should place in a directory called *include* (create it inside *deps*). The whole thing should look like this:
 
-Reuse and packaging
--------------------
+    small3d
+        deps
+            glew
+            googletest
+            include
+              glm
+            SDL2_ttf.framework
+            SDL2.framework
 
-Please consider this text (and the whole of this README file for that matter) informative, since I am not a lawyer and I do not accept responsibility for any consequence that may arise from following my indications :)
+Create another directory inside *small3d*, called *build*.
 
-I would not want there to be any limitations or inconveniences in the use of small3d, so much for free and open source as for commercial and closed source products. This is the reason that I have chosen the BSD 3-Clause License for the engine and I have made sure that all the libraries it is referencing are released under permissive licenses, like BSD, MIT or ZLIB. I have placed the licenses from those libraries in the libsLicenses folder for your convenience during packaging, suffixed with the block versions from which they are being retrieved by the small3d block. In general, there should be no problem in reusing small3d in any manner, provided that you, in SOME cases, reproduce the license text and give credit to the authors of the referenced libraries.
+#### For plain-old make
+
+    cd build
+    cmake ..
+    make
+
+And then just execute avoidthebug3d
+
+#### For Xcode
+
+    cd build
+    cmake -G"Xcode" ..
+
+Open the project with Xcode and build it once. Then copy the *resources* and *samplegame/resources* directories to a singe *resources* directory inside the *Debug* directory created by Xcode. Then, select the avoidthebug3d scheme in Xcode and run it.
+
+If you have any problems with the build, or any questions and need help, don't hesitate to [open an issue](https://github.com/coding3d/small3d/issues).
 
 3D models and textures
 ----------------------
@@ -40,4 +66,4 @@ The engine also supports manually created bounding boxes for collision detection
 Sound
 -----
 
-small3d's sound capabilities have beed disabled for the time being, but they will be reintroduced soon.
+small3d's sound capabilities have beed removed, but if you look at older commits, you will find the code I had written for providing sound, using portaudio.
