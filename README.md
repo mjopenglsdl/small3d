@@ -40,7 +40,7 @@ Create another directory inside *small3d*, called *build*.
     cmake ..
     make
 
-And then just execute avoidthebug3d
+And then just execute *avoidthebug3d*.
 
 #### For Xcode
 
@@ -49,7 +49,7 @@ And then just execute avoidthebug3d
 
 Open the project with Xcode and build it once. Then copy the *resources* and *samplegame/resources* directories to a singe *resources* directory inside the *Debug* directory created by Xcode. Then, select the avoidthebug3d scheme in Xcode and run it.
 
-If you have any problems with the build, or any questions and need help, don't hesitate to [open an issue](https://github.com/coding3d/small3d/issues).
+If you have any problems with the build, or any questions and need help, don't hesitate to [open an issue](https://github.com/coding3d/small3d/issues). The API documentation is also available [online](http://coding3d.github.io/small3d).
 
 3D models and textures
 ----------------------
