@@ -3,7 +3,6 @@
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
- *              http://dimitros.be
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
@@ -664,7 +663,7 @@ namespace small3d {
     SDL_GL_SwapWindow(sdlWindow);
   }
 
-  
+
   /**
   * Convert error enum returned from OpenGL to a readable string error message.
   * @param error The error code returned from OpenGL
@@ -705,4 +704,3 @@ namespace small3d {
   }
 
 }
-

@@ -3,7 +3,6 @@
  *
  *  Created on: 2014/11/23
  *      Author: Dimitri Kourkoulis
- *              http://dimitros.be
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
@@ -72,7 +71,7 @@ namespace small3d {
     //TTF_Quit();
   }
 
-  void Text::renderText(const string &text, const SDL_Color &colour, 
+  void Text::renderText(const string &text, const SDL_Color &colour,
 			const float &topX, const float &topY, const float &bottomX, const float &bottomY)
   {
     GLuint textHandle = renderer->getTextureHandle(intToStr(size) + "text_" + text);
@@ -100,7 +99,7 @@ namespace small3d {
 	    b = b >> textSurface->format->Bshift;
 	    a = a >> textSurface->format->Ashift;
 
-	    float ttuple[4] = {static_cast<float>(r), 
+	    float ttuple[4] = {static_cast<float>(r),
         static_cast<float>(g),
         static_cast<float>(b),
         static_cast<float>(a)
@@ -130,7 +129,7 @@ namespace small3d {
 	topX, topY, -0.5f, 1.0f
       };
 
-    renderer->renderImage(boxVerts, intToStr(size) + "text_" + text);		
+    renderer->renderImage(boxVerts, intToStr(size) + "text_" + text);
   }
 
   void Text::deleteTextTexture( const string &text )

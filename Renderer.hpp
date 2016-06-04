@@ -3,7 +3,6 @@
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
- *              http://dimitros.be
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
@@ -112,7 +111,7 @@ namespace small3d
      * @param fullScreen	Will the Renderer run in full screen mode? If set to true,
      * 				the width and height have to correspond to a resolution supported
      *                          by the user's screen in order for the scene to be displayed properly.
-     * @param windowTitle The title of the game's window		   
+     * @param windowTitle The title of the game's window
      * @param frustumScale	How much the frustum scales the items rendered
      * @param zNear		Projection plane z coordinate (use positive value)
      * @param zFar		Far end of frustum z coordinate (use positive value)

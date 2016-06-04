@@ -3,7 +3,6 @@
  *
  *  Created on: 2014/10/18
  *      Author: Dimitri Kourkoulis
- *              http://dimitros.be
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
@@ -85,7 +84,7 @@ namespace small3d {
 
     void append(const LogLevel level, const string &message);
   };
-	
+
   void initLogger();
 
   void initLogger(ostream &stream);
@@ -94,4 +93,3 @@ namespace small3d {
 }
 
 extern shared_ptr<small3d::Logger> logger;
-

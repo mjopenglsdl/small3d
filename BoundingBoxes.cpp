@@ -3,7 +3,6 @@
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
- *              http://dimitros.be
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
@@ -99,7 +98,7 @@ namespace small3d {
     for (int idx = 0; idx < numBoxes; ++idx) {
       float minZ, maxZ, minX, maxX, minY, maxY;
 
-      glm::vec4 coords(vertices[static_cast<unsigned int>(idx * 8)][0], vertices[static_cast<unsigned int>(idx * 8)][1], 
+      glm::vec4 coords(vertices[static_cast<unsigned int>(idx * 8)][0], vertices[static_cast<unsigned int>(idx * 8)][1],
         vertices[static_cast<unsigned int>(idx * 8)][2], 1);
       glm::vec4 rotatedCoords(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -117,7 +116,7 @@ namespace small3d {
       maxZ = rotatedCoords.z;
 
       for (int checkidx = idx * 8; checkidx < (idx + 1) * 8; ++checkidx) {
-        coords = glm::vec4(vertices[static_cast<unsigned int>(checkidx)][0], vertices[static_cast<unsigned int>(checkidx)][1], 
+        coords = glm::vec4(vertices[static_cast<unsigned int>(checkidx)][0], vertices[static_cast<unsigned int>(checkidx)][1],
           vertices[static_cast<unsigned int>(checkidx)][2], 1);
         rotatedCoords = rotationMatrix * coords;
 

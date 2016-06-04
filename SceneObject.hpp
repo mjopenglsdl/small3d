@@ -3,7 +3,6 @@
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
- *              http://dimitros.be
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
@@ -26,7 +25,7 @@ namespace small3d
    *
    * @brief	An object that appears on the 3D scene. It is made up of one or more models (the latter for animation),
    * 			together with information about positioning and rotation and collision detection functionality.
-   *	 
+   *
    */
 
   class SceneObject
@@ -43,7 +42,7 @@ namespace small3d
     shared_ptr<glm::vec4> colour;
     shared_ptr<glm::vec3> offset;
     shared_ptr<glm::vec3> rotation;
-		
+
 
     void initPropVectors();
 
