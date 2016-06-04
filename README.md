@@ -44,14 +44,14 @@ Create another directory inside *small3d*, called *build*.
     cmake ..
     make
 
-And then just execute *avoidthebug3d*.
+And then just execute *avoidthebug3d*, in order to run the sample game, or *small3dTest* for the unit tests.
 
 #### For Xcode
 
     cd build
     cmake -G"Xcode" ..
 
-Open the project with Xcode and build it once. Then copy the *resources* and *samplegame/resources* directories to a singe *resources* directory inside the *Debug* directory created by Xcode. Then, select the avoidthebug3d scheme in Xcode and run it.
+Open the project with Xcode and build it once. Then copy the *resources* and *samplegame/resources* directories to the *Debug* directory created by Xcode (maintaining directory structures). Then, select the *avoidthebug3d* or *small3dTest* scheme in Xcode and run it.
 
 If you have any problems with the build, or any questions and need help, don't hesitate to [open an issue](https://github.com/coding3d/small3d/issues). The API documentation is also available [online](http://coding3d.github.io/small3d).
 
