@@ -77,7 +77,7 @@ namespace small3d
     /**
      * Initialise SDL
      */
-    void initSDL(int width, int height, bool fullScreen);
+    void initSDL(int width, int height, bool fullScreen, const string &windowTitle = "");
 
     /**
      * Retrieve the information of what went wrong when linking a shader program
@@ -111,7 +111,8 @@ namespace small3d
      * @param height The height of the window
      * @param fullScreen	Will the Renderer run in full screen mode? If set to true,
      * 				the width and height have to correspond to a resolution supported
-     *                          by the user's screen in order for the scene to be displayed properly.			   
+     *                          by the user's screen in order for the scene to be displayed properly.
+     * @param windowTitle The title of the game's window		   
      * @param frustumScale	How much the frustum scales the items rendered
      * @param zNear		Projection plane z coordinate (use positive value)
      * @param zFar		Far end of frustum z coordinate (use positive value)
@@ -126,8 +127,8 @@ namespace small3d
      * 				The shader code can be changed, provided that their inputs
      * 				and outputs are maintained the same.
      */
-    void init(const int width, const int height, const bool fullScreen, 
-	      const float &frustumScale = 1.0f, const float &zNear = 1.0f, 
+    void init(const int width, const int height, const bool fullScreen, const string &windowTitle = "",
+	      const float &frustumScale = 1.0f, const float &zNear = 1.0f,
 	      const float &zFar = 24.0f, const float &zOffsetFromCamera = -1.0f,
 	      const string &shadersPath = "resources/shaders/");
 
@@ -206,12 +207,12 @@ namespace small3d
      * Render an image. The image is in effect a textured quad, since 4 vertex positions are
      * passed to this method, in order to define its position and size.
      * @param vertices The vertices
-     * @param textureName The name of the texture, containing the image (must have been loaded with 
+     * @param textureName The name of the texture, containing the image (must have been loaded with
      * 					 generateTexture())
      * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
      * @param offset	The offset (position) at which the quad of the image will be drawn.
      */
-    void renderImage(const float *vertices, const string &textureName, const bool &perspective = false, 
+    void renderImage(const float *vertices, const string &textureName, const bool &perspective = false,
 		     const glm::vec3 &offset = glm::vec3(0.0f, 0.0f, 0.0f));
 
     /**

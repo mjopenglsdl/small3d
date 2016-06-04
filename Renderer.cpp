@@ -105,7 +105,7 @@ namespace small3d {
     SDL_Quit();
   }
 
-  void Renderer::initSDL(int width, int height, bool fullScreen) {
+  void Renderer::initSDL(int width, int height, bool fullScreen, const string &windowTitle) {
     sdlWindow = 0;
 
     // initialize SDL video
@@ -128,7 +128,7 @@ namespace small3d {
     Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN :
                    SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
-    sdlWindow = SDL_CreateWindow("Avoid the Bug 3D", SDL_WINDOWPOS_CENTERED,
+    sdlWindow = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
                                  SDL_WINDOWPOS_CENTERED, width, height,
                                  flags);
 
@@ -210,11 +210,11 @@ namespace small3d {
     }
   }
 
-  void Renderer::init(const int width, const int height, const bool fullScreen,
+  void Renderer::init(const int width, const int height, const bool fullScreen, const string &windowTitle,
                       const float &frustumScale, const float &zNear,
                       const float &zFar, const float &zOffsetFromCamera,
                       const string &shadersPath) {
-    this->initSDL(width, height, fullScreen);
+    this->initSDL(width, height, fullScreen, windowTitle);
 
     this->frustumScale = frustumScale;
     this->zNear = zNear;
