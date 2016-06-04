@@ -2,6 +2,8 @@ small3d
 =======
 *A small, no fuss, 3D game engine*
 
+![Avoid the Bug 3D sample game](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
+
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.
 
 It has been derived from a simple game, which has been under development for more than a year, as a [learning exercise](http://goo.gl/itn6x5). In the end, I decided to separate the game from its engine and make the engine available for easy reuse. The game is now provided as a sample, in the "samplegame" folder, and it demonstrates how the features of the engine can be used.
@@ -13,11 +15,11 @@ This engine had initially been published as a [biicode](https://github.com/biico
 Building
 --------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
-- SDL2
-- SDL2_ttf
-- GLEW
-- GLM
-- Google Test
+- [SDL2](https://www.libsdl.org/download-2.0.php)
+- [SDL2_ttf](https://www.libsdl.org/projects/SDL_ttf/)
+- [GLEW](http://glew.sourceforge.net)
+- [GLM](http://glm.g-truc.net/0.9.7/index.html)
+- [Google Test](https://github.com/google/googletest)
 
 For SDL2 and SDL2_ttf, download the binary packages. Then you need to build GLEW and Google Test according to the instructions provided in their distributions. Don't run *make install* on them. We are going to place them in a specific directory. GLM does not require compiling.
 
@@ -31,6 +33,8 @@ Once the above is done, create a directory called *deps* inside the small3d dire
               glm
             SDL2_ttf.framework
             SDL2.framework
+
+Note that if you try to build the code on Windows or Linux, you will also need to download / install libpng and zlib. They are provided on OSX by default.
 
 Create another directory inside *small3d*, called *build*.
 
