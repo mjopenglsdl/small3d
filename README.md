@@ -10,7 +10,7 @@ It has been derived from a simple game, which has been under development for mor
 
 Compatibility
 -------------
-This engine had initially been published as a [biicode](https://github.com/biicode/) block. Unfortunately the biicode service has been taken offline. So now the code can be compiled independenty, using cmake. When biicode was available, the engine would successfully compile and run on Windows, Debian and OSX. So far I have compiled it successfully on OSX and Linux (Debian). You should be able to build it on Windows as well with a bit of effort, since the code had been written accordingly.
+This engine had initially been published as a [biicode](https://github.com/biicode/) block. Unfortunately the biicode service has been taken offline. So now the code can be compiled independenty, using cmake. When biicode was available, the engine would successfully compile and run on Windows, Debian and OSX. So far I have compiled it successfully on OSX and Debian. You should be able to build it on Windows as well with a bit of effort, since the code had been written accordingly.
 
 Building on OSX
 ---------------
@@ -21,16 +21,26 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 - [GLM](http://glm.g-truc.net/0.9.7/index.html)
 - [Google Test](https://github.com/google/googletest)
 
-For SDL2 and SDL2_ttf, download the binary packages. Then you need to build GLEW and Google Test according to the instructions provided in their distributions. Don't run *make install* on them. We are going to place them in a specific directory. GLM does not require compiling.
+Compile and install the dependencies:
+- Create a directory called *deps* inside the small3d directory.
+- For SDL2 and SDL2_ttf, download the binary packages (.framework) and place them in *deps*.
+- Build GLEW and Google Test according to the instructions provided in their distributions. Don't run *make install* on them.
+- Create a directory called *include* inside *deps* and copy the contents of the include directories of GLEW and Google Test there.
+- Create a directory called *lib* inside *deps* and copy the contents of the lib directories of GLEW and Google Test there, skipping the GLEW .dylib files, since they are not needed.  
+- GLM does not require compiling. Copy the contents of the include directory to *deps/include*.
 
-Once the above is done, create a directory called *deps* inside the small3d directory. Copy the libraries and compiled packages there. The only exception is the glm header files, which you should place in a directory called *include* (create it inside *deps*). The whole thing should look like this:
+In the end, the *deps* directory structure should look like this:
 
     small3d
         deps
-            glew
-            googletest
             include
+              GL
               glm
+              gtest
+            lib
+              libglew.a
+              libgtest_main.a
+              libgtest.a
             SDL2_ttf.framework
             SDL2.framework
 
@@ -64,7 +74,7 @@ First, install the dependencies:
 Google Test is also a dependency, but the package available for Debian (libgtest-dev) provides no binary, so it will not work. The framework needs to be installed manually. If libgtest-dev is already installed, uninstall it:
 
     sudo apt-get uninstall libgtest-dev
-	
+
 Then, run the following:
 
     wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz
@@ -73,7 +83,7 @@ Then, run the following:
     cmake -DBUILD\_SHARED\_LIBS=ON
     sudo cp -a include/gtest /usr/include
     sudo cp -a libgtest_main.so libgtest.so /usr/lib/
-	
+
 Clone the [small3d repository](https://github.com/coding3d/small3d). Create another directory inside *small3d*, called *build*. Then build the project:
 
     cd build
