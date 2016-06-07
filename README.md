@@ -10,10 +10,10 @@ It has been derived from a simple game, which has been under development for mor
 
 Compatibility
 -------------
-This engine had initially been published as a [biicode](https://github.com/biicode/) block. Unfortunately the biicode service has been taken offline. So now the code can be compiled independenty, using cmake. When biicode was available, the engine would successfully compile and run on Windows, Debian and OSX, but I have only compiled the independent build on OSX so far. You should be able to build it on other platforms as well, since the code had been written accordingly.
+This engine had initially been published as a [biicode](https://github.com/biicode/) block. Unfortunately the biicode service has been taken offline. So now the code can be compiled independenty, using cmake. When biicode was available, the engine would successfully compile and run on Windows, Debian and OSX. So far I have compiled it successfully on OSX and Linux (Debian). You should be able to build it on Windows as well with a bit of effort, since the code had been written accordingly.
 
-Building
---------
+Building on OSX
+---------------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 - [SDL2](https://www.libsdl.org/download-2.0.php)
 - [SDL2_ttf](https://www.libsdl.org/projects/SDL_ttf/)
@@ -34,7 +34,7 @@ Once the above is done, create a directory called *deps* inside the small3d dire
             SDL2_ttf.framework
             SDL2.framework
 
-Note that if you try to build the code on Windows or Linux, you will also need to download / install libpng and zlib. They are provided on OSX by default.
+Note that if you try to build the code on Windows, you will also need to download libpng and zlib. They are provided on OSX by default.
 
 Create another directory inside *small3d*, called *build*.
 
@@ -54,6 +54,33 @@ And then just execute *avoidthebug3d*, in order to run the sample game, or *smal
 Open the project with Xcode and build it once. Then copy the *resources* and *samplegame/resources* directories to the *Debug* directory created by Xcode (maintaining directory structures). Then, select the *avoidthebug3d* or *small3dTest* scheme in Xcode and run it.
 
 If you have any problems with the build, or any questions and need help, don't hesitate to [open an issue](https://github.com/coding3d/small3d/issues). The API documentation is also available [online](http://coding3d.github.io/small3d).
+
+Building on Debian
+------------------
+First, install the dependencies:
+
+    sudo apt-get install build-essential cmake libsdl2-dev libsdl2-ttf-dev libglm-dev libglew-dev libpng12-dev
+
+Google Test is also a dependency, but the package available for Debian (libgtest-dev) provides no binary, so it will not work. The framework needs to be installed manually. If libgtest-dev is already installed, uninstall it:
+
+    sudo apt-get uninstall libgtest-dev
+	
+Then, run the following:
+
+    wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz
+    tar xvf release-1.7.0.tar.gz
+    cd googletest-release-1.7.0/
+    cmake -DBUILD\_SHARED\_LIBS=ON
+    sudo cp -a include/gtest /usr/include
+    sudo cp -a libgtest_main.so libgtest.so /usr/lib/
+	
+Clone the [small3d repository](https://github.com/coding3d/small3d). Create another directory inside *small3d*, called *build*. Then build the project:
+
+    cd build
+    cmake ..
+    make
+
+And then just execute *avoidthebug3d*, in order to run the sample game, or *small3dTest* for the unit tests.
 
 3D models and textures
 ----------------------
