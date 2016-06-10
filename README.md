@@ -33,14 +33,14 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 Inside the small3d directory, create a directory called *deps* and, within it, one called *include* and another one called *lib*.
 
 #### Build and set up PNG with ZLIB
-Unzip the libpng and zlib archives. Place the diectories that will be created in the same parent directory. Then, using Visual Studio, open *libpng/projects/vstudio/vstudio.sln*. Build the whole solution. If zlib cannot be found during the build and you receive an error, make sure the zlib directory name matches exactly the name by which it is referenced in the zlib project within the libpng solution. After the build has been completed, copy all the .lib and .dll files from *libpng/projects/vstudio/Debug* to *small3d/deps/lib*. Finally, copy all the .h files from *libpng* to *small3d/deps/include*.
+Unzip the libpng and zlib archives. Place the diectories that will be created in the same parent directory. Then, using Visual Studio, open *libpng/projects/vstudio/vstudio.sln*. Build the whole solution. If zlib cannot be found during the build and you receive an error, make sure the zlib directory name matches exactly the name by which it is referenced in the zlib project within the libpng solution. After the build has been completed, copy all the .lib and .dll files from *libpng/projects/vstudio/Debug* to *small3d/deps/lib*. Finally, copy all the .h files from *libpng* and *zlib* to *small3d/deps/include*.
 
 #### Build and set up Google Test
 Unzip the Google Test archive. From within it, execute:
 
     cmake -DBUILD_SHARED_LIBS=ON
 
-With Visual Studio, open *gtest.sln* and then copy all the .dll and .lib files from the *Debug* or *Release* directory to *small3d/deps/lib*. Finally, copy the *gtest* directory from *include* to *small3d/deps/include*.
+With Visual Studio, open *gtest.sln*, build it, and then copy all the .dll and .lib files from the *Debug* or *Release* directory to *small3d/deps/lib*. Finally, copy the *gtest* directory from *include* to *small3d/deps/include*.
 
 #### Set up the rest of the libraries
 Unzip the SDL2, SDL2_ttf, GLEW and GLM archives. For SDL2 and SDL2_ttf, copy the contents of their include directories to *small3d/deps/include* and all the .lib and .dll files from their *lib/x86* directories to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. Finally, for GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries).
@@ -53,7 +53,7 @@ Create a directory inside *small3d*, called *build*. Then create the solution:
 
 Open *small3d/build/small3d.sln* with Visual Studio. Build the solution. Then, copy all the .dll files from *small3d/deps/lib* to *small3d/build/Debug*. Aslo copy the resources directoy from *small3d/build* to *small3d/build/debug* and the *samplegame/resources* directory from *small3d/build* to *small3d/build/Debug*, maintaining the same structure (don't merge it with the other resources directory).
 
-From here on you can execute the sample game (*avoidthebug3d.exe*) or the unit tests(*small3dTest.exe*), either by double-clicking on them or via the command line, or debug them with Visual Studio.
+From here on you can execute the sample game (*avoidthebug3d.exe*) or the unit tests (*small3dTest.exe*), either by double-clicking on them or via the command line, or debug them with Visual Studio.
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
 
