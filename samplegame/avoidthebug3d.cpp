@@ -96,8 +96,8 @@ int main(int argc, char** argv)
   catch (Exception &e)
   {
     LOGERROR(e.what());
-    return 1;
+    return EXIT_FAILURE;
   }
 
-  return 0;
+  return EXIT_SUCCESS;
 }
