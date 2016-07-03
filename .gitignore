@@ -19,3 +19,6 @@ Thumbs.db
 
 /deps
 /build
+/_build
+/conan/conanbuildinfo.cmake
+/conan/conaninfo.txt
