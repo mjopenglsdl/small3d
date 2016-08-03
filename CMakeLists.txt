@@ -5,7 +5,7 @@ PROJECT(small3d)
 ADD_LIBRARY(small3d BoundingBoxes.cpp BoundingBoxes.hpp Exception.cpp Exception.hpp GetTokens.cpp GetTokens.hpp
   Image.cpp Image.hpp Logger.cpp Logger.hpp MathFunctions.cpp MathFunctions.hpp Model.cpp Model.hpp
   ModelLoader.cpp ModelLoader.hpp Renderer.cpp Renderer.hpp SceneObject.cpp SceneObject.hpp Text.cpp
-  Text.hpp WavefrontLoader.cpp WavefrontLoader.hpp)
+  Text.hpp WavefrontLoader.cpp WavefrontLoader.hpp SoundData.hpp SoundData.cpp Sound.hpp Sound.cpp)
 
 ADD_EXECUTABLE(small3dTest main.cpp)
 
@@ -49,6 +49,10 @@ FIND_PACKAGE(PNG REQUIRED)
 INCLUDE_DIRECTORIES(${PNG_INCLUDE_DIRS})
 ADD_DEFINITIONS(${PNG_DEFINITIONS})
 TARGET_LINK_LIBRARIES(small3d PUBLIC "${PNG_LIBRARIES}")
+
+FIND_PACKAGE(PORTAUDIO REQUIRED)
+INCLUDE_DIRECTORIES(${PORTAUDIO_INCLUDE_DIRS})
+TARGET_LINK_LIBRARIES(small3d PUBLIC "${PORTAUDIO_LIBRARIES}")
 
 FIND_PACKAGE(GTest REQUIRED)
 INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
