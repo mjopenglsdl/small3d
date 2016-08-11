@@ -82,6 +82,9 @@ namespace AvoidTheBug3D {
     tree->setRotation(0.0f, -0.5f, 0.0f);
 
     gameState = START_SCREEN;
+	
+    sound = shared_ptr<Sound>(new Sound());
+       sound->load("resources/sounds/bah.ogg", "bah");
 
     startTicks = 0;
     seconds = 0;
@@ -219,6 +222,7 @@ namespace AvoidTheBug3D {
     {
       if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
       {
+		sound->play("bah");
 
         seconds = (SDL_GetTicks() - startTicks) / 1000;
         gameState = START_SCREEN;

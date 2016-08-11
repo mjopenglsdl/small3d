@@ -69,11 +69,19 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 - [Portaudio](http://www.portaudio.com/download.html)
 
 Compile and install the dependencies:
+
 - Create a directory called *deps* inside the small3d directory.
 - For SDL2 and SDL2_ttf, download the binary packages (.framework) and place them in *deps*.
 - Build the OGG library, according to the instructions. Also, install it (with *sudo make install*).
-- Build GLEW, Google Test, Vorbis and Portaudio according to the instructions provided in their distributions. Don't run *make install* on them.
-- Create a directory called *include* inside *deps* and copy the contents of the include directories of GLEW, Google Test and Vorbis there.
+- Build GLEW, Google Test and Vorbis according to the instructions provided in their distributions. Don't run *make install* on them.
+- Build Portaudio according to the instructions. You may have to perform the following changes to the *configure* file beforehand, depending on the version you are using and the version of your OSX system:
+	- Around line 15790, replace CFLAGS="$CFLAGS -I\$(top_srcdir)/src/os/unix **-Werror**" with CFLAGS="$CFLAGS -I\$(top_srcdir)/src/os/unix **-Wall**"
+	- Around line 15821, there are some condition statements, checking the version of your operating system. By copy pasting one of them, add a condition for your version, before the final *else* statement, if it is newer than the ones mentioned there, for example:
+	
+	  			elif xcodebuild -version -sdk macosx10.11 Path >/dev/null 2>&1 ; then
+	       			mac_version_min="-mmacosx-version-min=10.4"
+	       	 		mac_sysroot="-isysroot `xcodebuild -version -sdk macosx10.11 Path`"
+- Create a directory called *include* inside *deps* and copy the contents of the include directories of GLEW, Google Test, Vorbis and Portaudio there.
 - Create a directory called *lib* inside *deps* and copy the .a files from the lib directory of GLEW, the .a files from the Google Test build, the .a files from the Vorbis build (from inside *lib/.libs*) and the .a file from the Portaudio build (from inside *lib/.libs*) there.  
 - GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is another *glm* directory) to *deps/include*.
 
