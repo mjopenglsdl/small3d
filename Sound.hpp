@@ -10,7 +10,7 @@
 
 #include "Logger.hpp"
 #include <string>
-#include <vorbisfile.h>
+#include <vorbis/vorbisfile.h>
 #include <memory>
 #include <unordered_map>
 #include <portaudio.h>

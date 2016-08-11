@@ -65,14 +65,17 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 - [GLEW](http://glew.sourceforge.net)
 - [GLM](http://glm.g-truc.net/0.9.7/index.html)
 - [Google Test](https://github.com/google/googletest)
+- [Vorbis and OGG](https://www.xiph.org/downloads/)
+- [Portaudio](http://www.portaudio.com/download.html)
 
 Compile and install the dependencies:
 - Create a directory called *deps* inside the small3d directory.
 - For SDL2 and SDL2_ttf, download the binary packages (.framework) and place them in *deps*.
-- Build GLEW and Google Test according to the instructions provided in their distributions. Don't run *make install* on them.
-- Create a directory called *include* inside *deps* and copy the contents of the include directories of GLEW and Google Test there.
-- Create a directory called *lib* inside *deps* and copy the contents of the lib directories of GLEW and Google Test there, skipping the GLEW .dylib files, since they are not needed.  
-- GLM does not require compiling. Copy the contents of the include directory to *deps/include*.
+- Build the OGG library, according to the instructions. Also, install it (with *sudo make install*).
+- Build GLEW, Google Test, Vorbis and Portaudio according to the instructions provided in their distributions. Don't run *make install* on them.
+- Create a directory called *include* inside *deps* and copy the contents of the include directories of GLEW, Google Test and Vorbis there.
+- Create a directory called *lib* inside *deps* and copy the .a files from the lib directory of GLEW, the .a files from the Google Test build, the .a files from the Vorbis build (from inside *lib/.libs*) and the .a file from the Portaudio build (from inside *lib/.libs*) there.  
+- GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is another *glm* directory) to *deps/include*.
 
 In the end, the *deps* directory structure should look like this:
 
@@ -82,6 +85,8 @@ In the end, the *deps* directory structure should look like this:
               GL
               glm
               gtest
+			  vorbis
+			  (and various files starting with *pa_* for Portaudio)
             lib
               libglew.a
               libgtest_main.a
@@ -148,4 +153,12 @@ The engine also supports manually created bounding boxes for collision detection
 Sound
 -----
 
-small3d's sound capabilities have beed removed, but if you look at older commits, you will find the code I had written for providing sound, using portaudio.
+small3d can play sounds from .ogg files. This works well on Windows and OSX but there seem to be some problems on Linux. It may have something to do with the way PortAudio, which is used by small3d, functions in an environment where PulseAudio is installed but I am not sure yet. The problem is that on Debian  some errors like the following appear:
+
+**ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred**
+
+Also, the sound gets corrupted. On an Ubuntu installation on which I have tested the game, no default audio device can be found by PortAudio and the sample game exits the first time an attempt is made to produce a sound.
+
+I have been trying to resolve these problems but I have not been successful so far. In the meantime, note that the sound facilities of small3d are not tightly coupled at all with the rest of the engine. You can always choose to use an external sound library, if you require more features.
+
+I used SDL2_mixer at some point and it worked much better. The reason I have not incorporated it into small3d is that its license is not compatible with small3d's license as far as I have been able to find out (small3d is more permissive).
