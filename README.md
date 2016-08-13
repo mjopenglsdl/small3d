@@ -60,12 +60,12 @@ Unzip the Portaudio archive. Delete the *portaudio/src/hostapi/asio* directory. 
 
 In the second line, replace "ON" with "OFF". All of this is to save trouble by building Portaudio without ASIO support.
 
-Create a directory called *_build* inside the *portaudio* directory. Create the solution using cmake:
+Create a directory called *build1* inside the *portaudio* directory. Create the solution using cmake:
 
-    cd \_build
+    cd build1
     cmake ..
 
-Open the created solution, *portaudio.sln* with Visual Studio. Now you need to find where the file *ksguid.lib* is located inside your Windows SDK. The directory will probably look like *C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib*, depending on your SDK version. Note that we need the directory that contains the 32-bit version of the library. Once you know the directory, open the *portaudio* project properties from within the *portaudio.sln* solution in Visual studio and add the directory to *VC++ Directories > Library Directories*. Build the solution. Then, copy the .lib and .dll files from *\_build/Debug* to *deps/lib* and the .h files from *portaudio/include* to *deps/include*.
+Open the created solution, *portaudio.sln* with Visual Studio. Now you need to find where the file *ksguid.lib* is located inside your Windows SDK. The directory will probably look like *C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib*, depending on your SDK version. Note that we need the directory that contains the 32-bit version of the library. Once you know the directory, open the *portaudio* project properties from within the *portaudio.sln* solution in Visual studio and add the directory to *VC++ Directories > Library Directories*. Build the solution. Then, copy the .lib and .dll files from *build1/Debug* to *deps/lib* and the .h files from *portaudio/include* to *deps/include*.
 
 #### Set up the rest of the libraries
 Unzip the SDL2, SDL2_ttf, GLEW and GLM archives. For SDL2 and SDL2_ttf, copy the contents of their include directories to *small3d/deps/include* and all the .lib and .dll files from their *lib/x86* directories to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. Finally, for GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries).
