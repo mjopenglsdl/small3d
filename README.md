@@ -71,14 +71,13 @@ Open the created solution, *portaudio.sln* with Visual Studio. Now you need to f
 Unzip the SDL2, SDL2_ttf, GLEW and GLM archives. For SDL2 and SDL2_ttf, copy the contents of their include directories to *small3d/deps/include* and all the .lib and .dll files from their *lib/x86* directories to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. Finally, for GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries).
 
 #### Build small3d and the sample game
-Create a directory inside *small3d*, called *build*. Then create the solution:
+Create a directory inside *small3d*, called *build*. Then build the solution:
 
     cd build
     cmake ..
+    cmake --build .
 
-Open *small3d/build/small3d.sln* with Visual Studio. Build the solution. Then, copy all the .dll files from *small3d/deps/lib* to *small3d/build/Debug*. Aslo copy the resources directoy from *small3d/build* to *small3d/build/debug* and the *samplegame/resources* directory from *small3d/build* to *small3d/build/Debug*, merging it with the other *resources* directory.
-
-From here on you can execute the sample game (*avoidthebug3d.exe*) or the unit tests (*small3dTest.exe*), either by double-clicking on them or via the command line, or debug them with Visual Studio.
+Copy all the .dll files from *small3d/deps/lib* to *small3d/build*. Then copy *avoidthebug3d.exe* from *build/samplegame/src/Debug* to *build* and execute it, in order to run the sample game. The unit tests can be executed by copying *small3dTest.exe* from *build/small3d/src/Debug* to *build* and executing it.
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
 
