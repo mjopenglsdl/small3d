@@ -167,9 +167,9 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Create anot
 
     cd build
     cmake ..
-    make
+    cmake --build .
 
-And then just execute *avoidthebug3d*, in order to run the sample game, or *small3dTest* for the unit tests.
+Then copy *avoidthebug3d* from *build/samplegame/src* to *build* and execute it, in order to run the sample game. The unit tests can be executed by copying *small3dTest* from *build/small3d/src* to *build* and executing it.
 
 3D models and textures
 ----------------------
