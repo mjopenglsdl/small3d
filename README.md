@@ -133,9 +133,9 @@ Create another directory inside *small3d*, called *build*.
 
     cd build
     cmake ..
-    make
+    cmake --build .
 
-And then just execute *avoidthebug3d*, in order to run the sample game, or *small3dTest* for the unit tests.
+Then copy *avoidthebug3d* from *build/samplegame/src* to *build* and execute it, in order to run the sample game. The unit tests can be executed by copying *small3dTest* from *build/small3d/src* to *build* and executing it.
 
 #### For Xcode
 
