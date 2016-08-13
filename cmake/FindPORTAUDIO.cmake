@@ -52,6 +52,7 @@ else (PORTAUDIO_LIBRARIES AND PORTAUDIO_INCLUDE_DIRS)
     find_library(PORTAUDIO_LIBRARY
       NAMES
         portaudio
+        portaudio_x86
       PATHS
         /usr/lib
         /usr/local/lib

@@ -29,6 +29,8 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 - [PNG](http://libpng.sourceforge.net/) (source code)
 - [ZLIB](http://zlib.net/) (source code)
 - [Google Test](https://github.com/google/googletest) (source code)
+- [Vorbis and OGG](https://www.xiph.org/downloads/)
+- [Portaudio](http://www.portaudio.com/download.html)
 
 Inside the small3d directory, create a directory called *deps* and, within it, one called *include* and another one called *lib*.
 
@@ -42,6 +44,29 @@ Unzip the Google Test archive. From within it, execute:
 
 With Visual Studio, open *gtest.sln*, build it, and then copy all the .dll and .lib files from the *Debug* or *Release* directory to *small3d/deps/lib*. Finally, copy the *gtest* directory from *include* to *small3d/deps/include*.
 
+#### Build and set up OGG and Vorbis
+Unzip the OGG archive. Open the solution libogg_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary, and build it. Then, copy the .dll and .lib files from there to *small3d/deps/lib* and the *ogg* directory from *include* to *deps/include*.
+
+Unzip the Vorbis archive. Open the solution vorbis_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary. For each of the projects in the solution, add the *include* directory from the OGG archive in *Properties > VC++ Directories > Include Directories* and the *wind32/VS2010/Win32/Debug* directory from the OGG archive in *Properties > VC++ Directories > Library Directories*. Build the entire solution. Then, copy the *vorbis* directory from *include* to *deps/include* and all the .lib and .dll files from *wind32/VS2010/Win32/Debug* to *deps/lib*.
+
+#### Build and set up Portaudio
+Unzip the Portaudio archive. Delete the *portaudio/src/hostapi/asio* directory. Also, around line 54 of the CMakeLists.txt file, you will find the following code:
+
+    IF(ASIOSDK_FOUND)
+    OPTION(PA_USE_ASIO "Enable support for ASIO" ON)
+    ELSE(ASIOSDK_FOUND)
+    OPTION(PA_USE_ASIO "Enable support for ASIO" OFF)
+    ENDIF(ASIOSDK_FOUND)
+
+In the second line, replace "ON" with "OFF". All of this is to save trouble by building Portaudio without ASIO support.
+
+Create a directory called *_build* inside the *portaudio* directory. Create the solution using cmake:
+
+    cd \_build
+    cmake ..
+
+Open the created solution, *portaudio.sln* with Visual Studio. Now you need to find where the file *ksguid.lib* is located inside your Windows SDK. The directory will probably look like *C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib*, depending on your SDK version. Note that we need the directory that contains the 32-bit version of the library. Once you know the directory, open the *portaudio* project properties from within the *portaudio.sln* solution in Visual studio and add the directory to *VC++ Directories > Library Directories*. Build the solution. Then, copy the .lib and .dll files from *\_build/Debug* to *deps/lib* and the .h files from *portaudio/include* to *deps/include*.
+
 #### Set up the rest of the libraries
 Unzip the SDL2, SDL2_ttf, GLEW and GLM archives. For SDL2 and SDL2_ttf, copy the contents of their include directories to *small3d/deps/include* and all the .lib and .dll files from their *lib/x86* directories to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. Finally, for GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries).
 
@@ -51,7 +76,7 @@ Create a directory inside *small3d*, called *build*. Then create the solution:
     cd build
     cmake ..
 
-Open *small3d/build/small3d.sln* with Visual Studio. Build the solution. Then, copy all the .dll files from *small3d/deps/lib* to *small3d/build/Debug*. Aslo copy the resources directoy from *small3d/build* to *small3d/build/debug* and the *samplegame/resources* directory from *small3d/build* to *small3d/build/Debug*, maintaining the same structure (don't merge it with the other resources directory).
+Open *small3d/build/small3d.sln* with Visual Studio. Build the solution. Then, copy all the .dll files from *small3d/deps/lib* to *small3d/build/Debug*. Aslo copy the resources directoy from *small3d/build* to *small3d/build/debug* and the *samplegame/resources* directory from *small3d/build* to *small3d/build/Debug*, merging it with the other *resources* directory.
 
 From here on you can execute the sample game (*avoidthebug3d.exe*) or the unit tests (*small3dTest.exe*), either by double-clicking on them or via the command line, or debug them with Visual Studio.
 
@@ -77,7 +102,7 @@ Compile and install the dependencies:
 - Build Portaudio according to the instructions. You may have to perform the following changes to the *configure* file beforehand, depending on the version you are using and the version of your OSX system:
 	- Around line 15790, replace CFLAGS="$CFLAGS -I\$(top_srcdir)/src/os/unix **-Werror**" with CFLAGS="$CFLAGS -I\$(top_srcdir)/src/os/unix **-Wall**"
 	- Around line 15821, there are some condition statements, checking the version of your operating system. By copy pasting one of them, add a condition for your version, before the final *else* statement, if it is newer than the ones mentioned there, for example:
-	
+
 	  			elif xcodebuild -version -sdk macosx10.11 Path >/dev/null 2>&1 ; then
 	       			mac_version_min="-mmacosx-version-min=10.4"
 	       	 		mac_sysroot="-isysroot `xcodebuild -version -sdk macosx10.11 Path`"
