@@ -1,7 +1,7 @@
 # Locate OGG
 # This module defines
 # OGG_LIBRARIES
-# OGG_FOUND, if false, do not try to link to OGG 
+# OGG_FOUND, if false, do not try to link to OGG
 # OGG_INCLUDE_DIRS, where to find the headers
 #
 # $OGGDIR is an environment variable that would
@@ -26,15 +26,19 @@ FIND_PATH(OGG_INCLUDE_DIRS
 	/opt/local # DarwinPorts
 	/opt/csw # Blastwave
 	/opt
+	/lib
 )
 
-FIND_LIBRARY(OGG_LIBRARIES 
+FIND_LIBRARY(OGG_LIBRARIES
 	ogg
 	HINTS
 	$ENV{OGGDIR}
     $ENV{CSP_DEVPACK}
 	$ENV{OGG_PATH}
 	PATH_SUFFIXES win32/Dynamic_Release lib
+	NAMES
+	ogg
+	libogg
 	PATHS
 	~/Library/Frameworks
 	/Library/Frameworks
@@ -44,9 +48,10 @@ FIND_LIBRARY(OGG_LIBRARIES
 	/opt/local
 	/opt/csw
 	/opt
+	/lib
 )
 
-FIND_LIBRARY(OGG_LIBRARIES_DEBUG 
+FIND_LIBRARY(OGG_LIBRARIES_DEBUG
 	ogg_d
 	HINTS
 	$ENV{OGGDIR}
