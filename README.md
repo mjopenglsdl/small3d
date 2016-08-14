@@ -5,8 +5,6 @@ small3d
 - [Documentation](http://coding3d.github.io/small3d)
 - [Source Code](https://github.com/coding3d/small3d)
 
-This is a development version. The latest stable release is [1.0.3](https://github.com/coding3d/small3d/releases/tag/1.0.3)
-
 ![Avoid the Bug 3D sample game](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.
