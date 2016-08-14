@@ -1,27 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
 
 PROJECT(small3d)
-
-ADD_LIBRARY(small3d BoundingBoxes.cpp BoundingBoxes.hpp Exception.cpp Exception.hpp GetTokens.cpp GetTokens.hpp
-  Image.cpp Image.hpp Logger.cpp Logger.hpp MathFunctions.cpp MathFunctions.hpp Model.cpp Model.hpp
-  ModelLoader.cpp ModelLoader.hpp Renderer.cpp Renderer.hpp SceneObject.cpp SceneObject.hpp Text.cpp
-  Text.hpp WavefrontLoader.cpp WavefrontLoader.hpp)
-
-ADD_EXECUTABLE(small3dTest main.cpp)
-
-# Link OpenGL things and set to use C++11
-
-FIND_PACKAGE(OpenGL REQUIRED)
-INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR})
-TARGET_LINK_LIBRARIES(small3d PUBLIC ${OPENGL_LIBRARIES})
-
-if(NOT WIN32 OR MINGW)
-  IF(APPLE)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
-  ELSE()
-    target_compile_options(small3d PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Ubuntu if gcc problems
-  ENDIF()
-endif()
+SUBDIRS(small3d samplegame)
 
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
@@ -33,43 +13,17 @@ IF(APPLE OR WIN32)
   ENDIF()
 ENDIF()
 
+FIND_PACKAGE(OpenGL REQUIRED)
 FIND_PACKAGE(SDL2 REQUIRED)
-INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIR})
-TARGET_LINK_LIBRARIES(small3d PUBLIC "${SDL2_LIBRARY}")
-
 FIND_PACKAGE(SDL2_ttf REQUIRED)
-INCLUDE_DIRECTORIES(${SDL2_TTF_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(small3d PUBLIC "${SDL2_TTF_LIBRARIES}")
-
 FIND_PACKAGE(GLEW REQUIRED)
-INCLUDE_DIRECTORIES(${GLEW_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(small3d PUBLIC "${GLEW_LIBRARIES}")
-
 FIND_PACKAGE(PNG REQUIRED)
-INCLUDE_DIRECTORIES(${PNG_INCLUDE_DIRS})
-ADD_DEFINITIONS(${PNG_DEFINITIONS})
-TARGET_LINK_LIBRARIES(small3d PUBLIC "${PNG_LIBRARIES}")
-
-FIND_PACKAGE(GTest REQUIRED)
-INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(small3dTest PUBLIC ${GTEST_BOTH_LIBRARIES})
-
 FIND_PACKAGE(GLM)
-INCLUDE_DIRECTORIES("${GLM_INCLUDE_DIRS}")
+FIND_PACKAGE(OGG REQUIRED)
+FIND_PACKAGE(VORBIS REQUIRED)
+FIND_PACKAGE(PORTAUDIO REQUIRED)
 
-IF(WIN32 AND NOT MINGW)
-  SET_TARGET_PROPERTIES(small3d PROPERTIES LINK_FLAGS "/NODEFAULTLIB:\"LIBCMTD\" /NODEFAULTLIB:\"LIBCMT\"")
-ENDIF()
-
-TARGET_LINK_LIBRARIES(small3dTest PUBLIC small3d)
-
-FILE(COPY "resources" DESTINATION ".")
+FILE(COPY "small3d/resources" DESTINATION ".")
 FILE(COPY "samplegame" DESTINATION ".")
-
-ADD_EXECUTABLE(avoidthebug3d samplegame/avoidthebug3d.cpp samplegame/GameLogic.cpp samplegame/GameLogic.hpp
-  samplegame/KeyInput.hpp)
-TARGET_INCLUDE_DIRECTORIES(avoidthebug3d PUBLIC ".")
-TARGET_LINK_LIBRARIES(avoidthebug3d PUBLIC small3d)
-
 FILE(COPY "samplegame/resources" DESTINATION ".")
-FILE(COPY "resources/shaders" DESTINATION ".")
+FILE(COPY "small3d/resources/shaders" DESTINATION ".")

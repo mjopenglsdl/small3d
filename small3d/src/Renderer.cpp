@@ -46,7 +46,7 @@ namespace small3d {
 
     GLint status;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    if (status == GL_FALSE) {
+    if (status == GL_FALSE || shaderSource.length() ==0 ) {
 
       throw Exception(
           "Failed to compile shader:\n" + shaderSource + "\nInfo: "
