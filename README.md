@@ -75,7 +75,7 @@ Create a directory inside *small3d*, called *build*. Then build the solution:
     cmake ..
     cmake --build .
 
-Copy all the .dll files from *small3d/deps/lib* to *small3d/build*. Then copy *avoidthebug3d.exe* from *build/samplegame/src/Debug* to *build* and execute it, in order to run the sample game. The unit tests can be executed by copying *small3dTest.exe* from *build/small3d/src/Debug* to *build* and executing it.
+Copy all the .dll files from *small3d/deps/lib* to *small3d/build/samplegame/src/Debug* and *small3d/build/small3d/src/Debug*. Then execute *avoidthebug3d.exe* in *build/samplegame/src/Debug*, in order to run the sample game. The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
 
@@ -132,14 +132,14 @@ Create another directory inside *small3d*, called *build*.
     cmake ..
     cmake --build .
 
-Then copy *avoidthebug3d* from *build/samplegame/src* to *build* and execute it, in order to run the sample game. The unit tests can be executed by copying *small3dTest* from *build/small3d/src* to *build* and executing it.
+Then execute *avoidthebug3d* in *build/samplegame/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
 
 #### For Xcode
 
     cd build
     cmake -G"Xcode" ..
 
-Open the project with Xcode and build it once. Then copy the *resources* and *samplegame/resources* directories to the *Debug* directory created by Xcode (maintaining directory structures). Then, select the *avoidthebug3d* or *small3dTest* scheme in Xcode and run it.
+Open the project with Xcode and build it once. Then, select the *avoidthebug3d* or *small3dTest* scheme in Xcode and run it.
 
 Building on Debian
 ------------------
@@ -166,7 +166,7 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Create anot
     cmake ..
     cmake --build .
 
-Then copy *avoidthebug3d* from *build/samplegame/src* to *build* and execute it, in order to run the sample game. The unit tests can be executed by copying *small3dTest* from *build/small3d/src* to *build* and executing it.
+Then execute *avoidthebug3d* in *build/samplegame/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
 
 3D models and textures
 ----------------------
