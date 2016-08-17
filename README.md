@@ -2,14 +2,19 @@ small3d
 =======
 *A small, no fuss, cross-platform 3D game engine*
 
-- [Documentation](http://coding3d.github.io/small3d)
-- [Source Code](https://github.com/coding3d/small3d)
-
 ![Avoid the Bug 3D sample game](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.
 
 It has been derived from a simple game, which has been under development for more than a year, as a [learning exercise](http://goo.gl/itn6x5). In the end, I decided to separate the game from its engine and make the engine available for easy reuse. The game is now provided as a sample, in the "samplegame" folder, and it demonstrates how the features of the engine can be used.
+
+Getting Started
+---------------
+The best way to get started is to take a look at the source coude in *samplegame*. You can also compile the API documentation using doxygen. From the repository directory, execute:
+
+	doxygen doxygenConfig/doxygen
+
+The documentation will be created in a directory called *documentation*, inside the repository. Just open html/index.html. I am using doxygen v1.8.11, but it should compile with other versions too.
 
 Compatibility
 -------------
@@ -67,13 +72,6 @@ Open the created solution, *portaudio.sln* with Visual Studio. Now you need to f
 
 #### Set up the rest of the libraries
 Unzip the SDL2, SDL2_ttf, GLEW and GLM archives. For SDL2 and SDL2_ttf, copy the contents of their include directories to *small3d/deps/include* and all the .lib and .dll files from their *lib/x86* directories to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. Finally, for GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries).
-
-#### Getting Started
-The best way to get started is to take a look at the source coude in *samplegame*. You can also compile the API documentation using doxygen. From the repository directory, execute:
-
-	doxygen doxygenConfig/doxygen
-
-The documentation will be created in a directory called *documentation*, inside the repository. Just open html/index.html. I am using doxygen v1.8.11, but it should compile with other versions too.
 
 #### Build small3d and the sample game
 Create a directory inside *small3d*, called *build*. Then build the solution:
