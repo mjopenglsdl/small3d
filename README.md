@@ -80,7 +80,7 @@ Create a directory inside *small3d*, called *build*. Then build the solution:
     cmake ..
     cmake --build .
 
-Copy all the .dll files from *small3d/deps/lib* to *small3d/build/samplegame/src/Debug* and *small3d/build/small3d/src/Debug*. Then execute *avoidthebug3d.exe* in *build/samplegame/src/Debug*, in order to run the sample game. The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
+Execute *avoidthebug3d.exe* in *build/samplegame/src/Debug*, in order to run the sample game. The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
 
