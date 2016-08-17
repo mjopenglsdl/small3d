@@ -79,6 +79,14 @@ Copy all the .dll files from *small3d/deps/lib* to *small3d/build/samplegame/src
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
 
+Getting Started
+---------------
+The best way to get started is to take a look at the source coude in *samplegame*. You can also compile the API documentation using doxygen. From the repository directory, execute:
+
+	doxygen doxygenConfig/doxygen
+
+The documentation will be created in a directory called *documentation*, inside the repository. Just open html/index.html. I am using doxygen v1.8.11, but it should compile with other versions too.
+
 Building on OSX
 ---------------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
