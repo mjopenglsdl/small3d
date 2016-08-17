@@ -68,6 +68,13 @@ Open the created solution, *portaudio.sln* with Visual Studio. Now you need to f
 #### Set up the rest of the libraries
 Unzip the SDL2, SDL2_ttf, GLEW and GLM archives. For SDL2 and SDL2_ttf, copy the contents of their include directories to *small3d/deps/include* and all the .lib and .dll files from their *lib/x86* directories to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. Finally, for GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries).
 
+#### Getting Started
+The best way to get started is to take a look at the source coude in *samplegame*. You can also compile the API documentation using doxygen. From the repository directory, execute:
+
+	doxygen doxygenConfig/doxygen
+
+The documentation will be created in a directory called *documentation*, inside the repository. Just open html/index.html. I am using doxygen v1.8.11, but it should compile with other versions too.
+
 #### Build small3d and the sample game
 Create a directory inside *small3d*, called *build*. Then build the solution:
 
@@ -78,14 +85,6 @@ Create a directory inside *small3d*, called *build*. Then build the solution:
 Copy all the .dll files from *small3d/deps/lib* to *small3d/build/samplegame/src/Debug* and *small3d/build/small3d/src/Debug*. Then execute *avoidthebug3d.exe* in *build/samplegame/src/Debug*, in order to run the sample game. The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
-
-Getting Started
----------------
-The best way to get started is to take a look at the source coude in *samplegame*. You can also compile the API documentation using doxygen. From the repository directory, execute:
-
-	doxygen doxygenConfig/doxygen
-
-The documentation will be created in a directory called *documentation*, inside the repository. Just open html/index.html. I am using doxygen v1.8.11, but it should compile with other versions too.
 
 Building on OSX
 ---------------
