@@ -2,14 +2,19 @@ small3d
 =======
 *A small, no fuss, cross-platform 3D game engine*
 
-- [Documentation](http://coding3d.github.io/small3d)
-- [Source Code](https://github.com/coding3d/small3d)
-
 ![Avoid the Bug 3D sample game](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.
 
 It has been derived from a simple game, which has been under development for more than a year, as a [learning exercise](http://goo.gl/itn6x5). In the end, I decided to separate the game from its engine and make the engine available for easy reuse. The game is now provided as a sample, in the "samplegame" folder, and it demonstrates how the features of the engine can be used.
+
+Getting Started
+---------------
+The best way to get started is to take a look at the source coude in *samplegame*. You can also compile the API documentation using doxygen. From the repository directory, execute:
+
+	doxygen doxygenConfig/doxygen
+
+The documentation will be created in a directory called *documentation*, inside the repository. Just open html/index.html. I am using doxygen v1.8.11, but it should compile with other versions too.
 
 Compatibility
 -------------
@@ -75,7 +80,7 @@ Create a directory inside *small3d*, called *build*. Then build the solution:
     cmake ..
     cmake --build .
 
-Copy all the .dll files from *small3d/deps/lib* to *small3d/build*. Then copy *avoidthebug3d.exe* from *build/samplegame/src/Debug* to *build* and execute it, in order to run the sample game. The unit tests can be executed by copying *small3dTest.exe* from *build/small3d/src/Debug* to *build* and executing it.
+Execute *avoidthebug3d.exe* in *build/samplegame/src/Debug*, in order to run the sample game. The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
 
@@ -132,14 +137,14 @@ Create another directory inside *small3d*, called *build*.
     cmake ..
     cmake --build .
 
-Then copy *avoidthebug3d* from *build/samplegame/src* to *build* and execute it, in order to run the sample game. The unit tests can be executed by copying *small3dTest* from *build/small3d/src* to *build* and executing it.
+Then execute *avoidthebug3d* in *build/samplegame/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
 
 #### For Xcode
 
     cd build
     cmake -G"Xcode" ..
 
-Open the project with Xcode and build it once. Then copy the *resources* and *samplegame/resources* directories to the *Debug* directory created by Xcode (maintaining directory structures). Then, select the *avoidthebug3d* or *small3dTest* scheme in Xcode and run it.
+Open the project with Xcode and build it once. Then, select the *avoidthebug3d* or *small3dTest* scheme in Xcode and run it.
 
 Building on Debian
 ------------------
@@ -166,7 +171,7 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Create anot
     cmake ..
     cmake --build .
 
-Then copy *avoidthebug3d* from *build/samplegame/src* to *build* and execute it, in order to run the sample game. The unit tests can be executed by copying *small3dTest* from *build/small3d/src* to *build* and executing it.
+Then execute *avoidthebug3d* in *build/samplegame/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
 
 3D models and textures
 ----------------------

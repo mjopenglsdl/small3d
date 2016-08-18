@@ -137,7 +137,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
   unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes());
 
-  bboxes->loadFromFile("samplegame/resources/models/GoatBB/GoatBB.obj");
+  bboxes->loadFromFile("resources/models/GoatBB/GoatBB.obj");
 
   EXPECT_EQ(16, bboxes->vertices.size());
   EXPECT_EQ(12, bboxes->facesVertexIndexes.size());
