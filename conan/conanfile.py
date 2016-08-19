@@ -12,12 +12,6 @@ class Small3dConan(ConanFile):
     license="https://github.com/coding3d/small3d/blob/master/LICENSE"
     exports = "*"
 
-    def config(self):
-        try: # Try catch can be removed when conan 0.8 is released
-            del self.settings.compiler.libcxx
-        except:
-            pass
-
     def build(self):
         cmake = CMake(self.settings)
 
@@ -31,7 +25,7 @@ class Small3dConan(ConanFile):
 
         self.run("cd .. && mkdir _build")
         cd_build = "cd ../_build"
-        self.run("%s && cmake .. %s" % (cd_build, cmake.command_line))
+        self.run("%s && cmake .. -DBUILD_WITH_CONAN=TRUE %s" % (cd_build, cmake.command_line))
         self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
 
     def package(self):

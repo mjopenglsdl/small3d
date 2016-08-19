@@ -22,3 +22,4 @@ Thumbs.db
 /_build
 /conan/conanbuildinfo.cmake
 /conan/conaninfo.txt
+/conan/*.pyc
