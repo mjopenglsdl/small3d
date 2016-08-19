@@ -17,27 +17,28 @@ class Small3dConan(ConanFile):
 
         try:
             if self.settings.os == "Windows":
-                self.run("cd .. && rd /s /q _build")
+                self.run("rd /s /q _build")
             else:
-                self.run("cd .. && rm -rf _build")
+                self.run("rm -rf _build")
         except:
             pass
 
-        self.run("cd .. && mkdir _build")
-        cd_build = "cd ../_build"
+        self.run("mkdir _build")
+        cd_build = "cd _build"
         self.run("%s && cmake .. -DBUILD_WITH_CONAN=TRUE %s" % (cd_build, cmake.command_line))
         self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
 
     def package(self):
         # Copying headers
-        self.copy("../*.hpp", "./include", "..", keep_path=True)
+        self.copy(pattern="*.hpp", dst="include", src="small3d/include", keep_path=True)
+        self.copy(pattern="*.hpp", dst="include", src="glminclude", keep_path=True)
 
         if self.settings.os == "Windows":
             self.copy(pattern="*.dll", dst="bin", src=self.ZIP_FOLDER_NAME, keep_path=False)
             self.copy(pattern="*.lib", dst="lib", src=self.ZIP_FOLDER_NAME, keep_path=False)
         else:
             if self.settings.os == "Macos":
-                self.copy(pattern="*.dylib", dst="lib", keep_path=False)
+                self.copy(pattern="*.a", dst="lib", keep_path=False)
             else:
                 self.copy(pattern="*.so*", dst="lib", src="..", keep_path=False)
 
