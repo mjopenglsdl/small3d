@@ -4,7 +4,7 @@ import os
 
 class Small3dConan(ConanFile):
     name = "small3d"
-    version = "1.0.3"
+    version = "1.0.4"
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
     url="http://github.com/coding3d/small3d"
