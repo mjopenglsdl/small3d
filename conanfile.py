@@ -10,7 +10,7 @@ class Small3dConan(ConanFile):
     url="http://github.com/coding3d/small3d"
     requires = "SDL2/2.0.4@lasote/stable","SDL2_ttf/2.0.14@lasote/stable","glew/1.13.0@coding3d/ci","libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","gtest/1.7.0@lasote/stable"
     license="https://github.com/coding3d/small3d/blob/master/LICENSE"
-    exports = "*"
+    exports = "CMakeLists.txt", "small3d/*", "samplegame/*","FindSMALL3D.cmake", "cmake/*", "glminclude/*"
 
     def build(self):
         cmake = CMake(self.settings)
@@ -29,10 +29,11 @@ class Small3dConan(ConanFile):
         self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
 
     def package(self):
-        # Copying headers
+        self.copy("FindSMALL3D.cmake", ".", ".")
         self.copy(pattern="*.hpp", dst="include", src="small3d/include", keep_path=True)
         self.copy(pattern="*.hpp", dst="include", src="glminclude", keep_path=True)
-
+        self.copy(pattern="*.inl", dst="include", src="glminclude", keep_path=True)
+        
         if self.settings.os == "Windows":
             self.copy(pattern="*.dll", dst="bin", src=self.ZIP_FOLDER_NAME, keep_path=False)
             self.copy(pattern="*.lib", dst="lib", src=self.ZIP_FOLDER_NAME, keep_path=False)
@@ -44,4 +45,4 @@ class Small3dConan(ConanFile):
                 self.copy(pattern="*.a", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = ['smal3d']
+        self.cpp_info.libs = ['small3d']
