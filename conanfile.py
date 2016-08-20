@@ -40,7 +40,8 @@ class Small3dConan(ConanFile):
             if self.settings.os == "Macos":
                 self.copy(pattern="*.a", dst="lib", keep_path=False)
             else:
-                self.copy(pattern="*.so*", dst="lib", src="..", keep_path=False)
+                self.copy(pattern="*.so*", dst="lib", keep_path=False)
+                self.copy(pattern="*.a", dst="lib", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ['smal3d']
