@@ -1,8 +1,9 @@
 /*
- * KeyInput.hpp
+ *  KeyInput.hpp
  *
- *  Created on: 23 Sept 2014
+ *  Created on: 2014/09/23
  *      Author: Dimitri Kourkoulis
+ *     License: BSD 3-Clause License (see LICENSE file)
  */
 #pragma once
 
