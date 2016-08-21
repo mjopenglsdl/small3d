@@ -10,11 +10,17 @@ It has been derived from a simple game, which has been under development for mor
 
 Getting Started
 ---------------
-The best way to get started is to take a look at the source coude in *samplegame*. You can also compile the API documentation using doxygen. From the repository directory, execute:
+The best way to get started is to take a look at the source code in *samplegame* and experiment by modifying it before using the engine for your own games. 
+
+You can also compile the API documentation using doxygen. From the small3d repository, execute:
 
 	doxygen doxygenConfig/doxygen
 
 The documentation will be created in a directory called *documentation*, inside the repository. Just open html/index.html. I am using doxygen v1.8.11, but it should compile with other versions too.
+
+In order to build the engine, please see the instructions below, depending on your operating system. 
+
+Precompiled versions of the engine for some systems are also available on [conan.io](https://www.conan.io) and more will be added soon. [Here's an example](https://github.com/coding3d/small3d-conan-example) of how to compile the sample game, deploying the engine from there. It is very fast and simple.
 
 Compatibility
 -------------
