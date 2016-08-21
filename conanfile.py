@@ -8,7 +8,7 @@ class Small3dConan(ConanFile):
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
     url="http://github.com/coding3d/small3d"
-    requires = "SDL2/2.0.4@lasote/stable","SDL2_ttf/2.0.14@lasote/stable","glew/1.13.0@coding3d/ci","libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","gtest/1.7.0@lasote/stable"
+    requires = "SDL2/2.0.4@lasote/stable","SDL2_ttf/2.0.14@lasote/stable","glew/1.13.0@coding3d/ci", "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable"
     license="https://github.com/coding3d/small3d/blob/master/LICENSE"
     exports = "CMakeLists.txt", "small3d/*", "samplegame/*","FindSMALL3D.cmake", "cmake/*", "glminclude/*"
 
