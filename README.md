@@ -194,12 +194,23 @@ The engine also supports manually created bounding boxes for collision detection
 Sound
 -----
 
-small3d can play sounds from .ogg files. This works well on Windows and OSX but there seem to be some problems on Linux. It may have something to do with the way PortAudio, which is used by small3d, functions in an environment where PulseAudio is installed but I am not sure yet. The problem is that on Debian  some errors like the following appear:
+small3d can play sounds from .ogg files on all supported platforms. On Linux, you might hear some noise and receive the following error:
 
 **ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred**
 
-Also, the sound gets corrupted. On an Ubuntu installation on which I have tested the game, no default audio device can be found by PortAudio and the sample game exits the first time an attempt is made to produce a sound.
+One way to solve this is to edit the file */etc/pulse/default.pa* (with sudo), disabling *module-udev-detect* and *module-detect*, by commenting out the following lines (inserting a \# in front of each):
 
-I have been trying to resolve these problems but I have not been successful so far. In the meantime, note that the sound facilities of small3d are not tightly coupled at all with the rest of the engine. You can always choose to use an external sound library, if you require more features.
+	### Automatically load driver modules depending on the hardware available
+	#.ifexists module-udev-detect.so
+	#load-module module-udev-detect
+	#.else
+	### Use the static hardware detection module (for systems that lack udev support)
+	#load-module module-detect
+	#.endif
 
-I used SDL2_mixer at some point and it worked much better. The reason I have not incorporated it into small3d is that its license is not compatible with small3d's license as far as I have been able to find out (small3d is more permissive).
+Then, *module-alsa-sink* and *module-alsa-source* need to be enabled, by uncommenting all lines that look like the following (by removing the \# from in front of each). There could be two or more:
+
+	load-module module-alsa-sink
+	load-module module-alsa-source device=hw:1,0
+
+It is advised to make a backup of default.pa before making these modifications. A more detailed description of the procedure can be found in this [article](http://thehumble.ninja/2014/02/06/fixing-alsa-lib-pcmc7843snd_pcm_recover-underrun-occurred-while-keeping-pulseaudio-in-your-system/).
