@@ -1,4 +1,3 @@
-# Only building shared library, since the static library would not work
 from conans import ConanFile, CMake, os
 import os
 
