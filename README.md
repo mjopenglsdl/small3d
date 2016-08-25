@@ -86,7 +86,7 @@ Create a directory inside *small3d*, called *build*. Then build the solution:
     cmake ..
     cmake --build .
 
-Execute *avoidthebug3d.exe* in *build/samplegame/src/Debug*, in order to run the sample game. The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
+Execute *avoidthebug3d.exe* in *build/sampleGames/avoidTheBug/src/Debug*, in order to run the sample game. The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
 
@@ -143,7 +143,7 @@ Create another directory inside *small3d*, called *build*.
     cmake ..
     cmake --build .
 
-Then execute *avoidthebug3d* in *build/samplegame/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
+Then execute *avoidthebug3d* in *build/sampleGames/avoidTheBug/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
 
 #### For Xcode
 
@@ -177,7 +177,7 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Create anot
     cmake ..
     cmake --build .
 
-Then execute *avoidthebug3d* in *build/samplegame/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
+Then execute *avoidthebug3d* in *build/sampleGames/avoidTheBug/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
 
 3D models and textures
 ----------------------

@@ -1,0 +1,1 @@
+SUBDIRS(avoidTheBug chaseTheGoat)

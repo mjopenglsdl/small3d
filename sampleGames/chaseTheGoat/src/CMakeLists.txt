@@ -1,0 +1,4 @@
+ADD_EXECUTABLE(chasethegoat3d main.cpp GameLogic.cpp)
+TARGET_INCLUDE_DIRECTORIES(chasethegoat3d PUBLIC "${small3d_SOURCE_DIR}/sampleGames/chaseTheGoat/include" "${small3d_SOURCE_DIR}/small3d/include")
+INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR} ${PNG_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIRS})
+TARGET_LINK_LIBRARIES(chasethegoat3d PUBLIC small3d)

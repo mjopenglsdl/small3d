@@ -1,4 +1,0 @@
-ADD_EXECUTABLE(avoidthebug3d avoidthebug3d.cpp GameLogic.cpp)
-TARGET_INCLUDE_DIRECTORIES(avoidthebug3d PUBLIC "${small3d_SOURCE_DIR}/samplegame/include" "${small3d_SOURCE_DIR}/small3d/include")
-INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR} ${PNG_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIRS})
-TARGET_LINK_LIBRARIES(avoidthebug3d PUBLIC small3d)
