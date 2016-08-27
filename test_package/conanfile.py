@@ -16,5 +16,4 @@ class TestGlew(ConanFile):
         self.run("cmake --build . %s" % cmake.build_config)
 
     def test(self):
-        # equal to ./bin/greet, but portable win: .\bin\greet
         self.run(os.sep.join([".","bin", "test_small3d"]))
