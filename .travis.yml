@@ -9,7 +9,7 @@ env:
     - CONAN_REFERENCE="small3d/1.0.4"
     - CONAN_USERNAME="coding3d"
     - CONAN_CHANNEL="stable"
-    - CONAN_TOTAL_PAGES=5
+    - CONAN_TOTAL_PAGES=3
     - CONAN_CURRENT_PAGE=1
 
   matrix:
