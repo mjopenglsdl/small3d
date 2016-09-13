@@ -4,7 +4,7 @@ import os,platform
 if __name__ == "__main__":
     builder = ConanMultiPackager(args="--build missing")
     if platform.system() == 'Windows':
-        #builder.add({'compiler.version': '14', 'arch': 'x86_64', 'build_type': 'Debug', 'compiler': 'Visual Studio', 'compiler.runtime': 'MT'})
+        builder.add({'compiler.version': '14', 'arch': 'x86_64', 'build_type': 'Debug', 'compiler': 'Visual Studio', 'compiler.runtime': 'MT'})
         builder.add({'compiler.version': '14', 'arch': 'x86_64', 'build_type': 'Release', 'compiler': 'Visual Studio', 'compiler.runtime': 'MT'})
     elif platform.system() == 'Linux':
         builder.add({'compiler.version': '4.8', 'arch': 'x86_64', 'build_type': 'Debug', 'compiler': 'gcc'})
