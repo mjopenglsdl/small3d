@@ -57,8 +57,8 @@ namespace AvoidTheBug3D {
     void processGame(const KeyInput &keyInput);
     void processStartScreen(const KeyInput &keyInput);
 
-    void moveGoat(const KeyInput &keyInput);
-    void moveBug();
+    void moveGoat();
+    void moveBug(const KeyInput &keyInput);
 		
   public:
 
