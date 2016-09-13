@@ -11,7 +11,7 @@ class Small3dConan(ConanFile):
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.7.6@dlarudgus20/stable", \
         "vorbis/1.3.5@coding3d/stable", "portaudio/master@jgsogo/stable"
     license="https://github.com/coding3d/small3d/blob/master/LICENSE"
-    exports = "CMakeLists.txt", "small3d/*", "samplegame/*","FindSMALL3D.cmake", "cmake/*", "glminclude/*"
+    exports = "CMakeLists.txt", "small3d/*", "FindSMALL3D.cmake", "cmake/*"
 
     def build(self):
         cmake = CMake(self.settings)
