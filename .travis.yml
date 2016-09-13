@@ -4,8 +4,8 @@ services:
 sudo: required
 language: python
 branches:
-	only:
-		- master
+  only:
+    - master
 env:
   global:
     - CONAN_REFERENCE="small3d/1.0.4"
