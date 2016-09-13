@@ -4,10 +4,11 @@ import os
 class Small3dConan(ConanFile):
     name = "small3d"
     version = "1.0.4"
+    ZIP_FOLDER_NAME = "%s-%s" % (name, version)
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
     url="http://github.com/coding3d/small3d"
-    requires = "SDL2/2.0.4@lasote/stable","SDL2_ttf/2.0.14@lasote/stable","glew/1.13.0@coding3d/stable", \
+    requires = "SDL2/2.0.4@lasote/stable","SDL2_ttf/2.0.14@lasote/ci","glew/1.13.0@coding3d/stable", \
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.7.6@dlarudgus20/stable", \
         "vorbis/1.3.5@coding3d/stable", "portaudio/master@jgsogo/stable"
     license="https://github.com/coding3d/small3d/blob/master/LICENSE"
@@ -32,10 +33,10 @@ class Small3dConan(ConanFile):
     def package(self):
         self.copy("FindSMALL3D.cmake", ".", ".")
         self.copy(pattern="*.hpp", dst="include", src="small3d/include", keep_path=True)
-        
+
         if self.settings.os == "Windows":
-            self.copy(pattern="*.dll", dst="bin", src=self.ZIP_FOLDER_NAME, keep_path=False)
-            self.copy(pattern="*.lib", dst="lib", src=self.ZIP_FOLDER_NAME, keep_path=False)
+            self.copy(pattern="*.dll", dst="bin", keep_path=False)
+            self.copy(pattern="*.lib", dst="lib", keep_path=False)
         else:
             if self.settings.os == "Macos":
                 self.copy(pattern="*.a", dst="lib", keep_path=False)

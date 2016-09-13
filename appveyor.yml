@@ -1,0 +1,22 @@
+build: false
+environment:
+    PYTHON: "C:\\Python27-x64"
+    PYTHON_VERSION: "2.7.11"
+    PYTHON_ARCH: "64"
+
+    CONAN_UPLOAD: 1
+    CONAN_REFERENCE: "small3d/1.0.4"
+    CONAN_USERNAME: "coding3d"
+    CONAN_CHANNEL: "stable"
+    CONAN_TOTAL_PAGES: 1
+
+    matrix:
+        - CONAN_CURRENT_PAGE: 1
+
+install:
+  - set PATH=%PATH%;%PYTHON%/Scripts/
+  - pip.exe install conan_package_tools
+  - conan user
+
+test_script:
+  - C:\Python27-x64\python build.py
