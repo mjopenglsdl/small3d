@@ -132,18 +132,20 @@ namespace AvoidTheBug3D {
     shared_ptr<glm::vec3> bugOffset = bug->getOffset();
 
     if (keyInput.left) {
+      bugRotation->y -= BUG_ROTATION_SPEED;
 
     }
     else if (keyInput.right) {
+      bugRotation->y += BUG_ROTATION_SPEED;
 
     }
 
     if (keyInput.up) {
+      bugRotation->x -= BUG_ROTATION_SPEED;
 
     }
-
     else if (keyInput.down) {
-
+      bugRotation->x += BUG_ROTATION_SPEED;
     }
 	
     if (bugOffset->z < MIN_Z)
@@ -156,10 +158,10 @@ namespace AvoidTheBug3D {
     if (bugOffset->x > -(bugOffset->z))
       bugOffset->x = -(bugOffset->z);
 
-	// Looking through the eyes of the bug
+	  // Looking through the eyes of the bug
     renderer->cameraPosition = *bugOffset;
-	renderer->cameraRotation = *bugRotation;
-	renderer->cameraRotation.y -= 1.57f;
+	  renderer->cameraRotation = *bugRotation;
+	  renderer->cameraRotation.y -= 1.57f;
 
     bug->animate();
   }
