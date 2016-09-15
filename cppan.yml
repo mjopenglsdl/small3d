@@ -12,10 +12,6 @@ dependencies:
 static_only: true
 exclude_from_build:
   - small3d/src/main.cpp
-source:
-  git: https://github.com/coding3d/small3d
-  tag: 1.0.5
 include_directories:
   public: small3d/include/small3d
-version: 1.0.5
 post_target: !<!> "IF(APPLE)\n  FIND_LIBRARY(AUDIOUNIT_LIBRARY AudioUnit)\n  FIND_LIBRARY(AUDIOTOOLBOX_LIBRARY AudioToolbox)\n  FIND_LIBRARY(COREAUDIO_LIBRARY CoreAudio)\n  TARGET_LINK_LIBRARIES(${this} PUBLIC ${COREAUDIO_LIBRARY} ${AUDIOUNIT_LIBRARY} ${AUDIOTOOLBOX_LIBRARY})\nENDIF(APPLE)\nset_property(TARGET ${this} PROPERTY CXX_STANDARD 11)\n"
