@@ -161,7 +161,7 @@ namespace AvoidTheBug3D {
 	  // Looking through the eyes of the bug
     renderer->cameraPosition = *bugOffset;
 	  renderer->cameraRotation = *bugRotation;
-	  renderer->cameraRotation.y -= 1.57f;
+	  // renderer->cameraRotation.y -= 1.57f;
 
     bug->animate();
   }
