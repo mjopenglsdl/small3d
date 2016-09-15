@@ -221,8 +221,7 @@ namespace AvoidTheBug3D {
     {
       if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
       {
-		sound->play("bah");
-
+        sound->play("bah");
         seconds = (SDL_GetTicks() - startTicks) / 1000;
         gameState = START_SCREEN;
       }

@@ -15,7 +15,7 @@
 
 #define BUG_ROTATION_SPEED 0.12f
 #define BUG_SPEED 0.08f
-#define BUG_START_ALTITUDE 1.4f
+#define BUG_START_ALTITUDE 0.6f
 
 #define GOAT_ROTATION_SPEED 0.1f
 #define GOAT_SPEED 0.05f
@@ -131,21 +131,39 @@ namespace AvoidTheBug3D {
     shared_ptr<glm::vec3> bugRotation = bug->getRotation();
     shared_ptr<glm::vec3> bugOffset = bug->getOffset();
 
+    bug->stopAnimating();
+
     if (keyInput.left) {
       bugRotation->y -= BUG_ROTATION_SPEED;
+
+      if (bugRotation->y < -FULL_ROTATION)
+        bugRotation->y = 0.0f;
+      bug->startAnimating();
 
     }
     else if (keyInput.right) {
       bugRotation->y += BUG_ROTATION_SPEED;
 
+      if (bugRotation->y > FULL_ROTATION)
+        bugRotation->y = 0.0f;
+      bug->startAnimating();
+
     }
 
     if (keyInput.up) {
-      bugRotation->x -= BUG_ROTATION_SPEED;
+
+      bugOffset->x -= cos(bugRotation->y) * BUG_SPEED;
+      bugOffset->z -= sin(bugRotation->y) * BUG_SPEED;
+
+      bug->startAnimating();
 
     }
     else if (keyInput.down) {
-      bugRotation->x += BUG_ROTATION_SPEED;
+      bugOffset->x += cos(bugRotation->y) * BUG_SPEED;
+      bugOffset->z += sin(bugRotation->y) * BUG_SPEED;
+
+
+      bug->startAnimating();
     }
 	
     if (bugOffset->z < MIN_Z)
@@ -161,9 +179,17 @@ namespace AvoidTheBug3D {
 	  // Looking through the eyes of the bug
     renderer->cameraPosition = *bugOffset;
 	  renderer->cameraRotation = *bugRotation;
-	  // renderer->cameraRotation.y -= 1.57f;
+	  renderer->cameraRotation.y -= 1.57f;
 
     bug->animate();
+
+    bug->setRotation(0.0f, bugRotation->y, 0.0f);
+
+    if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
+    {
+      gameState = START_SCREEN;
+      sound->play("bah");
+    }
   }
 
   void GameLogic::processGame(const KeyInput &keyInput)
