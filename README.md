@@ -20,7 +20,7 @@ The documentation will be created in a directory called *documentation*, inside 
 
 In order to build the engine, please see the instructions below, depending on your operating system. 
 
-Precompiled versions of the engine for some systems are also available on [conan.io](https://www.conan.io/source/small3d/1.0.4/coding3d/stable) and more will be added soon. [Here's an example](https://github.com/coding3d/small3d-conan-example) of how to compile the sample game, deploying the engine from there. It is very fast and simple.
+Precompiled versions of the engine are also available on [conan.io](https://www.conan.io/source/small3d/1.0.4/coding3d/stable). [Here's an example](https://github.com/coding3d/small3d-conan-example) of how to compile the sample game, deploying the engine from there. It is very fast and simple.
 
 Compatibility
 -------------
