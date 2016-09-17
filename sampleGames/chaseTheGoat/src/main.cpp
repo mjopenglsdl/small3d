@@ -14,10 +14,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <Exception.hpp>
-#include <memory>
 
 #include "GameLogic.hpp"
-#include "KeyInput.hpp"
 
 using namespace std;
 using namespace AvoidTheBug3D;
@@ -65,6 +63,7 @@ int main(int argc, char** argv)
         input.left = keyState[SDL_SCANCODE_LEFT] == 1;
         input.right = keyState[SDL_SCANCODE_RIGHT] == 1;
         input.enter = keyState[SDL_SCANCODE_RETURN] == 1;
+        input.space = keyState[SDL_SCANCODE_SPACE] == 1;
 
         switch (event.type)
         {

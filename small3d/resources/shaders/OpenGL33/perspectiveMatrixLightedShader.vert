@@ -29,7 +29,7 @@ void main()
 			+ vec4(offset.x, offset.y, offset.z, 0.0);
 
     vec4 cameraPos = (worldPos - vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0.0))
-			 * yCameraRotationMatrix;
+			 * yCameraRotationMatrix * xCameraRotationMatrix * zCameraRotationMatrix;
 
     gl_Position = perspectiveMatrix * cameraPos;
 
