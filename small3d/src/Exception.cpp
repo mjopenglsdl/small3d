@@ -24,7 +24,7 @@ namespace small3d {
 
 
   Exception::~Exception() throw() {
-    // TODO Auto-generated destructor stub
+
   }
 
 }

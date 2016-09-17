@@ -9,11 +9,8 @@
 #include "Renderer.hpp"
 #include "Exception.hpp"
 #include <fstream>
-#include <unordered_map>
 #include "MathFunctions.hpp"
 #include <glm/gtc/type_ptr.hpp>
-#include <SDL.h>
-#include <cstring>
 
 using namespace std;
 
@@ -277,8 +274,8 @@ namespace small3d {
 
       // Perspective
 
-      GLuint perspectiveMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                             "perspectiveMatrix");
+      GLint perspectiveMatrixUniform = glGetUniformLocation(perspectiveProgram,
+                                                            "perspectiveMatrix");
 
       float perspectiveMatrix[16];
       memset(perspectiveMatrix, 0, sizeof(float) * 16);
@@ -305,7 +302,7 @@ namespace small3d {
     glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
     glClearDepth(1.0f);
 
-    // Program (with shaders) for orthographic rendering
+    // Program (with shaders) for orthographic rendering for text
 
     GLuint simpleVertexShader = compileShader(simpleVertexShaderPath,
                                               GL_VERTEX_SHADER);
@@ -372,18 +369,18 @@ namespace small3d {
   void Renderer::positionSceneObject(const glm::vec3 &offset, const glm::vec3 &rotation) {
     // Rotation
 
-    GLuint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+    GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
                                                          "xRotationMatrix");
-    GLuint yRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+    GLint yRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
                                                          "yRotationMatrix");
-    GLuint zRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+    GLint zRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
                                                          "zRotationMatrix");
 
     glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(rotation.x)));
     glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(rotation.y)));
     glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(rotation.z)));
 
-    GLuint offsetUniform = glGetUniformLocation(perspectiveProgram, "offset");
+    GLint offsetUniform = glGetUniformLocation(perspectiveProgram, "offset");
     glUniform3fv(offsetUniform, 1, glm::value_ptr(offset));
   }
 
@@ -391,11 +388,11 @@ namespace small3d {
   void Renderer::positionCamera() {
     // Camera rotation
 
-    GLuint xCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+    GLint xCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
                                                                "xCameraRotationMatrix");
-    GLuint yCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+    GLint yCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
                                                                "yCameraRotationMatrix");
-    GLuint zCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+    GLint zCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
                                                                "zCameraRotationMatrix");
 
     glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(-cameraRotation.x)));
@@ -404,7 +401,7 @@ namespace small3d {
 
     // Camera position
 
-    GLuint cameraPositionUniform = glGetUniformLocation(perspectiveProgram, "cameraPosition");
+    GLint cameraPositionUniform = glGetUniformLocation(perspectiveProgram, "cameraPosition");
     glUniform3fv(cameraPositionUniform, 1, glm::value_ptr(cameraPosition));
   }
 
@@ -476,18 +473,18 @@ namespace small3d {
 
     if (perspective) {
       // Find the colour uniform
-      GLuint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
+      GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
 
       // "Disable" colour since there is a texture
       glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
 
       // Lighting
-      GLuint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
+      GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
                                                           "lightDirection");
       glUniform3fv(lightDirectionUniform, 1,
                    glm::value_ptr(lightDirection));
 
-      GLuint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
+      GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
       glUniform1f(lightIntensityUniform, lightIntensity);
 
       positionSceneObject(offset, glm::vec3(0.0f, 0.0f, 0.0f));
@@ -528,7 +525,6 @@ namespace small3d {
     GLuint positionBufferObject = 0;
     GLuint indexBufferObject = 0;
     GLuint normalsBufferObject = 0;
-    GLuint sampler = 0;
     GLuint texture = 0;
     GLuint uvBufferObject = 0;
 
@@ -563,7 +559,7 @@ namespace small3d {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // Find the colour uniform
-    GLuint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
+    GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
 
     // Add texture if that is contained in the model
     shared_ptr<Image> textureObj = sceneObject->getTexture();
@@ -599,12 +595,12 @@ namespace small3d {
     }
 
     // Lighting
-    GLuint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
+    GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
                                                         "lightDirection");
     glUniform3fv(lightDirectionUniform, 1,
                  glm::value_ptr(lightDirection));
 
-    GLuint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
+    GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
     glUniform1f(lightIntensityUniform, lightIntensity);
 
     positionSceneObject(*sceneObject->getOffset(), *sceneObject->getRotation());
@@ -617,7 +613,7 @@ namespace small3d {
 
     // Draw
     glDrawElements(GL_TRIANGLES,
-                   sceneObject->getModel().indexData.size(),
+                   (GLsizei) sceneObject->getModel().indexData.size(),
                    GL_UNSIGNED_INT, 0);
 
     // Clear stuff
@@ -635,9 +631,7 @@ namespace small3d {
     if (normalsBufferObject != 0) {
       glDeleteBuffers(1, &normalsBufferObject);
     }
-    if (sampler != 0) {
-      glDeleteSamplers(1, &sampler);
-    }
+
     if (uvBufferObject != 0) {
       glDeleteBuffers(1, &uvBufferObject);
     }
