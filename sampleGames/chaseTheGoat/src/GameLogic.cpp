@@ -13,9 +13,10 @@
 #define GROUND_Y -1.0f
 #define FULL_ROTATION 6.28f // More or less 360 degrees in radians
 
-#define BUG_ROTATION_SPEED 0.12f
+#define BUG_TILT_SPEED 0.03f
+#define BUG_ROTATION_SPEED 0.06f
 #define BUG_SPEED 0.08f
-#define BUG_START_ALTITUDE 0.6f
+#define BUG_START_ALTITUDE 2.6f
 
 #define GOAT_ROTATION_SPEED 0.1f
 #define GOAT_SPEED 0.05f
@@ -91,13 +92,9 @@ namespace AvoidTheBug3D {
   void GameLogic::initGame()
   {
     goat->setOffset(-1.2f, GROUND_Y, -4.0f);
-    bug->setOffset(-1.2f, GROUND_Y + BUG_START_ALTITUDE, -2.0f);
+    bug->setOffset(3.6f, GROUND_Y + BUG_START_ALTITUDE, -5.0f);
 
     bug->startAnimating();
-
-    bugState = FLYING_STRAIGHT;
-    bugPreviousState = FLYING_STRAIGHT;
-    bugFramesInCurrentState = 1;
 
     startTicks = SDL_GetTicks();
 
@@ -150,7 +147,7 @@ namespace AvoidTheBug3D {
 
     if (keyInput.up) {
 
-      bugRotation->z -= BUG_ROTATION_SPEED;
+      bugRotation->z -= BUG_TILT_SPEED;
 
       if (bugRotation->z < -0.75f)
         bugRotation->z = -0.75f;
@@ -159,35 +156,26 @@ namespace AvoidTheBug3D {
     }
     else if (keyInput.down) {
 
-      bugRotation->z += BUG_ROTATION_SPEED;
+      bugRotation->z += BUG_TILT_SPEED;
 
       if (bugRotation->z > 0.75f)
         bugRotation->z = 0.75f;
-
-
     }
 
     if (keyInput.space) {
       bugOffset->x -= cos(bugRotation->y) * BUG_SPEED;
       bugOffset->z -= sin(bugRotation->y) * BUG_SPEED;
-      bugOffset->y += sin(bugRotation->z) * BUG_SPEED / 2;
+      bugOffset->y += sin(bugRotation->z) * BUG_SPEED;
     }
 	
-    if (bugOffset->z < MIN_Z)
-      bugOffset->z = MIN_Z;
-    if (bugOffset->z > MAX_Z)
-      bugOffset->z = MAX_Z;
-
-    if (bugOffset->x < bugOffset->z)
-      bugOffset->x = bugOffset->z;
-    if (bugOffset->x > -(bugOffset->z))
-      bugOffset->x = -(bugOffset->z);
+    if (bugOffset->y < GROUND_Y + 0.5f)
+      bugOffset->y = GROUND_Y + 0.5f;
 
 	  // Looking through the eyes of the bug
-    // renderer->cameraPosition = *bugOffset;
-	  // renderer->cameraRotation.x = -bugRotation->z;
-    // renderer->cameraRotation.z = bugRotation->x;
-    // renderer->cameraRotation.y = bugRotation->y - 1.57f;
+    renderer->cameraPosition = *bugOffset;
+    renderer->cameraRotation.x = -bugRotation->z;
+    renderer->cameraRotation.z = bugRotation->x;
+    renderer->cameraRotation.y = bugRotation->y - 1.57f;
 
     bug->setRotation(bugRotation->x, bugRotation->y, bugRotation->z);
     bug->animate();
