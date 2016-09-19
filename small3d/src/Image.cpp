@@ -120,7 +120,7 @@ namespace small3d {
 
     png_read_image(pngStructure, rowPointers);
 
-    if (png_get_color_type(pngStructure, pngInformation) != PNG_COLOR_TYPE_RGB) {
+    if (colorType != PNG_COLOR_TYPE_RGB) {
       throw Exception(
         "For now, only PNG_COLOR_TYPE_RGB is supported for PNG images.");
     }
