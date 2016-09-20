@@ -1,12 +1,13 @@
 small3d
 =======
+
+![beaver](https://raw.githubusercontent.com/coding3d/small3d/develop/assets/small3d.png)
+
 *A small, no fuss, cross-platform 3D game engine*
 
-![Avoid the Bug 3D sample game](https://cloud.githubusercontent.com/assets/875167/4695565/ca5fafb2-5808-11e4-8a81-d186db8b335c.png)
+![Avoid the Bug 3D sample game](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
 
-This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. It is meant for those who are in a hurry to produce something playable, but prefer to understand what is happening under the hood, rather than use a technology that abstracts the low-level details away.
-
-It has been derived from a simple game, which has been under development for more than a year, as a [learning exercise](http://goo.gl/itn6x5). In the end, I decided to separate the game from its engine and make the engine available for easy reuse. The game is now provided as a sample, in the "samplegame" folder, and it demonstrates how the features of the engine can be used.
+This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL.
 
 Getting Started
 ---------------
