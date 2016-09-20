@@ -52,14 +52,14 @@ Open the created solution, *portaudio.sln* with Visual Studio. Now you need to f
 #### Set up the rest of the libraries
 Unzip the SDL2, SDL2_ttf, GLEW and GLM archives. For SDL2 and SDL2_ttf, copy the contents of their include directories to *small3d/deps/include* and all the .lib and .dll files from their *lib/x86* directories to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. Finally, for GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries).
 
-#### Build small3d and the sample game
+#### Build small3d
 Create a directory inside *small3d*, called *build*. Then build the solution:
 
     cd build
     cmake ..
     cmake --build .
 
-Execute *avoidthebug3d.exe* in *build/sampleGames/avoidTheBug/src/Debug*, in order to run the sample game. The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
+The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
 
@@ -116,7 +116,7 @@ Create another directory inside *small3d*, called *build*.
     cmake ..
     cmake --build .
 
-Then execute *avoidthebug3d* in *build/sampleGames/avoidTheBug/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
+The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
 
 #### For Xcode
 
@@ -150,4 +150,4 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Create anot
     cmake ..
     cmake --build .
 
-Then execute *avoidthebug3d* in *build/sampleGames/avoidTheBug/src*, in order to run the sample game. The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
+The unit tests can be run by executing *small3dTest* in *build/small3d/src*.

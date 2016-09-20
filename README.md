@@ -15,28 +15,24 @@ This is a free, open-source, minimalistic 3D game engine, developed in C++ and b
 
 Getting Started
 ---------------
-The best way to get started is to take a look at the source code in *samplegame* and experiment by modifying it before using the engine for your own games. 
+The best way to get started is to take a look at the source code of two provided sample games:
 
-You can also compile the API documentation using doxygen. From the small3d repository, execute:
+- [Avoid the Bug 3D](https://github.com/coding3d/AvoidTheBug3D)
+- [Chase the Goat 3D](https://github.com/coding3d/ChaseTheGoat3D)
 
-	doxygen doxygenConfig/doxygen
+You can experiment by modifying them before using the engine for your own projects. It would also help to compile the API documentation using doxygen.
 
-The documentation will be created in a directory called *documentation*, inside the repository. Just open html/index.html. I am using doxygen v1.8.11, but it should compile with other versions too.
+As can be seen from the sample games, the proposed way to use the engine is to link to it from [conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable).
 
-In order to build the engine, please see the instructions below, depending on your operating system. 
+The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/cppan/small3d_example).
 
-Precompiled versions of the engine are also available on [conan.io](https://www.conan.io/source/small3d/1.0.4/coding3d/stable). [Here's an example](https://github.com/coding3d/small3d-conan-example) of how to compile the sample game, deploying the engine from there. It is very fast and simple.
-
-The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/cppan/small3d_example) and is, once again, very fast and simple.
-
+If you prefer to compile it from the source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though.
 
 Compatibility
 -------------
 The engine has been successfully compiled and tested on Windows, OSX and Linux (Debian).
 
 If you have any problems with the builds, or any questions and need help, don't hesitate to [open an issue](https://github.com/coding3d/small3d/issues).
-
-
 
 3D models and textures
 ----------------------
