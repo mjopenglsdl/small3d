@@ -2,11 +2,9 @@ small3d
 =======
 [![Build status](https://ci.appveyor.com/api/projects/status/vl7gmu89v7194o2t?svg=true)](https://ci.appveyor.com/project/coding3d/small3d) [![Build Status](https://travis-ci.org/coding3d/small3d.svg?branch=master)](https://travis-ci.org/coding3d/small3d)
 
-![beaver](https://raw.githubusercontent.com/coding3d/small3d/develop/assets/small3d.png)
+![beaver](https://raw.githubusercontent.com/coding3d/small3d/develop/assets/small3d.png) ![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)
 
 *A small, no fuss, cross-platform 3D game engine*
-
-![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif) ![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL.
 
@@ -25,6 +23,7 @@ In order to build the engine, please see the instructions below, depending on yo
 Precompiled versions of the engine are also available on [conan.io](https://www.conan.io/source/small3d/1.0.4/coding3d/stable). [Here's an example](https://github.com/coding3d/small3d-conan-example) of how to compile the sample game, deploying the engine from there. It is very fast and simple.
 
 The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/cppan/small3d_example) and is, once again, very fast and simple.
+
 
 Compatibility
 -------------
@@ -218,3 +217,5 @@ Then, *module-alsa-sink* and *module-alsa-source* need to be enabled, by uncomme
 	load-module module-alsa-source device=hw:1,0
 
 It is advised to make a backup of *default.pa* before making these modifications. A more detailed description of the procedure can be found in this [article](http://thehumble.ninja/2014/02/06/fixing-alsa-lib-pcmc7843snd_pcm_recover-underrun-occurred-while-keeping-pulseaudio-in-your-system/).
+
+![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif) 
