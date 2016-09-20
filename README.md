@@ -1,11 +1,12 @@
 small3d
 =======
+[![Build status](https://ci.appveyor.com/api/projects/status/vl7gmu89v7194o2t?svg=true)](https://ci.appveyor.com/project/coding3d/small3d) [![Build Status](https://travis-ci.org/coding3d/small3d.svg?branch=master)](https://travis-ci.org/coding3d/small3d)
 
 ![beaver](https://raw.githubusercontent.com/coding3d/small3d/develop/assets/small3d.png)
 
 *A small, no fuss, cross-platform 3D game engine*
 
-![Avoid the Bug 3D sample game](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
+![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif) ![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL.
 
