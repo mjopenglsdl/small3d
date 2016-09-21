@@ -8,6 +8,7 @@
 
 #include "Logger.hpp"
 #include <sstream>
+#include <ctime>
 #include <iostream>
 
 using namespace std;
