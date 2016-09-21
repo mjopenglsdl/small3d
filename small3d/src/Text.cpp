@@ -8,8 +8,6 @@
 
 #include "Text.hpp"
 #include "Exception.hpp"
-#include <cstdio>
-#include <cstring>
 
 using namespace std;
 

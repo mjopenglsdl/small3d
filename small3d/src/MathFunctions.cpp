@@ -7,7 +7,6 @@
  */
 
 #include "MathFunctions.hpp"
-#include <cmath>
 
 namespace small3d {
 

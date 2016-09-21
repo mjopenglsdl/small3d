@@ -25,7 +25,7 @@ namespace small3d {
 
     int idx = 0;
     for (vector<vector<float> >::iterator vertex = vertices.begin(); vertex != vertices.end(); ++vertex) {
-      for (int coordIdx = 0; coordIdx != 3; ++coordIdx) {
+      for (unsigned long coordIdx = 0; coordIdx != 3; ++coordIdx) {
         model->vertexData.push_back(vertex->at(coordIdx));
         ++idx;
       }
@@ -295,6 +295,9 @@ namespace small3d {
                         break;
                       case 2:
                         n.push_back(atoi(component.c_str()));
+                        break;
+                      default:
+                        throw Exception("Unexpected component index number while parsing Wavefront file.");
                         break;
                     }
                     ++componentIdx;

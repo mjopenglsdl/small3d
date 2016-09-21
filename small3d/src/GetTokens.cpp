@@ -13,7 +13,7 @@ using namespace std;
 namespace small3d {
 
   int getTokens(string input, char sep, string *tokens) {
-    int curPos = 0;
+    unsigned long curPos = 0;
     int count = 0;
 
     int length = input.length();

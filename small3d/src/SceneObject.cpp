@@ -12,7 +12,6 @@
 #include "Exception.hpp"
 #include "ModelLoader.hpp"
 #include "WavefrontLoader.hpp"
-#include <memory>
 
 using namespace std;
 

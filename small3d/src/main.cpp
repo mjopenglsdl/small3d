@@ -15,8 +15,6 @@
 
 #include <gtest/gtest.h>
 #include "Logger.hpp"
-#include <iostream>
-#include <sstream>
 #include "Image.hpp"
 #include "Model.hpp"
 #include "BoundingBoxes.hpp"

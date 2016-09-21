@@ -50,9 +50,7 @@ namespace small3d {
 
     png_infop pngInformation = NULL;
     png_structp pngStructure = NULL;
-    png_byte colorType = static_cast<png_byte>(0);
-    png_byte bitDepth = static_cast<png_byte>(0);
-    int numberOfPasses = 0;
+    png_byte colorType;
     png_bytep *rowPointers = NULL;
 
     unsigned char header[8]; // Using maximum size that can be checked
@@ -97,9 +95,9 @@ namespace small3d {
     width = static_cast<int>(png_get_image_width(pngStructure, pngInformation));
     height = static_cast<int>(png_get_image_height(pngStructure, pngInformation));
 
-    colorType = static_cast<png_byte>(png_get_color_type(pngStructure, pngInformation));
-    bitDepth = static_cast<png_byte>(png_get_bit_depth(pngStructure, pngInformation));
-    numberOfPasses = static_cast<int>(png_set_interlace_handling(pngStructure));
+    colorType = png_get_color_type(pngStructure, pngInformation);
+    png_get_bit_depth(pngStructure, pngInformation);
+    png_set_interlace_handling(pngStructure);
 
     png_read_update_info(pngStructure, pngInformation);
 
@@ -141,9 +139,9 @@ namespace small3d {
         rgb[1] = static_cast<float>(ptr[1]);
         rgb[2] = static_cast<float>(ptr[2]);
 
-        imageData[y * width * 4 + x * 4] = static_cast<float>(ROUND_2_DECIMAL(rgb[0] / 255.0f));
-        imageData[y * width * 4 + x * 4 + 1] = static_cast<float>(ROUND_2_DECIMAL(rgb[1] / 255.0f));
-        imageData[y * width * 4 + x * 4 + 2] = static_cast<float>(ROUND_2_DECIMAL(rgb[2] / 255.0f));
+        imageData[y * width * 4 + x * 4] = ROUND_2_DECIMAL(rgb[0] / 255.0f);
+        imageData[y * width * 4 + x * 4 + 1] = ROUND_2_DECIMAL(rgb[1] / 255.0f);
+        imageData[y * width * 4 + x * 4 + 2] = ROUND_2_DECIMAL(rgb[2] / 255.0f);
         imageData[y * width * 4 + x * 4 + 3] = 1.0f;
 
       }

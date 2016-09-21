@@ -7,12 +7,8 @@
  */
 
 #include "Sound.hpp"
-#include <vorbis/codec.h>
-#include <cstdio>
-#include <cstring>
 #include "Exception.hpp"
 #include <SDL.h>
-#include <iostream>
 
 #define WORD_SIZE 2
 #define PORTAUDIO_SAMPLE_FORMAT paInt16
