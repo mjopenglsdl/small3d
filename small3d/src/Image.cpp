@@ -96,7 +96,6 @@ namespace small3d {
     height = static_cast<int>(png_get_image_height(pngStructure, pngInformation));
 
     colorType = png_get_color_type(pngStructure, pngInformation);
-    png_get_bit_depth(pngStructure, pngInformation);
     png_set_interlace_handling(pngStructure);
 
     png_read_update_info(pngStructure, pngInformation);

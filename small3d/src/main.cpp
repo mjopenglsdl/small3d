@@ -172,9 +172,6 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 // Cannot run this with MinGW (see comment above Renderer.h include directive)
 #ifndef __MINGW32__
 TEST(RendererTest, StartAndUse) {
-shared_ptr<Logger> log(new Logger(cout));
-
-//shared_ptr<Configuration> cfg(new Configuration(log));
 
 shared_ptr<SceneObject> object(
 new SceneObject("animal",
