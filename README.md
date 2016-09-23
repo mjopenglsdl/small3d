@@ -17,8 +17,8 @@ Getting Started
 ---------------
 The best way to get started is to take a look at the source code of two provided sample games:
 
-- [Avoid the Bug 3D](https://github.com/coding3d/AvoidTheBug3D)
-- [Chase the Goat 3D](https://github.com/coding3d/ChaseTheGoat3D)
+- samples/AvoidTheBug3D
+- samples/ChaseTheGoat3D
 
 You can experiment by modifying them before using the engine for your own projects. It would also help to compile the API documentation using doxygen.
 
