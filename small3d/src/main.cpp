@@ -58,19 +58,19 @@ TEST(LoggerTest, LogSomething) {
 
 TEST(ImageTest, LoadImage) {
 
-  unique_ptr<Image> image(new Image("resources/images/testImage.png"));
+  Image image("resources/images/testImage.png");
 
-  cout << "Image width " << image->getWidth() << ", height " << image->getHeight() << endl;
+  cout << "Image width " << image.getWidth() << ", height " << image.getHeight() << endl;
 
-  float *imageData = image->getData();
+  float *imageData = image.getData();
 
   int x = 0, y = 0;
 
-  while (y < image->getHeight()) {
+  while (y < image.getHeight()) {
     x = 0;
-    while (x < image->getWidth()) {
+    while (x < image.getWidth()) {
 
-      float *colour = &imageData[4 * y * image->getWidth() + 4 * x];
+      float *colour = &imageData[4 * y * image.getWidth() + 4 * x];
 
       EXPECT_GE(colour[0], 0.0f);
       EXPECT_LE(colour[0], 1.0f);
