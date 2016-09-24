@@ -1,6 +1,6 @@
 small3d
 =======
-[![Build status](https://ci.appveyor.com/api/projects/status/vl7gmu89v7194o2t?svg=true)](https://ci.appveyor.com/project/coding3d/small3d) [![Build Status](https://travis-ci.org/dimitri03/small3d.svg?branch=master)](https://travis-ci.org/dimitri03/small3d)
+[![Build status](https://ci.appveyor.com/api/projects/status/vl7gmu89v7194o2t?svg=true)](https://ci.appveyor.com/project/coding3d/small3d) [![Build Status](https://travis-ci.org/dimi309/small3d.svg?branch=master)](https://travis-ci.org/dimi309/small3d)
 
 ![beaver](https://raw.githubusercontent.com/coding3d/small3d/develop/assets/small3d.png)
 
