@@ -4,8 +4,6 @@ small3d
 
 ![beaver](https://raw.githubusercontent.com/coding3d/small3d/develop/assets/small3d.png)
 
-*A small, no fuss, cross-platform 3D game engine*
-
 Introduction
 ------------
 
