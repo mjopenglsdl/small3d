@@ -35,13 +35,11 @@ namespace small3d {
 
   public:
 
-    Image() = delete;
-
     /**
-     * Constructor
+     * Default constructor
      * @param fileLocation Location of image file
      */
-    Image(const string &fileLocation);
+    Image(string fileLocation = "");
 
     /**
      * Copy constructor

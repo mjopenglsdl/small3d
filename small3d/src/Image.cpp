@@ -16,7 +16,7 @@ using namespace std;
 
 namespace small3d {
 
-  Image::Image(const string &fileLocation) {
+  Image::Image(string fileLocation) {
     initLogger();
     width = 0;
     height = 0;
@@ -24,8 +24,8 @@ namespace small3d {
     imageData = nullptr;
     imageDataSize=0;
 
-    this->loadFromFile(fileLocation);
-
+    if (fileLocation != "")
+      this->loadFromFile(fileLocation);
   }
 
   Image::Image(const Image &other) {
