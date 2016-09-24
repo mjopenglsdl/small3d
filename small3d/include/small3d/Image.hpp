@@ -29,15 +29,42 @@ namespace small3d {
 
     int width, height;
     float* imageData;
+    unsigned int imageDataSize;
 
     void loadFromFile(const string &fileLocation);
 
   public:
     /**
-     * Constructor
+     * Default constructor
      * @param fileLocation Location of image file
      */
     Image(const string &fileLocation);
+
+    /**
+     * Copy constructor
+     * @param other The other image
+     */
+    Image(const Image &other);
+
+    /**
+     * Move constructor
+     * @param other
+     */
+    Image(Image &&other) noexcept ;
+
+    /**
+     * Copy assignment operator
+     * @param other Other image
+     * @return This image
+     */
+    Image& operator= (const Image& other);
+
+    /**
+     * Move assignment operator
+     * @param other Other image
+     * @return This image
+     */
+    Image& operator= (Image&& other) noexcept;
 
     /**
      * Destructor
@@ -55,6 +82,12 @@ namespace small3d {
      * @return The image height
      */
     int getHeight() const;
+
+    /**
+     * Get the size of the image, in bytes
+     * @return Size of the image, in bytes
+     */
+    unsigned int size() const;
 
     /**
      * Get the image data

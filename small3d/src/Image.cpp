@@ -11,6 +11,7 @@
 #include "MathFunctions.hpp"
 #include "SDL.h"
 
+
 using namespace std;
 
 namespace small3d {
@@ -20,15 +21,48 @@ namespace small3d {
     width = 0;
     height = 0;
 
-    imageData = NULL;
+    imageData = nullptr;
+    imageDataSize=0;
 
     this->loadFromFile(fileLocation);
 
   }
 
+  Image::Image(const Image &other) {
+    width = other.width;
+    height = other.height;
+    imageDataSize = other.imageDataSize;
+    imageData = new float[imageDataSize];
+    copy(other.imageData, other.imageData + imageDataSize, imageData);
+  }
+
+  Image::Image(Image &&other) noexcept: imageData(other.imageData) {
+    width = other.width;
+    height = other.height;
+    imageDataSize = other.imageDataSize;
+    other.width = 0;
+    other.height = 0;
+    other.imageDataSize = 0;
+    other.imageData = nullptr;
+  }
+
+  Image& Image::operator= (const Image& other) {
+    Image tmp(other);
+    *this = std::move(tmp);
+    return *this;
+  }
+
+  Image& Image::operator= (Image&& other) noexcept {
+    if(imageData != nullptr)
+      delete[] imageData;
+    imageData = other.imageData;
+    other.imageData = nullptr;
+    return *this;
+  }
+
   Image::~Image() {
 
-    if (imageData != NULL) {
+    if (imageData != nullptr) {
       delete[] imageData;
     }
   }
@@ -48,10 +82,10 @@ namespace small3d {
         + fileLocation);
     }
 
-    png_infop pngInformation = NULL;
-    png_structp pngStructure = NULL;
+    png_infop pngInformation = nullptr;
+    png_structp pngStructure = nullptr;
     png_byte colorType;
-    png_bytep *rowPointers = NULL;
+    png_bytep *rowPointers = nullptr;
 
     unsigned char header[8]; // Using maximum size that can be checked
 
@@ -64,7 +98,7 @@ namespace small3d {
     }
 
     pngStructure = png_create_read_struct(PNG_LIBPNG_VER_STRING,
-      NULL, NULL, NULL);
+      nullptr, nullptr, nullptr);
 
     if (!pngStructure) {
       fclose(fp);
@@ -74,15 +108,15 @@ namespace small3d {
     pngInformation = png_create_info_struct(pngStructure);
 
     if (!pngInformation) {
-      png_destroy_read_struct(&pngStructure, NULL, NULL);
+      png_destroy_read_struct(&pngStructure, nullptr, nullptr);
       fclose(fp);
       throw Exception("Could not create PNG information structure.");
     }
 
     if (setjmp(png_jmpbuf(pngStructure))) {
-      png_destroy_read_struct(&pngStructure, &pngInformation, NULL);
-      pngStructure = NULL;
-      pngInformation = NULL;
+      png_destroy_read_struct(&pngStructure, &pngInformation, nullptr);
+      pngStructure = nullptr;
+      pngInformation = nullptr;
       fclose(fp);
       throw Exception("PNG read: Error calling setjmp. (1)");
     }
@@ -101,9 +135,9 @@ namespace small3d {
     png_read_update_info(pngStructure, pngInformation);
 
     if (setjmp(png_jmpbuf(pngStructure))) {
-      png_destroy_read_struct(&pngStructure, &pngInformation, NULL);
-      pngStructure = NULL;
-      pngInformation = NULL;
+      png_destroy_read_struct(&pngStructure, &pngInformation, nullptr);
+      pngStructure = nullptr;
+      pngInformation = nullptr;
       fclose(fp);
       throw Exception("PNG read: Error calling setjmp. (2)");
     }
@@ -122,7 +156,9 @@ namespace small3d {
         "For now, only RGB png images are supported, with no transparency information saved.");
     }
 
-    imageData = new float[4 * width * height];
+    imageDataSize = (unsigned int) (4 * width * height);
+
+    imageData = new float[imageDataSize];
 
     for (int y = 0; y < height; y++) {
 
@@ -153,10 +189,10 @@ namespace small3d {
     }
     delete[] rowPointers;
 
-    if (pngInformation != NULL || pngStructure != NULL) {
-      png_destroy_read_struct(&pngStructure, &pngInformation, NULL);
-      pngStructure = NULL;
-      pngInformation = NULL;
+    if (pngInformation != nullptr || pngStructure != nullptr) {
+      png_destroy_read_struct(&pngStructure, &pngInformation, nullptr);
+      pngStructure = nullptr;
+      pngInformation = nullptr;
     }
   }
 
@@ -166,6 +202,10 @@ namespace small3d {
 
   int Image::getHeight() const {
     return height;
+  }
+
+  unsigned int Image::size() const {
+    return imageDataSize;
   }
 
   float *Image::getData() const {
