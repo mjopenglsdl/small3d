@@ -34,8 +34,11 @@ namespace small3d {
     void loadFromFile(const string &fileLocation);
 
   public:
+
+    Image() = delete;
+
     /**
-     * Default constructor
+     * Constructor
      * @param fileLocation Location of image file
      */
     Image(const string &fileLocation);
