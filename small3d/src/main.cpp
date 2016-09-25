@@ -62,7 +62,7 @@ TEST(ImageTest, LoadImage) {
 
   cout << "Image width " << image.getWidth() << ", height " << image.getHeight() << endl;
 
-  float *imageData = image.getData();
+  const float *imageData = image.getData().data();
 
   int x = 0, y = 0;
 
@@ -70,7 +70,7 @@ TEST(ImageTest, LoadImage) {
     x = 0;
     while (x < image.getWidth()) {
 
-      float *colour = &imageData[4 * y * image.getWidth() + 4 * x];
+      const float *colour = &imageData[4 * y * image.getWidth() + 4 * x];
 
       EXPECT_GE(colour[0], 0.0f);
       EXPECT_LE(colour[0], 1.0f);

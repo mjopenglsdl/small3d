@@ -16,55 +16,14 @@ using namespace std;
 
 namespace small3d {
 
-  Image::Image(string fileLocation) {
+  Image::Image(string fileLocation) : imageData() {
     initLogger();
     width = 0;
     height = 0;
-
-    imageData = nullptr;
     imageDataSize=0;
 
     if (fileLocation != "")
       this->loadFromFile(fileLocation);
-  }
-
-  Image::Image(const Image &other) {
-    width = other.width;
-    height = other.height;
-    imageDataSize = other.imageDataSize;
-    imageData = new float[imageDataSize];
-    copy(other.imageData, other.imageData + imageDataSize, imageData);
-  }
-
-  Image::Image(Image &&other) noexcept: imageData(other.imageData) {
-    width = other.width;
-    height = other.height;
-    imageDataSize = other.imageDataSize;
-    other.width = 0;
-    other.height = 0;
-    other.imageDataSize = 0;
-    other.imageData = nullptr;
-  }
-
-  Image& Image::operator= (const Image& other) {
-    Image tmp(other);
-    *this = std::move(tmp);
-    return *this;
-  }
-
-  Image& Image::operator= (Image&& other) noexcept {
-    if(imageData != nullptr)
-      delete[] imageData;
-    imageData = other.imageData;
-    other.imageData = nullptr;
-    return *this;
-  }
-
-  Image::~Image() {
-
-    if (imageData != nullptr) {
-      delete[] imageData;
-    }
   }
 
   void Image::loadFromFile(const string &fileLocation) {
@@ -158,7 +117,7 @@ namespace small3d {
 
     imageDataSize = (unsigned int) (4 * width * height);
 
-    imageData = new float[imageDataSize];
+    imageData.resize(imageDataSize);
 
     for (int y = 0; y < height; y++) {
 
@@ -196,19 +155,19 @@ namespace small3d {
     }
   }
 
-  int Image::getWidth() const {
+  const int Image::getWidth() const {
     return width;
   }
 
-  int Image::getHeight() const {
+  const int Image::getHeight() const {
     return height;
   }
 
-  unsigned int Image::size() const {
+  const unsigned int Image::size() const {
     return imageDataSize;
   }
 
-  float *Image::getData() const {
+  const vector<float> Image::getData() const {
     return imageData;
   }
 

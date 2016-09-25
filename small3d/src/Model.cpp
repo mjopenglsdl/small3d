@@ -23,8 +23,4 @@ namespace small3d {
     textureCoordsDataSize = 0;
   }
 
-  Model::~Model(void) {
-
-  }
-
 }

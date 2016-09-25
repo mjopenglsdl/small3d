@@ -37,14 +37,11 @@ namespace small3d
     int currentFrame;
     int framesWaited;
     int numFrames;
-    shared_ptr<Image> texture;
+    Image texture;
     string name;
-    shared_ptr<glm::vec4> colour;
-    shared_ptr<glm::vec3> offset;
-    shared_ptr<glm::vec3> rotation;
-
-
-    void initPropVectors();
+    glm::vec4 colour;
+    glm::vec3 offset;
+    glm::vec3 rotation;
 
   public:
 
@@ -63,14 +60,13 @@ namespace small3d
      * @param boundingBoxesPath The path to the file containing the object's bounding boxes. If no such
      * 							path is given, the object cannot be checked for collision detection.
      */
-    SceneObject(const string &name, const string &modelPath,
-		const int &numFrames = 1, const string &texturePath = "",
-		const string &boundingBoxesPath = "");
+    SceneObject(string name, string modelPath, int numFrames = 1, string texturePath = "",
+                string boundingBoxesPath = "");
 
     /**
      * Destructor
      */
-    virtual ~SceneObject();
+    virtual ~SceneObject() = default;
 
     /**
      * Get the object's model
@@ -82,7 +78,7 @@ namespace small3d
      * Get the object's texture
      * @return The object's texture
      */
-    const shared_ptr<Image>& getTexture() const;
+    const Image& getTexture() const;
 
     /**
      * Get the name of the object
@@ -94,7 +90,7 @@ namespace small3d
      * Get the object's colour.
      * @return The object's colour.
      */
-    const shared_ptr<glm::vec4>& getColour();
+    const glm::vec4& getColour();
 
     /**
      * Set the object's colour. This will only have an effect if the
@@ -111,7 +107,7 @@ namespace small3d
      * Get the offset of the object's position
      * @return The offset
      */
-    const shared_ptr<glm::vec3>& getOffset() const;
+    const glm::vec3& getOffset() const;
 
     /**
      * Set the offset of the object's position
@@ -125,7 +121,7 @@ namespace small3d
      * Get the object's rotation
      * @return
      */
-    const shared_ptr<glm::vec3>& getRotation() const;
+    const glm::vec3& getRotation() const;
 
     /**
      * Set the object's rotation
@@ -165,7 +161,7 @@ namespace small3d
      * @brief	The bounding boxes for the object, used for collision detection.
      */
 
-    shared_ptr<BoundingBoxes> boundingBoxes;
+    BoundingBoxes boundingBoxes;
 
     /**
      * Check if the object collides with a point of the given

@@ -96,14 +96,11 @@ namespace small3d {
 
     Model();
 
-    /**
-     * @fn	~Model(void);
-     *
-     * @brief	Destructor.
-     *
-     */
 
-    ~Model(void);
+    /**
+     * Default destructor
+     */
+    ~Model(void) = default;
 
   };
 

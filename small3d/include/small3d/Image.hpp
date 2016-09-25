@@ -10,6 +10,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 #include "Logger.hpp"
 #include <png.h>
 
@@ -28,7 +29,7 @@ namespace small3d {
   private:
 
     int width, height;
-    float* imageData;
+    vector<float> imageData;
     unsigned int imageDataSize;
 
     void loadFromFile(const string &fileLocation);
@@ -42,59 +43,33 @@ namespace small3d {
     Image(string fileLocation = "");
 
     /**
-     * Copy constructor
-     * @param other The other image
-     */
-    Image(const Image &other);
-
-    /**
-     * Move constructor
-     * @param other
-     */
-    Image(Image &&other) noexcept ;
-
-    /**
-     * Copy assignment operator
-     * @param other Other image
-     * @return This image
-     */
-    Image& operator= (const Image& other);
-
-    /**
-     * Move assignment operator
-     * @param other Other image
-     * @return This image
-     */
-    Image& operator= (Image&& other) noexcept;
-
-    /**
      * Destructor
      */
-    ~Image();
+    ~Image() = default;
 
     /**
      * Get the image width
      * @return The image width
      */
-    int getWidth() const;
+    const int getWidth() const;
 
     /**
      * Get the image height
      * @return The image height
      */
-    int getHeight() const;
+    const int getHeight() const;
 
     /**
      * Get the size of the image, in bytes
      * @return Size of the image, in bytes
      */
-    unsigned int size() const;
+    const unsigned int size() const;
 
     /**
      * Get the image data
      * @return The image data
      */
-    float* getData() const;
+    const vector<float> getData() const;
 
   };
 

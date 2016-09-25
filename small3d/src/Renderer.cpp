@@ -561,18 +561,16 @@ namespace small3d {
     // Find the colour uniform
     GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
 
-    // Add texture if that is contained in the model
-    shared_ptr<Image> textureObj = sceneObject->getTexture();
-
-    if (textureObj) {
+    if (sceneObject->getTexture().size() != 0) {
       // "Disable" colour since there is a texture
       glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
 
       texture = this->getTextureHandle(sceneObject->getName());
 
       if (texture == 0) {
-        texture = generateTexture(sceneObject->getName(), textureObj->getData(), textureObj->getWidth(),
-                                  textureObj->getHeight());
+        texture = generateTexture(sceneObject->getName(), sceneObject->getTexture().getData().data(),
+                                  sceneObject->getTexture().getWidth(),
+                                  sceneObject->getTexture().getHeight());
       }
 
       glBindTexture(GL_TEXTURE_2D, texture);
@@ -591,7 +589,7 @@ namespace small3d {
     }
     else {
       // If there is no texture, use the colour of the object
-      glUniform4fv(colourUniform, 1, glm::value_ptr(*sceneObject->getColour()));
+      glUniform4fv(colourUniform, 1, glm::value_ptr(sceneObject->getColour()));
     }
 
     // Lighting
@@ -603,7 +601,7 @@ namespace small3d {
     GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
     glUniform1f(lightIntensityUniform, lightIntensity);
 
-    positionSceneObject(*sceneObject->getOffset(), *sceneObject->getRotation());
+    positionSceneObject(sceneObject->getOffset(), sceneObject->getRotation());
 
     positionCamera();
 
@@ -617,7 +615,7 @@ namespace small3d {
                    GL_UNSIGNED_INT, 0);
 
     // Clear stuff
-    if (textureObj) {
+    if (sceneObject->getTexture().size() > 0) {
       glDisableVertexAttribArray(2);
     }
 

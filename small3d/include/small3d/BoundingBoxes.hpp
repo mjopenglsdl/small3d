@@ -59,7 +59,7 @@ namespace small3d {
     /**
      * Destructor
      */
-    ~BoundingBoxes();
+    ~BoundingBoxes() = default;
 
     /**
      * @brief	Vertex coordinates read from Wavefront .obj file
@@ -96,20 +96,15 @@ namespace small3d {
      * @return	true if it succeeds, false if it fails.
      */
 
-    bool pointIsWithin(const float &pointX, const float &pointY, const float &pointZ);
+    bool pointIsWithin(float pointX, float pointY, float pointZ) const;
 
     /**
-     * @fn	bool boxesAreWithin(const BoundingBoxes &otherBoxes, const float &otherBoxesX,
-     * 		const float &otherBoxesY, const float &otherBoxesZ, const float &otherBoxesRotation,
-     * 		const float &boxesX, const float &boxesY, const float &boxesZ,
-     * 		const float &boxesRotation) };
-     *
-     * @brief	Check if another set of bounding boxes is located with this set (even partly)
+     * Check if another set of bounding boxes is located with this set (even partly)
      *
      * @return	true if it succeeds, false if it fails.
      */
 
-    bool boxesAreWithin(shared_ptr<BoundingBoxes> otherBoxes);
+    bool boxesAreWithin(BoundingBoxes& otherBoxes) const;
 
   };
 }

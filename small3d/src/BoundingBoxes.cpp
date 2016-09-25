@@ -25,10 +25,6 @@ namespace small3d {
     numBoxes = 0;
   }
 
-  BoundingBoxes::~BoundingBoxes() {
-
-  }
-
   void BoundingBoxes::loadFromFile(string fileLocation) {
     if (vertices.size() != 0) {
       throw Exception(
@@ -82,7 +78,7 @@ namespace small3d {
         }
       }
       file.close();
-      numBoxes = facesVertexIndexes.size() / 6;
+      numBoxes = (int) (facesVertexIndexes.size() / 6);
     }
     else
       throw Exception(
@@ -91,7 +87,7 @@ namespace small3d {
 
   }
 
-  bool BoundingBoxes::pointIsWithin(const float &pointX, const float &pointY, const float &pointZ) {
+  bool BoundingBoxes::pointIsWithin(float pointX, float pointY, float pointZ) const {
     bool collides = false;
     glm::mat4 rotationMatrix = rotateZ(rotation.z) * rotateX(rotation.x) * rotateY(rotation.y);
 
@@ -155,23 +151,23 @@ namespace small3d {
     return collides;
   }
 
-  bool BoundingBoxes::boxesAreWithin(shared_ptr<BoundingBoxes> otherBoxes) {
+  bool BoundingBoxes::boxesAreWithin(BoundingBoxes& otherBoxes) const {
     bool collides = false;
 
     glm::mat4 rotationMatrix =
-        rotateZ(otherBoxes->rotation.z) * rotateX(otherBoxes->rotation.x) * rotateY(otherBoxes->rotation.y);
+        rotateZ(otherBoxes.rotation.z) * rotateX(otherBoxes.rotation.x) * rotateY(otherBoxes.rotation.y);
 
-    for (vector<vector<float> >::iterator vertex = otherBoxes->vertices.begin();
-         vertex != otherBoxes->vertices.end(); ++vertex) {
+    for (vector<vector<float> >::iterator vertex = otherBoxes.vertices.begin();
+         vertex != otherBoxes.vertices.end(); ++vertex) {
 
       glm::vec4 otherCoords(vertex->at(0), vertex->at(1), vertex->at(2), 1.0f);
       glm::vec4 rotatedOtherCoords(0.0f, 0.0f, 0.0f, 1.0f);
 
       rotatedOtherCoords = rotationMatrix * otherCoords;
 
-      rotatedOtherCoords.x += otherBoxes->offset.x;
-      rotatedOtherCoords.y += otherBoxes->offset.y;
-      rotatedOtherCoords.z += otherBoxes->offset.z;
+      rotatedOtherCoords.x += otherBoxes.offset.x;
+      rotatedOtherCoords.y += otherBoxes.offset.y;
+      rotatedOtherCoords.z += otherBoxes.offset.z;
 
       /*cout << "Checking " << rotatedOtherCoords.x << ", " << rotatedOtherCoords.y << ", " << rotatedOtherCoords.z <<
     " with " << boxesX << ", " << boxesY << ", " << boxesZ << " rotation " << boxesRotation << endl;*/
