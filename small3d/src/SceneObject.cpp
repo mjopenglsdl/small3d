@@ -68,31 +68,6 @@ namespace small3d {
     return name;
   }
 
-  const glm::vec4& SceneObject::getColour() {
-    return colour;
-  }
-
-  void SceneObject::setColour(const float &r, const float &g, const float &b, const float &a) {
-    colour = glm::vec4(r, g, b, a);
-  }
-
-  const glm::vec3& SceneObject::getOffset() const {
-    return offset;
-  }
-
-  void SceneObject::setOffset(const float &x, const float &y, const float &z) {
-    offset = glm::vec3(x, y, z);
-  }
-
-  const glm::vec3& SceneObject::getRotation() const {
-    return rotation;
-  }
-
-  void SceneObject::setRotation(const float &x, const float &y,
-                                const float &z) {
-    rotation = glm::vec3(x, y, z);
-  }
-
   void SceneObject::startAnimating() {
     animating = true;
   }

@@ -1,0 +1,8 @@
+small3d changelog
+-----------------
+
+v1.0.5
+------
+	Changes:
+		- Lots of dynamic memory allocations removed
+		- [BREAKING] Model rotation, offset and speed are no longer pointers 

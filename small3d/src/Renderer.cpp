@@ -325,7 +325,7 @@ namespace small3d {
     glUseProgram(0);
   }
 
-  GLuint Renderer::generateTexture(const string &name, const float *texture, const int width, const int height) {
+  GLuint Renderer::generateTexture(string name, const float* texture, int width, int height) {
 
     GLuint textureHandle;
 
@@ -338,7 +338,7 @@ namespace small3d {
     GLint internalFormat = isOpenGL33Supported ? GL_RGBA32F : GL_RGBA;
 
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGBA,
-                 GL_FLOAT, &texture[0]);
+                 GL_FLOAT, texture);
 
     textures->insert(make_pair(name, textureHandle));
 
@@ -568,7 +568,7 @@ namespace small3d {
       texture = this->getTextureHandle(sceneObject->getName());
 
       if (texture == 0) {
-        texture = generateTexture(sceneObject->getName(), sceneObject->getTexture().getData().data(),
+        texture = generateTexture(sceneObject->getName(), sceneObject->getTexture().getData(),
                                   sceneObject->getTexture().getWidth(),
                                   sceneObject->getTexture().getHeight());
       }
@@ -589,7 +589,7 @@ namespace small3d {
     }
     else {
       // If there is no texture, use the colour of the object
-      glUniform4fv(colourUniform, 1, glm::value_ptr(sceneObject->getColour()));
+      glUniform4fv(colourUniform, 1, glm::value_ptr(sceneObject->colour));
     }
 
     // Lighting
@@ -601,7 +601,7 @@ namespace small3d {
     GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
     glUniform1f(lightIntensityUniform, lightIntensity);
 
-    positionSceneObject(sceneObject->getOffset(), sceneObject->getRotation());
+    positionSceneObject(sceneObject->offset, sceneObject->rotation);
 
     positionCamera();
 

@@ -24,9 +24,6 @@ namespace small3d {
   class WavefrontLoader : public ModelLoader {
   private:
 
-    // The model to which the data is loaded
-    Model* model;
-
     // Data read from .obj file
     vector< vector<float> > vertices;
     vector<vector<int> > facesVertexIndices;
@@ -35,20 +32,18 @@ namespace small3d {
     vector<vector<float> > textureCoords;
     vector<vector<int> > textureCoordsIndices;
 
-    void loadVertexData();
+    void loadVertexData(Model &model);
 
-    void loadIndexData();
+    void loadIndexData(Model &model);
 
-    void loadNormalsData();
+    void loadNormalsData(Model &model);
 
-    void loadTextureCoordsData();
+    void loadTextureCoordsData(Model &model);
 
     // Make sure that no texture coordinate information is lost when the data buffers get created (vertexData,
     // indexData, normalsData and textureCoordsData) by realigning the data vectors, in order to ensure unique
     // vertex - texture coordinates pairs
     void correctDataVectors();
-
-    void init();
 
     void clear();
 
@@ -70,18 +65,16 @@ namespace small3d {
      *
      */
 
-    ~WavefrontLoader();
+    ~WavefrontLoader() = default;
 
     /**
-     * @fn	void WavefrontLoader::load(const string &filename, shared_ptr<Model> model);
-     *
-     * @brief	Loads a model from the given wavefront .obj file into the model object.
+     *	Loads a model from the given wavefront .obj file into the model object.
      *
      * @param	fileLocation	Path to the file in which the model is stored.
      * @param	model   	The model.
      */
 
-    void load(const string &fileLocation, Model &model);
+    void load(string fileLocation, Model &model);
 
   };
 

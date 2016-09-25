@@ -62,7 +62,7 @@ TEST(ImageTest, LoadImage) {
 
   cout << "Image width " << image.getWidth() << ", height " << image.getHeight() << endl;
 
-  const float *imageData = image.getData().data();
+  const float *imageData = image.getData();
 
   int x = 0, y = 0;
 

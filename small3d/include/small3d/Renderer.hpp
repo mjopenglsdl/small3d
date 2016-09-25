@@ -163,7 +163,7 @@ namespace small3d
      * @param height The height of the texture, in pixels
      * @return The texture handle
      */
-    GLuint generateTexture(const string &name, const float *texture, const int width, const int height);
+    GLuint generateTexture(string name, const float *texture, int width, int height);
 
     /**
      * @fn	void Renderer::deleteTexture(const string &name);

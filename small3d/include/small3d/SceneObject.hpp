@@ -39,9 +39,6 @@ namespace small3d
     int numFrames;
     Image texture;
     string name;
-    glm::vec4 colour;
-    glm::vec3 offset;
-    glm::vec3 rotation;
 
   public:
 
@@ -87,49 +84,19 @@ namespace small3d
     const string getName();
 
     /**
-     * Get the object's colour.
-     * @return The object's colour.
+     * Colour of the object (if not mapping a texture)
      */
-    const glm::vec4& getColour();
+    glm::vec4 colour;
 
     /**
-     * Set the object's colour. This will only have an effect if the
-     * object is not textured.
-     * @param r The red component
-     * @param g The green component
-     * @param b The blue component
-     * @param a The alpha component
+     * Offset (position) of the object
      */
-    void setColour(const float &r, const float &g, const float &b, const float &a);
-
+    glm::vec3 offset;
 
     /**
-     * Get the offset of the object's position
-     * @return The offset
+     * Rotation of the object (on x, y, z axes respectively)
      */
-    const glm::vec3& getOffset() const;
-
-    /**
-     * Set the offset of the object's position
-     * @param x The offset's x coordinate
-     * @param y The offset's y coordinate
-     * @param z The offset's z coordinate
-     */
-    void setOffset(const float &x, const float &y, const float &z);
-
-    /**
-     * Get the object's rotation
-     * @return
-     */
-    const glm::vec3& getRotation() const;
-
-    /**
-     * Set the object's rotation
-     * @param x The orientation's x rotation
-     * @param y The orientation's y rotation
-     * @param z The orientation's z rotation
-     */
-    void setRotation(const float &x, const float &y, const float &z);
+    glm::vec3 rotation;
 
     /**
      * Start animating the object
