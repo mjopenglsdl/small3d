@@ -82,7 +82,7 @@ namespace small3d {
     Pa_Terminate();
   }
 
-  void Sound::load(const string &soundFilePath, const string &soundName) {
+  void Sound::load(string soundFilePath, string soundName) {
     OggVorbis_File vorbisFile;
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
@@ -154,7 +154,7 @@ namespace small3d {
 
   }
 
-  void Sound::play(const string &soundName) {
+  void Sound::play(string soundName) {
 
     if (defaultOutput == paNoDevice) {
       throw Exception("No default sound output device.");
@@ -195,7 +195,7 @@ namespace small3d {
     }
   }
 
-  void Sound::deleteSound(const string &soundName) {
+  void Sound::deleteSound(string soundName) {
 
     unordered_map<string, SoundData*>::iterator nameSoundPair = sounds->find(soundName);
 

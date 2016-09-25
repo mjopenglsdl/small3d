@@ -50,19 +50,13 @@ namespace small3d {
   public:
 
     /**
-     * @fn	WavefrontLoader::WavefrontLoader();
-     *
-     * @brief	Default constructor.
-     *
+     * Default constructor
      */
 
     WavefrontLoader();
 
     /**
-     * @fn	WavefrontLoader::~WavefrontLoader();
-     *
-     * @brief	Destructor.
-     *
+     * Destructor.
      */
 
     ~WavefrontLoader() = default;

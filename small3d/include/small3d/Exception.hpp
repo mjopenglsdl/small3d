@@ -16,10 +16,7 @@ using namespace std;
 namespace small3d {
 
   /**
-   * @class	Exception
-   *
-   * @brief	The standard exception for small3d.
-   *
+   * The standard exception for small3d.
    */
 
   class Exception : public exception  {
@@ -28,18 +25,13 @@ namespace small3d {
   public:
 
     /**
-     * @fn	Exception::Exception();
-     *
-     * @brief	Default constructor.
-     *
+     * Default constructor.
      */
 
     Exception();
 
     /**
-     * @fn	Exception::Exception(string message);
-     *
-     * @brief	Constructor with message.
+     * Constructor with message.
      *
      * @param	message	The message.
      */
@@ -47,9 +39,7 @@ namespace small3d {
     Exception(string message);
 
     /**
-     * @fn	virtual const char* Exception::what() const throw();
-     *
-     * @brief	Returns a null terminated character sequence that can be used to identify the exception.
+     * Returns a null terminated character sequence that can be used to identify the exception.
      *
      * @return	Information about the exception.
      */
@@ -57,10 +47,7 @@ namespace small3d {
     virtual const char* what() const throw();
 
     /**
-     * @fn	virtual Exception::~Exception() throw();
-     *
-     * @brief	Destructor.
-     *
+     * Destructor.
      */
 
     virtual ~Exception() throw();

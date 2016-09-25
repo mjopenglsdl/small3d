@@ -29,10 +29,7 @@ namespace small3d
 {
 
   /**
-   * @class	Renderer
-   *
-   * @brief	Renderer class, which can render using either OpenGL v3.3 or v2.1
-   *
+   * Renderer class, which can render using either OpenGL v3.3 or v2.1
    */
 
   class Renderer
@@ -97,6 +94,19 @@ namespace small3d
      */
     unordered_map<string, GLuint> *textures;
 
+    /**
+     * Overrides the position of the next object to be rendered.
+     * @param offset The offset (location coordinates)
+     * @param rotation The rotation (around the x, y and z axes)
+     */
+    void overrideNextObjectPosition(const glm::vec3 &offset, const glm::vec3 &rotation);
+
+    /**
+     * Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).
+     */
+
+    void positionCamera();
+
   public:
 
     /**
@@ -132,25 +142,25 @@ namespace small3d
 	      const string &shadersPath = "resources/shaders/");
 
     /**
-     * @brief	Vector indicating the direction of the light in the scene.
+     * Vector indicating the direction of the light in the scene.
      */
 
     glm::vec3 lightDirection;
 
     /**
-     * @brief	The camera position in world space.
+     * The camera position in world space.
      */
 
     glm::vec3 cameraPosition;
 
     /**
-     * @brief	The camera rotation (around the x, y and z axes)
+     * The camera rotation (around the x, y and z axes)
      */
 
     glm::vec3 cameraRotation;
 
     /**
-     * @brief	The light intensity (set to -1.0f if no lighting is to be used).
+     * The light intensity (set to -1.0f if no lighting is to be used).
      */
 
     float lightIntensity;
@@ -166,9 +176,7 @@ namespace small3d
     GLuint generateTexture(string name, const float *texture, int width, int height);
 
     /**
-     * @fn	void Renderer::deleteTexture(const string &name);
-     *
-     * @brief	Deletes the texture indicated by the given name.
+     * Deletes the texture indicated by the given name.
      *
      * @param	name	The name of the texture.
      */
@@ -181,26 +189,6 @@ namespace small3d
      * @return The texture handle (0 if not found)
      */
     GLuint getTextureHandle(const string &name);
-
-    /**
-     * @fn	void Renderer::positionSceneObject(const glm::vec3 &offset, const glm::vec3 &rotation);
-     *
-     * @brief	Positions the scene object (sets offset and rotation)
-     *
-     * @param	offset  	The offset (x, y, z values).
-     * @param	rotation	The rotation (around the x, y and z axes).
-     */
-
-    void positionSceneObject(const glm::vec3 &offset, const glm::vec3 &rotation);
-
-    /**
-     * @fn	void Renderer::positionCamera();
-     *
-     * @brief	Position the camera.
-     *
-     */
-
-    void positionCamera();
 
     /**
      * Render an image. The image is in effect a textured quad, since 4 vertex positions are

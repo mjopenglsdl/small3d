@@ -20,9 +20,7 @@ using namespace std;
 namespace small3d {
 
   /**
-   * @class Sound
-   *
-   * @brief Sound management class
+   * Sound management class
    */
 
   class Sound {
@@ -55,7 +53,7 @@ namespace small3d {
      * @param soundName     The name by which the loaded sound will
      *                      be identified.
      */
-    void load(const string &soundFilePath, const string &soundName);
+    void load(string soundFilePath, string soundName);
 
     /**
      * Plays a sound.
@@ -63,7 +61,7 @@ namespace small3d {
      * @param soundName The name of the sound to be played.
      *
      */
-    void play(const string &soundName);
+    void play(string soundName);
 
     /**
      * Delete a sound from memory.
@@ -71,7 +69,7 @@ namespace small3d {
      * @param soundName The name of the sound to be deleted.
      *
      */
-    void deleteSound(const string &soundName);
+    void deleteSound(string soundName);
 
   };
 }
