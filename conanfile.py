@@ -16,19 +16,8 @@ class Small3dConan(ConanFile):
 
     def build(self):
         cmake = CMake(self.settings)
-
-        try:
-            if self.settings.os == "Windows":
-                self.run("rd /s /q _build")
-            else:
-                self.run("rm -rf _build")
-        except:
-            pass
-
-        self.run("mkdir _build")
-        cd_build = "cd _build"
-        self.run("%s && cmake .. -DBUILD_WITH_CONAN=TRUE %s" % (cd_build, cmake.command_line))
-        self.run("%s && cmake --build . %s" % (cd_build, cmake.build_config))
+        self.run("cmake %s -DBUILD_WITH_CONAN=TRUE %s" % (self.conanfile_directory, cmake.command_line))
+        self.run("cmake --build . %s" % cmake.build_config)
 
     def package(self):
         self.copy("FindSMALL3D.cmake", ".", ".")
