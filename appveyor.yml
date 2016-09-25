@@ -2,7 +2,7 @@ build: false
 branches:
   only:
     - master
-	- develop	
+    - develop	
 environment:
     PYTHON: "C:\\Python27-x64"
     PYTHON_VERSION: "2.7.11"

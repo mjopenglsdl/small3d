@@ -6,7 +6,7 @@ language: python
 branches:
   only:
     - master
-	- develop
+    - develop
 env:
   global:
     - CONAN_REFERENCE="small3d/1.0.5"
