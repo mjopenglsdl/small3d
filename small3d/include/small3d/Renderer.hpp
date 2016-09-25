@@ -136,10 +136,10 @@ namespace small3d
      * 				The shader code can be changed, provided that their inputs
      * 				and outputs are maintained the same.
      */
-    void init(const int width, const int height, const bool fullScreen, const string &windowTitle = "",
-	      const float &frustumScale = 1.0f, const float &zNear = 1.0f,
-	      const float &zFar = 24.0f, const float &zOffsetFromCamera = -1.0f,
-	      const string &shadersPath = "resources/shaders/");
+    void init(int width, int height, bool fullScreen, string windowTitle = "",
+	      float frustumScale = 1.0f, float zNear = 1.0f,
+	      float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
+	      string shadersPath = "resources/shaders/");
 
     /**
      * Vector indicating the direction of the light in the scene.
@@ -181,14 +181,14 @@ namespace small3d
      * @param	name	The name of the texture.
      */
 
-    void deleteTexture(const string &name);
+    void deleteTexture(string name);
 
     /**
      * Get the handle of a texture which has already been generated (see generateTexture)
      * @param name The name of the texture
      * @return The texture handle (0 if not found)
      */
-    GLuint getTextureHandle(const string &name);
+    GLuint getTextureHandle(string name);
 
     /**
      * Render an image. The image is in effect a textured quad, since 4 vertex positions are
@@ -199,8 +199,8 @@ namespace small3d
      * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
      * @param offset	The offset (position) at which the quad of the image will be drawn.
      */
-    void renderImage(const float *vertices, const string &textureName, const bool &perspective = false,
-		     const glm::vec3 &offset = glm::vec3(0.0f, 0.0f, 0.0f));
+    void renderImage(const float *vertices, string textureName, bool perspective = false,
+		     glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
 
     /**
      * Render a scene object

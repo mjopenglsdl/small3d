@@ -206,10 +206,10 @@ namespace small3d {
     }
   }
 
-  void Renderer::init(const int width, const int height, const bool fullScreen, const string &windowTitle,
-                      const float &frustumScale, const float &zNear,
-                      const float &zFar, const float &zOffsetFromCamera,
-                      const string &shadersPath) {
+  void Renderer::init(int width, int height, bool fullScreen, string windowTitle,
+                      float frustumScale, float zNear,
+                      float zFar, float zOffsetFromCamera,
+                      string shadersPath) {
     this->initSDL(width, height, fullScreen, windowTitle);
 
     this->frustumScale = frustumScale;
@@ -345,7 +345,7 @@ namespace small3d {
     return textureHandle;
   }
 
-  void Renderer::deleteTexture(const string &name) {
+  void Renderer::deleteTexture(string name) {
     unordered_map<string, GLuint>::iterator nameTexturePair = textures->find(name);
 
     if (nameTexturePair != textures->end()) {
@@ -354,7 +354,7 @@ namespace small3d {
     }
   }
 
-  GLuint Renderer::getTextureHandle(const string &name) {
+  GLuint Renderer::getTextureHandle(string name) {
     GLuint handle = 0;
 
     unordered_map<string, GLuint>::iterator nameTexturePair = textures->find(name);
@@ -407,8 +407,8 @@ namespace small3d {
   }
 
 
-  void Renderer::renderImage(const float *vertices, const string &textureName, const bool &perspective,
-                             const glm::vec3 &offset) {
+  void Renderer::renderImage(const float *vertices, string textureName, bool perspective,
+                             glm::vec3 offset) {
 
     glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
 
