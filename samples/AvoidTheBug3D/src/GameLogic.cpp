@@ -38,6 +38,8 @@ namespace AvoidTheBug3D {
     initLogger();
 
     renderer = shared_ptr<Renderer>(new Renderer());
+	
+	renderer->cameraRotation = glm::vec3(0.0f, 1.57f, 0.0f);
 
     renderer->init(854, 480, false, "Avoid the Bug 3D");
 
@@ -176,10 +178,9 @@ namespace AvoidTheBug3D {
     goat->animate();
 
     // Uncomment to see the goat's view of the world
-    /* renderer->cameraPosition = *goatOffset;
-    renderer->cameraPosition.y += 1.0f;
-    renderer->cameraRotation = *goatRotation;
-    renderer->cameraRotation.y -= 1.57f; */
+    //renderer->cameraPosition = goat->offset;
+	//renderer->cameraPosition.y += 1.0f;
+    //renderer->cameraRotation = goat->rotation;
 
   }
 
@@ -296,10 +297,9 @@ namespace AvoidTheBug3D {
       bug->offset.x = -(bug->offset.z);
 
     // Uncomment to see the bug's view of the world
-    /* renderer->cameraPosition = *bugOffset;
-       renderer->cameraRotation = *bugRotation;
-       renderer->cameraRotation.y -= 1.57f;*/
-
+    // renderer->cameraPosition = bug->offset;
+    // renderer->cameraRotation = bug->rotation;
+       
     bug->animate();
   }
 

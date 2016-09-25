@@ -155,11 +155,8 @@ namespace AvoidTheBug3D {
 	  // Looking through the eyes of the bug
     renderer->cameraPosition = bug->offset;
     renderer->cameraRotation = bug->rotation;
-	//renderer->cameraRotation.y -= 1.57f;
 	
     bug->animate();
-
-
 
     if (goat->collidesWithPoint(bug->offset.x, bug->offset.y, bug->offset.z))
     {
