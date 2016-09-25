@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
 PROJECT(game)
-INCLUDE(conanbuildinfo.cmake)
+INCLUDE(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 CONAN_BASIC_SETUP()
 SUBDIRS(src)
 
