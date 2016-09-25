@@ -29,76 +29,69 @@ namespace small3d {
   public:
 
     /**
-     * @brief	The vertex data. This is an array, which is to be treated as a 4 column table, holding
-     * 			the x, y, z values in each column. The fourth column is there to assist in matrix operations.
+     * The vertex data. This is an array, which is to be treated as a 4 column table, holding
+     * the x, y, z values in each column. The fourth column is there to assist in matrix operations.
      */
 
     vector<float> vertexData;
 
     /**
-     * @brief	Size of the vertex data, in bytes.
+     * Size of the vertex data, in bytes.
      */
 
     int vertexDataSize;
 
     /**
-     * @brief	3 column table. Each element refers to a "row" in the vertex data table. Each "row"
-     * 				in the index data table forms a triangle.
+     * 3 column table. Each element refers to a "row" in the vertex data table. Each "row"
+     * in the index data table forms a triangle.
      *
      */
 
     vector<unsigned int> indexData;
 
     /**
-     * @brief	Size of the index data, in bytes
+     * Size of the index data, in bytes
      */
 
     int indexDataSize;
 
     /**
-     * @brief	Array, to be treated as a 3 column table. Each "row" contains the x, y and z components
-     * 			of the vector representing the normal of a vertex. The position of the "row" in the array
-     * 			is the same as the position of the corresponding vertex "row" in the vertexData array.
+     * Array, to be treated as a 3 column table. Each "row" contains the x, y and z components
+     * of the vector representing the normal of a vertex. The position of the "row" in the array
+     * is the same as the position of the corresponding vertex "row" in the vertexData array.
      */
 
     vector<float> normalsData;
 
     /**
-     * @brief	Size of the normals data, in bytes.
+     * Size of the normals data, in bytes.
      */
 
     int normalsDataSize;
 
     /**
-     * @brief	Array, to be treated as a 2 column table. Each "row" contains the x and y components
-     * 			of the pixel coordinates on the model's texture image for the vertex in the corresponding
-     * 			"row" of the vertex data "table"
+     * Array, to be treated as a 2 column table. Each "row" contains the x and y components
+     * of the pixel coordinates on the model's texture image for the vertex in the corresponding
+     * "row" of the vertex data "table"
      */
 
     vector<float> textureCoordsData;
 
     /**
-     * @brief	Size of the texture coordinates data, in bytes.
+     * Size of the texture coordinates data, in bytes.
      */
 
     int textureCoordsDataSize;
 
     /**
-     * @brief	Number of elements in the texture coordinates array.
-     */
-
-    /**
-     * @fn	Model();
-     *
-     * @brief	Default constructor.
-     *
+     * Default constructor
      */
 
     Model();
 
 
     /**
-     * Default destructor
+     * Destructor
      */
     ~Model(void) = default;
 

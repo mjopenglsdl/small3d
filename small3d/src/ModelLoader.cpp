@@ -10,18 +10,7 @@
 
 namespace small3d {
 
-
-  ModelLoader::ModelLoader()
-  {
-
-  }
-
-  ModelLoader::~ModelLoader()
-  {
-
-  }
-
-  void ModelLoader::load( const string &filename, Model &model )
+  void ModelLoader::load(string filename, Model &model )
   {
 
   }

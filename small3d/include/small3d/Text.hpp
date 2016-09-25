@@ -22,10 +22,7 @@ namespace small3d {
   string intToStr(int number);
 
   /**
-   * @struct	Text
-   *
-   * @brief	Structure for rendering text
-   *
+   * Structure for rendering text
    */
 
   struct Text {
@@ -38,11 +35,7 @@ namespace small3d {
   public:
 
     /**
-     * @fn	Text( shared_ptr<Renderer> renderer,
-     * 		const string &ttfFontPath="resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
-     * 		const int &size = 48);
-     *
-     * @brief	Constructor.
+     * Constructor
      *
      * @param	renderer   	The renderer to be used.
      * @param	ttfFontPath	(optional) The path to the TrueType font to be used by the Renderer,
@@ -62,9 +55,7 @@ namespace small3d {
 	 const int &size = 48);
 
     /**
-     * @fn	~Text();
-     *
-     * @brief	Destructor.
+     * Destructor
      *
      */
 
@@ -80,8 +71,8 @@ namespace small3d {
      * @param bottomX The bottom x coordinate of the text rectangle
      * @param bottomY The bottom y coordinate of the text rectangle
      */
-    void renderText(const string &text, const SDL_Color &colour,
-		    const float &topX, const float &topY, const float &bottomX, const float &bottomY);
+    void renderText(string text, const SDL_Color &colour,
+		    float topX, float topY, float bottomX, float bottomY);
 
     /**
      * @fn	void deleteTextTexture(const string &text);
@@ -92,7 +83,7 @@ namespace small3d {
      * @param	text	The text for which the texture has been generated.
      */
 
-    void deleteTextTexture(const string &text);
+    void deleteTextTexture(string text);
 
   };
 }

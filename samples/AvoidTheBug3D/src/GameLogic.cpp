@@ -38,6 +38,8 @@ namespace AvoidTheBug3D {
     initLogger();
 
     renderer = shared_ptr<Renderer>(new Renderer());
+	
+	renderer->cameraRotation = glm::vec3(0.0f, 1.57f, 0.0f);
 
     renderer->init(854, 480, false, "Avoid the Bug 3D");
 
@@ -65,7 +67,7 @@ namespace AvoidTheBug3D {
       new SceneObject("bug",
         "resources/models/Bug/bugAnim",
         9));
-    bug->setColour(0.2f, 0.2f, 0.2f, 1.0f);
+    bug->colour = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
     bug->setFrameDelay(2);
 
     bugVerticalSpeed = ROUND_2_DECIMAL(BUG_FLIGHT_HEIGHT / BUG_DIVE_DURATION);
@@ -76,8 +78,8 @@ namespace AvoidTheBug3D {
         1, "resources/models/Tree/tree.png",
         "resources/models/TreeBB/TreeBB.obj"));
 
-    tree->setOffset(2.6f, GROUND_Y, -8.0f);
-    tree->setRotation(0.0f, -0.5f, 0.0f);
+    tree->offset = glm::vec3(2.6f, GROUND_Y, -8.0f);
+    tree->rotation = glm::vec3(0.0f, -0.5f, 0.0f);
 
     gameState = START_SCREEN;
 	
@@ -96,8 +98,8 @@ namespace AvoidTheBug3D {
 
   void GameLogic::initGame()
   {
-    goat->setOffset(-1.2f, GROUND_Y, -4.0f);
-    bug->setOffset(0.5f, GROUND_Y + BUG_FLIGHT_HEIGHT, -18.0f);
+    goat->offset = glm::vec3(-1.2f, GROUND_Y, -4.0f);
+    bug->offset = glm::vec3(0.5f, GROUND_Y + BUG_FLIGHT_HEIGHT, -18.0f);
 
     bug->startAnimating();
 
@@ -111,97 +113,89 @@ namespace AvoidTheBug3D {
 
   void GameLogic::moveGoat(const KeyInput &keyInput)
   {
-    shared_ptr<glm::vec3> goatRotation = goat->getRotation();
-    shared_ptr<glm::vec3> goatOffset = goat->getOffset();
-
     goat->stopAnimating();
 
     if (keyInput.left) {
-      goatRotation->y -= GOAT_ROTATION_SPEED;
+      goat->rotation.y -= GOAT_ROTATION_SPEED;
 
       while (goat->collidesWithSceneObject(tree)) {
-        goatRotation->y += GOAT_ROTATION_SPEED;
+        goat->rotation.y += GOAT_ROTATION_SPEED;
       }
 
-      if (goatRotation->y < -FULL_ROTATION)
-        goatRotation->y = 0.0f;
+      if (goat->rotation.y < -FULL_ROTATION)
+        goat->rotation.y = 0.0f;
       goat->startAnimating();
 
     }
     else if (keyInput.right) {
-      goatRotation->y += GOAT_ROTATION_SPEED;
+      goat->rotation.y += GOAT_ROTATION_SPEED;
 
       while (goat->collidesWithSceneObject(tree)) {
-        goatRotation->y -= GOAT_ROTATION_SPEED;
+        goat->rotation.y -= GOAT_ROTATION_SPEED;
       }
 
 
-      if (goatRotation->y > FULL_ROTATION)
-        goatRotation->y = 0.0f;
+      if (goat->rotation.y > FULL_ROTATION)
+        goat->rotation.y = 0.0f;
       goat->startAnimating();
     }
 
     if (keyInput.up) {
 
-      goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
-      goatOffset->z -= sin(goatRotation->y) * GOAT_SPEED;
+      goat->offset.x -= cos(goat->rotation.y) * GOAT_SPEED;
+      goat->offset.z -= sin(goat->rotation.y) * GOAT_SPEED;
 
       while (goat->collidesWithSceneObject(tree)) {
-        goatOffset->x += cos(goatRotation->y) * GOAT_SPEED;
-        goatOffset->z += sin(goatRotation->y) * GOAT_SPEED;
+        goat->offset.x += cos(goat->rotation.y) * GOAT_SPEED;
+        goat->offset.z += sin(goat->rotation.y) * GOAT_SPEED;
       }
 
       goat->startAnimating();
 
     }
     else if (keyInput.down) {
-      goatOffset->x += cos(goatRotation->y) * GOAT_SPEED;
-      goatOffset->z += sin(goatRotation->y) * GOAT_SPEED;
+      goat->offset.x += cos(goat->rotation.y) * GOAT_SPEED;
+      goat->offset.z += sin(goat->rotation.y) * GOAT_SPEED;
 
       while (goat->collidesWithSceneObject(tree)) {
-        goatOffset->x -= cos(goatRotation->y) * GOAT_SPEED;
-        goatOffset->z -= sin(goatRotation->y) * GOAT_SPEED;
+        goat->offset.x -= cos(goat->rotation.y) * GOAT_SPEED;
+        goat->offset.z -= sin(goat->rotation.y) * GOAT_SPEED;
       }
 
       goat->startAnimating();
     }
 
-    if (goatOffset->z < MIN_Z + 1.0f)
-      goatOffset->z = MIN_Z + 1.0f;
-    if (goatOffset->z > MAX_Z - 1.0f)
-      goatOffset->z = MAX_Z - 1.0f;
+    if (goat->offset.z < MIN_Z + 1.0f)
+      goat->offset.z = MIN_Z + 1.0f;
+    if (goat->offset.z > MAX_Z - 1.0f)
+      goat->offset.z = MAX_Z - 1.0f;
 
-    if (goatOffset->x < goatOffset->z)
-      goatOffset->x = goatOffset->z;
-    if (goatOffset->x > -(goatOffset->z))
-      goatOffset->x = -(goatOffset->z);
+    if (goat->offset.x < goat->offset.z)
+      goat->offset.x = goat->offset.z;
+    if (goat->offset.x > -(goat->offset.z))
+      goat->offset.x = -(goat->offset.z);
 
     goat->animate();
 
-    goat->setRotation(0.0f, goatRotation->y, 0.0f);
-
     // Uncomment to see the goat's view of the world
-    /* renderer->cameraPosition = *goatOffset;
-    renderer->cameraPosition.y += 1.0f;
-    renderer->cameraRotation = *goatRotation;
-    renderer->cameraRotation.y -= 1.57f; */
+    //renderer->cameraPosition = goat->offset;
+	//renderer->cameraPosition.y += 1.0f;
+    //renderer->cameraRotation = goat->rotation;
 
   }
 
   void GameLogic::moveBug()
   {
-    shared_ptr<glm::vec3> bugRotation = bug->getRotation();
-    shared_ptr<glm::vec3> bugOffset = bug->getOffset();
 
-    float xDistance = bug->getOffset()->x - goat->getOffset()->x;
-    float zDistance = bug->getOffset()->z - goat->getOffset()->z;
+    float xDistance = bug->offset.x - goat->offset.x;
+    float zDistance = bug->offset.z - goat->offset.z;
     float distance = ROUND_2_DECIMAL(sqrt(xDistance * xDistance + zDistance*zDistance));
 
     float goatRelX = ROUND_2_DECIMAL(xDistance / distance);
     float goatRelZ = ROUND_2_DECIMAL(zDistance / distance);
 
-    float bugDirectionX = cos(bug->getRotation()->y);
-    float bugDirectionZ = sin(bug->getRotation()->y);
+    float bugDirectionX = cos(bug->rotation.y);
+    float bugDirectionZ = sin(bug->rotation.y);
 
     float dotPosDir = goatRelX * bugDirectionX + goatRelZ * bugDirectionZ; // dot product
 
@@ -218,7 +212,7 @@ namespace AvoidTheBug3D {
 
     if (bugState == DIVING_DOWN)
     {
-      if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
+      if (goat->collidesWithPoint(bug->offset.x, bug->offset.y, bug->offset.z))
       {
 	sound->play("bah");
 
@@ -233,14 +227,14 @@ namespace AvoidTheBug3D {
     }
     else if (bugState == DIVING_UP)
     {
-      if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
+      if (goat->collidesWithPoint(bug->offset.x, bug->offset.y, bug->offset.z))
       {
         gameState = START_SCREEN;
       }
 
       if (bugFramesInCurrentState > BUG_DIVE_DURATION / 2) {
         bugState = FLYING_STRAIGHT;
-        bugOffset->y = GROUND_Y + BUG_FLIGHT_HEIGHT; // Correction of possible rounding errors
+        bug->offset.y = GROUND_Y + BUG_FLIGHT_HEIGHT; // Correction of possible rounding errors
       }
     }
     else
@@ -266,47 +260,46 @@ namespace AvoidTheBug3D {
 
     // Bug state: represent
 
-    bugRotation->z = 0;
+    bug->rotation.z = 0;
 
     if (bugState == TURNING)
     {
 
-      bugRotation->y -= BUG_ROTATION_SPEED;
+      bug->rotation.y -= BUG_ROTATION_SPEED;
 
     }
     else if (bugState == DIVING_DOWN)
     {
-      bugRotation->z = -BUG_DIVE_TILT;
-      bugOffset->y -= bugVerticalSpeed;
+      bug->rotation.z = -BUG_DIVE_TILT;
+      bug->offset.y -= bugVerticalSpeed;
     }
     else if (bugState == DIVING_UP)
     {
-      bugRotation->z = BUG_DIVE_TILT;
-      bugOffset->y += bugVerticalSpeed;
+      bug->rotation.z = BUG_DIVE_TILT;
+      bug->offset.y += bugVerticalSpeed;
     }
 
-    if (bugRotation->y < -FULL_ROTATION)
-      bugRotation->y = 0.0f;
+    if (bug->rotation.y < -FULL_ROTATION)
+      bug->rotation.y = 0.0f;
 
 
-    bugOffset->x -= cos(bugRotation->y) * BUG_SPEED;
-    bugOffset->z -= sin(bugRotation->y) * BUG_SPEED;
+    bug->offset.x -= cos(bug->rotation.y) * BUG_SPEED;
+    bug->offset.z -= sin(bug->rotation.y) * BUG_SPEED;
 
-    if (bugOffset->z < MIN_Z)
-      bugOffset->z = MIN_Z;
-    if (bugOffset->z > MAX_Z)
-      bugOffset->z = MAX_Z;
+    if (bug->offset.z < MIN_Z)
+      bug->offset.z = MIN_Z;
+    if (bug->offset.z > MAX_Z)
+      bug->offset.z = MAX_Z;
 
-    if (bugOffset->x < bugOffset->z)
-      bugOffset->x = bugOffset->z;
-    if (bugOffset->x > -(bugOffset->z))
-      bugOffset->x = -(bugOffset->z);
+    if (bug->offset.x < bug->offset.z)
+      bug->offset.x = bug->offset.z;
+    if (bug->offset.x > -(bug->offset.z))
+      bug->offset.x = -(bug->offset.z);
 
     // Uncomment to see the bug's view of the world
-    /* renderer->cameraPosition = *bugOffset;
-       renderer->cameraRotation = *bugRotation;
-       renderer->cameraRotation.y -= 1.57f;*/
-
+    // renderer->cameraPosition = bug->offset;
+    // renderer->cameraRotation = bug->rotation;
+       
     bug->animate();
   }
 

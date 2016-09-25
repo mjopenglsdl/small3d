@@ -69,7 +69,7 @@ namespace small3d {
      * Get the image data
      * @return The image data
      */
-    const vector<float> getData() const;
+    const float* getData() const;
 
   };
 

@@ -25,32 +25,26 @@ namespace small3d {
   public:
 
     /**
-     * @fn	ModelLoader::ModelLoader();
-     *
-     * @brief	Default constructor.
+     * Default constructor
      *
      */
 
-    ModelLoader();
+    ModelLoader() = default;
 
     /**
-     * @fn	ModelLoader::~ModelLoader();
-     *
-     * @brief	Destructor.
+     * Destructor
      *
      */
 
-    virtual ~ModelLoader();
+    virtual ~ModelLoader() = default;
 
     /**
-     * @fn	virtual void ModelLoader::load(const string &filename, shared_ptr<Model> model);
-     *
-     * @brief	Loads a model from the given file into the model object.
+     * Loads a model from the given file into the model object.
      *
      * @param	filename	Name of the file in which the model is stored.
      * @param	model   	The model.
      */
 
-    virtual void load(const string &filename, Model &model);
+    virtual void load(string filename, Model &model);
   };
 }

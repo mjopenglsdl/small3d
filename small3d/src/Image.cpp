@@ -167,8 +167,8 @@ namespace small3d {
     return imageDataSize;
   }
 
-  const vector<float> Image::getData() const {
-    return imageData;
+  const float* Image::getData() const {
+    return imageData.data();
   }
 
 }

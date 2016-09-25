@@ -29,10 +29,7 @@ namespace small3d
 {
 
   /**
-   * @class	Renderer
-   *
-   * @brief	Renderer class, which can render using either OpenGL v3.3 or v2.1
-   *
+   * Renderer class, which can render using either OpenGL v3.3 or v2.1
    */
 
   class Renderer
@@ -97,6 +94,19 @@ namespace small3d
      */
     unordered_map<string, GLuint> *textures;
 
+    /**
+     * Overrides the position of the next object to be rendered.
+     * @param offset The offset (location coordinates)
+     * @param rotation The rotation (around the x, y and z axes)
+     */
+    void overrideNextObjectPosition(const glm::vec3 &offset, const glm::vec3 &rotation);
+
+    /**
+     * Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).
+     */
+
+    void positionCamera();
+
   public:
 
     /**
@@ -126,31 +136,31 @@ namespace small3d
      * 				The shader code can be changed, provided that their inputs
      * 				and outputs are maintained the same.
      */
-    void init(const int width, const int height, const bool fullScreen, const string &windowTitle = "",
-	      const float &frustumScale = 1.0f, const float &zNear = 1.0f,
-	      const float &zFar = 24.0f, const float &zOffsetFromCamera = -1.0f,
-	      const string &shadersPath = "resources/shaders/");
+    void init(int width, int height, bool fullScreen, string windowTitle = "",
+	      float frustumScale = 1.0f, float zNear = 1.0f,
+	      float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
+	      string shadersPath = "resources/shaders/");
 
     /**
-     * @brief	Vector indicating the direction of the light in the scene.
+     * Vector indicating the direction of the light in the scene.
      */
 
     glm::vec3 lightDirection;
 
     /**
-     * @brief	The camera position in world space.
+     * The camera position in world space.
      */
 
     glm::vec3 cameraPosition;
 
     /**
-     * @brief	The camera rotation (around the x, y and z axes)
+     * The camera rotation (around the x, y and z axes)
      */
 
     glm::vec3 cameraRotation;
 
     /**
-     * @brief	The light intensity (set to -1.0f if no lighting is to be used).
+     * The light intensity (set to -1.0f if no lighting is to be used).
      */
 
     float lightIntensity;
@@ -163,44 +173,22 @@ namespace small3d
      * @param height The height of the texture, in pixels
      * @return The texture handle
      */
-    GLuint generateTexture(const string &name, const float *texture, const int width, const int height);
+    GLuint generateTexture(string name, const float *texture, int width, int height);
 
     /**
-     * @fn	void Renderer::deleteTexture(const string &name);
-     *
-     * @brief	Deletes the texture indicated by the given name.
+     * Deletes the texture indicated by the given name.
      *
      * @param	name	The name of the texture.
      */
 
-    void deleteTexture(const string &name);
+    void deleteTexture(string name);
 
     /**
      * Get the handle of a texture which has already been generated (see generateTexture)
      * @param name The name of the texture
      * @return The texture handle (0 if not found)
      */
-    GLuint getTextureHandle(const string &name);
-
-    /**
-     * @fn	void Renderer::positionSceneObject(const glm::vec3 &offset, const glm::vec3 &rotation);
-     *
-     * @brief	Positions the scene object (sets offset and rotation)
-     *
-     * @param	offset  	The offset (x, y, z values).
-     * @param	rotation	The rotation (around the x, y and z axes).
-     */
-
-    void positionSceneObject(const glm::vec3 &offset, const glm::vec3 &rotation);
-
-    /**
-     * @fn	void Renderer::positionCamera();
-     *
-     * @brief	Position the camera.
-     *
-     */
-
-    void positionCamera();
+    GLuint getTextureHandle(string name);
 
     /**
      * Render an image. The image is in effect a textured quad, since 4 vertex positions are
@@ -211,8 +199,8 @@ namespace small3d
      * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
      * @param offset	The offset (position) at which the quad of the image will be drawn.
      */
-    void renderImage(const float *vertices, const string &textureName, const bool &perspective = false,
-		     const glm::vec3 &offset = glm::vec3(0.0f, 0.0f, 0.0f));
+    void renderImage(const float *vertices, string textureName, bool perspective = false,
+		     glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
 
     /**
      * Render a scene object

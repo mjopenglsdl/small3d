@@ -62,7 +62,7 @@ namespace AvoidTheBug3D {
       new SceneObject("bug",
         "resources/models/Bug/bugAnim",
         9));
-    bug->setColour(0.2f, 0.2f, 0.2f, 1.0f);
+    bug->colour = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
     bug->setFrameDelay(2);
 
     tree = shared_ptr<SceneObject>(
@@ -71,8 +71,8 @@ namespace AvoidTheBug3D {
         1, "resources/models/Tree/tree.png",
         "resources/models/TreeBB/TreeBB.obj"));
 
-    tree->setOffset(2.6f, GROUND_Y, -8.0f);
-    tree->setRotation(0.0f, -0.5f, 0.0f);
+    tree->offset = glm::vec3(2.6f, GROUND_Y, -8.0f);
+    tree->rotation = glm::vec3(0.0f, -0.5f, 0.0f);
 
     gameState = START_SCREEN;
 	
@@ -91,8 +91,8 @@ namespace AvoidTheBug3D {
 
   void GameLogic::initGame()
   {
-    goat->setOffset(-1.2f, GROUND_Y, -4.0f);
-    bug->setOffset(3.6f, GROUND_Y + BUG_START_ALTITUDE, -5.0f);
+    goat->offset = glm::vec3(-1.2f, GROUND_Y, -4.0f);
+    bug->offset = glm::vec3(3.6f, GROUND_Y + BUG_START_ALTITUDE, -5.0f);
 
     bug->startAnimating();
 
@@ -102,87 +102,63 @@ namespace AvoidTheBug3D {
 
   void GameLogic::moveGoat()
   {
-    shared_ptr<glm::vec3> goatRotation = goat->getRotation();
-    shared_ptr<glm::vec3> goatOffset = goat->getOffset();
-
-    goat->stopAnimating();
-
-    if (goatOffset->z < MIN_Z + 1.0f)
-      goatOffset->z = MIN_Z + 1.0f;
-    if (goatOffset->z > MAX_Z - 1.0f)
-      goatOffset->z = MAX_Z - 1.0f;
-
-    if (goatOffset->x < goatOffset->z)
-      goatOffset->x = goatOffset->z;
-    if (goatOffset->x > -(goatOffset->z))
-      goatOffset->x = -(goatOffset->z);
-
     goat->animate();
-
-    goat->setRotation(0.0f, goatRotation->y, 0.0f);
 
   }
 
   void GameLogic::moveBug(const KeyInput &keyInput)
   {
-    shared_ptr<glm::vec3> bugRotation = bug->getRotation();
-    shared_ptr<glm::vec3> bugOffset = bug->getOffset();
 
     if (keyInput.left) {
-      bugRotation->y -= BUG_ROTATION_SPEED;
+      bug->rotation.y -= BUG_ROTATION_SPEED;
 
-      if (bugRotation->y < -FULL_ROTATION)
-        bugRotation->y = 0.0f;
+      if (bug->rotation.y < -FULL_ROTATION)
+        bug->rotation.y = 0.0f;
 
 
     }
     else if (keyInput.right) {
-      bugRotation->y += BUG_ROTATION_SPEED;
+      bug->rotation.y += BUG_ROTATION_SPEED;
 
-      if (bugRotation->y > FULL_ROTATION)
-        bugRotation->y = 0.0f;
+      if (bug->rotation.y > FULL_ROTATION)
+        bug->rotation.y = 0.0f;
 
 
     }
 
     if (keyInput.up) {
 
-      bugRotation->z -= BUG_TILT_SPEED;
+      bug->rotation.z -= BUG_TILT_SPEED;
 
-      if (bugRotation->z < -0.75f)
-        bugRotation->z = -0.75f;
+      if (bug->rotation.z < -0.75f)
+        bug->rotation.z = -0.75f;
 
 
     }
     else if (keyInput.down) {
 
-      bugRotation->z += BUG_TILT_SPEED;
+      bug->rotation.z += BUG_TILT_SPEED;
 
-      if (bugRotation->z > 0.75f)
-        bugRotation->z = 0.75f;
+      if (bug->rotation.z > 0.75f)
+        bug->rotation.z = 0.75f;
     }
 
     if (keyInput.space) {
-      bugOffset->x -= cos(bugRotation->y) * BUG_SPEED;
-      bugOffset->z -= sin(bugRotation->y) * BUG_SPEED;
-      bugOffset->y += sin(bugRotation->z) * BUG_SPEED;
+      bug->offset.x -= cos(bug->rotation.y) * BUG_SPEED;
+      bug->offset.z -= sin(bug->rotation.y) * BUG_SPEED;
+      bug->offset.y += sin(bug->rotation.z) * BUG_SPEED;
     }
 	
-    if (bugOffset->y < GROUND_Y + 0.5f)
-      bugOffset->y = GROUND_Y + 0.5f;
+    if (bug->offset.y < GROUND_Y + 0.5f)
+      bug->offset.y = GROUND_Y + 0.5f;
 
 	  // Looking through the eyes of the bug
-    renderer->cameraPosition = *bugOffset;
-    renderer->cameraRotation.x = -bugRotation->z;
-    renderer->cameraRotation.z = bugRotation->x;
-    renderer->cameraRotation.y = bugRotation->y - 1.57f;
-
-    bug->setRotation(bugRotation->x, bugRotation->y, bugRotation->z);
+    renderer->cameraPosition = bug->offset;
+    renderer->cameraRotation = bug->rotation;
+	
     bug->animate();
 
-
-
-    if (goat->collidesWithPoint(bug->getOffset()->x, bug->getOffset()->y, bug->getOffset()->z))
+    if (goat->collidesWithPoint(bug->offset.x, bug->offset.y, bug->offset.z))
     {
       gameState = START_SCREEN;
       sound->play("bah");

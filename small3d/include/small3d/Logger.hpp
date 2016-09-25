@@ -32,9 +32,7 @@ using namespace std;
 namespace small3d {
 
   /**
-   * @enum	LogLevel
-   *
-   * @brief	Possible logging levels.
+   * Possible logging levels.
    */
 
   enum LogLevel {
@@ -42,10 +40,7 @@ namespace small3d {
   };
 
   /**
-   * @class	Logger
-   *
-   * @brief	The standard logging class for small3d.
-   *
+   * The standard logging class for small3d.
    */
 
   class Logger {
@@ -54,10 +49,7 @@ namespace small3d {
   public:
 
     /**
-     * @fn	Logger::Logger(ostream &stream);
-     *
-     * @brief	Constructor with stream for output.
-     *
+     * Constructor with stream for output.
      *
      * @param [in,out]	stream	The stream to which events will be logged.
      */
@@ -65,18 +57,13 @@ namespace small3d {
     Logger(ostream &stream);
 
     /**
-     * @fn	Logger::~Logger();
-     *
-     * @brief	Destructor.
-     *
+     * Destructor.
      */
 
     ~Logger();
 
     /**
-     * @fn	void Logger::append(const LogLevel level, const string message);
-     *
-     * @brief	Appends a message to the logger.
+     * Appends a message to the logger.
      *
      * @param	level  	The logging level (debug, info, etc).
      * @param	message	The message.

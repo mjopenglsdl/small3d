@@ -206,10 +206,10 @@ namespace small3d {
     }
   }
 
-  void Renderer::init(const int width, const int height, const bool fullScreen, const string &windowTitle,
-                      const float &frustumScale, const float &zNear,
-                      const float &zFar, const float &zOffsetFromCamera,
-                      const string &shadersPath) {
+  void Renderer::init(int width, int height, bool fullScreen, string windowTitle,
+                      float frustumScale, float zNear,
+                      float zFar, float zOffsetFromCamera,
+                      string shadersPath) {
     this->initSDL(width, height, fullScreen, windowTitle);
 
     this->frustumScale = frustumScale;
@@ -325,7 +325,7 @@ namespace small3d {
     glUseProgram(0);
   }
 
-  GLuint Renderer::generateTexture(const string &name, const float *texture, const int width, const int height) {
+  GLuint Renderer::generateTexture(string name, const float* texture, int width, int height) {
 
     GLuint textureHandle;
 
@@ -338,14 +338,14 @@ namespace small3d {
     GLint internalFormat = isOpenGL33Supported ? GL_RGBA32F : GL_RGBA;
 
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGBA,
-                 GL_FLOAT, &texture[0]);
+                 GL_FLOAT, texture);
 
     textures->insert(make_pair(name, textureHandle));
 
     return textureHandle;
   }
 
-  void Renderer::deleteTexture(const string &name) {
+  void Renderer::deleteTexture(string name) {
     unordered_map<string, GLuint>::iterator nameTexturePair = textures->find(name);
 
     if (nameTexturePair != textures->end()) {
@@ -354,7 +354,7 @@ namespace small3d {
     }
   }
 
-  GLuint Renderer::getTextureHandle(const string &name) {
+  GLuint Renderer::getTextureHandle(string name) {
     GLuint handle = 0;
 
     unordered_map<string, GLuint>::iterator nameTexturePair = textures->find(name);
@@ -366,7 +366,7 @@ namespace small3d {
     return handle;
   }
 
-  void Renderer::positionSceneObject(const glm::vec3 &offset, const glm::vec3 &rotation) {
+  void Renderer::overrideNextObjectPosition(const glm::vec3 &offset, const glm::vec3 &rotation) {
     // Rotation
 
     GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
@@ -395,9 +395,10 @@ namespace small3d {
     GLint zCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
                                                                "zCameraRotationMatrix");
 
-    glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(-cameraRotation.x)));
-    glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(-cameraRotation.y)));
-    glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(-cameraRotation.z)));
+
+    glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(cameraRotation.z)));
+    glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(-cameraRotation.y + 1.57f)));
+    glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(-cameraRotation.x)));
 
     // Camera position
 
@@ -406,8 +407,8 @@ namespace small3d {
   }
 
 
-  void Renderer::renderImage(const float *vertices, const string &textureName, const bool &perspective,
-                             const glm::vec3 &offset) {
+  void Renderer::renderImage(const float *vertices, string textureName, bool perspective,
+                             glm::vec3 offset) {
 
     glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
 
@@ -487,7 +488,7 @@ namespace small3d {
       GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
       glUniform1f(lightIntensityUniform, lightIntensity);
 
-      positionSceneObject(offset, glm::vec3(0.0f, 0.0f, 0.0f));
+      overrideNextObjectPosition(offset, glm::vec3(0.0f, 0.0f, 0.0f));
       positionCamera();
     }
 
@@ -568,7 +569,7 @@ namespace small3d {
       texture = this->getTextureHandle(sceneObject->getName());
 
       if (texture == 0) {
-        texture = generateTexture(sceneObject->getName(), sceneObject->getTexture().getData().data(),
+        texture = generateTexture(sceneObject->getName(), sceneObject->getTexture().getData(),
                                   sceneObject->getTexture().getWidth(),
                                   sceneObject->getTexture().getHeight());
       }
@@ -589,7 +590,7 @@ namespace small3d {
     }
     else {
       // If there is no texture, use the colour of the object
-      glUniform4fv(colourUniform, 1, glm::value_ptr(sceneObject->getColour()));
+      glUniform4fv(colourUniform, 1, glm::value_ptr(sceneObject->colour));
     }
 
     // Lighting
@@ -601,7 +602,7 @@ namespace small3d {
     GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
     glUniform1f(lightIntensityUniform, lightIntensity);
 
-    positionSceneObject(sceneObject->getOffset(), sceneObject->getRotation());
+    overrideNextObjectPosition(sceneObject->offset, sceneObject->rotation);
 
     positionCamera();
 

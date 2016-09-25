@@ -18,17 +18,14 @@ using namespace std;
 namespace small3d {
 
   /**
-   * @class	BoundingBoxes
-   *
-   * @brief	Bounding boxes for a model. Even though the loading logic is similar
-   * 			to that of the Model class, BoundingBoxes is a separate class with
-   * 			a separate loading function, because it loads a Wavefront file
-   * 			exported with a different set of options (see README.md).
-   * 			Each BoundingBoxes class may contain more than one bounding boxes,
-   *                    which means that it is a set of bounding boxes. These are
-   * 			not separated into different structures because each has a set of
-   * 			six faces and this fact can be used to separate them at runtime.
-   *
+   * Bounding boxes for a model. Even though the loading logic is similar
+   * to that of the Model class, BoundingBoxes is a separate class with
+   * a separate loading function, because it loads a Wavefront file
+   * exported with a different set of options (see README.md).
+   * Each BoundingBoxes class may contain more than one bounding boxes,
+   * which means that it is a set of bounding boxes. These are
+   * not separated into different structures because each has a set of
+   * six faces and this fact can be used to separate them at runtime.
    */
 
   class BoundingBoxes {
@@ -62,13 +59,13 @@ namespace small3d {
     ~BoundingBoxes() = default;
 
     /**
-     * @brief	Vertex coordinates read from Wavefront .obj file
+     * Vertex coordinates read from Wavefront .obj file
      */
 
     vector<vector<float> > vertices;
 
     /**
-     * @brief	Faces vertex indexes read from Wavefront .obj file
+     * Faces vertex indexes read from Wavefront .obj file
      */
 
     vector<vector<int> > facesVertexIndexes;

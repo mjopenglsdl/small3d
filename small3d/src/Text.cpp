@@ -69,8 +69,8 @@ namespace small3d {
     //TTF_Quit();
   }
 
-  void Text::renderText(const string &text, const SDL_Color &colour,
-			const float &topX, const float &topY, const float &bottomX, const float &bottomY)
+  void Text::renderText(string text, const SDL_Color &colour,
+			float topX, float topY, float bottomX, float bottomY)
   {
     GLuint textHandle = renderer->getTextureHandle(intToStr(size) + "text_" + text);
 
@@ -130,7 +130,7 @@ namespace small3d {
     renderer->renderImage(boxVerts, intToStr(size) + "text_" + text);
   }
 
-  void Text::deleteTextTexture( const string &text )
+  void Text::deleteTextTexture( string text )
   {
     renderer->deleteTexture(intToStr(size) + "text_" + text);
   }
