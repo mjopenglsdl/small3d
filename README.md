@@ -18,7 +18,7 @@ The best way to get started is to take a look at the source code of two provided
 - samples/AvoidTheBug3D
 - samples/ChaseTheGoat3D
 
-You can experiment by modifying them before using the engine for your own projects. It would also help to compile the API documentation using doxygen.
+You can experiment by modifying them before using the engine for your own projects. You can also review the [API documentation](https://codedocs.xyz/dimi309/small3d/).
 
 As can be seen from the sample games, the proposed way to use the engine is to link to it from [conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable).
 
