@@ -50,10 +50,8 @@ namespace small3d {
      * 						to 48.
      */
 
-    Text(
-	 shared_ptr<Renderer> renderer,
-	 const string &ttfFontPath="resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
-	 const int &size = 48);
+    Text(shared_ptr<Renderer> renderer, string ttfFontPath="resources/fonts/CrusoeText/CrusoeText-Regular.ttf",
+         int size = 48);
 
     /**
      * Destructor

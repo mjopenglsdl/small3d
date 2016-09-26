@@ -26,8 +26,7 @@ namespace small3d {
     return string(buffer);
   }
 
-  Text::Text(shared_ptr<Renderer> renderer,
-	     const string &ttfFontPath, const int &size)
+  Text::Text(shared_ptr<Renderer> renderer, string ttfFontPath, int size)
   {
     this->renderer = renderer;
 
