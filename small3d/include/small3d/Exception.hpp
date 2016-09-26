@@ -16,7 +16,8 @@ using namespace std;
 namespace small3d {
 
   /**
-   * The standard exception for small3d.
+   * @class Exception
+   * @brief The standard exception for small3d.
    */
 
   class Exception : public exception  {

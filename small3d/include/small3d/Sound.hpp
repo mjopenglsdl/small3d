@@ -20,7 +20,8 @@ using namespace std;
 namespace small3d {
 
   /**
-   * Sound management class
+   * @class Sound
+   * @brief Sound management class
    */
 
   class Sound {

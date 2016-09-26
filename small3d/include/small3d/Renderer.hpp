@@ -29,7 +29,8 @@ namespace small3d
 {
 
   /**
-   * Renderer class, which can render using either OpenGL v3.3 or v2.1
+   * @class Renderer
+   * @brief Renderer class, which can render using either OpenGL v3.3 or v2.1
    */
 
   class Renderer

@@ -40,7 +40,8 @@ namespace small3d {
   };
 
   /**
-   * The standard logging class for small3d.
+   * @class Logger
+   * @brief The standard logging class for small3d.
    */
 
   class Logger {

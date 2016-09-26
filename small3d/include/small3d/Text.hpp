@@ -22,7 +22,8 @@ namespace small3d {
   string intToStr(int number);
 
   /**
-   * Structure for rendering text
+   * @struct Text
+   * @brief Structure for rendering text
    */
 
   struct Text {

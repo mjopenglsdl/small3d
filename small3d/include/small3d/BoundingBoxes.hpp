@@ -18,7 +18,8 @@ using namespace std;
 namespace small3d {
 
   /**
-   * Bounding boxes for a model. Even though the loading logic is similar
+   * @class BoundingBoxes
+   * @brief Bounding boxes for a model. Even though the loading logic is similar
    * to that of the Model class, BoundingBoxes is a separate class with
    * a separate loading function, because it loads a Wavefront file
    * exported with a different set of options (see README.md).
