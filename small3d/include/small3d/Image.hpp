@@ -37,36 +37,36 @@ namespace small3d {
   public:
 
     /**
-     * Default constructor
+     * @brief Default constructor
      * @param fileLocation Location of image file
      */
     Image(string fileLocation = "");
 
     /**
-     * Destructor
+     * @brief Destructor
      */
     ~Image() = default;
 
     /**
-     * Get the image width
+     * @brief Get the image width
      * @return The image width
      */
     const int getWidth() const;
 
     /**
-     * Get the image height
+     * @brief Get the image height
      * @return The image height
      */
     const int getHeight() const;
 
     /**
-     * Get the size of the image, in bytes
+     * @brief Get the size of the image, in bytes
      * @return Size of the image, in bytes
      */
     const unsigned int size() const;
 
     /**
-     * Get the image data
+     * @brief Get the image data
      * @return The image data
      */
     const float* getData() const;

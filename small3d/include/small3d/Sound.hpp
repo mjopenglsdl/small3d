@@ -35,17 +35,17 @@ namespace small3d {
   public:
 
     /**
-     * Constructor
+     * @brief Constructor
      */
     Sound();
 
     /**
-     * Destructor
+     * @brief Destructor
      */
     ~Sound();
 
     /**
-     * Loads a sound from a file. For the moment, the file can
+     * @brief Loads a sound from a file. For the moment, the file can
      * only be an .ogg file.
      *
      * @param soundFilePath The path to the file, relative to the
@@ -57,7 +57,7 @@ namespace small3d {
     void load(string soundFilePath, string soundName);
 
     /**
-     * Plays a sound.
+     * @brief Plays a sound.
      *
      * @param soundName The name of the sound to be played.
      *
@@ -65,7 +65,7 @@ namespace small3d {
     void play(string soundName);
 
     /**
-     * Delete a sound from memory.
+     * @brief Deletes a sound from memory.
      *
      * @param soundName The name of the sound to be deleted.
      *

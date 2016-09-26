@@ -57,14 +57,14 @@ namespace small3d
     float zOffsetFromCamera;
 
     /**
-     * Load a shader's source code from a file into a string
+     * @brief Load a shader's source code from a file into a string
      * @param fileLocation The file's location, relative to the game path
      * @return String containing the shader's source code
      */
     string loadShaderFromFile(const string &fileLocation);
 
     /**
-     * Compile a shader's source code
+     * @brief Compile a shader's source code
      * @param shaderSource String containing the shader's source code
      * @param shaderType Type of shader (GL_VERTEX_SHADER, GL_FRAGMENT_SHADER, GL_GEOMETRY_SHADER - the latter for OpenGL 3.3)
      * @return OpenGL shader reference
@@ -72,17 +72,17 @@ namespace small3d
     GLuint compileShader(const string &shaderSource, const GLenum shaderType);
 
     /**
-     * Initialise SDL
+     * @brief Initialise SDL
      */
     void initSDL(int width, int height, bool fullScreen, const string &windowTitle = "");
 
     /**
-     * Retrieve the information of what went wrong when linking a shader program
+     * @brief Retrieve the information of what went wrong when linking a shader program
      */
     string getProgramInfoLog(const GLuint linkedProgram) const;
 
     /**
-     * Detect if OpenGL 3.3 is supported. If not, fall back to OpenGL 2.1.
+     * @brief Detect if OpenGL 3.3 is supported. If not, fall back to OpenGL 2.1.
      * If neither of the two is supported, an exception is raised.
      */
     void detectOpenGLVersion();
@@ -90,20 +90,20 @@ namespace small3d
     void checkForOpenGLErrors(string when, bool abort);
 
     /**
-     * Textures used in the scene, each corresponding to the name of one of
+     * @brief Textures used in the scene, each corresponding to the name of one of
      * the rendered models
      */
     unordered_map<string, GLuint> *textures;
 
     /**
-     * Overrides the position of the next object to be rendered.
+     * @brief Overrides the position of the next object to be rendered.
      * @param offset The offset (location coordinates)
      * @param rotation The rotation (around the x, y and z axes)
      */
     void overrideNextObjectPosition(const glm::vec3 &offset, const glm::vec3 &rotation);
 
     /**
-     * Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).
+     * @brief Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).
      */
 
     void positionCamera();
@@ -116,7 +116,7 @@ namespace small3d
     Renderer();
 
     /**
-     * Initialise renderer (OpenGL, GLEW, etc)
+     * @brief Initialise renderer (OpenGL, GLEW, etc)
      * @param width The width of the window
      * @param height The height of the window
      * @param fullScreen	Will the Renderer run in full screen mode? If set to true,
@@ -143,31 +143,31 @@ namespace small3d
 	      string shadersPath = "resources/shaders/");
 
     /**
-     * Vector indicating the direction of the light in the scene.
+     * @brief Vector, indicating the direction of the light in the scene.
      */
 
     glm::vec3 lightDirection;
 
     /**
-     * The camera position in world space.
+     * @brief The camera position in world space.
      */
 
     glm::vec3 cameraPosition;
 
     /**
-     * The camera rotation (around the x, y and z axes)
+     * @brief The camera rotation (around the x, y and z axes)
      */
 
     glm::vec3 cameraRotation;
 
     /**
-     * The light intensity (set to -1.0f if no lighting is to be used).
+     * @brief The light intensity (set to -1.0f if no lighting is to be used).
      */
 
     float lightIntensity;
 
     /**
-     * Generate a texture in OpenGL, using the given data
+     * @brief Generate a texture in OpenGL, using the given data
      * @param name The name by which the texture will be known
      * @param texture The texture data
      * @param width The width of the texture, in pixels
@@ -177,7 +177,7 @@ namespace small3d
     GLuint generateTexture(string name, const float *texture, int width, int height);
 
     /**
-     * Deletes the texture indicated by the given name.
+     * @brief Deletes the texture indicated by the given name.
      *
      * @param	name	The name of the texture.
      */
@@ -185,14 +185,14 @@ namespace small3d
     void deleteTexture(string name);
 
     /**
-     * Get the handle of a texture which has already been generated (see generateTexture)
+     * @brief Get the handle of a texture which has already been generated (see generateTexture)
      * @param name The name of the texture
      * @return The texture handle (0 if not found)
      */
     GLuint getTextureHandle(string name);
 
     /**
-     * Render an image. The image is in effect a textured quad, since 4 vertex positions are
+     * @brief Render an image. The image is in effect a textured quad, since 4 vertex positions are
      * passed to this method, in order to define its position and size.
      * @param vertices The vertices
      * @param textureName The name of the texture, containing the image (must have been loaded with
@@ -204,24 +204,24 @@ namespace small3d
 		     glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
 
     /**
-     * Render a scene object
+     * @brief Render a scene object
      * @param sceneObject The scene object
      */
     void renderSceneObject(shared_ptr<SceneObject> sceneObject);
 
     /**
-     * Clears the screen.
+     * @brief Clears the screen.
      */
     void clearScreen();
 
     /**
-     * This is a double buffered system and this commands swaps
+     * @brief This is a double buffered system and this commands swaps
      * the buffers
      */
     void swapBuffers();
 
     /**
-     * Destructor
+     * @brief Destructor
      */
     ~Renderer();
   };

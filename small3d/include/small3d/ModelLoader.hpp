@@ -25,21 +25,21 @@ namespace small3d {
   public:
 
     /**
-     * Default constructor
+     * @brief Default constructor
      *
      */
 
     ModelLoader() = default;
 
     /**
-     * Destructor
+     * @brief Destructor
      *
      */
 
     virtual ~ModelLoader() = default;
 
     /**
-     * Loads a model from the given file into the model object.
+     * @brief Loads a model from the given file into the model object.
      *
      * @param	filename	Name of the file in which the model is stored.
      * @param	model   	The model.

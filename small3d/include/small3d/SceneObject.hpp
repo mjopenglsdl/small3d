@@ -131,7 +131,7 @@ namespace small3d
     BoundingBoxes boundingBoxes;
 
     /**
-     * Check if the object collides with a point of the given
+     * @brief Check if the object collides with a point of the given
      * coordinates
      *
      * @param	x	The x coordinate of the point
@@ -144,7 +144,6 @@ namespace small3d
     bool collidesWithPoint(float x, float y, float z);
 
     /**
-     * @fn	bool SceneObject::collidesWithSceneObject(SceneObject otherObject);
      *
      * @brief	Check if the object collides with another given object.
      *

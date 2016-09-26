@@ -15,7 +15,7 @@ using namespace std;
 namespace small3d {
 
   /**
-   * Separates a string into tokens, using the given character
+   * @brief Separates a string into tokens, using the given character
    * as a separator
    *
    * @param	input		  	The input string

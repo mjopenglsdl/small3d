@@ -37,42 +37,42 @@ namespace small3d {
   public:
 
     /**
-     * The offset of the set of bounding boxes (their position on the scene).
+     * @brief The offset of the set of bounding boxes (their position on the scene).
      */
 
     glm::vec3 offset;
 
     /**
-     * The roation (around the x, y and z axes) of the set of bounding boxes.
+     * @brief The roation (around the x, y and z axes) of the set of bounding boxes.
      */
 
     glm::vec3 rotation;
 
     /**
-     * Constructor
+     * @brief Constructor
      */
 
     BoundingBoxes();
 
     /**
-     * Destructor
+     * @brief Destructor
      */
     ~BoundingBoxes() = default;
 
     /**
-     * Vertex coordinates read from Wavefront .obj file
+     * @brief Vertex coordinates read from Wavefront .obj file
      */
 
     vector<vector<float> > vertices;
 
     /**
-     * Faces vertex indexes read from Wavefront .obj file
+     * @brief Faces vertex indexes read from Wavefront .obj file
      */
 
     vector<vector<int> > facesVertexIndexes;
 
     /**
-     * Load the bounding boxes from a Wavefront file.
+     * @brief Load the bounding boxes from a Wavefront file.
      *
      * @param	fileLocation	The file location, relative to the game's
      * 							execution directory
@@ -81,7 +81,7 @@ namespace small3d {
     void loadFromFile(string fileLocation);
 
     /**
-     * Check if a point collides (or is inside) any of the boxes
+     * @brief Check if a point collides (or is inside) any of the boxes
      * assuming that they are in a given offset and have a certain rotation.
      * The reason the boxes' offset and rotation are passed as parameters is so
      * that there is no need to keep track of them together with the corresponding
@@ -97,7 +97,7 @@ namespace small3d {
     bool pointIsWithin(float pointX, float pointY, float pointZ) const;
 
     /**
-     * Check if another set of bounding boxes is located with this set (even partly)
+     * @brief Check if another set of bounding boxes is located with this set (even partly)
      *
      * @return	true if it succeeds, false if it fails.
      */

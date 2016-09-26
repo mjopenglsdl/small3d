@@ -50,19 +50,19 @@ namespace small3d {
   public:
 
     /**
-     * Default constructor
+     * @brief Default constructor
      */
 
     WavefrontLoader();
 
     /**
-     * Destructor.
+     * @brief Destructor.
      */
 
     ~WavefrontLoader() = default;
 
     /**
-     *	Loads a model from the given wavefront .obj file into the model object.
+     * @brief Loads a model from the given wavefront .obj file into the model object.
      *
      * @param	fileLocation	Path to the file in which the model is stored.
      * @param	model   	The model.

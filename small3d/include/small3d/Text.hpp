@@ -36,7 +36,7 @@ namespace small3d {
   public:
 
     /**
-     * Constructor
+     * @brief Constructor
      *
      * @param	renderer   	The renderer to be used.
      * @param	ttfFontPath	(optional) The path to the TrueType font to be used by the Renderer,
@@ -63,7 +63,7 @@ namespace small3d {
     ~Text();
 
     /**
-     * Render some text on the screen. A texture will be generated, containing the given
+     * @brief Render some text on the screen. A texture will be generated, containing the given
      * text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space.
      * @param text The text to be rendered
      * @param colour The colour in which the text will be rendered
@@ -76,8 +76,6 @@ namespace small3d {
 		    float topX, float topY, float bottomX, float bottomY);
 
     /**
-     * @fn	void deleteTextTexture(const string &text);
-     *
      * @brief	Deletes a texture, generated for text rendering, from the GPU and
      * 			from the renderer's map of textures
      *

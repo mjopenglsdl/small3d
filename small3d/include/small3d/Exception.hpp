@@ -26,13 +26,13 @@ namespace small3d {
   public:
 
     /**
-     * Default constructor.
+     * @brief Default constructor.
      */
 
     Exception();
 
     /**
-     * Constructor with message.
+     * @brief Constructor with message.
      *
      * @param	message	The message.
      */
@@ -40,7 +40,7 @@ namespace small3d {
     Exception(string message);
 
     /**
-     * Returns a null terminated character sequence that can be used to identify the exception.
+     * @brief Returns a null terminated character sequence that can be used to identify the exception.
      *
      * @return	Information about the exception.
      */

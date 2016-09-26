@@ -30,13 +30,13 @@ namespace small3d {
     char *data;
 
     /**
-     * Default constructor
+     * @brief Default constructor
      */
 
     SoundData();
 
     /**
-     * Destructor
+     * @brief Destructor
      */
 
     ~SoundData();

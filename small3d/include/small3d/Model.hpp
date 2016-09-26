@@ -29,20 +29,20 @@ namespace small3d {
   public:
 
     /**
-     * The vertex data. This is an array, which is to be treated as a 4 column table, holding
+     * @brief The vertex data. This is an array, which is to be treated as a 4 column table, holding
      * the x, y, z values in each column. The fourth column is there to assist in matrix operations.
      */
 
     vector<float> vertexData;
 
     /**
-     * Size of the vertex data, in bytes.
+     * @brief Size of the vertex data, in bytes.
      */
 
     int vertexDataSize;
 
     /**
-     * 3 column table. Each element refers to a "row" in the vertex data table. Each "row"
+     * @brief 3 column table. Each element refers to a "row" in the vertex data table. Each "row"
      * in the index data table forms a triangle.
      *
      */
@@ -50,13 +50,13 @@ namespace small3d {
     vector<unsigned int> indexData;
 
     /**
-     * Size of the index data, in bytes
+     * @brief Size of the index data, in bytes
      */
 
     int indexDataSize;
 
     /**
-     * Array, to be treated as a 3 column table. Each "row" contains the x, y and z components
+     * @brief Array, to be treated as a 3 column table. Each "row" contains the x, y and z components
      * of the vector representing the normal of a vertex. The position of the "row" in the array
      * is the same as the position of the corresponding vertex "row" in the vertexData array.
      */
@@ -64,13 +64,13 @@ namespace small3d {
     vector<float> normalsData;
 
     /**
-     * Size of the normals data, in bytes.
+     * @brief Size of the normals data, in bytes.
      */
 
     int normalsDataSize;
 
     /**
-     * Array, to be treated as a 2 column table. Each "row" contains the x and y components
+     * @brief Array, to be treated as a 2 column table. Each "row" contains the x and y components
      * of the pixel coordinates on the model's texture image for the vertex in the corresponding
      * "row" of the vertex data "table"
      */
@@ -78,13 +78,13 @@ namespace small3d {
     vector<float> textureCoordsData;
 
     /**
-     * Size of the texture coordinates data, in bytes.
+     * @brief Size of the texture coordinates data, in bytes.
      */
 
     int textureCoordsDataSize;
 
     /**
-     * Default constructor
+     * @brief Default constructor
      */
 
     Model();
