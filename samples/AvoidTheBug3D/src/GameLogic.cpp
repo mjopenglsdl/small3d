@@ -37,13 +37,10 @@ namespace AvoidTheBug3D {
   GameLogic::GameLogic() {
     initLogger();
 
-    renderer = shared_ptr<Renderer>(new Renderer());
+    renderer = shared_ptr<Renderer>(new Renderer(854, 480, false, "Avoid the Bug 3D"));
 	
-	renderer->cameraRotation = glm::vec3(0.0f, 1.57f, 0.0f);
+	  renderer->cameraRotation = glm::vec3(0.0f, 1.57f, 0.0f);
 
-    renderer->init(854, 480, false, "Avoid the Bug 3D");
-
-    crusoeText48 = shared_ptr<Text>(new Text(renderer));
 
     unique_ptr<Image> startScreenTexture(
       new Image("resources/images/startScreen.png"));
@@ -360,12 +357,12 @@ namespace AvoidTheBug3D {
         -1.0f, 1.0f, 1.0f, 1.0f
       };
 
-      renderer->renderImage(&startScreenVerts[0], "startScreen");
+      renderer->render(&startScreenVerts[0], "startScreen");
 
       if (seconds != 0)
       {
         SDL_Color textColour = { 255, 100, 0, 255 };
-        crusoeText48->renderText("Goat not bitten for " + intToStr(seconds) + " seconds",
+        renderer->render("Goat not bitten for " + intToStr(seconds) + " seconds",
           textColour, -0.95f, -0.6f, 0.0f, -0.8f);
       }
 
@@ -381,7 +378,7 @@ namespace AvoidTheBug3D {
         -1.0f, 1.0f, 1.0f, 1.0f
       };
 
-      renderer->renderImage(&skyVerts[0], "sky");
+      renderer->render(&skyVerts[0], "sky");
 
       // Draw the background
 
@@ -393,11 +390,11 @@ namespace AvoidTheBug3D {
         -25.0f, GROUND_Y, MIN_Z, 1.0f
       };
 
-      renderer->renderImage(&groundVerts[0], "ground", true, glm::vec3(0.0f, 0.0f, 0.0f));
+      renderer->render(&groundVerts[0], "ground", true, glm::vec3(0.0f, 0.0f, 0.0f));
 
-      renderer->renderSceneObject(goat);
-      renderer->renderSceneObject(bug);
-      renderer->renderSceneObject(tree);
+      renderer->render(*goat);
+      renderer->render(*bug);
+      renderer->render(*tree);
 
     }
     renderer->swapBuffers();

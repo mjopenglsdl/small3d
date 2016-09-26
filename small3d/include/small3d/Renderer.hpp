@@ -119,31 +119,6 @@ namespace small3d
 
     void positionCamera();
 
-    /**
-     * @brief Generate a texture in OpenGL, using the given data
-     * @param name The name by which the texture will be known
-     * @param texture The texture data
-     * @param width The width of the texture, in pixels
-     * @param height The height of the texture, in pixels
-     * @return The texture handle
-     */
-    GLuint generateTexture(string name, const float *texture, int width, int height);
-
-    /**
-     * @brief Deletes the texture indicated by the given name.
-     *
-     * @param	name	The name of the texture.
-     */
-
-    void deleteTexture(string name);
-
-    /**
-     * @brief Get the handle of a texture which has already been generated (see generateTexture)
-     * @param name The name of the texture
-     * @return The texture handle (0 if not found)
-     */
-    GLuint getTextureHandle(string name);
-
   public:
 
     /**
@@ -196,6 +171,31 @@ namespace small3d
      */
 
     float lightIntensity;
+
+    /**
+     * @brief Generate a texture in OpenGL, using the given data
+     * @param name The name by which the texture will be known
+     * @param texture The texture data
+     * @param width The width of the texture, in pixels
+     * @param height The height of the texture, in pixels
+     * @return The texture handle
+     */
+    GLuint generateTexture(string name, const float *texture, int width, int height);
+
+    /**
+     * @brief Deletes the texture indicated by the given name.
+     *
+     * @param	name	The name of the texture.
+     */
+
+    void deleteTexture(string name);
+
+    /**
+     * @brief Get the handle of a texture which has already been generated (see generateTexture)
+     * @param name The name of the texture
+     * @return The texture handle (0 if not found)
+     */
+    GLuint getTextureHandle(string name);
 
     /**
      * @brief Render an image. The image is in effect a textured quad, since 4 vertex positions are

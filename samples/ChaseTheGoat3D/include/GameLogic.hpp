@@ -12,7 +12,6 @@
 #include <small3d/Logger.hpp>
 #include <small3d/SceneObject.hpp>
 #include <small3d/Renderer.hpp>
-#include <small3d/Text.hpp>
 #include <small3d/Sound.hpp>
 
 #include "KeyInput.hpp"
@@ -37,10 +36,8 @@ namespace AvoidTheBug3D {
     shared_ptr<SceneObject> tree;
 
     shared_ptr<Renderer> renderer;
-
-    shared_ptr<Text> crusoeText48;
 	
-	shared_ptr<Sound> sound;
+	  shared_ptr<Sound> sound;
 
     enum GameState {START_SCREEN, PLAYING};
     GameState gameState;
