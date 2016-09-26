@@ -15,8 +15,8 @@ Getting Started
 ---------------
 The best way to get started is to take a look at the source code of two provided sample games:
 
-- samples/AvoidTheBug3D
-- samples/ChaseTheGoat3D
+- (samples/AvoidTheBug3D)[https://github.com/dimi309/small3d/tree/master/samples/AvoidTheBug3D]
+- (samples/ChaseTheGoat3D)[https://github.com/dimi309/small3d/tree/master/samples/ChaseTheGoat3D]
 
 You can experiment by modifying them before using the engine for your own projects. You can also review the [API documentation](https://codedocs.xyz/dimi309/small3d/).
 
