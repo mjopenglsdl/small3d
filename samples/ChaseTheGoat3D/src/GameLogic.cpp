@@ -36,7 +36,7 @@ namespace AvoidTheBug3D {
 
     renderer = shared_ptr<Renderer>(new Renderer());
 
-    renderer->init(854, 480, false, "Avoid the Bug 3D");
+    renderer->init(854, 480, false, "Chase the Goat 3D");
 
     crusoeText48 = shared_ptr<Text>(new Text(renderer));
 
