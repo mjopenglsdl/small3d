@@ -1,6 +1,6 @@
 ADD_LIBRARY(small3d BoundingBoxes.cpp Exception.cpp GetTokens.cpp
       Image.cpp Logger.cpp MathFunctions.cpp Model.cpp
-      ModelLoader.cpp Renderer.cpp SceneObject.cpp Text.cpp
+      ModelLoader.cpp Renderer.cpp SceneObject.cpp
       WavefrontLoader.cpp SoundData.cpp Sound.cpp)
 
 IF(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN)

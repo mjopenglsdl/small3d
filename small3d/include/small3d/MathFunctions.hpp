@@ -9,6 +9,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <string>
 
 /**
  * @def	ROUND_2_DECIMAL(x) (floorf(100 * x + 0.5) / 100)
@@ -19,6 +20,8 @@
  */
 
 #define ROUND_2_DECIMAL(x) (floorf(100 * x + 0.5) / 100)
+
+using namespace std;
 
 namespace small3d {
 
@@ -42,5 +45,12 @@ namespace small3d {
    * @return The Z rotation matrix
    */
   glm::mat4x4 rotateZ(float angle);
+
+  /**
+   * Convert an integer to a string
+   * @param number The integer
+   * @return The integer, converted to a string
+   */
+  string intToStr(int number);
 
 }

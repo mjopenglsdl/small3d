@@ -7,3 +7,7 @@ v1.0.5
 - [BREAKING] Model rotation, offset and speed are no longer pointers 
 - [BREAKING] Camera rotation adjustments to align it with the "character" (scene objects) rotations when following them have been moved from the sample games to the engine's source code.
 - Comments overview and improvement
+- [BREAKING] Renderer init function now hidden. All initialisation happens via the constructor.
+- [BREAKING] Renrerer functions renderSceneObject and renderImage have been renamed to two overloaded functions, called "render".
+- [BREAKING] The Text class has been removed and its functionality has been moved to another overloaded function in the Renderer, called "render".
+- [BREAKING] Renderer functions generateTexture, getTextureHandle and deleteTexture are now private.

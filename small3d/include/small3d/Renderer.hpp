@@ -22,6 +22,7 @@
 #include "Logger.hpp"
 #include <unordered_map>
 #include <glm/glm.hpp>
+#include <SDL_ttf.h>
 
 using namespace std;
 
@@ -56,6 +57,8 @@ namespace small3d
 
     float zOffsetFromCamera;
 
+    unordered_map<string, TTF_Font*> fonts;
+
     /**
      * @brief Load a shader's source code from a file into a string
      * @param fileLocation The file's location, relative to the game path
@@ -70,6 +73,14 @@ namespace small3d
      * @return OpenGL shader reference
      */
     GLuint compileShader(const string &shaderSource, const GLenum shaderType);
+
+    /**
+    * @brief Initialise renderer (OpenGL, GLEW, etc)
+    */
+    void init(int width, int height, bool fullScreen, string windowTitle,
+              float frustumScale , float zNear,
+              float zFar, float zOffsetFromCamera,
+              string shadersPath);
 
     /**
      * @brief Initialise SDL
@@ -108,15 +119,35 @@ namespace small3d
 
     void positionCamera();
 
+    /**
+     * @brief Generate a texture in OpenGL, using the given data
+     * @param name The name by which the texture will be known
+     * @param texture The texture data
+     * @param width The width of the texture, in pixels
+     * @param height The height of the texture, in pixels
+     * @return The texture handle
+     */
+    GLuint generateTexture(string name, const float *texture, int width, int height);
+
+    /**
+     * @brief Deletes the texture indicated by the given name.
+     *
+     * @param	name	The name of the texture.
+     */
+
+    void deleteTexture(string name);
+
+    /**
+     * @brief Get the handle of a texture which has already been generated (see generateTexture)
+     * @param name The name of the texture
+     * @return The texture handle (0 if not found)
+     */
+    GLuint getTextureHandle(string name);
+
   public:
 
     /**
      * Constructor
-     */
-    Renderer();
-
-    /**
-     * @brief Initialise renderer (OpenGL, GLEW, etc)
      * @param width The width of the window
      * @param height The height of the window
      * @param fullScreen	Will the Renderer run in full screen mode? If set to true,
@@ -137,10 +168,10 @@ namespace small3d
      * 				The shader code can be changed, provided that their inputs
      * 				and outputs are maintained the same.
      */
-    void init(int width, int height, bool fullScreen, string windowTitle = "",
-	      float frustumScale = 1.0f, float zNear = 1.0f,
-	      float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
-	      string shadersPath = "resources/shaders/");
+    Renderer(int width, int height, bool fullScreen, string windowTitle = "",
+             float frustumScale = 1.0f, float zNear = 1.0f,
+             float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
+             string shadersPath = "resources/shaders/");
 
     /**
      * @brief Vector, indicating the direction of the light in the scene.
@@ -167,31 +198,6 @@ namespace small3d
     float lightIntensity;
 
     /**
-     * @brief Generate a texture in OpenGL, using the given data
-     * @param name The name by which the texture will be known
-     * @param texture The texture data
-     * @param width The width of the texture, in pixels
-     * @param height The height of the texture, in pixels
-     * @return The texture handle
-     */
-    GLuint generateTexture(string name, const float *texture, int width, int height);
-
-    /**
-     * @brief Deletes the texture indicated by the given name.
-     *
-     * @param	name	The name of the texture.
-     */
-
-    void deleteTexture(string name);
-
-    /**
-     * @brief Get the handle of a texture which has already been generated (see generateTexture)
-     * @param name The name of the texture
-     * @return The texture handle (0 if not found)
-     */
-    GLuint getTextureHandle(string name);
-
-    /**
      * @brief Render an image. The image is in effect a textured quad, since 4 vertex positions are
      * passed to this method, in order to define its position and size.
      * @param vertices The vertices
@@ -200,14 +206,29 @@ namespace small3d
      * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
      * @param offset	The offset (position) at which the quad of the image will be drawn.
      */
-    void renderImage(const float *vertices, string textureName, bool perspective = false,
+    void render(const float *vertices, string textureName, bool perspective = false,
 		     glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
 
     /**
      * @brief Render a scene object
      * @param sceneObject The scene object
      */
-    void renderSceneObject(shared_ptr<SceneObject> sceneObject);
+    void render(SceneObject &sceneObject);
+
+    /**
+     * @brief Render some text on the screen. A texture will be generated, containing the given
+     * text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space.
+     * @param text The text to be rendered
+     * @param colour The colour in which the text will be rendered
+     * @param topX The top x coordinate of the text rectangle
+     * @param topY The top y coordinate of the text rectangle
+     * @param bottomX The bottom x coordinate of the text rectangle
+     * @param bottomY The bottom y coordinate of the text rectangle
+     * @param fontPath Path to the TrueType font (.ttf) which will be used
+     * @param fontSize The size of the font which will be used
+     */
+    void render(string text, const SDL_Color &colour, float topX, float topY, float bottomX, float bottomY,
+                string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf", int fontSize=48);
 
     /**
      * @brief Clears the screen.

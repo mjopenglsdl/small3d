@@ -56,7 +56,10 @@ namespace small3d {
     return shader;
   }
 
-  Renderer::Renderer() {
+  Renderer::Renderer(int width, int height, bool fullScreen, string windowTitle,
+                     float frustumScale , float zNear,
+                     float zFar, float zOffsetFromCamera,
+                     string shadersPath) {
     isOpenGL33Supported = false;
     sdlWindow = 0;
     perspectiveProgram = 0;
@@ -72,6 +75,14 @@ namespace small3d {
     cameraRotation = glm::vec3(0, 0, 0);
     lightIntensity = 1.0f;
 
+    init(width, height, fullScreen, windowTitle, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
+
+    if(TTF_Init()==-1)
+    {
+      LOGERROR(TTF_GetError());
+      throw Exception("Unable to initialise font system");
+    }
+
   }
 
   Renderer::~Renderer() {
@@ -82,6 +93,10 @@ namespace small3d {
       glDeleteTextures(1, &it->second);
     }
     delete textures;
+
+    for(auto idFontPair : fonts) {
+      TTF_CloseFont(idFontPair.second);
+    }
 
     if (!noShaders) {
       glUseProgram(0);
@@ -407,7 +422,7 @@ namespace small3d {
   }
 
 
-  void Renderer::renderImage(const float *vertices, string textureName, bool perspective,
+  void Renderer::render(const float *vertices, string textureName, bool perspective,
                              glm::vec3 offset) {
 
     glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
@@ -512,7 +527,7 @@ namespace small3d {
     checkForOpenGLErrors("rendering image", true);
   }
 
-  void Renderer::renderSceneObject(shared_ptr<SceneObject> sceneObject) {
+  void Renderer::render(SceneObject &sceneObject) {
     // Use the shaders prepared at initialisation
     glUseProgram(perspectiveProgram);
 
@@ -534,8 +549,8 @@ namespace small3d {
 
     glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
     glBufferData(GL_ARRAY_BUFFER,
-                 sceneObject->getModel().vertexDataSize,
-                 sceneObject->getModel().vertexData.data(),
+                 sceneObject.getModel().vertexDataSize,
+                 sceneObject.getModel().vertexData.data(),
                  GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
@@ -545,16 +560,16 @@ namespace small3d {
     glGenBuffers(1, &indexBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 sceneObject->getModel().indexDataSize,
-                 sceneObject->getModel().indexData.data(),
+                 sceneObject.getModel().indexDataSize,
+                 sceneObject.getModel().indexData.data(),
                  GL_STATIC_DRAW);
 
     // Normals
     glGenBuffers(1, &normalsBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, normalsBufferObject);
     glBufferData(GL_ARRAY_BUFFER,
-                 sceneObject->getModel().normalsDataSize,
-                 sceneObject->getModel().normalsData.data(), GL_STATIC_DRAW);
+                 sceneObject.getModel().normalsDataSize,
+                 sceneObject.getModel().normalsData.data(), GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -562,16 +577,16 @@ namespace small3d {
     // Find the colour uniform
     GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
 
-    if (sceneObject->getTexture().size() != 0) {
+    if (sceneObject.getTexture().size() != 0) {
       // "Disable" colour since there is a texture
       glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
 
-      texture = this->getTextureHandle(sceneObject->getName());
+      texture = this->getTextureHandle(sceneObject.getName());
 
       if (texture == 0) {
-        texture = generateTexture(sceneObject->getName(), sceneObject->getTexture().getData(),
-                                  sceneObject->getTexture().getWidth(),
-                                  sceneObject->getTexture().getHeight());
+        texture = generateTexture(sceneObject.getName(), sceneObject.getTexture().getData(),
+                                  sceneObject.getTexture().getWidth(),
+                                  sceneObject.getTexture().getHeight());
       }
 
       glBindTexture(GL_TEXTURE_2D, texture);
@@ -581,8 +596,8 @@ namespace small3d {
       glGenBuffers(1, &uvBufferObject);
       glBindBuffer(GL_ARRAY_BUFFER, uvBufferObject);
       glBufferData(GL_ARRAY_BUFFER,
-                   sceneObject->getModel().textureCoordsDataSize,
-                   sceneObject->getModel().textureCoordsData.data(), GL_STATIC_DRAW);
+                   sceneObject.getModel().textureCoordsDataSize,
+                   sceneObject.getModel().textureCoordsData.data(), GL_STATIC_DRAW);
       glEnableVertexAttribArray(2);
       glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
       glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -590,7 +605,7 @@ namespace small3d {
     }
     else {
       // If there is no texture, use the colour of the object
-      glUniform4fv(colourUniform, 1, glm::value_ptr(sceneObject->colour));
+      glUniform4fv(colourUniform, 1, glm::value_ptr(sceneObject.colour));
     }
 
     // Lighting
@@ -602,7 +617,7 @@ namespace small3d {
     GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
     glUniform1f(lightIntensityUniform, lightIntensity);
 
-    overrideNextObjectPosition(sceneObject->offset, sceneObject->rotation);
+    overrideNextObjectPosition(sceneObject.offset, sceneObject.rotation);
 
     positionCamera();
 
@@ -612,11 +627,11 @@ namespace small3d {
 
     // Draw
     glDrawElements(GL_TRIANGLES,
-                   (GLsizei) sceneObject->getModel().indexData.size(),
+                   (GLsizei) sceneObject.getModel().indexData.size(),
                    GL_UNSIGNED_INT, 0);
 
     // Clear stuff
-    if (sceneObject->getTexture().size() > 0) {
+    if (sceneObject.getTexture().size() > 0) {
       glDisableVertexAttribArray(2);
     }
 
@@ -645,6 +660,86 @@ namespace small3d {
 
     glUseProgram(0);
 
+  }
+
+  void Renderer::render(string text, const SDL_Color &colour,
+                        float topX, float topY, float bottomX, float bottomY,
+                        string fontPath, int fontSize)
+  {
+
+    string fontId = intToStr(fontSize) + fontPath;
+    unordered_map<string, TTF_Font*>::iterator idFontPair = fonts.find(fontId);
+
+    TTF_Font *font = nullptr;
+
+    if (idFontPair == fonts.end()) {
+      string fontFullPath = SDL_GetBasePath() + fontPath;
+      LOGINFO("Loading font from " + fontFullPath);
+      font = TTF_OpenFont(fontFullPath.c_str(), fontSize);
+
+      if (font == nullptr)
+      {
+        LOGERROR(TTF_GetError());
+        throw Exception("Failed to load font");
+      }
+      else
+      {
+        LOGINFO("TTF font loaded successfully");
+        fonts.insert(make_pair(fontId, font));
+      }
+    } else {
+      font = idFontPair->second;
+    }
+
+
+
+    //GLuint textHandle = getTextureHandle(intToStr(size) + "text_" + text);
+
+    SDL_Surface *textSurface = TTF_RenderText_Blended(font, text.c_str(), colour);
+    int numPixels = textSurface->h * textSurface->w;
+    Uint32 *pix = static_cast<Uint32*>(textSurface->pixels);
+    float *texturef = new float[numPixels * 4];
+    for (int pidx = 0; pidx < numPixels; ++pidx)
+    {
+      Uint32 r = pix[pidx] & textSurface->format->Rmask;
+      Uint32 g = pix[pidx] & textSurface->format->Gmask;
+      Uint32 b = pix[pidx] & textSurface->format->Bmask;
+      Uint32 a = pix[pidx] & textSurface->format->Amask;
+
+      r = r >> textSurface->format->Rshift;
+      g = g >> textSurface->format->Gshift;
+      b = b >> textSurface->format->Bshift;
+      a = a >> textSurface->format->Ashift;
+
+      float ttuple[4] = {static_cast<float>(r),
+                           static_cast<float>(g),
+                           static_cast<float>(b),
+                           static_cast<float>(a)
+      };
+
+      ttuple[0]= floorf(100.0f * (ttuple[0] / 255.0f) + 0.5f) / 100.0f;
+      ttuple[1]= floorf(100.0f * (ttuple[1] / 255.0f) + 0.5f) / 100.0f;
+      ttuple[2]= floorf(100.0f * (ttuple[2] / 255.0f) + 0.5f) / 100.0f;
+      ttuple[3]= floorf(100.0f * (ttuple[3] / 255.0f) + 0.5f) / 100.0f;
+
+      memcpy(&texturef[pidx * 4], &ttuple, sizeof(ttuple));
+
+    }
+    string textTextureId = intToStr(fontSize) + "text_" + text;
+    GLuint textHandle = generateTexture(textTextureId, texturef, textSurface->w, textSurface->h);
+    delete[] texturef;
+    SDL_FreeSurface(textSurface);
+
+    float boxVerts[16] =
+        {
+            topX, bottomY, -0.5f, 1.0f,
+            bottomX, bottomY, -0.5f, 1.0f,
+            bottomX, topY, -0.5f, 1.0f,
+            topX, topY, -0.5f, 1.0f
+        };
+
+    render(boxVerts, textTextureId);
+    deleteTexture(textTextureId);
   }
 
   void Renderer::clearScreen() {
