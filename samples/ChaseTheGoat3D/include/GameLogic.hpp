@@ -31,13 +31,11 @@ namespace AvoidTheBug3D {
 
   private:
 
-    shared_ptr<SceneObject> goat;
-    shared_ptr<SceneObject> bug;
-    shared_ptr<SceneObject> tree;
-
-    shared_ptr<Renderer> renderer;
-	
-	  shared_ptr<Sound> sound;
+    Renderer renderer;
+    SceneObject goat;
+    SceneObject bug;
+    SceneObject tree;
+    Sound sound;
 
     enum GameState {START_SCREEN, PLAYING};
     GameState gameState;
@@ -53,7 +51,6 @@ namespace AvoidTheBug3D {
     void initGame();
     void processGame(const KeyInput &keyInput);
     void processStartScreen(const KeyInput &keyInput);
-
     void moveGoat();
     void moveBug(const KeyInput &keyInput);
 		
@@ -67,7 +64,7 @@ namespace AvoidTheBug3D {
     /**
      * Destructor
      */
-    ~GameLogic();
+    ~GameLogic() = default;
 
     /**
      * Process conditions and set up the next frame, also taking into consideration

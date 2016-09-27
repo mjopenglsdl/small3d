@@ -38,8 +38,9 @@ int main(int argc, char** argv)
 
   try
   {
+    initLogger();
 
-    shared_ptr<GameLogic> gameLogic(new GameLogic());
+    GameLogic gameLogic;
 
     // program main loop
     bool done = false;
@@ -84,9 +85,9 @@ int main(int argc, char** argv)
       ticks = SDL_GetTicks();
       if (ticks - prevTicks > ticksInterval)
       {
-        gameLogic->process(input);
+        gameLogic.process(input);
         prevTicks = ticks;
-        gameLogic->render();
+        gameLogic.render();
       }
     }
 

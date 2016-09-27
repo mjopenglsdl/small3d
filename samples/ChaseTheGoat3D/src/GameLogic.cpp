@@ -31,49 +31,39 @@ using namespace small3d;
 
 namespace AvoidTheBug3D {
 
-  GameLogic::GameLogic() {
-    initLogger();
+  GameLogic::GameLogic() :
+      renderer(854, 480, false, "Chase the Goat 3D"),
+      goat("goat", "resources/models/Goat/goatAnim",
+           19, "resources/models/Goat/Goat.png",
+           "resources/models/GoatBB/GoatBB.obj"),
+      bug("bug", "resources/models/Bug/bugAnim", 9),
+      tree("tree",
+           "resources/models/Tree/tree.obj",
+           1, "resources/models/Tree/tree.png",
+           "resources/models/TreeBB/TreeBB.obj")
+  {
 
-    renderer = shared_ptr<Renderer>(new Renderer(854, 480, false, "Chase the Goat 3D"));
+    Image startScreenTexture("resources/images/startScreen.png");
 
-    unique_ptr<Image> startScreenTexture(
-      new Image("resources/images/startScreen.png"));
-    renderer->generateTexture("startScreen", startScreenTexture->getData(), startScreenTexture->getWidth(), startScreenTexture->getHeight());
+    renderer.generateTexture("startScreen", startScreenTexture.getData(), startScreenTexture.getWidth(),
+                             startScreenTexture.getHeight());
 
-    unique_ptr<Image> groundTexture(
-      new Image("resources/images/grass.png"));
-    renderer->generateTexture("ground", groundTexture->getData(), groundTexture->getWidth(), groundTexture->getHeight());
+    Image groundTexture("resources/images/grass.png");
+    renderer.generateTexture("ground", groundTexture.getData(), groundTexture.getWidth(), groundTexture.getHeight());
 
-    unique_ptr<Image> skyTexture(
-      new Image("resources/images/sky.png"));
-    renderer->generateTexture("sky", skyTexture->getData(), skyTexture->getWidth(), skyTexture->getHeight());
+    Image skyTexture("resources/images/sky.png");
+    renderer.generateTexture("sky", skyTexture.getData(), skyTexture.getWidth(), skyTexture.getHeight());
 
-    goat = shared_ptr<SceneObject>(
-      new SceneObject("goat",
-        "resources/models/Goat/goatAnim",
-        19, "resources/models/Goat/Goat.png",
-        "resources/models/GoatBB/GoatBB.obj"));
 
-    bug = shared_ptr<SceneObject>(
-      new SceneObject("bug",
-        "resources/models/Bug/bugAnim",
-        9));
-    bug->colour = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
-    bug->setFrameDelay(2);
+    bug.colour = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
+    bug.setFrameDelay(2);
 
-    tree = shared_ptr<SceneObject>(
-      new SceneObject("tree",
-        "resources/models/Tree/tree.obj",
-        1, "resources/models/Tree/tree.png",
-        "resources/models/TreeBB/TreeBB.obj"));
-
-    tree->offset = glm::vec3(2.6f, GROUND_Y, -8.0f);
-    tree->rotation = glm::vec3(0.0f, -0.5f, 0.0f);
+    tree.offset = glm::vec3(2.6f, GROUND_Y, -8.0f);
+    tree.rotation = glm::vec3(0.0f, -0.5f, 0.0f);
 
     gameState = START_SCREEN;
 	
-    sound = shared_ptr<Sound>(new Sound());
-       sound->load("resources/sounds/bah.ogg", "bah");
+    sound.load("resources/sounds/bah.ogg", "bah");
 
     startTicks = 0;
     seconds = 0;
@@ -81,16 +71,12 @@ namespace AvoidTheBug3D {
     lightModifier = -0.01f;
   }
 
-  GameLogic::~GameLogic() {
-
-  }
-
   void GameLogic::initGame()
   {
-    goat->offset = glm::vec3(-1.2f, GROUND_Y, -4.0f);
-    bug->offset = glm::vec3(3.6f, GROUND_Y + BUG_START_ALTITUDE, -5.0f);
+    goat.offset = glm::vec3(-1.2f, GROUND_Y, -4.0f);
+    bug.offset = glm::vec3(3.6f, GROUND_Y + BUG_START_ALTITUDE, -5.0f);
 
-    bug->startAnimating();
+    bug.startAnimating();
 
     startTicks = SDL_GetTicks();
 
@@ -98,7 +84,7 @@ namespace AvoidTheBug3D {
 
   void GameLogic::moveGoat()
   {
-    goat->animate();
+    goat.animate();
 
   }
 
@@ -106,58 +92,58 @@ namespace AvoidTheBug3D {
   {
 
     if (keyInput.left) {
-      bug->rotation.y -= BUG_ROTATION_SPEED;
+      bug.rotation.y -= BUG_ROTATION_SPEED;
 
-      if (bug->rotation.y < -FULL_ROTATION)
-        bug->rotation.y = 0.0f;
+      if (bug.rotation.y < -FULL_ROTATION)
+        bug.rotation.y = 0.0f;
 
 
     }
     else if (keyInput.right) {
-      bug->rotation.y += BUG_ROTATION_SPEED;
+      bug.rotation.y += BUG_ROTATION_SPEED;
 
-      if (bug->rotation.y > FULL_ROTATION)
-        bug->rotation.y = 0.0f;
+      if (bug.rotation.y > FULL_ROTATION)
+        bug.rotation.y = 0.0f;
 
 
     }
 
     if (keyInput.up) {
 
-      bug->rotation.z -= BUG_TILT_SPEED;
+      bug.rotation.z -= BUG_TILT_SPEED;
 
-      if (bug->rotation.z < -0.75f)
-        bug->rotation.z = -0.75f;
+      if (bug.rotation.z < -0.75f)
+        bug.rotation.z = -0.75f;
 
 
     }
     else if (keyInput.down) {
 
-      bug->rotation.z += BUG_TILT_SPEED;
+      bug.rotation.z += BUG_TILT_SPEED;
 
-      if (bug->rotation.z > 0.75f)
-        bug->rotation.z = 0.75f;
+      if (bug.rotation.z > 0.75f)
+        bug.rotation.z = 0.75f;
     }
 
     if (keyInput.space) {
-      bug->offset.x -= cos(bug->rotation.y) * BUG_SPEED;
-      bug->offset.z -= sin(bug->rotation.y) * BUG_SPEED;
-      bug->offset.y += sin(bug->rotation.z) * BUG_SPEED;
+      bug.offset.x -= cos(bug.rotation.y) * BUG_SPEED;
+      bug.offset.z -= sin(bug.rotation.y) * BUG_SPEED;
+      bug.offset.y += sin(bug.rotation.z) * BUG_SPEED;
     }
 	
-    if (bug->offset.y < GROUND_Y + 0.5f)
-      bug->offset.y = GROUND_Y + 0.5f;
+    if (bug.offset.y < GROUND_Y + 0.5f)
+      bug.offset.y = GROUND_Y + 0.5f;
 
 	  // Looking through the eyes of the bug
-    renderer->cameraPosition = bug->offset;
-    renderer->cameraRotation = bug->rotation;
+    renderer.cameraPosition = bug.offset;
+    renderer.cameraRotation = bug.rotation;
 	
-    bug->animate();
+    bug.animate();
 
-    if (goat->collidesWithPoint(bug->offset.x, bug->offset.y, bug->offset.z))
+    if (goat.collidesWithPoint(bug.offset.x, bug.offset.y, bug.offset.z))
     {
       gameState = START_SCREEN;
-      sound->play("bah");
+      sound.play("bah");
     }
   }
 
@@ -191,20 +177,20 @@ namespace AvoidTheBug3D {
 
   void GameLogic::render()
   {
-    renderer->clearScreen();
+    renderer.clearScreen();
 
     //Uncomment for groovy nightfall effect :)
-    /*renderer->lightIntensity += lightModifier;
+    /*renderer.lightIntensity += lightModifier;
 
-      if (renderer->lightIntensity < 0)
+      if (renderer.lightIntensity < 0)
       {
-      renderer->lightIntensity = 0.0f;
+      renderer.lightIntensity = 0.0f;
       lightModifier = 0.01f;
       }
 
-      if (renderer->lightIntensity > 1.0f)
+      if (renderer.lightIntensity > 1.0f)
       {
-      renderer->lightIntensity = 1.0f;
+      renderer.lightIntensity = 1.0f;
       lightModifier = -0.01f;
       }*/
 
@@ -217,12 +203,12 @@ namespace AvoidTheBug3D {
         -1.0f, 1.0f, 1.0f, 1.0f
       };
 
-      renderer->render(&startScreenVerts[0], "startScreen");
+      renderer.render(&startScreenVerts[0], "startScreen");
 
       if (seconds != 0)
       {
         SDL_Color textColour = { 255, 100, 0, 255 };
-        renderer->render("Goat not bitten for " + intToStr(seconds) + " seconds",
+        renderer.render("Goat not bitten for " + intToStr(seconds) + " seconds",
           textColour, -0.95f, -0.6f, 0.0f, -0.8f);
       }
 
@@ -238,7 +224,7 @@ namespace AvoidTheBug3D {
         -1.0f, 1.0f, 1.0f, 1.0f
       };
 
-      renderer->render(&skyVerts[0], "sky");
+      renderer.render(&skyVerts[0], "sky");
 
       // Draw the background
 
@@ -250,14 +236,14 @@ namespace AvoidTheBug3D {
         -25.0f, GROUND_Y, MIN_Z, 1.0f
       };
 
-      renderer->render(&groundVerts[0], "ground", true, glm::vec3(0.0f, 0.0f, 0.0f));
+      renderer.render(&groundVerts[0], "ground", true, glm::vec3(0.0f, 0.0f, 0.0f));
 
-      renderer->render(*goat);
-      renderer->render(*bug);
-      renderer->render(*tree);
+      renderer.render(goat);
+      renderer.render(bug);
+      renderer.render(tree);
 
     }
-    renderer->swapBuffers();
+    renderer.swapBuffers();
   }
 
 }
