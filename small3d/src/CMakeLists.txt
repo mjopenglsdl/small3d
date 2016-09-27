@@ -1,7 +1,11 @@
-ADD_LIBRARY(small3d BoundingBoxes.cpp Exception.cpp GetTokens.cpp
+ADD_LIBRARY(small3d BoundingBoxSet.cpp Exception.cpp GetTokens.cpp
       Image.cpp Logger.cpp MathFunctions.cpp Model.cpp
       ModelLoader.cpp Renderer.cpp SceneObject.cpp
-      WavefrontLoader.cpp SoundData.cpp Sound.cpp)
+      WavefrontLoader.cpp SoundData.cpp Sound.cpp ../include/small3d/BoundingBoxSet.hpp
+    ../include/small3d/Exception.hpp ../include/small3d/GetTokens.hpp ../include/small3d/Image.hpp
+    ../include/small3d/Logger.hpp ../include/small3d/MathFunctions.hpp ../include/small3d/Model.hpp
+    ../include/small3d/ModelLoader.hpp ../include/small3d/Renderer.hpp ../include/small3d/SceneObject.hpp
+    ../include/small3d/Sound.hpp ../include/small3d/SoundData.hpp ../include/small3d/WavefrontLoader.hpp)
 
 IF(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN)
   TARGET_LINK_LIBRARIES(small3d PUBLIC ${CONAN_LIBS})

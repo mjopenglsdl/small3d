@@ -18,7 +18,7 @@ using namespace std;
 namespace small3d {
 
   /**
-   * @class BoundingBoxes
+   * @class BoundingBoxSet
    * @brief Bounding boxes for a model. Even though the loading logic is similar
    * to that of the Model class, BoundingBoxes is a separate class with
    * a separate loading function, because it loads a Wavefront file
@@ -29,7 +29,7 @@ namespace small3d {
    * six faces and this fact can be used to separate them at runtime.
    */
 
-  class BoundingBoxes {
+  class BoundingBoxSet {
   private:
 
     int numBoxes;
@@ -52,12 +52,12 @@ namespace small3d {
      * @brief Constructor
      */
 
-    BoundingBoxes();
+    BoundingBoxSet();
 
     /**
      * @brief Destructor
      */
-    ~BoundingBoxes() = default;
+    ~BoundingBoxSet() = default;
 
     /**
      * @brief Vertex coordinates read from Wavefront .obj file
@@ -83,26 +83,24 @@ namespace small3d {
     /**
      * @brief Check if a point collides (or is inside) any of the boxes
      * assuming that they are in a given offset and have a certain rotation.
-     * The reason the boxes' offset and rotation are passed as parameters is so
-     * that there is no need to keep track of them together with the corresponding
-     * information of the model they refer to.
      *
-     * @param	pointX		 	The point x coordinate.
-     * @param	pointY		 	The point y coordinate.
-     * @param	pointZ		 	The point z coordinate.
+     * @param	point		 	The point (as a vector)
      *
-     * @return	true if it succeeds, false if it fails.
+     * @return	true if there is a collision, false if not.
      */
 
-    bool pointIsWithin(float pointX, float pointY, float pointZ) const;
+    bool collidesWith(glm::vec3 point) const;
 
     /**
-     * @brief Check if another set of bounding boxes is located with this set (even partly)
+     * @brief Check if another set of bounding boxes is located with this set (even partially), 
+     * thus colliding with it.
      *
-     * @return	true if it succeeds, false if it fails.
+     * @param otherBoxSet The other box set
+     *
+     * @return	true if there is a collision, false if not.
      */
 
-    bool boxesAreWithin(BoundingBoxes& otherBoxes) const;
+    bool collidesWith(BoundingBoxSet &otherBoxSet) const;
 
   };
 }
