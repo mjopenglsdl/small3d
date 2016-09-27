@@ -31,13 +31,9 @@ namespace AvoidTheBug3D {
 
   private:
 
-    shared_ptr<SceneObject> goat;
-    shared_ptr<SceneObject> bug;
-    shared_ptr<SceneObject> tree;
-
-    shared_ptr<Renderer> renderer;
-	
-    shared_ptr<Sound> sound;
+    SceneObject goat, bug, tree;
+    Renderer renderer;
+	  Sound sound;
 
     enum GameState {START_SCREEN, PLAYING};
     GameState gameState;
@@ -67,7 +63,7 @@ namespace AvoidTheBug3D {
     /**
      * Destructor
      */
-    ~GameLogic();
+    ~GameLogic() = default;
 
     /**
      * Process conditions and set up the next frame, also taking into consideration
@@ -86,7 +82,7 @@ namespace AvoidTheBug3D {
 
     void render();
 
-    float lightModifier; 
+    float lightModifier;
   };
 
 } /* namespace AvoidTheBug3D */

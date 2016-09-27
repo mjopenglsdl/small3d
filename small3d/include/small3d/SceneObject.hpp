@@ -141,7 +141,7 @@ namespace small3d
      * @return	true if a collision is detected, false otherwise.
      */
 
-    bool collidesWithPoint(float x, float y, float z);
+    bool collidesWith(float x, float y, float z);
 
     /**
      *
@@ -152,7 +152,7 @@ namespace small3d
      * @return	true if there is a collision, false if not.
      */
 
-    bool collidesWithSceneObject(shared_ptr<SceneObject> otherObject);
+    bool collidesWith(SceneObject &otherObject);
 
   };
 

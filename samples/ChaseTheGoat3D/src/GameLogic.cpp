@@ -140,7 +140,7 @@ namespace AvoidTheBug3D {
 	
     bug.animate();
 
-    if (goat.collidesWithPoint(bug.offset.x, bug.offset.y, bug.offset.z))
+    if (goat.collidesWith(bug.offset.x, bug.offset.y, bug.offset.z))
     {
       gameState = START_SCREEN;
       sound.play("bah");
@@ -180,7 +180,7 @@ namespace AvoidTheBug3D {
     renderer.clearScreen();
 
     //Uncomment for groovy nightfall effect :)
-    /*renderer.lightIntensity += lightModifier;
+    /* renderer.lightIntensity += lightModifier;
 
       if (renderer.lightIntensity < 0)
       {
@@ -192,7 +192,7 @@ namespace AvoidTheBug3D {
       {
       renderer.lightIntensity = 1.0f;
       lightModifier = -0.01f;
-      }*/
+      } */
 
     if (gameState == START_SCREEN) {
       float startScreenVerts[16] =

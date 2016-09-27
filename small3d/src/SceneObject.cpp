@@ -97,7 +97,7 @@ namespace small3d {
     }
   }
 
-  bool SceneObject::collidesWithPoint(float x, float y, float z) {
+  bool SceneObject::collidesWith(float x, float y, float z) {
     if (boundingBoxes.vertices.size() == 0) {
       throw Exception("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
@@ -108,25 +108,25 @@ namespace small3d {
     return boundingBoxes.pointIsWithin(x, y, z);
   }
 
-  bool SceneObject::collidesWithSceneObject(shared_ptr<SceneObject> otherObject) {
+  bool SceneObject::collidesWith(SceneObject &otherObject) {
     if (boundingBoxes.vertices.size() == 0) {
       throw Exception("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
 
-    if (otherObject->boundingBoxes.vertices.size() == 0) {
+    if (otherObject.boundingBoxes.vertices.size() == 0) {
       throw Exception(
-          "No bounding boxes have been provided for " + otherObject->name + ", so collision detection is not enabled.");
+          "No bounding boxes have been provided for " + otherObject.name + ", so collision detection is not enabled.");
     }
 
     boundingBoxes.offset = offset;
     boundingBoxes.rotation = rotation;
 
-    otherObject->boundingBoxes.offset = otherObject->offset;
-    otherObject->boundingBoxes.rotation = otherObject->rotation;
+    otherObject.boundingBoxes.offset = otherObject.offset;
+    otherObject.boundingBoxes.rotation = otherObject.rotation;
 
     // Checking whether the boxes of this object are within the boxes of the other object or vice versa
-    return boundingBoxes.boxesAreWithin(otherObject->boundingBoxes) ||
-           otherObject->boundingBoxes.boxesAreWithin(boundingBoxes);
+    return boundingBoxes.boxesAreWithin(otherObject.boundingBoxes) ||
+           otherObject.boundingBoxes.boxesAreWithin(boundingBoxes);
   }
 
 }
