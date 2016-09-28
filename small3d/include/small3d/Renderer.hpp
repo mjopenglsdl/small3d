@@ -227,7 +227,7 @@ namespace small3d
      * @param fontPath Path to the TrueType font (.ttf) which will be used
      * @param fontSize The size of the font which will be used
      */
-    void render(string text, const SDL_Color &colour, float topX, float topY, float bottomX, float bottomY,
+    void render(string text, glm::uvec4 colour, float topX, float topY, float bottomX, float bottomY,
                 string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf", int fontSize=48);
 
     /**

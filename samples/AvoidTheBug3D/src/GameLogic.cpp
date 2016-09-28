@@ -190,7 +190,7 @@ namespace AvoidTheBug3D {
 
     if (bugState == DIVING_DOWN)
     {
-      if (goat.collidesWith(bug.offset.x, bug.offset.y, bug.offset.z))
+      if (goat.collidesWith(bug.offset))
       {
         sound.play("bah");
         seconds = (SDL_GetTicks() - startTicks) / 1000;
@@ -204,7 +204,7 @@ namespace AvoidTheBug3D {
     }
     else if (bugState == DIVING_UP)
     {
-      if (goat.collidesWith(bug.offset.x, bug.offset.y, bug.offset.z))
+      if (goat.collidesWith(bug.offset))
       {
         gameState = START_SCREEN;
       }
@@ -341,9 +341,8 @@ namespace AvoidTheBug3D {
 
       if (seconds != 0)
       {
-        SDL_Color textColour = { 255, 100, 0, 255 };
         renderer.render("Goat not bitten for " + intToStr(seconds) + " seconds",
-          textColour, -0.95f, -0.6f, 0.0f, -0.8f);
+          glm::uvec4(255, 100, 0, 255), -0.95f, -0.6f, 0.0f, -0.8f);
       }
 
     }
