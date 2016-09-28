@@ -9,6 +9,7 @@ branches:
     - develop
 env:
   global:
+    - CONAN_UPLOAD=1
     - CONAN_REFERENCE="small3d/1.0.5"
     - CONAN_USERNAME="coding3d"
     - CONAN_CHANNEL="ci"
