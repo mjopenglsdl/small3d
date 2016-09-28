@@ -1,5 +1,5 @@
 /*
- *  BoundingBoxes.hpp
+ *  BoundingBoxSet.hpp
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
@@ -20,10 +20,10 @@ namespace small3d {
   /**
    * @class BoundingBoxSet
    * @brief Bounding boxes for a model. Even though the loading logic is similar
-   * to that of the Model class, BoundingBoxes is a separate class with
+   * to that of the Model class, BoundingBoxSet is a separate class with
    * a separate loading function, because it loads a Wavefront file
    * exported with a different set of options (see README.md).
-   * Each BoundingBoxes class may contain more than one bounding boxes,
+   * Each BoundingBoxSet class may contain more than one bounding boxes,
    * which means that it is a set of bounding boxes. These are
    * not separated into different structures because each has a set of
    * six faces and this fact can be used to separate them at runtime.

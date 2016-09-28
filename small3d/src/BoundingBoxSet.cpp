@@ -1,5 +1,5 @@
 /*
- *  BoundingBoxes.cpp
+ *  BoundingBoxSet.cpp
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
