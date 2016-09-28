@@ -28,7 +28,7 @@ If you prefer to compile it from the source code, there are [instructions](BUILD
 
 Compatibility
 -------------
-The engine has been successfully compiled and tested on Windows, OSX and Linux (Debian).
+The engine has been successfully compiled and tested on Windows, OSX and Linux (Debian). It works with OpenGL 3.3, but will default to OpenGL 2.1 at runtime if the former is not available.
 
 If you have any problems with the builds, or any questions and need help, don't hesitate to [open an issue](https://github.com/coding3d/small3d/issues).
 
