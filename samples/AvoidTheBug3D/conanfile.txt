@@ -5,4 +5,4 @@ small3d/1.0.5@coding3d/stable
 cmake
 
 [imports]
-bin, *.dll -> ./build/bin
+bin, *.dll -> ./bin
