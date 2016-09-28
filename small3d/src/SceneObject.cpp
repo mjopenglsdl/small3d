@@ -12,6 +12,8 @@
 #include "Exception.hpp"
 #include "ModelLoader.hpp"
 #include "WavefrontLoader.hpp"
+#include <glm/glm.hpp>
+
 
 using namespace std;
 
@@ -19,7 +21,7 @@ namespace small3d {
 
   SceneObject::SceneObject(string name, string modelPath, int numFrames, string texturePath,
                            string boundingBoxesPath) : texture(texturePath), colour(0,0,0,0), offset(0,0,0),
-                                                       rotation(0,0,0), boundingBoxes() {
+                                                       rotation(0,0,0), boundingBoxSet() {
     initLogger();
     this->name = name;
     animating = false;
@@ -51,7 +53,7 @@ namespace small3d {
     }
 
     if (boundingBoxesPath != "") {
-      boundingBoxes.loadFromFile(boundingBoxesPath);
+      boundingBoxSet.loadFromFile(boundingBoxesPath);
     }
 
   }
@@ -97,36 +99,36 @@ namespace small3d {
     }
   }
 
-  bool SceneObject::collidesWith(float x, float y, float z) {
-    if (boundingBoxes.vertices.size() == 0) {
+  bool SceneObject::collidesWith(glm::vec3 point) {
+    if (boundingBoxSet.vertices.size() == 0) {
       throw Exception("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
 
-    boundingBoxes.offset = this->offset;
-    boundingBoxes.rotation = this->rotation;
+    boundingBoxSet.offset = this->offset;
+    boundingBoxSet.rotation = this->rotation;
 
-    return boundingBoxes.pointIsWithin(x, y, z);
+    return boundingBoxSet.collidesWith(point);
   }
 
   bool SceneObject::collidesWith(SceneObject &otherObject) {
-    if (boundingBoxes.vertices.size() == 0) {
+    if (boundingBoxSet.vertices.size() == 0) {
       throw Exception("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
 
-    if (otherObject.boundingBoxes.vertices.size() == 0) {
+    if (otherObject.boundingBoxSet.vertices.size() == 0) {
       throw Exception(
           "No bounding boxes have been provided for " + otherObject.name + ", so collision detection is not enabled.");
     }
 
-    boundingBoxes.offset = offset;
-    boundingBoxes.rotation = rotation;
+    boundingBoxSet.offset = offset;
+    boundingBoxSet.rotation = rotation;
 
-    otherObject.boundingBoxes.offset = otherObject.offset;
-    otherObject.boundingBoxes.rotation = otherObject.rotation;
+    otherObject.boundingBoxSet.offset = otherObject.offset;
+    otherObject.boundingBoxSet.rotation = otherObject.rotation;
 
     // Checking whether the boxes of this object are within the boxes of the other object or vice versa
-    return boundingBoxes.boxesAreWithin(otherObject.boundingBoxes) ||
-           otherObject.boundingBoxes.boxesAreWithin(boundingBoxes);
+    return boundingBoxSet.collidesWith(otherObject.boundingBoxSet) ||
+        otherObject.boundingBoxSet.collidesWith(boundingBoxSet);
   }
 
 }

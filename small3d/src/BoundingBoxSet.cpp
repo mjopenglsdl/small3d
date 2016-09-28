@@ -6,26 +6,27 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "BoundingBoxes.hpp"
+#include "BoundingBoxSet.hpp"
 #include <fstream>
 #include "Exception.hpp"
 #include "GetTokens.hpp"
 #include "MathFunctions.hpp"
 #include "SDL.h"
 
+
 namespace small3d {
 
   /**
    * Constructor
    */
-  BoundingBoxes::BoundingBoxes() {
+  BoundingBoxSet::BoundingBoxSet() {
     initLogger();
     vertices.clear();
     facesVertexIndexes.clear();
     numBoxes = 0;
   }
 
-  void BoundingBoxes::loadFromFile(string fileLocation) {
+  void BoundingBoxSet::loadFromFile(string fileLocation) {
     if (vertices.size() != 0) {
       throw Exception(
           "Illegal attempt to reload bounding boxes. Please use another object.");
@@ -87,7 +88,7 @@ namespace small3d {
 
   }
 
-  bool BoundingBoxes::pointIsWithin(float pointX, float pointY, float pointZ) const {
+  bool BoundingBoxSet::collidesWith(glm::vec3 point) const {
     bool collides = false;
     glm::mat4 rotationMatrix = rotateZ(rotation.z) * rotateX(rotation.x) * rotateY(rotation.y);
 
@@ -134,15 +135,10 @@ namespace small3d {
           maxZ = rotatedCoords.z;
       }
 
-      /*cout<<"Checking "<<minX<<" "<<maxX<< " - " << pointX<<", "<<
-    minY<<" "<<maxY<<" - "<<pointY << ", " << minZ <<" "<<pointZ<<" - "<<rotatedCoords.z<<endl;*/
+      if (point.x > minX && point.x < maxX &&
+          point.y > minY && point.y < maxY &&
+          point.z > minZ && point.z < maxZ) {
 
-      //cout<<"Checking " << minY<<" "<<maxY<<" - "<<pointY <<endl;
-
-      if (pointX > minX && pointX < maxX &&
-          pointY > minY && pointY < maxY &&
-          pointZ > minZ && pointZ < maxZ) {
-        //cout<<"NOT Checking " << minY<<" "<<maxY<<" - "<<pointY <<endl;
         collides = true;
         break;
       }
@@ -151,27 +147,27 @@ namespace small3d {
     return collides;
   }
 
-  bool BoundingBoxes::boxesAreWithin(BoundingBoxes& otherBoxes) const {
+  bool BoundingBoxSet::collidesWith(BoundingBoxSet &otherBoxSet) const {
     bool collides = false;
 
     glm::mat4 rotationMatrix =
-        rotateZ(otherBoxes.rotation.z) * rotateX(otherBoxes.rotation.x) * rotateY(otherBoxes.rotation.y);
+        rotateZ(otherBoxSet.rotation.z) * rotateX(otherBoxSet.rotation.x) * rotateY(otherBoxSet.rotation.y);
 
-    for (vector<vector<float> >::iterator vertex = otherBoxes.vertices.begin();
-         vertex != otherBoxes.vertices.end(); ++vertex) {
+    for (vector<vector<float> >::iterator vertex = otherBoxSet.vertices.begin();
+         vertex != otherBoxSet.vertices.end(); ++vertex) {
 
       glm::vec4 otherCoords(vertex->at(0), vertex->at(1), vertex->at(2), 1.0f);
       glm::vec4 rotatedOtherCoords(0.0f, 0.0f, 0.0f, 1.0f);
 
       rotatedOtherCoords = rotationMatrix * otherCoords;
 
-      rotatedOtherCoords.x += otherBoxes.offset.x;
-      rotatedOtherCoords.y += otherBoxes.offset.y;
-      rotatedOtherCoords.z += otherBoxes.offset.z;
+      rotatedOtherCoords.x += otherBoxSet.offset.x;
+      rotatedOtherCoords.y += otherBoxSet.offset.y;
+      rotatedOtherCoords.z += otherBoxSet.offset.z;
 
       /*cout << "Checking " << rotatedOtherCoords.x << ", " << rotatedOtherCoords.y << ", " << rotatedOtherCoords.z <<
     " with " << boxesX << ", " << boxesY << ", " << boxesZ << " rotation " << boxesRotation << endl;*/
-      if (pointIsWithin(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z)) {
+      if (collidesWith(glm::vec3(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z))) {
 
         collides = true;
         break;

@@ -13,7 +13,7 @@
 #include <memory>
 #include "Logger.hpp"
 #include "Image.hpp"
-#include "BoundingBoxes.hpp"
+#include "BoundingBoxSet.hpp"
 #include <glm/glm.hpp>
 
 using namespace std;
@@ -128,20 +128,17 @@ namespace small3d
      * @brief	The bounding boxes for the object, used for collision detection.
      */
 
-    BoundingBoxes boundingBoxes;
+    BoundingBoxSet boundingBoxSet;
 
     /**
-     * @brief Check if the object collides with a point of the given
-     * coordinates
+     * @brief Check if the object collides with a given point
      *
-     * @param	x	The x coordinate of the point
-     * @param	y	The y coordinate of the point
-     * @param	z	The z coordinate of the point
+     * @param	point	The point
      *
      * @return	true if a collision is detected, false otherwise.
      */
 
-    bool collidesWith(float x, float y, float z);
+    bool collidesWith(glm::vec3 point);
 
     /**
      *

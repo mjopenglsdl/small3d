@@ -8,17 +8,18 @@ Sample game, linking to the engine on conan.io. Move the goat around using the a
 Build as follows:
 
 	cd AvoidTheBug3D
-	conan install --build missing
 	mkdir build
 	cd build
+	conan install .. --build missing
 	cmake ..
 	cmake --build .
 
 On Microsoft Windows, better do it like this:
 
 	cd AvoidTheBug3D
-	conan install --build missing
+	mkdir build
 	cd build
+	conan install .. --build missing
 	cmake -G "Visual Studio 14 2015 Win64" ..
 	cmake --build . --config Release
 

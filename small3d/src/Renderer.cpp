@@ -662,7 +662,7 @@ namespace small3d {
 
   }
 
-  void Renderer::render(string text, const SDL_Color &colour,
+  void Renderer::render(string text, glm::uvec4 colour,
                         float topX, float topY, float bottomX, float bottomY,
                         string fontPath, int fontSize)
   {
@@ -691,11 +691,9 @@ namespace small3d {
       font = idFontPair->second;
     }
 
+    SDL_Color sdlColour = {(Uint8) colour.r, (Uint8) colour.g, (Uint8) colour.b, (Uint8) colour.a};
 
-
-    //GLuint textHandle = getTextureHandle(intToStr(size) + "text_" + text);
-
-    SDL_Surface *textSurface = TTF_RenderText_Blended(font, text.c_str(), colour);
+    SDL_Surface *textSurface = TTF_RenderText_Blended(font, text.c_str(), sdlColour);
     int numPixels = textSurface->h * textSurface->w;
     Uint32 *pix = static_cast<Uint32*>(textSurface->pixels);
     float *texturef = new float[numPixels * 4];

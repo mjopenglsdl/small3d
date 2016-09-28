@@ -17,7 +17,7 @@
 #include "Logger.hpp"
 #include "Image.hpp"
 #include "Model.hpp"
-#include "BoundingBoxes.hpp"
+#include "BoundingBoxSet.hpp"
 #include "ModelLoader.hpp"
 #include "WavefrontLoader.hpp"
 #include "SceneObject.hpp"
@@ -133,7 +133,7 @@ TEST(ModelTest, LoadModel) {
 
 TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
-  unique_ptr<BoundingBoxes> bboxes(new BoundingBoxes());
+  unique_ptr<BoundingBoxSet> bboxes(new BoundingBoxSet());
 
   bboxes->loadFromFile("resources/models/GoatBB/GoatBB.obj");
 
@@ -162,7 +162,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
   bboxes->offset.z = 0.1f;
   bboxes->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 
-  EXPECT_FALSE(bboxes->pointIsWithin(0.1f, 0.1f, 0.1f));
+  EXPECT_FALSE(bboxes->collidesWith(glm::vec3(0.1f, 0.1f, 0.1f)));
 
 }
 
