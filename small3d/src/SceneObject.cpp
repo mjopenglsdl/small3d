@@ -12,7 +12,6 @@
 #include "Exception.hpp"
 #include "ModelLoader.hpp"
 #include "WavefrontLoader.hpp"
-#include <glm/glm.hpp>
 
 
 using namespace std;

@@ -720,7 +720,7 @@ namespace small3d {
 
     }
     string textTextureId = intToStr(fontSize) + "text_" + text;
-    GLuint textHandle = generateTexture(textTextureId, texturef, textSurface->w, textSurface->h);
+    generateTexture(textTextureId, texturef, textSurface->w, textSurface->h);
     delete[] texturef;
     SDL_FreeSurface(textSurface);
 
