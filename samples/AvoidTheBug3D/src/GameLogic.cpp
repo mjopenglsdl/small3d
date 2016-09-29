@@ -342,7 +342,7 @@ namespace AvoidTheBug3D {
       if (seconds != 0)
       {
         renderer.render("Goat not bitten for " + intToStr(seconds) + " seconds",
-          glm::uvec4(255, 100, 0, 255), -0.95f, -0.6f, 0.0f, -0.8f);
+          glm::uvec4(255, 100, 0, 255), glm::vec2(-0.95f, -0.6f), glm::vec2(0.0f, -0.8f));
       }
 
     }

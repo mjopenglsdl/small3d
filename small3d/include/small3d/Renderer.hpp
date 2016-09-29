@@ -219,15 +219,13 @@ namespace small3d
      * @brief Render some text on the screen. A texture will be generated, containing the given
      * text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space.
      * @param text The text to be rendered
-     * @param colour The colour in which the text will be rendered
-     * @param topX The top x coordinate of the text rectangle
-     * @param topY The top y coordinate of the text rectangle
-     * @param bottomX The bottom x coordinate of the text rectangle
-     * @param bottomY The bottom y coordinate of the text rectangle
+     * @param colour The colour in which the text will be rendered (r, g, b and a)
+     * @param topLeft The coordinates of the top left corner of the text rectangle (x, y)
+     * @param bottomRight The coordinates of the bottom right corner of the text rectangle (x, y)
      * @param fontPath Path to the TrueType font (.ttf) which will be used
      * @param fontSize The size of the font which will be used
      */
-    void render(string text, glm::uvec4 colour, float topX, float topY, float bottomX, float bottomY,
+    void render(string text, glm::uvec4 colour, glm::vec2 topLeft, glm::vec2 bottomRight,
                 string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf", int fontSize=48);
 
     /**

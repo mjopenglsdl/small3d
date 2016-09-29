@@ -663,7 +663,7 @@ namespace small3d {
   }
 
   void Renderer::render(string text, glm::uvec4 colour,
-                        float topX, float topY, float bottomX, float bottomY,
+                        glm::vec2 topLeft, glm::vec2 bottomRight,
                         string fontPath, int fontSize)
   {
 
@@ -730,10 +730,10 @@ namespace small3d {
 
     float boxVerts[16] =
         {
-            topX, bottomY, -0.5f, 1.0f,
-            bottomX, bottomY, -0.5f, 1.0f,
-            bottomX, topY, -0.5f, 1.0f,
-            topX, topY, -0.5f, 1.0f
+            topLeft.x, bottomRight.y, -0.5f, 1.0f,
+            bottomRight.x, bottomRight.y, -0.5f, 1.0f,
+            bottomRight.x, topLeft.y, -0.5f, 1.0f,
+            topLeft.x, topLeft.y, -0.5f, 1.0f
         };
 
     render(boxVerts, textTextureId);

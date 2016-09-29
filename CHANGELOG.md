@@ -18,3 +18,4 @@ v1.0.5
 - [BREAKING] Renamed BoundingBoxes (now BoungingBoxSet) functions boxesAreWithin and pointIsWithin to collidesWith (overloaded).
 - [BREAKING] Replaced 3 variables which represented a point's coordinates in SceneObject.collidesWith and BoundingBoxSet.collidesWith with a single glm::vec3 variable.
 - [BREAKING] The SDL colour parameter in the Renderer.render has been replaced by a glm::uvec4
+- [BREAKING] The Renderer.render method for text has had its four indivitual parameters, indicating the coordinates of the top left and the bottom right corner of the rectangle in which the text will be displayed, replaced by two 2-dimensional glm vectors.
