@@ -21,7 +21,7 @@ namespace small3d {
   /**
    * @class	Image
    *
-   * @brief	Image loading class. Only handles RGB encoded data in PNG files for now.
+   * @brief	Image loading class. Only handles RGB encoded data in PNG files.
    *
    */
 

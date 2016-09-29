@@ -112,7 +112,7 @@ namespace small3d {
 
     if (colorType != PNG_COLOR_TYPE_RGB) {
       throw Exception(
-        "For now, only RGB png images are supported, with no transparency information saved.");
+        "Image format not recognised. Only RGB png images are supported, with no transparency information saved.");
     }
 
     imageDataSize = (unsigned int) (4 * width * height);
