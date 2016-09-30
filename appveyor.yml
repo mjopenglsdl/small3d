@@ -2,7 +2,7 @@ build: false
 branches:
   only:
     - master
-    - develop	
+    - develop
 environment:
     PYTHON: "C:\\Python27-x64"
     PYTHON_VERSION: "2.7.11"
@@ -10,7 +10,7 @@ environment:
 
     CONAN_REFERENCE: "small3d/1.0.5"
     CONAN_USERNAME: "coding3d"
-    CONAN_CHANNEL: "ci"
+    CONAN_CHANNEL: "testing"
     CONAN_TOTAL_PAGES: 1
 
     matrix:

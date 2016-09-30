@@ -11,6 +11,7 @@
 
 #ifndef SDLANDOPENGL
 #define SDLANDOPENGL
+#define GLEW_STATIC
 #include <GL/glew.h>
 #include <SDL_opengl.h>
 #include <SDL.h>
