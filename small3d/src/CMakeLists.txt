@@ -8,6 +8,7 @@ ADD_LIBRARY(small3d BoundingBoxSet.cpp Exception.cpp GetTokens.cpp
     ../include/small3d/Sound.hpp ../include/small3d/SoundData.hpp ../include/small3d/WavefrontLoader.hpp)
 
 IF(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN)
+  TARGET_COMPILE_DEFINITIONS(small3d PUBLIC "${CONAN_DEFINES}")
   TARGET_LINK_LIBRARIES(small3d PUBLIC ${CONAN_LIBS})
 ELSE()
   INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR} ${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS}
