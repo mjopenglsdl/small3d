@@ -12,6 +12,3 @@ add_executable(test_small3d main.cpp)
 target_link_libraries(test_small3d ${CONAN_LIBS})
 
 SET_TARGET_PROPERTIES(test_small3d PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}")
-
-
-#target_compile_options(test_small3d PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Ubuntu if gcc problems
