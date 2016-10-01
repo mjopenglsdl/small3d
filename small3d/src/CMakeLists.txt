@@ -8,6 +8,9 @@ ADD_LIBRARY(small3d BoundingBoxSet.cpp Exception.cpp GetTokens.cpp
     ../include/small3d/Sound.hpp ../include/small3d/SoundData.hpp ../include/small3d/WavefrontLoader.hpp)
 
 IF(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN)
+  set(CMAKE_C_FLAGS "${CONAN_C_FLAGS}")
+  set(CMAKE_CXX_FLAGS "${CONAN_CXX_FLAGS}")
+  set(CMAKE_SHARED_LINKER_FLAGS "${CONAN_SHARED_LINKER_FLAGS}")
   TARGET_LINK_LIBRARIES(small3d PUBLIC ${CONAN_LIBS})
   TARGET_COMPILE_DEFINITIONS(small3d PUBLIC "${CONAN_DEFINES}")
 ELSE()
