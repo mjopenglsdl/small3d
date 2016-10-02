@@ -3,8 +3,12 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
-v1.0.5
-------
+v1.0.5 (due October 2016)
+-------------------------
+There are many breaking changes in this version. A large code revision is taking place. Unfortunately, I have gotten into the habit of updating its ["stable" channel on conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable) while developing it. However the version will be closed soon, from which point on there will be no more changes. Future versions will appear as "testing" on conan, until they are locked and released as "stable".
+
+These are the changes:
+
 - Lots of dynamic memory allocations removed
 - [BREAKING] Model rotation, offset and speed are no longer pointers 
 - [BREAKING] Camera rotation adjustments to align it with the "character" (scene objects) rotations when following them have been moved from the sample games to the engine's source code.
