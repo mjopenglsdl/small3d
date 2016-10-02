@@ -47,8 +47,8 @@ namespace AvoidTheBug3D {
 	
 	renderer.cameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	
-	bug.rotationAdjustment = glm::vec3(0.0f, 1.57f, 0.0f);
-	goat.rotationAdjustment = glm::vec3(0.0f, 1.57f, 0.0f);
+	bug.adjustRotation(glm::vec3(0.0f, 1.57f, 0.0f));
+	goat.adjustRotation(glm::vec3(0.0f, 1.57f, 0.0f));
 	
 
     Image startScreenTexture("resources/images/startScreen.png");

@@ -88,6 +88,13 @@ namespace small3d {
 
   }
 
+  void BoundingBoxSet::setRotationAdjustment(const glm::mat4x4 &ajdustmentMatrix) {
+
+    rotationAdjustment = ajdustmentMatrix;
+
+  }
+
+
   bool BoundingBoxSet::collidesWith(glm::vec3 point) const {
     bool collides = false;
     glm::mat4 rotationMatrix = rotateZ(rotation.z) * rotateX(rotation.x) * rotateY(rotation.y);
@@ -99,7 +106,7 @@ namespace small3d {
         vertices[static_cast<unsigned int>(idx * 8)][2], 1);
       glm::vec4 rotatedCoords(0.0f, 0.0f, 0.0f, 1.0f);
 
-      rotatedCoords = rotationMatrix * coords;
+      rotatedCoords = coords * rotationAdjustment * rotationMatrix;
 
       rotatedCoords.x += offset.x;
       rotatedCoords.y += offset.y;

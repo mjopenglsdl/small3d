@@ -33,6 +33,7 @@ namespace small3d {
   private:
 
     int numBoxes;
+    glm::mat4x4 rotationAdjustment;
 
   public:
 
@@ -79,6 +80,13 @@ namespace small3d {
      */
 
     void loadFromFile(string fileLocation);
+
+    /**
+     * Set the rotation adjustment matrix (normally used so that a SceneObject's rotation adjustment
+     * is also applied to its BoundingBoxSet. See SceneObject.adjustRotation)
+     * @param ajdustmentMatrix The rotation adjustment matrix
+     */
+    void setRotationAdjustment(const glm::mat4x4 &ajdustmentMatrix);
 
     /**
      * @brief Check if a point collides (or is inside) any of the boxes

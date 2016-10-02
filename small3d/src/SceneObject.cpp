@@ -12,6 +12,7 @@
 #include "Exception.hpp"
 #include "ModelLoader.hpp"
 #include "WavefrontLoader.hpp"
+#include "MathFunctions.hpp"
 
 
 using namespace std;
@@ -20,7 +21,7 @@ namespace small3d {
 
   SceneObject::SceneObject(string name, string modelPath, int numFrames, string texturePath,
                            string boundingBoxesPath) : texture(texturePath), colour(0,0,0,0), offset(0,0,0),
-                                                       rotation(0,0,0), rotationAdjustment(0,0,0) {
+                                                       rotation(0,0,0) {
     initLogger();
     this->name = name;
     animating = false;
@@ -67,6 +68,16 @@ namespace small3d {
 
   const string SceneObject::getName() {
     return name;
+  }
+
+  void SceneObject::adjustRotation(const glm::vec3 &adjustment) {
+    rotationAdjustment = rotateX(adjustment.x) * rotateY(adjustment.y) * rotateZ(adjustment.z);
+    if (boundingBoxSet.vertices.size() > 0)
+      boundingBoxSet.setRotationAdjustment(rotationAdjustment);
+  }
+
+  const glm::mat4x4 &SceneObject::getRotationAdjustment() {
+    return rotationAdjustment;
   }
 
   void SceneObject::startAnimating() {

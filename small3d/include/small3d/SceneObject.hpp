@@ -37,8 +37,10 @@ namespace small3d
     int currentFrame;
     int framesWaited;
     int numFrames;
+    glm::mat4x4 rotationAdjustment;
     Image texture;
     string name;
+
 
   public:
 
@@ -101,8 +103,15 @@ namespace small3d
     /**
      * Adjustment of the object's rotation, in case the way it was exported from an editor
      * does not correspond to the way it is supposed to appear in a game.
+     * @param adjustment Vector containing the rotation adjustment around the x, y and z axis respectively
      */
-    glm::vec3 rotationAdjustment;
+    void adjustRotation(const glm::vec3 &adjustment);
+
+    /**
+     * Get the matrix that can apply the rotation adjustment for the object (see adjustRotation)
+     * @return The rotation adjustment matrix
+     */
+    const glm::mat4x4& getRotationAdjustment();
 
     /**
      * Start animating the object

@@ -107,9 +107,10 @@ namespace small3d
      * @brief Positions the next object to be rendered.
      * @param offset The offset (location coordinates)
      * @param rotation The rotation (around the x, y and z axes)
+     * @param rotationAdjustment The matrix potentially containing an adjustment to the object's rotation (see SceneObject.adjustRotation)
      */
     void positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation,
-                            const glm::vec3 &rotationAdjustment);
+                            const glm::mat4x4 &rotationAdjustment);
 
     /**
      * @brief Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).

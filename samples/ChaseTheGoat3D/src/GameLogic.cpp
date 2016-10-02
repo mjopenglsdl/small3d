@@ -42,7 +42,7 @@ namespace AvoidTheBug3D {
            1, "resources/models/Tree/tree.png",
            "resources/models/TreeBB/TreeBB.obj")
   {
-	bug.rotationAdjustment = glm::vec3(0.0f, 1.57f, 0.0f);
+	bug.adjustRotation(glm::vec3(0.0f, 1.57f, 0.0f));
 
     Image startScreenTexture("resources/images/startScreen.png");
 
