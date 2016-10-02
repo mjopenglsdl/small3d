@@ -108,7 +108,8 @@ namespace small3d
      * @param offset The offset (location coordinates)
      * @param rotation The rotation (around the x, y and z axes)
      */
-    void positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation);
+    void positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation,
+                            const glm::vec3 &rotationAdjustment);
 
     /**
      * @brief Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).

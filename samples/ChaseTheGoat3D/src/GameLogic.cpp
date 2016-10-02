@@ -138,8 +138,8 @@ namespace AvoidTheBug3D {
       bug.offset.y = GROUND_Y + 0.5f;
 
 	  // Looking through the eyes of the bug
-    //renderer.cameraPosition = bug.offset;
-    //renderer.cameraRotation = bug.rotation;
+    renderer.cameraPosition = bug.offset;
+    renderer.cameraRotation = bug.rotation;
 	
     bug.animate();
 

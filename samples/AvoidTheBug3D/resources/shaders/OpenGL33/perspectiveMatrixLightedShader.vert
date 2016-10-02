@@ -20,16 +20,18 @@ uniform mat4 xCameraRotationMatrix;
 uniform mat4 yCameraRotationMatrix;
 uniform mat4 zCameraRotationMatrix;
 
+uniform mat4 rotationAdjustmentMatrix;
+
 uniform vec3 lightDirection;
 
 void main()
 {
-    vec4 worldPos = position * zRotationMatrix * xRotationMatrix 
+    vec4 worldPos = position *rotationAdjustmentMatrix * zRotationMatrix * xRotationMatrix 
 			* yRotationMatrix
 			+ vec4(offset.x, offset.y, offset.z, 0.0);
 
     vec4 cameraPos = (worldPos - vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0.0))
-			* yCameraRotationMatrix * xCameraRotationMatrix * zCameraRotationMatrix;
+			 * yCameraRotationMatrix * xCameraRotationMatrix * zCameraRotationMatrix;
 
     gl_Position = perspectiveMatrix * cameraPos;
 

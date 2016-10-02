@@ -20,11 +20,13 @@ uniform mat4 xCameraRotationMatrix;
 uniform mat4 yCameraRotationMatrix;
 uniform mat4 zCameraRotationMatrix;
 
+uniform mat4 rotationAdjustmentMatrix;
+
 uniform vec3 lightDirection;
 
 void main()
 {
-    vec4 worldPos = position * zRotationMatrix * xRotationMatrix 
+    vec4 worldPos = position *rotationAdjustmentMatrix * zRotationMatrix * xRotationMatrix 
 			* yRotationMatrix
 			+ vec4(offset.x, offset.y, offset.z, 0.0);
 

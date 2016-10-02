@@ -377,7 +377,8 @@ namespace small3d {
     return handle;
   }
 
-  void Renderer::positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation) {
+  void Renderer::positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation,
+    const glm::vec3 &rotationAdjustment) {
     // Rotation
 
     GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
@@ -386,10 +387,15 @@ namespace small3d {
                                                          "yRotationMatrix");
     GLint zRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
                                                          "zRotationMatrix");
+    GLint rotationAdjustmentMatrixUniform = glGetUniformLocation(perspectiveProgram,
+                                                                 "rotationAdjustmentMatrix");
 
     glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(rotation.x)));
     glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(rotation.y)));
     glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(rotation.z)));
+    glUniformMatrix4fv(rotationAdjustmentMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(rotationAdjustment.x) *
+                                                                                       rotateY(rotationAdjustment.y) *
+                                                                                       rotateZ(rotationAdjustment.z)));
 
     GLint offsetUniform = glGetUniformLocation(perspectiveProgram, "offset");
     glUniform3fv(offsetUniform, 1, glm::value_ptr(offset));
@@ -499,7 +505,7 @@ namespace small3d {
       GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
       glUniform1f(lightIntensityUniform, lightIntensity);
 
-      positionNextObject(offset, glm::vec3(0.0f, 0.0f, 0.0f));
+      positionNextObject(offset, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
       positionCamera();
     }
 
@@ -613,7 +619,7 @@ namespace small3d {
     GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
     glUniform1f(lightIntensityUniform, lightIntensity);
 
-    positionNextObject(sceneObject.offset, sceneObject.rotation + sceneObject.rotationAdjustment);
+    positionNextObject(sceneObject.offset, sceneObject.rotation, sceneObject.rotationAdjustment);
 
     positionCamera();
 
