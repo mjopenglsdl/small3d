@@ -46,7 +46,7 @@ namespace small3d
 
     /**
      * @brief Constructor
-     * 
+     *
      * @param name The name of the object
      * @param modelPath The path to the file containing the object's model
      * @param texturePath The path to the file containing the object's texture. If the object
