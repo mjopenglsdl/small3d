@@ -45,7 +45,8 @@ namespace small3d
   public:
 
     /**
-     * Constructor for object with texture
+     * @brief Constructor
+     * 
      * @param name The name of the object
      * @param modelPath The path to the file containing the object's model
      * @param texturePath The path to the file containing the object's texture. If the object
@@ -63,24 +64,24 @@ namespace small3d
                 string boundingBoxesPath = "");
 
     /**
-     * Destructor
+     * @brief Destructor
      */
     virtual ~SceneObject() = default;
 
     /**
-     * Get the object's model
+     * @brief Get the object's model
      * @return The object's model
      */
     Model& getModel() ;
 
     /**
-     * Get the object's texture
+     * @brief Get the object's texture
      * @return The object's texture
      */
     const Image& getTexture() const;
 
     /**
-     * Get the name of the object
+     * @brief Get the name of the object
      * @return The name of the object
      */
     const string getName();
@@ -101,41 +102,41 @@ namespace small3d
     glm::vec3 rotation;
 
     /**
-     * Adjustment of the object's rotation, in case the way it was exported from an editor
+     * @brief Adjustment of the object's rotation, in case the way it was exported from an editor
      * does not correspond to the way it is supposed to appear in a game.
-     * @param adjustment Vector containing the rotation adjustment around the x, y and z axis respectively
+     * @param adjustment Vector containing the rotation adjustment around the x, y and z axes respectively
      */
     void adjustRotation(const glm::vec3 &adjustment);
 
     /**
-     * Get the matrix that can apply the rotation adjustment for the object (see adjustRotation)
+     * @brief Get the matrix that can apply the rotation adjustment for the object (see adjustRotation)
      * @return The rotation adjustment matrix
      */
     const glm::mat4x4& getRotationAdjustment();
 
     /**
-     * Start animating the object
+     * @brief Start animating the object
      */
     void startAnimating();
 
     /**
-     * Stop animating the object
+     * @brief Stop animating the object
      */
     void stopAnimating();
 
     /**
-     * Reset the animation sequence (go to first frame)
+     * @brief Reset the animation sequence (go to the first frame)
      */
     void resetAnimation();
 
     /**
-     * Set the animation speed
+     * @brief Set the animation speed
      * @param delay The delay between each animation frame, expressed in number of game frames
      */
     void setFrameDelay(const int &delay);
 
     /**
-     * Process animation (progress current frame if necessary)
+     * @brief Process animation (progress current frame if necessary)
      */
     void animate();
 

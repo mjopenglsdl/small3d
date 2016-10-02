@@ -82,7 +82,7 @@ namespace small3d {
     void loadFromFile(string fileLocation);
 
     /**
-     * Set the rotation adjustment matrix (normally used so that a SceneObject's rotation adjustment
+     * @brief Set the rotation adjustment matrix (normally used so that a SceneObject's rotation adjustment
      * is also applied to its BoundingBoxSet. See SceneObject.adjustRotation)
      * @param ajdustmentMatrix The rotation adjustment matrix
      */
