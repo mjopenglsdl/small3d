@@ -23,7 +23,6 @@ Features
 - It can read and render Wavefront files, including animations. For other formats, you can write your own shader, inherriting from the ModelLoader class.
 - Texture mapping.
 - It renders text.
-- It renders
 - It can render any image in any position (for example to be used as the ground, or the sky).
 - Gouraud shading. You can set the light direction.
 - Simple rotations with matrices.
