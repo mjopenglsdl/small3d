@@ -111,35 +111,35 @@ namespace AvoidTheBug3D {
 
     }
 
-    if (keyInput.up) {
+    if (keyInput.down) {
 
-      bug.rotation.z -= BUG_TILT_SPEED;
+      bug.rotation.x -= BUG_TILT_SPEED;
 
-      if (bug.rotation.z < -0.75f)
-        bug.rotation.z = -0.75f;
+      if (bug.rotation.x < -0.75f)
+        bug.rotation.x = -0.75f;
 
 
     }
-    else if (keyInput.down) {
+    else if (keyInput.up) {
 
-      bug.rotation.z += BUG_TILT_SPEED;
+      bug.rotation.x += BUG_TILT_SPEED;
 
-      if (bug.rotation.z > 0.75f)
-        bug.rotation.z = 0.75f;
+      if (bug.rotation.x > 0.75f)
+        bug.rotation.x = 0.75f;
     }
 
     if (keyInput.space) {
 	  bug.offset.x += sin(bug.rotation.y) * BUG_SPEED;
 	  bug.offset.z -= cos(bug.rotation.y) * BUG_SPEED;
-	  bug.offset.y += sin(bug.rotation.z) * BUG_SPEED;
+	  bug.offset.y -= sin(bug.rotation.x) * BUG_SPEED;
     }
 	
     if (bug.offset.y < GROUND_Y + 0.5f)
       bug.offset.y = GROUND_Y + 0.5f;
 
 	  // Looking through the eyes of the bug
-    renderer.cameraPosition = bug.offset;
-    renderer.cameraRotation = bug.rotation;
+    //renderer.cameraPosition = bug.offset;
+    //renderer.cameraRotation = bug.rotation;
 	
     bug.animate();
 
