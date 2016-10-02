@@ -11,6 +11,29 @@ Introduction
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL.
 
+Features
+--------
+
+- Runs on Windows, Mac, Linux (I'm using Debian and somebody told me that it works ok on Ubuntu, too)
+- Uses OpenGL 3.3 and defaults to 2.1 if the former is not available. So, it comes with two sets of shaders.
+- Uses C++ 11
+- You can tweak the shaders, as long as you keep the same incoming variables and uniforms.
+- Plays sounds from .ogg files.
+- Doesn't hide SDL from you. You can set up your main game loop, inputs, etc, however you want.
+- It can read and render Wavefront files, including animations. For other formats, you can write your own shader, inherriting from the ModelLoader class.
+- Texture mapping.
+- It renders text.
+- It renders
+- It can render any image in any position (for example to be used as the ground, or the sky).
+- Gouraud shading. You can set the light direction.
+- Simple rotations with matrices.
+- Simple collision detection with bounding boxes.
+- Can be deployed via the conan.io package manager.
+- Can also be compiled independently, using CMake.
+- Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
+- Comes packaged with 2 sample games (I am working on finishing the second one).
+- I am open to adding more features, so write to me if you have any ideas. Don't be offended if I say no though. I have spent too much time trying to expand on various directions and this made me delay finishing a decent version of the engine. I would like to keep it small and simple, so that beginners can understand easily not only how to use it, but also how the code works (so that they can send me bug fixes :) 
+
 Getting Started
 ---------------
 The best way to get started is to take a look at the source code of two provided sample games:
@@ -35,7 +58,7 @@ If you have any problems with the builds, or any questions and need help, don't 
 3D models and textures
 ----------------------
 
-The engine can only read 3D models from Wavefront .obj files. There are many ways to create such a file, but I am exporting them from Blender.
+As already mentioned, the engine can only read 3D models from Wavefront .obj files. There are many ways to create such a file, but I am exporting them from Blender.
 
 When exporting the models to Wavefront .obj files, make sure you set the options "Include Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing,
 the normals listed later in the exported file for some vertices will overwrite the previous ones.
