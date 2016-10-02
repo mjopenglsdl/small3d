@@ -47,6 +47,9 @@ namespace AvoidTheBug3D {
 	
 	renderer.cameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	
+	bug.rotationAdjustment = glm::vec3(0.0f, 1.57f, 0.0f);
+	goat.rotationAdjustment = glm::vec3(0.0f, 1.57f, 0.0f);
+	
 
     Image startScreenTexture("resources/images/startScreen.png");
     renderer.generateTexture("startScreen", startScreenTexture.getData(), startScreenTexture.getWidth(),
@@ -122,24 +125,24 @@ namespace AvoidTheBug3D {
 
     if (keyInput.up) {
 
-      goat.offset.x -= cos(goat.rotation.y) * GOAT_SPEED;
-      goat.offset.z -= sin(goat.rotation.y) * GOAT_SPEED;
+      goat.offset.x += sin(goat.rotation.y) * GOAT_SPEED;
+      goat.offset.z -= cos(goat.rotation.y) * GOAT_SPEED;
 
       while (goat.collidesWith(tree)) {
-        goat.offset.x += cos(goat.rotation.y) * GOAT_SPEED;
-        goat.offset.z += sin(goat.rotation.y) * GOAT_SPEED;
+        goat.offset.x -= sin(goat.rotation.y) * GOAT_SPEED;
+        goat.offset.z += cos(goat.rotation.y) * GOAT_SPEED;
       }
 
       goat.startAnimating();
 
     }
     else if (keyInput.down) {
-      goat.offset.x += cos(goat.rotation.y) * GOAT_SPEED;
-      goat.offset.z += sin(goat.rotation.y) * GOAT_SPEED;
+      goat.offset.x -= sin(goat.rotation.y) * GOAT_SPEED;
+      goat.offset.z += cos(goat.rotation.y) * GOAT_SPEED;
 
       while (goat.collidesWith(tree)) {
-        goat.offset.x -= cos(goat.rotation.y) * GOAT_SPEED;
-        goat.offset.z -= sin(goat.rotation.y) * GOAT_SPEED;
+        goat.offset.x += sin(goat.rotation.y) * GOAT_SPEED;
+        goat.offset.z -= cos(goat.rotation.y) * GOAT_SPEED;
       }
 
       goat.startAnimating();
@@ -174,8 +177,8 @@ namespace AvoidTheBug3D {
     float goatRelX = ROUND_2_DECIMAL(xDistance / distance);
     float goatRelZ = ROUND_2_DECIMAL(zDistance / distance);
 
-    float bugDirectionX = cos(bug.rotation.y);
-    float bugDirectionZ = sin(bug.rotation.y);
+    float bugDirectionX = -sin(bug.rotation.y);
+    float bugDirectionZ = cos(bug.rotation.y);
 
     float dotPosDir = goatRelX * bugDirectionX + goatRelZ * bugDirectionZ; // dot product
 
@@ -239,7 +242,7 @@ namespace AvoidTheBug3D {
 
     // Bug state: represent
 
-    bug.rotation.z = 0;
+    bug.rotation.x = 0;
 
     if (bugState == TURNING)
     {
@@ -249,12 +252,12 @@ namespace AvoidTheBug3D {
     }
     else if (bugState == DIVING_DOWN)
     {
-      bug.rotation.z = -BUG_DIVE_TILT;
+      bug.rotation.x = BUG_DIVE_TILT;
       bug.offset.y -= bugVerticalSpeed;
     }
     else if (bugState == DIVING_UP)
     {
-      bug.rotation.z = BUG_DIVE_TILT;
+      bug.rotation.x = -BUG_DIVE_TILT;
       bug.offset.y += bugVerticalSpeed;
     }
 
@@ -262,8 +265,8 @@ namespace AvoidTheBug3D {
       bug.rotation.y = 0.0f;
 
 
-    bug.offset.x -= cos(bug.rotation.y) * BUG_SPEED;
-    bug.offset.z -= sin(bug.rotation.y) * BUG_SPEED;
+    bug.offset.x += sin(bug.rotation.y) * BUG_SPEED;
+    bug.offset.z -= cos(bug.rotation.y) * BUG_SPEED;
 
     if (bug.offset.z < MIN_Z)
       bug.offset.z = MIN_Z;
