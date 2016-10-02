@@ -14,20 +14,20 @@ This is a free, open-source, minimalistic 3D game engine, developed in C++ and b
 Features
 --------
 
-- Runs on Windows, Mac, Linux (I'm using Debian and somebody told me that it works ok on Ubuntu, too)
+- Runs on Windows, Mac, Linux (I'm using Debian and somebody told me that it works ok on Ubuntu, too).
 - Uses OpenGL 3.3 and defaults to 2.1 if the former is not available. So, it comes with two sets of shaders.
 - Uses C++ 11
 - You can tweak the shaders, as long as you keep the same incoming variables and uniforms.
 - Plays sounds from .ogg files.
 - Doesn't hide SDL from you. You can set up your main game loop, inputs, etc, however you want.
-- It can read and render Wavefront files, including animations. For other formats, you can write your own shader, inherriting from the ModelLoader class.
+- It can read and render Wavefront files, including animations. For other formats, you can write your own reader, inherriting from the [ModelLoader](https://codedocs.xyz/dimi309/small3d/classsmall3d_1_1ModelLoader.html) class.
 - Texture mapping.
 - It renders text.
 - It can render any image in any position (for example to be used as the ground, or the sky).
 - Gouraud shading. You can set the light direction.
 - Simple rotations with matrices.
 - Simple collision detection with bounding boxes.
-- Can be deployed via the conan.io package manager.
+- Can be deployed via the [conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable) package manager.
 - Can also be compiled independently, using CMake.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
 - Comes packaged with 2 sample games (I am working on finishing the second one).
