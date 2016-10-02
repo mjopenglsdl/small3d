@@ -42,7 +42,9 @@ class Small3dConan(ConanFile):
         elif self.settings.os == "Macos":
             self.cpp_info.cppflags.append("-std=c++11")
             self.cpp_info.cppflags.append("-stdlib=libc++")
+            self.cpp_info.exelinkflags.append("-framework OpenGL")
         else:
             self.cpp_info.cppflags.append("-std=c++11")
             self.cpp_info.cppflags.append("-Wl,--no-as-needed")
+            self.cpp_info.exelinkflags.append("-lasound")
             
