@@ -45,8 +45,8 @@ namespace AvoidTheBug3D {
          "resources/models/TreeBB/TreeBB.obj")
   {
 	
-	  renderer.cameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-	renderer.cameraRotation = glm::vec3(0.0f, 1.57f, 0.0f);
+	renderer.cameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+	
 
     Image startScreenTexture("resources/images/startScreen.png");
     renderer.generateTexture("startScreen", startScreenTexture.getData(), startScreenTexture.getWidth(),
