@@ -104,11 +104,11 @@ namespace small3d
     unordered_map<string, GLuint> *textures;
 
     /**
-     * @brief Overrides the position of the next object to be rendered.
+     * @brief Positions the next object to be rendered.
      * @param offset The offset (location coordinates)
      * @param rotation The rotation (around the x, y and z axes)
      */
-    void overrideNextObjectPosition(const glm::vec3 &offset, const glm::vec3 &rotation);
+    void positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation);
 
     /**
      * @brief Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).

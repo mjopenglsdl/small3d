@@ -32,6 +32,7 @@ namespace AvoidTheBug3D {
   private:
 
     Renderer renderer;
+
     SceneObject goat;
     SceneObject bug;
     SceneObject tree;

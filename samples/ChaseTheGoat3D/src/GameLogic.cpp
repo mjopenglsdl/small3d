@@ -42,6 +42,7 @@ namespace AvoidTheBug3D {
            1, "resources/models/Tree/tree.png",
            "resources/models/TreeBB/TreeBB.obj")
   {
+	bug.rotationAdjustment = glm::vec3(0.0f, 1.57f, 0.0f);
 
     Image startScreenTexture("resources/images/startScreen.png");
 
@@ -75,6 +76,8 @@ namespace AvoidTheBug3D {
   {
     goat.offset = glm::vec3(-1.2f, GROUND_Y, -4.0f);
     bug.offset = glm::vec3(3.6f, GROUND_Y + BUG_START_ALTITUDE, -5.0f);
+    bug.rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+	
 
     bug.startAnimating();
 
@@ -90,7 +93,7 @@ namespace AvoidTheBug3D {
 
   void GameLogic::moveBug(const KeyInput &keyInput)
   {
-
+	  
     if (keyInput.left) {
       bug.rotation.y -= BUG_ROTATION_SPEED;
 
@@ -126,9 +129,9 @@ namespace AvoidTheBug3D {
     }
 
     if (keyInput.space) {
-      bug.offset.x -= cos(bug.rotation.y) * BUG_SPEED;
-      bug.offset.z -= sin(bug.rotation.y) * BUG_SPEED;
-      bug.offset.y += sin(bug.rotation.z) * BUG_SPEED;
+	  bug.offset.x += sin(bug.rotation.y) * BUG_SPEED;
+	  bug.offset.z -= cos(bug.rotation.y) * BUG_SPEED;
+	  bug.offset.y += sin(bug.rotation.z) * BUG_SPEED;
     }
 	
     if (bug.offset.y < GROUND_Y + 0.5f)

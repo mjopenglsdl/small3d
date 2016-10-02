@@ -99,6 +99,12 @@ namespace small3d
     glm::vec3 rotation;
 
     /**
+     * Adjustment of the object's rotation, in case the way it was exported from an editor
+     * does not correspond to the way it is supposed to appear in a game.
+     */
+    glm::vec3 rotationAdjustment;
+
+    /**
      * Start animating the object
      */
     void startAnimating();

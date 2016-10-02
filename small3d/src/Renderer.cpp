@@ -377,7 +377,7 @@ namespace small3d {
     return handle;
   }
 
-  void Renderer::overrideNextObjectPosition(const glm::vec3 &offset, const glm::vec3 &rotation) {
+  void Renderer::positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation) {
     // Rotation
 
     GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
@@ -407,8 +407,8 @@ namespace small3d {
                                                                "zCameraRotationMatrix");
 
 
-    glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(cameraRotation.z)));
-    glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(-cameraRotation.y + 1.57f)));
+    glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(-cameraRotation.z)));
+    glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(-cameraRotation.y)));
     glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(-cameraRotation.x)));
 
     // Camera position
@@ -499,7 +499,7 @@ namespace small3d {
       GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
       glUniform1f(lightIntensityUniform, lightIntensity);
 
-      overrideNextObjectPosition(offset, glm::vec3(0.0f, 0.0f, 0.0f));
+      positionNextObject(offset, glm::vec3(0.0f, 0.0f, 0.0f));
       positionCamera();
     }
 
@@ -613,7 +613,7 @@ namespace small3d {
     GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
     glUniform1f(lightIntensityUniform, lightIntensity);
 
-    overrideNextObjectPosition(sceneObject.offset, sceneObject.rotation);
+    positionNextObject(sceneObject.offset, sceneObject.rotation + sceneObject.rotationAdjustment);
 
     positionCamera();
 

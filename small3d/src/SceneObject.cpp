@@ -20,7 +20,7 @@ namespace small3d {
 
   SceneObject::SceneObject(string name, string modelPath, int numFrames, string texturePath,
                            string boundingBoxesPath) : texture(texturePath), colour(0,0,0,0), offset(0,0,0),
-                                                       rotation(0,0,0), boundingBoxSet() {
+                                                       rotation(0,0,0), rotationAdjustment(0,0,0) {
     initLogger();
     this->name = name;
     animating = false;
