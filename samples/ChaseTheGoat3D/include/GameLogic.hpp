@@ -18,6 +18,8 @@
 
 using namespace small3d;
 
+
+
 namespace AvoidTheBug3D {
 
   /**
@@ -35,16 +37,16 @@ namespace AvoidTheBug3D {
 
     SceneObject goat;
     SceneObject bug;
-    SceneObject tree;
+    
     Sound sound;
+	
+	
 
     enum GameState {START_SCREEN, PLAYING};
     GameState gameState;
-
-    enum BugState {FLYING_STRAIGHT, TURNING, DIVING_DOWN, DIVING_UP};
-    BugState bugState, bugPreviousState;
-    int bugFramesInCurrentState;
-    float bugVerticalSpeed;
+	
+	enum GoatState {TURNING, WALKING_STRAIGHT};
+	GoatState goatState;
 
     unsigned int startTicks;
     int seconds;

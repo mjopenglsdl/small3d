@@ -9,6 +9,8 @@
 
 #define MAX_Z -1.0f
 #define MIN_Z -24.0f
+#define MAX_X 24.0f
+#define MIN_X -24.0f
 
 #define GROUND_Y -1.0f
 #define FULL_ROTATION 6.28f // More or less 360 degrees in radians
@@ -20,6 +22,8 @@
 
 #define GOAT_ROTATION_SPEED 0.1f
 #define GOAT_SPEED 0.05f
+
+
 
 #include <memory>
 #include <small3d/MathFunctions.hpp>
@@ -36,13 +40,10 @@ namespace AvoidTheBug3D {
       goat("goat", "resources/models/Goat/goatAnim",
            19, "resources/models/Goat/Goat.png",
            "resources/models/GoatBB/GoatBB.obj"),
-      bug("bug", "resources/models/Bug/bugAnim", 9),
-      tree("tree",
-           "resources/models/Tree/tree.obj",
-           1, "resources/models/Tree/tree.png",
-           "resources/models/TreeBB/TreeBB.obj")
+      bug("bug", "resources/models/Bug/bugAnim", 9)
   {
 	bug.adjustRotation(glm::vec3(0.0f, 1.57f, 0.0f));
+	goat.adjustRotation(glm::vec3(0.0f, 1.57f, 0.0f));
 
     Image startScreenTexture("resources/images/startScreen.png");
 
@@ -59,9 +60,6 @@ namespace AvoidTheBug3D {
     bug.colour = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f);
     bug.setFrameDelay(2);
 
-    tree.offset = glm::vec3(2.6f, GROUND_Y, -8.0f);
-    tree.rotation = glm::vec3(0.0f, -0.5f, 0.0f);
-
     gameState = START_SCREEN;
 	
     sound.load("resources/sounds/bah.ogg", "bah");
@@ -70,6 +68,8 @@ namespace AvoidTheBug3D {
     seconds = 0;
 
     lightModifier = -0.01f;
+	
+	goatState = WALKING_STRAIGHT;
   }
 
   void GameLogic::initGame()
@@ -80,6 +80,7 @@ namespace AvoidTheBug3D {
 	
 
     bug.startAnimating();
+	goat.startAnimating();
 
     startTicks = SDL_GetTicks();
 
@@ -87,6 +88,57 @@ namespace AvoidTheBug3D {
 
   void GameLogic::moveGoat()
   {
+	  goatState = TURNING;
+	  
+      float xDistance = bug.offset.x - goat.offset.x;
+      float zDistance = bug.offset.z - goat.offset.z;
+      float distance = ROUND_2_DECIMAL(sqrt(xDistance * xDistance + zDistance*zDistance));
+
+      float goatRelX = ROUND_2_DECIMAL(xDistance / distance);
+      float goatRelZ = ROUND_2_DECIMAL(zDistance / distance);
+
+      float goatDirectionX = -sin(goat.rotation.y);
+      float goatDirectionZ = cos(goat.rotation.y);
+
+      float dotPosDir = goatRelX * goatDirectionX + goatRelZ * goatDirectionZ; // dot product
+	  
+      if (dotPosDir > 0.98f)
+      {
+        goatState = TURNING;
+      }
+      else
+		  goatState = WALKING_STRAIGHT;
+	  
+	  if (goatState == TURNING) {
+		  goat.rotation.y -= GOAT_ROTATION_SPEED;
+		  
+	  }
+	  
+	  if (goat.offset.z > MAX_Z)
+	  {
+		  goat.offset.z = MAX_Z;
+		  goatState = TURNING;
+	  }
+	  if (goat.offset.z < MIN_Z)
+	  {
+		  goat.offset.z = MIN_Z;
+		  goatState = TURNING;
+	  }
+	  if (goat.offset.x > MAX_X)
+	  {
+		  goat.offset.x = MAX_X;
+		  goatState = TURNING;
+	  }
+	  if (goat.offset.x < MIN_X)
+	  {
+		  goat.offset.x = MIN_X;
+		  goatState = TURNING;
+	  }
+	  
+	  goat.offset.x += sin(goat.rotation.y) * GOAT_SPEED;
+	  goat.offset.z -= cos(goat.rotation.y) * GOAT_SPEED;
+	  goat.offset.y -= sin(goat.rotation.x) * GOAT_SPEED;
+	  
     goat.animate();
 
   }
@@ -136,6 +188,16 @@ namespace AvoidTheBug3D {
 	
     if (bug.offset.y < GROUND_Y + 0.5f)
       bug.offset.y = GROUND_Y + 0.5f;
+	
+  if (bug.offset.z > MAX_Z)
+	  bug.offset.z = MAX_Z;
+  if (bug.offset.z < MIN_Z)
+	  bug.offset.z = MIN_Z;
+  if (bug.offset.x > MAX_X)
+	  bug.offset.x = MAX_X;
+  if (bug.offset.x < MIN_X)
+	  bug.offset.x = MIN_X;
+  
 
 	  // Looking through the eyes of the bug
     renderer.cameraPosition = bug.offset;
@@ -248,7 +310,7 @@ namespace AvoidTheBug3D {
 
       renderer.render(goat);
       renderer.render(bug);
-      renderer.render(tree);
+      
 
     }
     renderer.swapBuffers();
