@@ -18,13 +18,12 @@
 #include "GameLogic.hpp"
 
 using namespace std;
-using namespace AvoidTheBug3D;
+using namespace ChaseTheGoat3D;
 using namespace small3d;
 
 const GLuint frameRate = 60;
 
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
   // Set up a console, if using MinGW
   // This is because the mwindows linker flag,
   // used by blocks referenced by small3d,
@@ -36,8 +35,7 @@ int main(int argc, char** argv)
 
   KeyInput input;
 
-  try
-  {
+  try {
     initLogger();
 
     GameLogic gameLogic;
@@ -50,12 +48,10 @@ int main(int argc, char** argv)
     GLuint prevTicks = ticks;
     GLuint ticksInterval = 1000 / frameRate;
 
-    while (!done)
-    {
+    while (!done) {
 
       SDL_Event event;
-      if (SDL_PollEvent(&event))
-      {
+      if (SDL_PollEvent(&event)) {
 
         const Uint8 *keyState = SDL_GetKeyboardState(NULL);
 
@@ -66,25 +62,25 @@ int main(int argc, char** argv)
         input.enter = keyState[SDL_SCANCODE_RETURN] == 1;
         input.space = keyState[SDL_SCANCODE_SPACE] == 1;
 
-        switch (event.type)
-        {
+        switch (event.type) {
 
-        case SDL_QUIT:
-          done = true;
-          break;
-
-        case SDL_KEYDOWN:
-        {
-          if (event.key.keysym.sym == SDLK_ESCAPE)
+          case SDL_QUIT:
             done = true;
-          break;
-        }
+            break;
+
+          case SDL_KEYDOWN: {
+            if (event.key.keysym.sym == SDLK_ESCAPE)
+              done = true;
+            break;
+          }
+          default: {
+            // Do nothing
+          }
         }
       }
 
       ticks = SDL_GetTicks();
-      if (ticks - prevTicks > ticksInterval)
-      {
+      if (ticks - prevTicks > ticksInterval) {
         gameLogic.process(input);
         prevTicks = ticks;
         gameLogic.render();
@@ -92,8 +88,7 @@ int main(int argc, char** argv)
     }
 
   }
-  catch (Exception &e)
-  {
+  catch (Exception &e) {
     LOGERROR(e.what());
     return EXIT_FAILURE;
   }

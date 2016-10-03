@@ -74,7 +74,7 @@ namespace small3d
     /**
     * @brief Initialise renderer (OpenGL, GLEW, etc)
     */
-    void init(int width, int height, bool fullScreen, string windowTitle,
+    void init(int width, int height, string windowTitle,
               float frustumScale , float zNear,
               float zFar, float zOffsetFromCamera,
               string shadersPath);
@@ -82,7 +82,7 @@ namespace small3d
     /**
      * @brief Initialise SDL
      */
-    void initSDL(int width, int height, bool fullScreen, const string &windowTitle = "");
+    void initSDL(int &width, int &height, const string &windowTitle = "");
 
     /**
      * @brief Retrieve the information of what went wrong when linking a shader program
@@ -122,12 +122,9 @@ namespace small3d
 
     /**
      * Constructor
-     * @param width The width of the window
-     * @param height The height of the window
-     * @param fullScreen	Will the Renderer run in full screen mode? If set to true,
-     * 				the width and height have to correspond to a resolution supported
-     *                          by the user's screen in order for the scene to be displayed properly.
      * @param windowTitle The title of the game's window
+     * @param width The width of the window. If width and height are not set, the game will run in full screen mode.
+     * @param height The height of the window
      * @param frustumScale	How much the frustum scales the items rendered
      * @param zNear		Projection plane z coordinate (use positive value)
      * @param zFar		Far end of frustum z coordinate (use positive value)
@@ -142,7 +139,7 @@ namespace small3d
      * 				The shader code can be changed, provided that their inputs
      * 				and outputs are maintained the same.
      */
-    Renderer(int width, int height, bool fullScreen, string windowTitle = "",
+    Renderer(string windowTitle = "", int width = 0, int height = 0,
              float frustumScale = 1.0f, float zNear = 1.0f,
              float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
              string shadersPath = "resources/shaders/");

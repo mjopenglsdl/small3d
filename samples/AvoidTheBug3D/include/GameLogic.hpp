@@ -33,12 +33,16 @@ namespace AvoidTheBug3D {
 
     SceneObject goat, bug, tree;
     Renderer renderer;
-	  Sound sound;
+    Sound sound;
 
-    enum GameState {START_SCREEN, PLAYING};
+    enum GameState {
+      START_SCREEN, PLAYING
+    };
     GameState gameState;
 
-    enum BugState {FLYING_STRAIGHT, TURNING, DIVING_DOWN, DIVING_UP};
+    enum BugState {
+      FLYING_STRAIGHT, TURNING, DIVING_DOWN, DIVING_UP
+    };
     BugState bugState, bugPreviousState;
     int bugFramesInCurrentState;
     float bugVerticalSpeed;
@@ -47,12 +51,15 @@ namespace AvoidTheBug3D {
     int seconds;
 
     void initGame();
+
     void processGame(const KeyInput &keyInput);
+
     void processStartScreen(const KeyInput &keyInput);
 
     void moveGoat(const KeyInput &keyInput);
+
     void moveBug();
-		
+
   public:
 
     /**

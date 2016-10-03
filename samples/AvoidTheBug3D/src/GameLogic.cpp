@@ -35,21 +35,20 @@ using namespace small3d;
 namespace AvoidTheBug3D {
 
   GameLogic::GameLogic() :
-    renderer(854, 480, false, "Avoid the Bug 3D"),
-    goat("goat", "resources/models/Goat/goatAnim",
-         19, "resources/models/Goat/Goat.png",
-         "resources/models/GoatBB/GoatBB.obj"),
-    bug("bug", "resources/models/Bug/bugAnim", 9),
-    tree("tree", "resources/models/Tree/tree.obj",
-         1, "resources/models/Tree/tree.png",
-         "resources/models/TreeBB/TreeBB.obj")
-  {
-	
-	renderer.cameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-	
-	bug.adjustRotation(glm::vec3(0.0f, 1.57f, 0.0f));
-	goat.adjustRotation(glm::vec3(0.0f, 1.57f, 0.0f));
-	
+      renderer("Avoid the Bug 3D", 854, 480),
+      goat("goat", "resources/models/Goat/goatAnim",
+           19, "resources/models/Goat/Goat.png",
+           "resources/models/GoatBB/GoatBB.obj"),
+      bug("bug", "resources/models/Bug/bugAnim", 9),
+      tree("tree", "resources/models/Tree/tree.obj",
+           1, "resources/models/Tree/tree.png",
+           "resources/models/TreeBB/TreeBB.obj") {
+
+    renderer.cameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+
+    bug.adjustRotation(glm::vec3(0.0f, 1.57f, 0.0f));
+    goat.adjustRotation(glm::vec3(0.0f, 1.57f, 0.0f));
+
 
     Image startScreenTexture("resources/images/startScreen.png");
     renderer.generateTexture("startScreen", startScreenTexture.getData(), startScreenTexture.getWidth(),
@@ -79,8 +78,7 @@ namespace AvoidTheBug3D {
     lightModifier = -0.01f;
   }
 
-  void GameLogic::initGame()
-  {
+  void GameLogic::initGame() {
     goat.offset = glm::vec3(-1.2f, GROUND_Y, -4.0f);
     bug.offset = glm::vec3(0.5f, GROUND_Y + BUG_FLIGHT_HEIGHT, -18.0f);
 
@@ -94,8 +92,7 @@ namespace AvoidTheBug3D {
 
   }
 
-  void GameLogic::moveGoat(const KeyInput &keyInput)
-  {
+  void GameLogic::moveGoat(const KeyInput &keyInput) {
     goat.stopAnimating();
 
     if (keyInput.left) {
@@ -109,8 +106,7 @@ namespace AvoidTheBug3D {
         goat.rotation.y = 0.0f;
       goat.startAnimating();
 
-    }
-    else if (keyInput.right) {
+    } else if (keyInput.right) {
       goat.rotation.y += GOAT_ROTATION_SPEED;
 
       while (goat.collidesWith(tree)) {
@@ -135,8 +131,7 @@ namespace AvoidTheBug3D {
 
       goat.startAnimating();
 
-    }
-    else if (keyInput.down) {
+    } else if (keyInput.down) {
       goat.offset.x -= sin(goat.rotation.y) * GOAT_SPEED;
       goat.offset.z += cos(goat.rotation.y) * GOAT_SPEED;
 
@@ -162,17 +157,16 @@ namespace AvoidTheBug3D {
 
     // Uncomment to see the goat's view of the world
     // renderer.cameraPosition = goat.offset;
-	  // renderer.cameraPosition.y += 1.0f;
+    // renderer.cameraPosition.y += 1.0f;
     // renderer.cameraRotation = goat.rotation;
 
   }
 
-  void GameLogic::moveBug()
-  {
+  void GameLogic::moveBug() {
 
     float xDistance = bug.offset.x - goat.offset.x;
     float zDistance = bug.offset.z - goat.offset.z;
-    float distance = ROUND_2_DECIMAL(sqrt(xDistance * xDistance + zDistance*zDistance));
+    float distance = ROUND_2_DECIMAL(sqrt(xDistance * xDistance + zDistance * zDistance));
 
     float goatRelX = ROUND_2_DECIMAL(xDistance / distance);
     float goatRelZ = ROUND_2_DECIMAL(zDistance / distance);
@@ -185,32 +179,24 @@ namespace AvoidTheBug3D {
     // Bug state: decide
     if (bugState == bugPreviousState) {
       ++bugFramesInCurrentState;
-    }
-    else
-    {
+    } else {
       bugFramesInCurrentState = 1;
     }
 
     bugPreviousState = bugState;
 
-    if (bugState == DIVING_DOWN)
-    {
-      if (goat.collidesWith(bug.offset))
-      {
+    if (bugState == DIVING_DOWN) {
+      if (goat.collidesWith(bug.offset)) {
         sound.play("bah");
         seconds = (SDL_GetTicks() - startTicks) / 1000;
         gameState = START_SCREEN;
       }
 
-      if (bugFramesInCurrentState > BUG_DIVE_DURATION / 2)
-      {
+      if (bugFramesInCurrentState > BUG_DIVE_DURATION / 2) {
         bugState = DIVING_UP;
       }
-    }
-    else if (bugState == DIVING_UP)
-    {
-      if (goat.collidesWith(bug.offset))
-      {
+    } else if (bugState == DIVING_UP) {
+      if (goat.collidesWith(bug.offset)) {
         gameState = START_SCREEN;
       }
 
@@ -218,23 +204,15 @@ namespace AvoidTheBug3D {
         bugState = FLYING_STRAIGHT;
         bug.offset.y = GROUND_Y + BUG_FLIGHT_HEIGHT; // Correction of possible rounding errors
       }
-    }
-    else
-    {
+    } else {
 
-      if (distance > BUG_START_DIVE_DISTANCE)
-      {
-        if (dotPosDir < 0.98f)
-        {
+      if (distance > BUG_START_DIVE_DISTANCE) {
+        if (dotPosDir < 0.98f) {
           bugState = TURNING;
-        }
-        else
-        {
+        } else {
           bugState = FLYING_STRAIGHT;
         }
-      }
-      else
-      {
+      } else {
         bugState = DIVING_DOWN;
       }
 
@@ -244,19 +222,14 @@ namespace AvoidTheBug3D {
 
     bug.rotation.x = 0;
 
-    if (bugState == TURNING)
-    {
+    if (bugState == TURNING) {
 
       bug.rotation.y -= BUG_ROTATION_SPEED;
 
-    }
-    else if (bugState == DIVING_DOWN)
-    {
+    } else if (bugState == DIVING_DOWN) {
       bug.rotation.x = BUG_DIVE_TILT;
       bug.offset.y -= bugVerticalSpeed;
-    }
-    else if (bugState == DIVING_UP)
-    {
+    } else if (bugState == DIVING_UP) {
       bug.rotation.x = -BUG_DIVE_TILT;
       bug.offset.y += bugVerticalSpeed;
     }
@@ -281,41 +254,37 @@ namespace AvoidTheBug3D {
     // Uncomment to see the bug's view of the world
     // renderer.cameraPosition = bug.offset;
     // renderer.cameraRotation = bug.rotation;
-       
+
     bug.animate();
   }
 
-  void GameLogic::processGame(const KeyInput &keyInput)
-  {
+  void GameLogic::processGame(const KeyInput &keyInput) {
     moveBug();
     moveGoat(keyInput);
   }
 
-  void GameLogic::processStartScreen(const KeyInput &keyInput)
-  {
+  void GameLogic::processStartScreen(const KeyInput &keyInput) {
     if (keyInput.enter) {
       initGame();
       gameState = PLAYING;
     }
   }
 
-  void GameLogic::process(const KeyInput &keyInput)
-  {
+  void GameLogic::process(const KeyInput &keyInput) {
     switch (gameState) {
-    case START_SCREEN:
-      processStartScreen(keyInput);
-      break;
-    case PLAYING:
-      processGame(keyInput);
-      break;
-    default:
-      throw Exception("Urecognised game state");
-      break;
+      case START_SCREEN:
+        processStartScreen(keyInput);
+        break;
+      case PLAYING:
+        processGame(keyInput);
+        break;
+      default:
+        throw Exception("Urecognised game state");
+        break;
     }
   }
 
-  void GameLogic::render()
-  {
+  void GameLogic::render() {
     renderer.clearScreen();
 
     //Uncomment for groovy nightfall effect :)
@@ -335,44 +304,41 @@ namespace AvoidTheBug3D {
 
     if (gameState == START_SCREEN) {
       float startScreenVerts[16] =
-      {
-        -1.0f, -1.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f, 1.0f
-      };
+          {
+              -1.0f, -1.0f, 1.0f, 1.0f,
+              1.0f, -1.0f, 1.0f, 1.0f,
+              1.0f, 1.0f, 1.0f, 1.0f,
+              -1.0f, 1.0f, 1.0f, 1.0f
+          };
 
       renderer.render(&startScreenVerts[0], "startScreen");
 
-      if (seconds != 0)
-      {
+      if (seconds != 0) {
         renderer.render("Goat not bitten for " + intToStr(seconds) + " seconds",
-          glm::uvec4(255, 100, 0, 255), glm::vec2(-0.95f, -0.6f), glm::vec2(0.0f, -0.8f));
+                        glm::uvec4(255, 100, 0, 255), glm::vec2(-0.95f, -0.6f), glm::vec2(0.0f, -0.8f));
       }
 
-    }
-    else
-    {
+    } else {
 
       float skyVerts[16] =
-      {
-        -1.0f, -1.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f, 1.0f
-      };
+          {
+              -1.0f, -1.0f, 1.0f, 1.0f,
+              1.0f, -1.0f, 1.0f, 1.0f,
+              1.0f, 1.0f, 1.0f, 1.0f,
+              -1.0f, 1.0f, 1.0f, 1.0f
+          };
 
       renderer.render(&skyVerts[0], "sky");
 
       // Draw the background
 
       float groundVerts[16] =
-      {
-        -25.0f, GROUND_Y, MAX_Z, 1.0f,
-        25.0f, GROUND_Y, MAX_Z, 1.0f,
-        25.0f, GROUND_Y,  MIN_Z, 1.0f,
-        -25.0f, GROUND_Y, MIN_Z, 1.0f
-      };
+          {
+              -25.0f, GROUND_Y, MAX_Z, 1.0f,
+              25.0f, GROUND_Y, MAX_Z, 1.0f,
+              25.0f, GROUND_Y, MIN_Z, 1.0f,
+              -25.0f, GROUND_Y, MIN_Z, 1.0f
+          };
 
       renderer.render(&groundVerts[0], "ground", true, glm::vec3(0.0f, 0.0f, 0.0f));
 

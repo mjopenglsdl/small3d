@@ -11,6 +11,7 @@
 #include <fstream>
 #include "MathFunctions.hpp"
 #include <glm/gtc/type_ptr.hpp>
+#include <SDL_video.h>
 
 using namespace std;
 
@@ -56,7 +57,7 @@ namespace small3d {
     return shader;
   }
 
-  Renderer::Renderer(int width, int height, bool fullScreen, string windowTitle,
+  Renderer::Renderer(string windowTitle, int width, int height,
                      float frustumScale , float zNear,
                      float zFar, float zOffsetFromCamera,
                      string shadersPath) {
@@ -71,7 +72,7 @@ namespace small3d {
     cameraRotation = glm::vec3(0, 0, 0);
     lightIntensity = 1.0f;
 
-    init(width, height, fullScreen, windowTitle, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
+    init(width, height, windowTitle, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
 
     if(TTF_Init()==-1)
     {
@@ -112,7 +113,7 @@ namespace small3d {
     SDL_Quit();
   }
 
-  void Renderer::initSDL(int width, int height, bool fullScreen, const string &windowTitle) {
+  void Renderer::initSDL(int &width, int &height, const string &windowTitle) {
     sdlWindow = 0;
 
     // initialize SDL video
@@ -131,6 +132,22 @@ namespace small3d {
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+    bool fullScreen = false;
+
+    if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
+      throw Exception("Screen width and height both have to be equal or not equal to zero at the same time.");
+    }
+    else if (width == 0) {
+      fullScreen = true;
+      SDL_DisplayMode mode;
+      if (SDL_GetCurrentDisplayMode(0, &mode) != 0)
+        throw Exception("Error while retrieving display mode:" + string(SDL_GetError()));
+      width = mode.w;
+      height = mode.h;
+      LOGINFO("Detected screen width " + intToStr(width) + " and height " + intToStr(height));
+    }
+
 
     Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN :
                    SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
@@ -217,11 +234,15 @@ namespace small3d {
     }
   }
 
-  void Renderer::init(int width, int height, bool fullScreen, string windowTitle,
+  void Renderer::init(int width, int height, string windowTitle,
                       float frustumScale, float zNear,
                       float zFar, float zOffsetFromCamera,
                       string shadersPath) {
-    this->initSDL(width, height, fullScreen, windowTitle);
+
+    int screenWidth = width;
+    int screenHeight = height;
+
+    this->initSDL(screenWidth, screenHeight, windowTitle);
 
     this->frustumScale = frustumScale;
     this->zNear = zNear;
@@ -252,7 +273,7 @@ namespace small3d {
       simpleFragmentShaderPath = shadersPath + "OpenGL21/simpleShader.frag";
     }
 
-    glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
+    glViewport(0, 0, static_cast<GLsizei>(screenWidth), static_cast<GLsizei>(screenHeight));
 
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
@@ -291,7 +312,7 @@ namespace small3d {
       float perspectiveMatrix[16];
       memset(perspectiveMatrix, 0, sizeof(float) * 16);
       perspectiveMatrix[0] = frustumScale;
-      perspectiveMatrix[5] = frustumScale * ROUND_2_DECIMAL(width / height);
+      perspectiveMatrix[5] = frustumScale * ROUND_2_DECIMAL(screenWidth / screenHeight);
       perspectiveMatrix[10] = (zNear + zFar) / (zNear - zFar);
       perspectiveMatrix[14] = 2.0f * zNear * zFar / (zNear - zFar);
       perspectiveMatrix[11] = zOffsetFromCamera;

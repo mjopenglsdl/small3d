@@ -181,7 +181,7 @@ shared_ptr<vector<shared_ptr<SceneObject> > > scene(
 new vector<shared_ptr<SceneObject> >());
 scene->push_back(object);
 
-unique_ptr<Renderer> renderer(new Renderer(640, 480, false));
+unique_ptr<Renderer> renderer(new Renderer("test", 640, 480));
 
 }
 #endif

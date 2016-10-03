@@ -7,7 +7,7 @@
  */
 #pragma once
 
-namespace AvoidTheBug3D
+namespace ChaseTheGoat3D
 {
   /**
    * @typedef	struct KeyInput

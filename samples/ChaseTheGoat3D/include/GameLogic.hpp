@@ -18,9 +18,7 @@
 
 using namespace small3d;
 
-
-
-namespace AvoidTheBug3D {
+namespace ChaseTheGoat3D {
 
   /**
    * @class	GameLogic

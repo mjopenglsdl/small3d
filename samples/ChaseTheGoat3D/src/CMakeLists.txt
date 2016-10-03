@@ -1,4 +1,4 @@
-ADD_EXECUTABLE(chasethegoat3d chasethegoat3d.cpp GameLogic.cpp)
+ADD_EXECUTABLE(chasethegoat3d main.cpp GameLogic.cpp)
 
 TARGET_INCLUDE_DIRECTORIES(chasethegoat3d PUBLIC "${game_SOURCE_DIR}/include")
 TARGET_LINK_LIBRARIES(chasethegoat3d PUBLIC "${CONAN_LIBS}")

@@ -1,4 +1,4 @@
-ADD_EXECUTABLE(avoidthebug3d avoidthebug3d.cpp GameLogic.cpp)
+ADD_EXECUTABLE(avoidthebug3d main.cpp GameLogic.cpp)
 
 TARGET_INCLUDE_DIRECTORIES(avoidthebug3d PUBLIC "${game_SOURCE_DIR}/include")
 TARGET_LINK_LIBRARIES(avoidthebug3d PUBLIC "${CONAN_LIBS}")
