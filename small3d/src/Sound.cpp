@@ -19,21 +19,18 @@ using namespace std;
 namespace small3d {
 
   static int audioCallback(const void *inputBuffer, void *outputBuffer,
-    unsigned long framesPerBuffer,
-    const PaStreamCallbackTimeInfo* timeInfo,
-    PaStreamCallbackFlags statusFlags,
-    void *userData)
-  {
+                           unsigned long framesPerBuffer,
+                           const PaStreamCallbackTimeInfo *timeInfo,
+                           PaStreamCallbackFlags statusFlags,
+                           void *userData) {
     int result = paContinue;
-    SoundData *soundData = static_cast<SoundData*>(userData);
+    SoundData *soundData = static_cast<SoundData *>(userData);
     if (soundData->startTime == 0) {
       soundData->startTime = timeInfo->currentTime - 0.1;
-    }
-    else if (timeInfo->currentTime - soundData->startTime > soundData->duration)
-    {
+    } else if (timeInfo->currentTime - soundData->startTime > soundData->duration) {
       return paAbort;
     }
-    SAMPLE_DATATYPE *out = static_cast<SAMPLE_DATATYPE*>(outputBuffer);
+    SAMPLE_DATATYPE *out = static_cast<SAMPLE_DATATYPE *>(outputBuffer);
     unsigned long startPos = soundData->currentFrame * static_cast<unsigned long>(soundData->channels);
     unsigned long endPos = startPos + framesPerBuffer * static_cast<unsigned long>(soundData->channels);
 
@@ -45,11 +42,9 @@ namespace small3d {
     }
 
 
-    for (unsigned long i = startPos; i < endPos; i += static_cast<unsigned long>(soundData->channels))
-    {
-      for (int c = 0; c < soundData->channels; ++c)
-      {
-        *out++ = (reinterpret_cast<short*>(soundData->data))[i + c];
+    for (unsigned long i = startPos; i < endPos; i += static_cast<unsigned long>(soundData->channels)) {
+      for (int c = 0; c < soundData->channels; ++c) {
+        *out++ = (reinterpret_cast<short *>(soundData->data))[i + c];
       }
     }
     soundData->currentFrame += framesPerBuffer;
@@ -58,7 +53,8 @@ namespace small3d {
   }
 
   Sound::Sound() {
-    sounds = new unordered_map<string, SoundData*>();
+    sounds = new unordered_map<string, SoundData *>();
+    noOutputDevice = false;
 
     PaError error = Pa_Initialize();
 
@@ -71,9 +67,8 @@ namespace small3d {
 
   Sound::~Sound() {
 
-    for (unordered_map<string, SoundData*>::iterator it = sounds->begin();
-    it != sounds->end(); ++it)
-    {
+    for (unordered_map<string, SoundData *>::iterator it = sounds->begin();
+         it != sounds->end(); ++it) {
       LOGINFO("Deleting sound '" + it->first + "'.");
       delete it->second;
     }
@@ -90,17 +85,16 @@ namespace small3d {
 #else
     FILE *fp = fopen((SDL_GetBasePath() + soundFilePath).c_str(), "rb");
 #endif
-    if (!fp)
-    {
+    if (!fp) {
       throw Exception(
-        "Could not open file " + string(SDL_GetBasePath())
-        + soundFilePath);
+          "Could not open file " + string(SDL_GetBasePath())
+          + soundFilePath);
     }
 
     if (ov_open_callbacks(fp, &vorbisFile, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0) {
       throw Exception(
-        "Could not load sound from file " + string(SDL_GetBasePath())
-        + soundFilePath);
+          "Could not load sound from file " + string(SDL_GetBasePath())
+          + soundFilePath);
     }
 
     vorbis_info *vi = ov_info(&vorbisFile, -1);
@@ -127,8 +121,7 @@ namespace small3d {
 
         LOGERROR("Error in sound stream.");
 
-      }
-      else if (ret > 0) {
+      } else if (ret > 0) {
 
         memcpy(&soundData->data[pos], pcmout, ret);
         pos += ret;
@@ -148,8 +141,8 @@ namespace small3d {
     char soundInfo[100];
 
     sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %ld - size in bytes %ld", soundName.c_str(),
-      soundData->channels, soundData->rate, soundData->samples, soundData->
-      size);
+            soundData->channels, soundData->rate, soundData->samples, soundData->
+            size);
     LOGINFO(string(soundInfo));
 
   }
@@ -157,50 +150,53 @@ namespace small3d {
   void Sound::play(string soundName) {
 
     if (defaultOutput == paNoDevice) {
-      throw Exception("No default sound output device.");
-    }
+      if (!noOutputDevice) {
+        LOGERROR("No default sound output device.");
+        noOutputDevice = true;
+      }
+    } else {
 
-    unordered_map<string, SoundData*>::iterator nameSoundPair = sounds->find(soundName);
+      unordered_map<string, SoundData *>::iterator nameSoundPair = sounds->find(soundName);
 
-    if (nameSoundPair == sounds->end()) {
-      throw Exception("Sound '" + soundName + "' has not been loaded.");
-    }
+      if (nameSoundPair == sounds->end()) {
+        throw Exception("Sound '" + soundName + "' has not been loaded.");
+      }
 
-    SoundData *soundData = nameSoundPair->second;
+      SoundData *soundData = nameSoundPair->second;
 
-    PaStreamParameters outputParams;
+      PaStreamParameters outputParams;
 
-    memset(&outputParams, 0, sizeof(PaStreamParameters));
-    outputParams.device = defaultOutput;
-    outputParams.channelCount = soundData->channels;
-    //outputParams.suggestedLatency = 0;
-    outputParams.hostApiSpecificStreamInfo = NULL;
+      memset(&outputParams, 0, sizeof(PaStreamParameters));
+      outputParams.device = defaultOutput;
+      outputParams.channelCount = soundData->channels;
+      //outputParams.suggestedLatency = 0;
+      outputParams.hostApiSpecificStreamInfo = NULL;
 
-    outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
+      outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
 
-    PaStream *stream;
+      PaStream *stream;
 
-    soundData->currentFrame = 0;
-    soundData->startTime = 0;
+      soundData->currentFrame = 0;
+      soundData->startTime = 0;
 
-    PaError error = Pa_OpenStream(&stream, NULL, &outputParams, soundData->rate,
-      1024, paNoFlag,
-      audioCallback, soundData);
-    if (error != paNoError) {
-      throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
-    }
-    error = Pa_StartStream(stream);
-    if (error != paNoError) {
-      throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
+      PaError error = Pa_OpenStream(&stream, NULL, &outputParams, soundData->rate,
+                                    1024, paNoFlag,
+                                    audioCallback, soundData);
+      if (error != paNoError) {
+        throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
+      }
+      error = Pa_StartStream(stream);
+      if (error != paNoError) {
+        throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
+      }
     }
   }
 
   void Sound::deleteSound(string soundName) {
 
-    unordered_map<string, SoundData*>::iterator nameSoundPair = sounds->find(soundName);
+    unordered_map<string, SoundData *>::iterator nameSoundPair = sounds->find(soundName);
 
-    if (nameSoundPair != sounds->end())
-    {
+    if (nameSoundPair != sounds->end()) {
       delete nameSoundPair->second;
       sounds->erase(soundName);
     }

@@ -30,6 +30,8 @@ namespace small3d {
 
     unordered_map<string, SoundData*> *sounds;
 
+    bool noOutputDevice;
+
     PaDeviceIndex defaultOutput;
 
   public:
