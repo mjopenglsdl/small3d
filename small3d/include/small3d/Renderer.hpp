@@ -123,7 +123,7 @@ namespace small3d
     /**
      * Constructor
      * @param windowTitle The title of the game's window
-     * @param width The width of the window. If width and height are not set, the game will run in full screen mode.
+     * @param width The width of the window. If width and height are not set, or set to 0, the game will run in full screen mode.
      * @param height The height of the window
      * @param frustumScale	How much the frustum scales the items rendered
      * @param zNear		Projection plane z coordinate (use positive value)
