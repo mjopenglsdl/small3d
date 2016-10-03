@@ -121,7 +121,7 @@ namespace small3d
   public:
 
     /**
-     * Constructor
+     * @brief Constructor
      * @param windowTitle The title of the game's window
      * @param width The width of the window. If width and height are not set, or set to 0, the game will run in full screen mode.
      * @param height The height of the window
