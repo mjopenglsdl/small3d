@@ -31,7 +31,7 @@ Features
 - Can also be compiled independently, using CMake.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
 - Comes packaged with 2 sample games (I am working on finishing the second one).
-- I am open to adding more features, so write to me if you have any ideas. Don't be offended if I say no though. I have spent too much time trying to expand on various directions and this made me delay finishing a decent version of the engine. I would like to keep it small and simple, so that beginners can understand easily not only how to use it, but also how the code works (so that they can send me bug fixes :) 
+- I am open to adding more features, so write to me if you have any ideas. Don't be offended if I say no though. I have spent too much time trying to expand on various directions and this made me delay finishing a decent version of the engine. I would like to keep it small and simple, so that beginners can understand easily not only how to use it, but also how the code works (so that they can send me bug fixes :)
 
 Getting Started
 ---------------
@@ -47,12 +47,6 @@ As can be seen from the sample games, the proposed way to use the engine is to l
 The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/cppan/small3d_example).
 
 If you prefer to compile it from the source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though.
-
-Compatibility
--------------
-The engine has been successfully compiled and tested on Windows, OSX and Linux (Debian). It works with OpenGL 3.3, but will default to OpenGL 2.1 at runtime if the former is not available.
-
-If you have any problems with the builds, or any questions and need help, don't hesitate to [open an issue](https://github.com/coding3d/small3d/issues).
 
 3D models and textures
 ----------------------
