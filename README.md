@@ -44,7 +44,7 @@ You can experiment by modifying them before using the engine for your own projec
 
 As can be seen from the sample games, the proposed way to use the engine is to link to it from [conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable).
 
-The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d_example).
+The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d-cppan-example).
 
 If you prefer to compile it from the source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though.
 
