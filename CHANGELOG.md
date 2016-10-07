@@ -3,6 +3,13 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.0.6 (October 2016 - bugfix release)
+--------------------------------------
+
+- [BREAKING] The Renderer.render method which draws a textured quad has had the array of vertex coordinates removed from its parameters and now takes two diagonally opposed corners of the quad as parameters, for simplicity.
+- Many corrections made to the collision detection system.
+- In order to assist in debugging collisions, an option to render associated bounding boxes when drawing a model has been added to the Renderer.render function.
+
 v1.0.5 (October 2016)
 ---------------------
 
