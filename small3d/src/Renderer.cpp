@@ -558,7 +558,6 @@ namespace small3d {
   void Renderer::render(const BoundingBoxSet &boundingBoxSet, const glm::vec3 &offset,
   const glm::vec3 &rotation, const glm::mat4x4 &rotationAdjustment) {
     glUseProgram(perspectiveProgram);
-    glDisable(GL_CULL_FACE);
     int numBoxes = boundingBoxSet.getNumBoxes();
 
     for (int idx = 0; idx < numBoxes; ++idx) {
@@ -657,7 +656,6 @@ namespace small3d {
 
     }
     glUseProgram(0);
-    glEnable(GL_CULL_FACE);
 
   }
 
