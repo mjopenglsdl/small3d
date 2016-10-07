@@ -475,7 +475,7 @@ namespace small3d {
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    unsigned int vertexIndices[6] =
+    unsigned int vertexIndexes[6] =
         {
             0, 1, 2,
             2, 3, 0
@@ -486,7 +486,7 @@ namespace small3d {
     glGenBuffers(1, &indexBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 sizeof(unsigned int) * 6, vertexIndices, GL_STATIC_DRAW);
+                 sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
 
     GLuint textureHandle = getTextureHandle(textureName);
 
@@ -596,15 +596,15 @@ namespace small3d {
 
       checkForOpenGLErrors("rendering bounding boxes", true);
 
-      // Copy vertex indices to simple structure
+      // Copy vertex indexes to simple structure
 
-      unsigned int vertexIndices[24];
+      unsigned int vertexIndexes[24];
 
       for (int vIdx = 0; vIdx < 6; ++vIdx) {
-        memcpy(&vertexIndices[vIdx * 4], boundingBoxSet.facesVertexIndexes[idx * 6 + vIdx].data(), 4 * sizeof(unsigned int));
+        memcpy(&vertexIndexes[vIdx * 4], boundingBoxSet.facesVertexIndexes[idx * 6 + vIdx].data(), 4 * sizeof(unsigned int));
       }
 
-      // Vertex indices to GPU
+      // Vertex indexes to GPU
 
       GLuint indexBufferObject;
 
@@ -612,7 +612,7 @@ namespace small3d {
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
       glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                    24 * sizeof(unsigned int),
-                   vertexIndices,
+                   vertexIndexes,
                    GL_STATIC_DRAW);
 
       // Standard slightly transparent blue colour
