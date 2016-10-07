@@ -604,11 +604,7 @@ namespace small3d {
         memcpy(&vertexIndices[vIdx * 4], boundingBoxSet.facesVertexIndexes[idx * 6 + vIdx].data(), 4 * sizeof(unsigned int));
       }
 
-      // OpenGL indices are 0 based. Wavefront indices start from 1 and the numbering continues for multiple objects.
-      for (int vIdx = 0; vIdx < 24; ++vIdx)
-        vertexIndices[vIdx] -= 1 + 8 * idx ;
-
-        // Vertex indices to GPU
+      // Vertex indices to GPU
 
       GLuint indexBufferObject;
 
@@ -633,7 +629,9 @@ namespace small3d {
       checkForOpenGLErrors("rendering bounding boxes", true);
 
       // Draw
-      glDrawElements(GL_TRIANGLES,
+      // With triangle fan the boxes look more complete (they are not triangulated, keeping collision
+      // detection simple, so this makes up for it, while rendering.
+      glDrawElements(GL_TRIANGLE_FAN,
                      24,
                      GL_UNSIGNED_INT, 0);
 

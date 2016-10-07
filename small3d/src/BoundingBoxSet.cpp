@@ -70,7 +70,6 @@ namespace small3d {
               ++idx;
             }
             facesVertexIndexes.push_back(v);
-
           }
 
           if (tokens != NULL) {
@@ -80,6 +79,18 @@ namespace small3d {
       }
       file.close();
       numBoxes = (int) (facesVertexIndexes.size() / 6);
+
+      // Correct indices. OpenGL indices are 0 based. Wavefront indices start from 1 and the numbering
+      // continues for multiple objects.
+
+      for (int idx = 0; idx < numBoxes; ++idx) {
+        for(int idx2 = 0; idx2 < 6; ++idx2) {
+          for(int idx3 = 0; idx3 < 4; ++idx3) {
+            facesVertexIndexes[6 * idx + idx2][idx3] -= 1 + 8 * idx;
+          }
+        }
+      }
+
       LOGINFO("Loaded " + intToStr(numBoxes) + " bounding boxes.");
     }
     else
@@ -92,7 +103,6 @@ namespace small3d {
   void BoundingBoxSet::setRotationAdjustment(const glm::mat4x4 &ajdustmentMatrix) {
 
     rotationAdjustment = ajdustmentMatrix;
-
   }
 
 
@@ -173,8 +183,6 @@ namespace small3d {
       rotatedOtherCoords.y += otherBoxSet.offset.y;
       rotatedOtherCoords.z += otherBoxSet.offset.z;
 
-      /*cout << "Checking " << rotatedOtherCoords.x << ", " << rotatedOtherCoords.y << ", " << rotatedOtherCoords.z <<
-    " with " << boxesX << ", " << boxesY << ", " << boxesZ << " rotation " << boxesRotation << endl;*/
       if (collidesWith(glm::vec3(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z))) {
 
         collides = true;
