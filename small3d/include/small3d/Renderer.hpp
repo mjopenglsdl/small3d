@@ -118,6 +118,13 @@ namespace small3d
 
     void positionCamera();
 
+    /**
+     * Render the bounding box set of an object. Useful for debugging collisions.
+     * @param boundingBoxSet
+     */
+    void render(const BoundingBoxSet &boundingBoxSet, const glm::vec3 &offset,
+                const glm::vec3 &rotation, const glm::mat4x4 &rotationAdjustment);
+
   public:
 
     /**
@@ -194,22 +201,25 @@ namespace small3d
     GLuint getTextureHandle(string name);
 
     /**
-     * @brief Render an image. The image is in effect a textured quad, since 4 vertex positions are
-     * passed to this method, in order to define its position and size.
-     * @param vertices The vertices
-     * @param textureName The name of the texture, containing the image (must have been loaded with
-     * 					 generateTexture())
+     * @brief Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each
+     * other, as parameters, for ease of use (at the price of two edges of the rectancle being parallel to
+     * one of the axes of the scene. The visible side is the one designed counter-clockwise from corner 1
+     * to corner2. This function can be used for rendering the ground, the sky or a splash screen for example.
+     * @param corner1 corner 1
+     * @param corner2 corner 2
+     * @param textureName The name of the texture to be used (must have been loaded with generateTexture())
      * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
      * @param offset	The offset (position) at which the quad of the image will be drawn.
      */
-    void render(const float *vertices, string textureName, bool perspective = false,
+    void render(const glm::vec3 &corner1, const glm::vec3 &corner2, string textureName, bool perspective = false,
 		     glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
 
     /**
      * @brief Render a scene object
      * @param sceneObject The scene object
+     * @param showBoundingBoxes If true, also render the bounding boxes, otherwise don't (default)
      */
-    void render(SceneObject &sceneObject);
+    void render(SceneObject &sceneObject, bool showBoundingBoxes = false);
 
     /**
      * @brief Render some text on the screen. A texture will be generated, containing the given

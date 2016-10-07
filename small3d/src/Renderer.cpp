@@ -11,7 +11,7 @@
 #include <fstream>
 #include "MathFunctions.hpp"
 #include <glm/gtc/type_ptr.hpp>
-#include <SDL_video.h>
+#include <iostream>
 
 using namespace std;
 
@@ -443,8 +443,15 @@ namespace small3d {
   }
 
 
-  void Renderer::render(const float *vertices, string textureName, bool perspective,
-                             glm::vec3 offset) {
+  void Renderer::render(const glm::vec3 &corner1, const glm::vec3 &corner2, string textureName,
+                        bool perspective, glm::vec3 offset) {
+
+    float vertices[16] = {
+        corner1.x, corner1.y, corner1.z, 1.0f,
+        corner2.x, corner1.y, corner1.z, 1.0f,
+        corner2.x, corner2.y, corner2.z, 1.0f,
+        corner1.x, corner2.y, corner2.z, 1.0f
+    };
 
     glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
 
@@ -463,7 +470,7 @@ namespace small3d {
     glBindBuffer(GL_ARRAY_BUFFER, boxBuffer);
     glBufferData(GL_ARRAY_BUFFER,
                  sizeof(float) * 16,
-                 vertices,
+                 &vertices[0],
                  GL_STATIC_DRAW);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -548,7 +555,113 @@ namespace small3d {
     checkForOpenGLErrors("rendering image", true);
   }
 
-  void Renderer::render(SceneObject &sceneObject) {
+  void Renderer::render(const BoundingBoxSet &boundingBoxSet, const glm::vec3 &offset,
+  const glm::vec3 &rotation, const glm::mat4x4 &rotationAdjustment) {
+    glUseProgram(perspectiveProgram);
+    glDisable(GL_CULL_FACE);
+    int numBoxes = boundingBoxSet.getNumBoxes();
+
+    for (int idx = 0; idx < numBoxes; ++idx) {
+
+      GLuint vao = 0;
+      if (isOpenGL33Supported) {
+        // Generate VAO
+        glGenVertexArrays(1, &vao);
+        glBindVertexArray(vao);
+      }
+
+      // Copy vertices to simple structure
+
+      float vertices[24];
+
+      for (int vIdx = 0; vIdx < 8; ++vIdx) {
+        memcpy(&vertices[vIdx * 3], boundingBoxSet.vertices[idx * 8 + vIdx].data(), 3 * sizeof(float));
+      }
+
+      // Vertices to GPU
+
+      GLuint positionBufferObject = 0;
+
+      glGenBuffers(1, &positionBufferObject);
+
+      int dataSize = 24 * sizeof(float);
+      glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
+
+      glBufferData(GL_ARRAY_BUFFER,
+                   dataSize,
+                   &vertices[0],
+                   GL_STATIC_DRAW);
+
+      glEnableVertexAttribArray(0);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+      checkForOpenGLErrors("rendering bounding boxes", true);
+
+      // Copy vertex indices to simple structure
+
+      unsigned int vertexIndices[24];
+
+      for (int vIdx = 0; vIdx < 6; ++vIdx) {
+        memcpy(&vertexIndices[vIdx * 4], boundingBoxSet.facesVertexIndexes[idx * 6 + vIdx].data(), 4 * sizeof(unsigned int));
+      }
+
+      // OpenGL indices are 0 based. Wavefront indices start from 1 and the numbering continues for multiple objects.
+      for (int vIdx = 0; vIdx < 24; ++vIdx)
+        vertexIndices[vIdx] -= 1 + 8 * idx ;
+
+        // Vertex indices to GPU
+
+      GLuint indexBufferObject;
+
+      glGenBuffers(1, &indexBufferObject);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                   24 * sizeof(unsigned int),
+                   vertexIndices,
+                   GL_STATIC_DRAW);
+
+      // Standard slightly transparent blue colour
+
+      GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
+      glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 1.0f, 0.4f)));
+
+      //positionNextObject(offset, rotation, rotationAdjustment);
+
+      positionCamera();
+
+      // Throw an exception if there was an error in OpenGL, during
+      // any of the above.
+      checkForOpenGLErrors("rendering bounding boxes", true);
+
+      // Draw
+      glDrawElements(GL_TRIANGLES,
+                     24,
+                     GL_UNSIGNED_INT, 0);
+
+      // cleanup
+
+      if (positionBufferObject != 0) {
+        glDeleteBuffers(1, &positionBufferObject);
+      }
+
+      if (indexBufferObject != 0) {
+        glDeleteBuffers(1, &indexBufferObject);
+      }
+
+      glDisableVertexAttribArray(0);
+
+      if (isOpenGL33Supported) {
+        glDeleteVertexArrays(1, &vao);
+        glBindVertexArray(0);
+      }
+
+    }
+    glUseProgram(0);
+    glEnable(GL_CULL_FACE);
+
+  }
+
+  void Renderer::render(SceneObject &sceneObject, bool showBoundingBoxes) {
     // Use the shaders prepared at initialisation
     glUseProgram(perspectiveProgram);
 
@@ -681,6 +794,10 @@ namespace small3d {
 
     glUseProgram(0);
 
+    if(showBoundingBoxes && sceneObject.boundingBoxSet.getNumBoxes() > 0) {
+      render(sceneObject.boundingBoxSet, sceneObject.offset, sceneObject.rotation, sceneObject.getRotationAdjustment());
+    }
+
   }
 
   void Renderer::render(string text, glm::uvec4 colour,
@@ -749,15 +866,8 @@ namespace small3d {
     delete[] texturef;
     SDL_FreeSurface(textSurface);
 
-    float boxVerts[16] =
-        {
-            topLeft.x, bottomRight.y, -0.5f, 1.0f,
-            bottomRight.x, bottomRight.y, -0.5f, 1.0f,
-            bottomRight.x, topLeft.y, -0.5f, 1.0f,
-            topLeft.x, topLeft.y, -0.5f, 1.0f
-        };
-
-    render(boxVerts, textTextureId);
+    render(glm::vec3(bottomRight.x, bottomRight.y, -0.5f),
+           glm::vec3(topLeft.x, topLeft.y, -0.5f), textTextureId);
     deleteTexture(textTextureId);
   }
 

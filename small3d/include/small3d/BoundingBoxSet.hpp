@@ -33,6 +33,10 @@ namespace small3d {
   private:
 
     int numBoxes;
+  public:
+    int getNumBoxes() const;
+
+  private:
     glm::mat4x4 rotationAdjustment;
 
   public:
@@ -70,7 +74,7 @@ namespace small3d {
      * @brief Faces vertex indexes read from Wavefront .obj file
      */
 
-    vector<vector<int> > facesVertexIndexes;
+    vector<vector<unsigned int> > facesVertexIndexes;
 
     /**
      * @brief Load the bounding boxes from a Wavefront file.

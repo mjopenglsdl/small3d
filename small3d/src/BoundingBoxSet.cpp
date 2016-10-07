@@ -59,13 +59,13 @@ namespace small3d {
           }
           else {
             // get vertex index
-            vector<int> v;
+            vector<unsigned int> v;
 
             for (int tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is face indicator
               {
-                v.push_back(atoi(t.c_str()));
+                v.push_back((unsigned int) atoi(t.c_str()));
               }
               ++idx;
             }
@@ -80,6 +80,7 @@ namespace small3d {
       }
       file.close();
       numBoxes = (int) (facesVertexIndexes.size() / 6);
+      LOGINFO("Loaded " + intToStr(numBoxes) + " bounding boxes.");
     }
     else
       throw Exception(
@@ -104,8 +105,8 @@ namespace small3d {
 
       glm::vec4 coords(vertices[static_cast<unsigned int>(idx * 8)][0], vertices[static_cast<unsigned int>(idx * 8)][1],
         vertices[static_cast<unsigned int>(idx * 8)][2], 1);
-      glm::vec4 rotatedCoords(0.0f, 0.0f, 0.0f, 1.0f);
 
+      glm::vec4 rotatedCoords;
       rotatedCoords = coords * rotationAdjustment * rotationMatrix;
 
       rotatedCoords.x += offset.x;
@@ -122,7 +123,7 @@ namespace small3d {
       for (int checkidx = idx * 8; checkidx < (idx + 1) * 8; ++checkidx) {
         coords = glm::vec4(vertices[static_cast<unsigned int>(checkidx)][0], vertices[static_cast<unsigned int>(checkidx)][1],
           vertices[static_cast<unsigned int>(checkidx)][2], 1);
-        rotatedCoords = rotationMatrix * coords;
+        rotatedCoords = coords * rotationAdjustment * rotationMatrix;
 
         rotatedCoords.x += offset.x;
         rotatedCoords.y += offset.y;
@@ -164,9 +165,9 @@ namespace small3d {
          vertex != otherBoxSet.vertices.end(); ++vertex) {
 
       glm::vec4 otherCoords(vertex->at(0), vertex->at(1), vertex->at(2), 1.0f);
-      glm::vec4 rotatedOtherCoords(0.0f, 0.0f, 0.0f, 1.0f);
+      glm::vec4 rotatedOtherCoords;
 
-      rotatedOtherCoords = rotationMatrix * otherCoords;
+      rotatedOtherCoords = otherCoords * otherBoxSet.rotationAdjustment * rotationMatrix;
 
       rotatedOtherCoords.x += otherBoxSet.offset.x;
       rotatedOtherCoords.y += otherBoxSet.offset.y;
@@ -182,6 +183,10 @@ namespace small3d {
     }
 
     return collides;
+  }
+
+  int BoundingBoxSet::getNumBoxes() const {
+    return numBoxes;
   }
 
 }
