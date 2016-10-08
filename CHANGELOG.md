@@ -3,12 +3,13 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
-v1.0.6 (October 2016 - bugfix release)
+v1.0.6
 --------------------------------------
 
-- [BREAKING] The Renderer.render method which draws a textured quad has had the array of vertex coordinates removed from its parameters and now takes two diagonally opposed corners of the quad as parameters, for simplicity.
+- [BREAKING] The Renderer.render function which draws a textured quad has had the array of vertex coordinates removed from its parameters and now takes two diagonally opposed corners of the quad as parameters, for simplicity.
 - Many corrections made to the collision detection system.
 - In order to assist in debugging collisions, an option to render associated bounding boxes when drawing a model has been added to the Renderer.render function.
+- Resolved the full screen mode issue in MS Windows. Games running on small3d in full screen mode are no longer "cropped".
 
 v1.0.5 (October 2016)
 ---------------------

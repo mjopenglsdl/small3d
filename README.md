@@ -30,23 +30,19 @@ Features
 - Can be deployed via the [conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable) package manager.
 - Can also be compiled independently, using CMake.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
-- Comes packaged with 2 sample games (I am working on finishing the second one).
 - I am open to adding more features, so write to me if you have any ideas. Don't be offended if I say no though. I have spent too much time trying to expand on various directions and this made me delay finishing a decent version of the engine. I would like to keep it small and simple, so that beginners can understand easily not only how to use it, but also how the code works (so that they can send me bug fixes :)
 
 Getting Started
 ---------------
-The best way to get started is to take a look at the source code of two provided sample games:
-
-- [samples/AvoidTheBug3D](https://github.com/dimi309/small3d/tree/master/samples/AvoidTheBug3D)
-- [samples/ChaseTheGoat3D](https://github.com/dimi309/small3d/tree/master/samples/ChaseTheGoat3D)
+The best way to get started is to take a look at the source code of the games at [Compile to Play](https://compiletoplay.github.io/).
 
 You can experiment by modifying them before using the engine for your own projects. You can also review the [API documentation](https://codedocs.xyz/dimi309/small3d/).
 
-As can be seen from the sample games, the proposed way to use the engine is to link to it from [conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable).
+As can be seen from the games, the proposed way to use the engine is to deploy it from [conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable).
 
 The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d-cppan-example).
 
-If you prefer to compile it from the source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though.
+If you prefer to compile the it from source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though.
 
 3D models and textures
 ----------------------

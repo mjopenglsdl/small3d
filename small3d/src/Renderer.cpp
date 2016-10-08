@@ -141,7 +141,7 @@ namespace small3d {
     else if (width == 0) {
       fullScreen = true;
       SDL_DisplayMode mode;
-      if (SDL_GetCurrentDisplayMode(0, &mode) != 0)
+      if (SDL_GetDesktopDisplayMode(0, &mode) != 0)
         throw Exception("Error while retrieving display mode:" + string(SDL_GetError()));
       width = mode.w;
       height = mode.h;
@@ -149,7 +149,7 @@ namespace small3d {
     }
 
 
-    Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN :
+    Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
                    SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
     sdlWindow = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
