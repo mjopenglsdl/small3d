@@ -7,7 +7,7 @@ username = os.getenv("CONAN_USERNAME", "coding3d")
 
 class TestGlew(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "small3d/1.0.6@%s/%s" % (username, channel)
+    requires = "small3d/1.0.7@%s/%s" % (username, channel)
     generators = "cmake"
 
     def build(self):
