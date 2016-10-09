@@ -203,7 +203,7 @@ namespace small3d
     /**
      * @brief Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each
      * other, as parameters, for ease of use (at the price of two edges of the rectancle being parallel to
-     * one of the axes of the scene. The visible side is the one designed counter-clockwise from corner 1
+     * one of the axes of the scene). The visible side is the one designed counter-clockwise from corner 1
      * to corner2. This function can be used for rendering the ground, the sky or a splash screen for example.
      * @param corner1 corner 1
      * @param corner2 corner 2

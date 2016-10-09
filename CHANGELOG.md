@@ -4,7 +4,9 @@ small3d changelog
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
 v1.0.6
---------------------------------------
+------
+
+This is a bug fix release.
 
 - [BREAKING] The Renderer.render function which draws a textured quad has had the array of vertex coordinates removed from its parameters and now takes two diagonally opposed corners of the quad as parameters, for simplicity.
 - Many corrections made to the collision detection system.
