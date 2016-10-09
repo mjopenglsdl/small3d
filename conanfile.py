@@ -15,6 +15,23 @@ class Small3dConan(ConanFile):
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = "CMakeLists.txt", "small3d/*", "FindSMALL3D.cmake", "cmake/*"
 
+    def linux_package_installed(self, package):
+        p = subprocess.Popen(['dpkg', '-s', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = p.communicate()
+        return 'install ok' in out
+
+    def ensure_linux_dependency(self, package):
+        if not self.linux_package_installed(package):
+            self.output.warn(package + " is not installed in this machine! Conan will try to install it.")
+            self.run("sudo apt-get update && sudo apt-get install -y " + package)
+            if not self.linux_package_installed(package):
+                self.output.error(package + " Installation doesn't work... install it manually and try again")
+                exit(1)
+                
+    def system_requirements(self):
+        if self.settings.os == "Linux":
+            self.ensure_linux_dependency("libjack-dev")
+
     def build(self):
         cmake = CMake(self.settings)
         self.run("cmake %s -DBUILD_WITH_CONAN=TRUE %s" % (self.conanfile_directory, cmake.command_line))
@@ -46,4 +63,3 @@ class Small3dConan(ConanFile):
             self.cpp_info.cppflags.append("-std=c++11")
             self.cpp_info.cppflags.append("-Wl,--no-as-needed")
             self.cpp_info.exelinkflags.append("-ljack -lasound")
-            
