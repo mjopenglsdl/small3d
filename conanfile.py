@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake, os
-import os
+import os, subprocess
 
 class Small3dConan(ConanFile):
     name = "small3d"
@@ -27,7 +27,7 @@ class Small3dConan(ConanFile):
             if not self.linux_package_installed(package):
                 self.output.error(package + " Installation doesn't work... install it manually and try again")
                 exit(1)
-                
+
     def system_requirements(self):
         if self.settings.os == "Linux":
             self.ensure_linux_dependency("libjack-dev")
