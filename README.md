@@ -27,7 +27,7 @@ Features
 - Gouraud shading. You can set the light direction.
 - Simple rotations with matrices.
 - Simple collision detection with bounding boxes.
-- Can be deployed via the [conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable) package manager.
+- Can be deployed via the [conan.io](https://www.conan.io) package manager.
 - Can also be compiled independently, using CMake.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
 - I am open to adding more features, so write to me if you have any ideas. Don't be offended if I say no though. I have spent too much time trying to expand on various directions and this made me delay finishing a decent version of the engine. I would like to keep it small and simple, so that beginners can understand easily not only how to use it, but also how the code works (so that they can send me bug fixes :)
