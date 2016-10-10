@@ -18,7 +18,6 @@ v1.0.5 (October 2016)
 
 - Lots of dynamic memory allocations removed
 - [BREAKING] Model rotation, offset and speed are no longer pointers
-- [BREAKING] Camera rotation adjustments to align it with the "character" (scene objects) rotations when following them have been moved from the sample games to the engine's source code.
 - Comments review and improvement
 - [BREAKING] Renderer init function now hidden. All initialisation happens via the constructor.
 - [BREAKING] Renderer functions renderSceneObject and renderImage have been renamed to two overloaded functions, called "render".
