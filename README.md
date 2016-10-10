@@ -38,7 +38,7 @@ The best way to get started is to take a look at the source code of the games at
 
 You can experiment by modifying them before using the engine for your own projects. You can also review the [API documentation](https://codedocs.xyz/dimi309/small3d/).
 
-As can be seen from the games, the proposed way to use the engine is to deploy it from [conan.io](https://www.conan.io/source/small3d/1.0.5/coding3d/stable).
+As can be seen from the games, the proposed way to use the engine is to deploy it from conan.io.
 
 The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d-cppan-example).
 
