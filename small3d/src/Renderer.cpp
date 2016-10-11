@@ -862,8 +862,9 @@ namespace small3d {
     delete[] texturef;
     SDL_FreeSurface(textSurface);
 
-    render(glm::vec3(bottomRight.x, bottomRight.y, -0.5f),
-           glm::vec3(topLeft.x, topLeft.y, -0.5f), textTextureId);
+    render(glm::vec3(topLeft.x, bottomRight.y, -0.5f),
+           glm::vec3(bottomRight.x, topLeft.y, -0.5f), textTextureId);
+
     deleteTexture(textTextureId);
   }
 
