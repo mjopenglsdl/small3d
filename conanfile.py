@@ -8,7 +8,7 @@ class Small3dConan(ConanFile):
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
     url="http://github.com/dimi309/small3d"
-    requires = "SDL2/2.0.4@lasote/stable","freetype/2.6.3@lasote/stable","glew/2.0.0@coding3d/stable", \
+    requires = "SDL2/2.0.4@lasote/stable","SDL2_ttf/2.0.14@coding3d/ci","glew/2.0.0@coding3d/stable", \
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.7.6@dlarudgus20/stable", \
         "vorbis/1.3.5@coding3d/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
     default_options = "glew:shared=False"
