@@ -19,7 +19,8 @@
 #include "Logger.hpp"
 #include <unordered_map>
 #include <glm/glm.hpp>
-#include <SDL_ttf.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 using namespace std;
 
@@ -54,7 +55,9 @@ namespace small3d
 
     float zOffsetFromCamera;
 
-    unordered_map<string, TTF_Font*> fonts;
+    FT_Library    library;
+
+    unordered_map<string, FT_Face> fonts;
 
     /**
      * @brief Load a shader's source code from a file into a string
@@ -231,7 +234,7 @@ namespace small3d
      * @param fontPath Path to the TrueType font (.ttf) which will be used
      * @param fontSize The size of the font which will be used
      */
-    void render(string text, glm::uvec4 colour, glm::vec2 topLeft, glm::vec2 bottomRight,
+    void render(string text, glm::vec3 colour, glm::vec2 topLeft, glm::vec2 bottomRight,
                 string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf", int fontSize=48);
 
     /**
