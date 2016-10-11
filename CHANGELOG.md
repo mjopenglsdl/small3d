@@ -3,6 +3,13 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.0.7
+------
+Another bug fix release.
+
+- Corrected text rendering bug.
+- [BREAKING] Textured quads and text now rendered using clear "bottom left" and "top right" parameters. The ordering of the coordinates has changed for the text rendering function.
+
 v1.0.6
 ------
 
