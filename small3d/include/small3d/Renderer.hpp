@@ -202,16 +202,14 @@ namespace small3d
 
     /**
      * @brief Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each
-     * other, as parameters, for ease of use (at the price of two edges of the rectancle being parallel to
-     * one of the axes of the scene). The visible side is the one designed counter-clockwise from corner 1
-     * to corner2. This function can be used for rendering the ground, the sky or a splash screen for example.
-     * @param corner1 corner 1
-     * @param corner2 corner 2
+     * other. This function can be used for rendering the ground, the sky or a splash screen for example.
+     * @param bottomLeft The coordinates for the bottom left corner of the texture
+     * @param topRight The coordinates for the top right corner of the texture
      * @param textureName The name of the texture to be used (must have been loaded with generateTexture())
      * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
      * @param offset	The offset (position) at which the quad of the image will be drawn.
      */
-    void render(const glm::vec3 &corner1, const glm::vec3 &corner2, string textureName, bool perspective = false,
+    void render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, string textureName, bool perspective = false,
 		     glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
 
     /**
@@ -226,12 +224,12 @@ namespace small3d
      * text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space.
      * @param text The text to be rendered
      * @param colour The colour in which the text will be rendered (r, g, b and a)
-     * @param topLeft The coordinates of the top left corner of the text rectangle (x, y)
-     * @param bottomRight The coordinates of the bottom right corner of the text rectangle (x, y)
+     * @param bottomLeft The coordinates of the bottom left corner of the text rectangle (x, y)
+     * @param topRight The coordinates of the top right corner of the text rectangle (x, y)
      * @param fontPath Path to the TrueType font (.ttf) which will be used
      * @param fontSize The size of the font which will be used
      */
-    void render(string text, glm::uvec4 colour, glm::vec2 topLeft, glm::vec2 bottomRight,
+    void render(string text, glm::uvec4 colour, glm::vec2 bottomLeft, glm::vec2 topRight,
                 string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf", int fontSize=48);
 
     /**

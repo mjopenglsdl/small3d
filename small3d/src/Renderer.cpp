@@ -443,14 +443,14 @@ namespace small3d {
   }
 
 
-  void Renderer::render(const glm::vec3 &corner1, const glm::vec3 &corner2, string textureName,
+  void Renderer::render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, string textureName,
                         bool perspective, glm::vec3 offset) {
 
     float vertices[16] = {
-        corner1.x, corner1.y, corner1.z, 1.0f,
-        corner2.x, corner1.y, corner1.z, 1.0f,
-        corner2.x, corner2.y, corner2.z, 1.0f,
-        corner1.x, corner2.y, corner2.z, 1.0f
+        bottomLeft.x, bottomLeft.y, bottomLeft.z, 1.0f,
+        topRight.x, bottomLeft.y, bottomLeft.z, 1.0f,
+        topRight.x, topRight.y, topRight.z, 1.0f,
+        bottomLeft.x, topRight.y, topRight.z, 1.0f
     };
 
     glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
@@ -797,7 +797,7 @@ namespace small3d {
   }
 
   void Renderer::render(string text, glm::uvec4 colour,
-                        glm::vec2 topLeft, glm::vec2 bottomRight,
+                        glm::vec2 bottomLeft, glm::vec2 topRight,
                         string fontPath, int fontSize)
   {
 
@@ -862,8 +862,8 @@ namespace small3d {
     delete[] texturef;
     SDL_FreeSurface(textSurface);
 
-    render(glm::vec3(topLeft.x, bottomRight.y, -0.5f),
-           glm::vec3(bottomRight.x, topLeft.y, -0.5f), textTextureId);
+    render(glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
+           glm::vec3(topRight.x, topRight.y, -0.5f), textTextureId);
 
     deleteTexture(textTextureId);
   }
