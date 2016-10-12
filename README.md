@@ -45,7 +45,7 @@ As can be seen from the games, the proposed way to use the engine is to deploy i
 
 The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d-cppan-example).
 
-If you prefer to compile the it from source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though.
+If you prefer to compile it from source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though.
 
 3D models and textures
 ----------------------
