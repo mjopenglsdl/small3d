@@ -34,7 +34,10 @@ Features
 
 Getting Started
 ---------------
-The best way to get started is to take a look at the source code of the games at [Compile to Play](https://compiletoplay.github.io/).
+The best way to get started is to take a look at the source code of the sample games:
+
+- [Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D)
+- [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)
 
 You can experiment by modifying them before using the engine for your own projects. You can also review the [API documentation](https://codedocs.xyz/dimi309/small3d/).
 
