@@ -23,14 +23,16 @@ namespace small3d {
                            const PaStreamCallbackTimeInfo *timeInfo,
                            PaStreamCallbackFlags statusFlags,
                            void *userData) {
+
     int result = paContinue;
     SoundData *soundData = static_cast<SoundData *>(userData);
+
     if (soundData->startTime == 0) {
       soundData->startTime = timeInfo->currentTime - 0.1;
     } else if (timeInfo->currentTime - soundData->startTime > soundData->duration) {
       return paAbort;
     }
-    
+
     SAMPLE_DATATYPE *out = static_cast<SAMPLE_DATATYPE *>(outputBuffer);
     unsigned long startPos = soundData->currentFrame * static_cast<unsigned long>(soundData->channels);
     unsigned long endPos = startPos + framesPerBuffer * static_cast<unsigned long>(soundData->channels);
@@ -45,12 +47,16 @@ namespace small3d {
         *out++ = (reinterpret_cast<short *>(soundData->data))[i + c];
       }
     }
+
     soundData->currentFrame += framesPerBuffer;
+    
     return result;
   }
 
   Sound::Sound() {
+
     sounds = new unordered_map<string, SoundData *>();
+
     noOutputDevice = false;
 
     PaError error = Pa_Initialize();
@@ -71,17 +77,21 @@ namespace small3d {
     }
 
     delete sounds;
+
     Pa_Terminate();
   }
 
   void Sound::load(string soundFilePath, string soundName) {
+
     OggVorbis_File vorbisFile;
+
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
     fopen_s(&fp, (SDL_GetBasePath() + soundFilePath).c_str(), "rb");
 #else
     FILE *fp = fopen((SDL_GetBasePath() + soundFilePath).c_str(), "rb");
 #endif
+
     if (!fp) {
       throw Exception(
           "Could not open file " + string(SDL_GetBasePath())
@@ -119,7 +129,7 @@ namespace small3d {
 
       } else if (ret > 0) {
 
-        memcpy(&soundData->data[pos], pcmout, ret);
+        memcpy(&soundData->data[pos], pcmout, (size_t) ret);
         pos += ret;
       }
     } while (ret != 0);
@@ -127,12 +137,15 @@ namespace small3d {
     sounds->insert(make_pair(soundName, soundData));
 
     ov_clear(&vorbisFile);
+
     fclose(fp);
+
     char soundInfo[100];
 
     sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %ld - size in bytes %ld", soundName.c_str(),
             soundData->channels, soundData->rate, soundData->samples, soundData->
             size);
+
     LOGINFO(string(soundInfo));
 
   }
@@ -140,10 +153,12 @@ namespace small3d {
   void Sound::play(string soundName) {
 
     if (defaultOutput == paNoDevice) {
+
       if (!noOutputDevice) {
         LOGERROR("No default sound output device.");
         noOutputDevice = true;
       }
+
     } else {
 
       unordered_map<string, SoundData *>::iterator nameSoundPair = sounds->find(soundName);
