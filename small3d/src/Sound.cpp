@@ -30,6 +30,7 @@ namespace small3d {
     } else if (timeInfo->currentTime - soundData->startTime > soundData->duration) {
       return paAbort;
     }
+    
     SAMPLE_DATATYPE *out = static_cast<SAMPLE_DATATYPE *>(outputBuffer);
     unsigned long startPos = soundData->currentFrame * static_cast<unsigned long>(soundData->channels);
     unsigned long endPos = startPos + framesPerBuffer * static_cast<unsigned long>(soundData->channels);
@@ -37,10 +38,7 @@ namespace small3d {
     if (endPos > static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels) {
       endPos = static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels;
       result = paAbort;
-      //memset(out, 0, endPos - startPos);
-
     }
-
 
     for (unsigned long i = startPos; i < endPos; i += static_cast<unsigned long>(soundData->channels)) {
       for (int c = 0; c < soundData->channels; ++c) {
@@ -48,7 +46,6 @@ namespace small3d {
       }
     }
     soundData->currentFrame += framesPerBuffer;
-    //cout << "played up to " << soundData->currentFrame <<endl;
     return result;
   }
 
@@ -102,14 +99,13 @@ namespace small3d {
     SoundData *soundData = new SoundData();
 
     soundData->channels = vi->channels;
-    soundData->rate = vi->rate;
+    soundData->rate = (int) vi->rate;
     soundData->samples = static_cast<long>(ov_pcm_total(&vorbisFile, -1));
     soundData->size = soundData->channels * soundData->samples * WORD_SIZE;
     soundData->duration = static_cast<double>(soundData->samples) / static_cast<double>(soundData->rate);
 
     char pcmout[4096];
     soundData->data = new char[soundData->size];
-    //memset(soundData->data, 0, soundData->size);
 
     int current_section;
     long ret = 0;
@@ -125,12 +121,6 @@ namespace small3d {
 
         memcpy(&soundData->data[pos], pcmout, ret);
         pos += ret;
-
-        /*
-          char readResult[100];
-          sprintf(readResult, "Read %d bytes and copied them up to position %d", ret, pos);
-          LOGINFO(string(readResult));
-        */
       }
     } while (ret != 0);
 
@@ -169,7 +159,6 @@ namespace small3d {
       memset(&outputParams, 0, sizeof(PaStreamParameters));
       outputParams.device = defaultOutput;
       outputParams.channelCount = soundData->channels;
-      //outputParams.suggestedLatency = 0;
       outputParams.hostApiSpecificStreamInfo = NULL;
 
       outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
