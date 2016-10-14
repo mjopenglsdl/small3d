@@ -9,6 +9,7 @@
 #include "Sound.hpp"
 #include "Exception.hpp"
 #include <SDL.h>
+#include <vector>
 
 #define WORD_SIZE 2
 #define PORTAUDIO_SAMPLE_FORMAT paInt16
@@ -236,6 +237,20 @@ namespace small3d {
   }
 
   void Sound::deleteSound(string soundName) {
+
+    vector<string> removals;
+
+    for (auto handleStreamPair = streams.begin(); handleStreamPair != streams.end(); ++handleStreamPair) {
+      if (handleStreamPair->first.compare(0, soundName.length(), soundName) == 0) {
+        Pa_AbortStream(handleStreamPair->second);
+        Pa_CloseStream(handleStreamPair->second);
+        removals.push_back(handleStreamPair->first);
+      }
+    }
+
+    for (auto removal = removals.begin(); removal != removals.end(); ++removal) {
+      streams.erase(removal->data());
+    }
 
     auto nameSoundPair = sounds.find(soundName);
 
