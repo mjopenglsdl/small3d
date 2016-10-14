@@ -7,11 +7,10 @@
  */
 
 #include "SoundData.hpp"
-#include <cstring>
 
 namespace small3d {
 
-  SoundData::SoundData(){
+  SoundData::SoundData() {
     channels = 0;
     rate = 0;
     samples = 0;
@@ -22,9 +21,11 @@ namespace small3d {
     currentFrame = 0;
 
     data = NULL;
+
   }
 
   SoundData::~SoundData(){
+
     if (data) {
       delete[] data;
     }

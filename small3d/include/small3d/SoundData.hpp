@@ -8,6 +8,12 @@
 
 #pragma once
 
+#include <unordered_map>
+#include <portaudio.h>
+
+
+using namespace std;
+
 namespace small3d {
   
   /**

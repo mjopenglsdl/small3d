@@ -49,13 +49,11 @@ namespace small3d {
     }
 
     soundData->currentFrame += framesPerBuffer;
-    
+
     return result;
   }
 
   Sound::Sound() {
-
-    sounds = new unordered_map<string, SoundData *>();
 
     noOutputDevice = false;
 
@@ -66,22 +64,26 @@ namespace small3d {
     }
 
     defaultOutput = Pa_GetDefaultOutputDevice();
+
+    if (defaultOutput == paNoDevice) {
+        //LOGERROR("No default sound output device.");
+        noOutputDevice = true;
+    }
   }
 
   Sound::~Sound() {
 
-    for (unordered_map<string, SoundData *>::iterator it = sounds->begin();
-         it != sounds->end(); ++it) {
-      LOGINFO("Deleting sound '" + it->first + "'.");
-      delete it->second;
+    for (auto it = streams.begin(); it != streams.end(); ++it) {
+      Pa_AbortStream(it->second);
+      Pa_CloseStream(it->second);
     }
-
-    delete sounds;
 
     Pa_Terminate();
   }
 
   void Sound::load(string soundFilePath, string soundName) {
+
+    if (!noOutputDevice) {
 
     OggVorbis_File vorbisFile;
 
@@ -106,7 +108,7 @@ namespace small3d {
 
     vorbis_info *vi = ov_info(&vorbisFile, -1);
 
-    SoundData *soundData = new SoundData();
+    shared_ptr<SoundData> soundData(new SoundData());
 
     soundData->channels = vi->channels;
     soundData->rate = (int) vi->rate;
@@ -134,7 +136,7 @@ namespace small3d {
       }
     } while (ret != 0);
 
-    sounds->insert(make_pair(soundName, soundData));
+    sounds.insert(make_pair(soundName, soundData));
 
     ov_clear(&vorbisFile);
 
@@ -147,27 +149,21 @@ namespace small3d {
             size);
 
     LOGINFO(string(soundInfo));
+    }
 
   }
 
-  void Sound::play(string soundName) {
+  void Sound::play(string soundName, string handle, bool repeat) {
 
-    if (defaultOutput == paNoDevice) {
+    if (!noOutputDevice) {
 
-      if (!noOutputDevice) {
-        LOGERROR("No default sound output device.");
-        noOutputDevice = true;
-      }
+      auto nameSoundPair = sounds.find(soundName);
 
-    } else {
-
-      unordered_map<string, SoundData *>::iterator nameSoundPair = sounds->find(soundName);
-
-      if (nameSoundPair == sounds->end()) {
+      if (nameSoundPair == sounds.end()) {
         throw Exception("Sound '" + soundName + "' has not been loaded.");
       }
 
-      SoundData *soundData = nameSoundPair->second;
+      auto soundData = nameSoundPair->second;
 
       PaStreamParameters outputParams;
 
@@ -178,31 +174,75 @@ namespace small3d {
 
       outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
 
-      PaStream *stream;
-
       soundData->currentFrame = 0;
       soundData->startTime = 0;
 
-      PaError error = Pa_OpenStream(&stream, NULL, &outputParams, soundData->rate,
-                                    1024, paNoFlag,
-                                    audioCallback, soundData);
-      if (error != paNoError) {
-        throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
+      PaError error;
+
+      auto handleStreamPair = streams.find(soundName + handle);
+      if (handleStreamPair != streams.end()) {
+
+        Pa_AbortStream(handleStreamPair->second);
+
+        error = Pa_StartStream(handleStreamPair->second);
+        if (error != paNoError) {
+          throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
+        }
+
+      } else {
+
+        PaStream *stream = nullptr;
+
+        error = Pa_OpenStream(&stream, NULL, &outputParams, soundData->rate,
+                              1024, paNoFlag,
+                              audioCallback, soundData.get());
+        if (error != paNoError) {
+          throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
+        }
+
+        error = Pa_StartStream(stream);
+        if (error != paNoError) {
+          throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
+        }
+
+        streams.insert(make_pair(soundName + handle, stream));
       }
-      error = Pa_StartStream(stream);
-      if (error != paNoError) {
-        throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
-      }
+
     }
+  }
+
+  void Sound::stop(string soundName, string handle) {
+    if (!noOutputDevice) {
+
+      auto nameSoundPair = sounds.find(soundName);
+
+      if (nameSoundPair == sounds.end()) {
+        throw Exception("Sound '" + soundName + "' has not been loaded.");
+      }
+
+      auto soundData = nameSoundPair->second;
+
+      auto handleStreamPair = streams.find(soundName + handle);
+      if (handleStreamPair == streams.end()) {
+        throw Exception("Sound handle '" + handle + "' does not exist.");
+      }
+
+      auto stream = handleStreamPair->second;
+
+      Pa_AbortStream(stream);
+
+    }
+
   }
 
   void Sound::deleteSound(string soundName) {
 
-    unordered_map<string, SoundData *>::iterator nameSoundPair = sounds->find(soundName);
+    auto nameSoundPair = sounds.find(soundName);
 
-    if (nameSoundPair != sounds->end()) {
-      delete nameSoundPair->second;
-      sounds->erase(soundName);
+    if (nameSoundPair == sounds.end()) {
+      throw Exception("Sound '" + soundName + "' has not been loaded or has already been deleted.");
     }
+
+    sounds.erase(soundName);
   }
 }
