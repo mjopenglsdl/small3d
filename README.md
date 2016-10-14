@@ -24,7 +24,7 @@ Features
 - Texture mapping.
 - It renders text.
 - It can render any image in any position (for example to be used as the ground, or the sky).
-- Gouraud shading. You can set the light direction.
+- Gouraud shading. You can set the light direction and intensity.
 - Simple rotations with matrices.
 - Simple collision detection with bounding boxes.
 - Can be deployed via the [conan.io](https://www.conan.io) package manager.
