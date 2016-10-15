@@ -3,6 +3,14 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.0.8
+------
+
+- As usual, various bug fixes.
+- Auto-replay is now supported for sounds. 
+- Sounds can now be stopped before they finish playing.
+- [BREAKING] Most sound manipulation functions now also take a sound handle parameter, in addition to the sound name parameter. This helps play a sound multiple times in parallel. 
+
 v1.0.7
 ------
 Another bug fix release.

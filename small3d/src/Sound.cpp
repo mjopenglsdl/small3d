@@ -180,10 +180,17 @@ namespace small3d {
 
       outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
 
-      soundData->currentFrame = 0;
-      soundData->startTime = 0;
+      auto idStreamDataPair = streamData.find(soundName + handle);
 
-      soundData->repeat = repeat;
+      if (idStreamDataPair == streamData.end()) {
+        streamData.insert(make_pair(soundName + handle, nameSoundPair->second));
+        idStreamDataPair = streamData.find(soundName + handle);
+      }
+
+      idStreamDataPair->second.currentFrame = 0;
+      idStreamDataPair->second.startTime = 0;
+
+      idStreamDataPair->second.repeat = repeat;
 
       PaError error;
 
@@ -203,7 +210,7 @@ namespace small3d {
 
         error = Pa_OpenStream(&stream, NULL, &outputParams, soundData->rate,
                               1024, paNoFlag,
-                              audioCallback, soundData);
+                              audioCallback, &idStreamDataPair->second);
         if (error != paNoError) {
           throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
         }
@@ -258,6 +265,20 @@ namespace small3d {
     for (auto removal = removals.begin(); removal != removals.end(); ++removal) {
       streams.erase(removal->data());
     }
+
+    removals.clear();
+
+    for (auto handleStreamDataPair = streamData.begin(); handleStreamDataPair != streamData.end();
+         ++handleStreamDataPair ) {
+      if (handleStreamDataPair->first.compare(0, soundName.length(), soundName) == 0) {
+        removals.push_back(handleStreamDataPair->first);
+      }
+    }
+
+    for (auto removal = removals.begin(); removal != removals.end(); ++removal) {
+      streamData.erase(removal->data());
+    }
+
 
     auto nameSoundPair = sounds.find(soundName);
 
