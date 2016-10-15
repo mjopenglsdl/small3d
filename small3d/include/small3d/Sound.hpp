@@ -26,9 +26,10 @@ namespace small3d {
 
   private:
 
-    unordered_map<string, shared_ptr<SoundData> > sounds;
+    unordered_map<string, SoundData> sounds;
 
     unordered_map<string, PaStream* > streams;
+
 
     bool noOutputDevice;
 

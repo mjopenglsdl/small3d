@@ -115,13 +115,13 @@ namespace small3d {
 
     vorbis_info *vi = ov_info(&vorbisFile, -1);
 
-    shared_ptr<SoundData> soundData(new SoundData());
+    SoundData soundData;
 
-    soundData->channels = vi->channels;
-    soundData->rate = (int) vi->rate;
-    soundData->samples = static_cast<long>(ov_pcm_total(&vorbisFile, -1));
-    soundData->size = soundData->channels * soundData->samples * WORD_SIZE;
-    soundData->duration = static_cast<double>(soundData->samples) / static_cast<double>(soundData->rate);
+    soundData.channels = vi->channels;
+    soundData.rate = (int) vi->rate;
+    soundData.samples = static_cast<long>(ov_pcm_total(&vorbisFile, -1));
+    soundData.size = soundData.channels * soundData.samples * WORD_SIZE;
+    soundData.duration = static_cast<double>(soundData.samples) / static_cast<double>(soundData.rate);
 
     char pcmout[4096];
     int current_section;
@@ -136,7 +136,7 @@ namespace small3d {
 
       } else if (ret > 0) {
 
-        soundData->data.insert(soundData->data.end(), &pcmout[0], &pcmout[ret]);
+        soundData.data.insert(soundData.data.end(), &pcmout[0], &pcmout[ret]);
 
         pos += ret;
 
@@ -152,8 +152,7 @@ namespace small3d {
     char soundInfo[100];
 
     sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %ld - size in bytes %ld", soundName.c_str(),
-            soundData->channels, soundData->rate, soundData->samples, soundData->
-            size);
+            soundData.channels, soundData.rate, soundData.samples, soundData.size);
 
     LOGINFO(string(soundInfo));
     }
@@ -170,7 +169,7 @@ namespace small3d {
         throw Exception("Sound '" + soundName + "' has not been loaded.");
       }
 
-      auto soundData = nameSoundPair->second;
+      SoundData *soundData = &nameSoundPair->second;
 
       PaStreamParameters outputParams;
 
@@ -204,7 +203,7 @@ namespace small3d {
 
         error = Pa_OpenStream(&stream, NULL, &outputParams, soundData->rate,
                               1024, paNoFlag,
-                              audioCallback, soundData.get());
+                              audioCallback, soundData);
         if (error != paNoError) {
           throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
         }
