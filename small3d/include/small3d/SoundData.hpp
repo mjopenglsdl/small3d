@@ -10,6 +10,7 @@
 
 #include <unordered_map>
 #include <portaudio.h>
+#include <vector>
 
 
 using namespace std;
@@ -31,20 +32,22 @@ namespace small3d {
     double duration;
     double startTime;
 
+    bool repeat;
+
     unsigned long currentFrame;
 
-    char *data;
+    vector<char> data;
 
     /**
      * @brief Default constructor
      */
 
-    SoundData();
+    SoundData() = default;
 
     /**
      * @brief Destructor
      */
 
-    ~SoundData();
+    ~SoundData() = default;
   };
 }

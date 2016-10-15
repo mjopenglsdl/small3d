@@ -9,7 +9,6 @@
 #include "Sound.hpp"
 #include "Exception.hpp"
 #include <SDL.h>
-#include <vector>
 
 #define WORD_SIZE 2
 #define PORTAUDIO_SAMPLE_FORMAT paInt16
@@ -31,7 +30,14 @@ namespace small3d {
     if (soundData->startTime == 0) {
       soundData->startTime = timeInfo->currentTime - 0.1;
     } else if (timeInfo->currentTime - soundData->startTime > soundData->duration) {
-      return paAbort;
+      if (soundData->repeat) {
+        soundData->startTime = timeInfo->currentTime - 0.1;
+        soundData->currentFrame = 0;
+      }
+      else
+      {
+        return paAbort;
+      }
     }
 
     SAMPLE_DATATYPE *out = static_cast<SAMPLE_DATATYPE *>(outputBuffer);
@@ -45,7 +51,7 @@ namespace small3d {
 
     for (unsigned long i = startPos; i < endPos; i += static_cast<unsigned long>(soundData->channels)) {
       for (int c = 0; c < soundData->channels; ++c) {
-        *out++ = (reinterpret_cast<short *>(soundData->data))[i + c];
+        *out++ = (reinterpret_cast<short *>(soundData->data.data()))[i + c];
       }
     }
 
@@ -118,8 +124,6 @@ namespace small3d {
     soundData->duration = static_cast<double>(soundData->samples) / static_cast<double>(soundData->rate);
 
     char pcmout[4096];
-    soundData->data = new char[soundData->size];
-
     int current_section;
     long ret = 0;
     long pos = 0;
@@ -132,8 +136,10 @@ namespace small3d {
 
       } else if (ret > 0) {
 
-        memcpy(&soundData->data[pos], pcmout, (size_t) ret);
+        soundData->data.insert(soundData->data.end(), &pcmout[0], &pcmout[ret]);
+
         pos += ret;
+
       }
     } while (ret != 0);
 
@@ -177,6 +183,8 @@ namespace small3d {
 
       soundData->currentFrame = 0;
       soundData->startTime = 0;
+
+      soundData->repeat = repeat;
 
       PaError error;
 
