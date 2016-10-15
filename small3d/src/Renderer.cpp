@@ -662,19 +662,25 @@ namespace small3d {
     glUseProgram(perspectiveProgram);
 
     bool alreadyInGPU = sceneObject.positionBufferObjectId != 0;
+    bool animated = sceneObject.isAnimated();
+    GLuint drawType =  GL_STATIC_DRAW;
 
-    if (isOpenGL33Supported) {
-      if (!alreadyInGPU) {
+
+    if (!alreadyInGPU) {
+      if (isOpenGL33Supported) {
         glGenVertexArrays(1, &sceneObject.vaoId);
       }
+      glGenBuffers(1, &sceneObject.indexBufferObjectId);
+      glGenBuffers(1, &sceneObject.positionBufferObjectId);
+      glGenBuffers(1, &sceneObject.normalsBufferObjectId);
+      glGenBuffers(1, &sceneObject.uvBufferObjectId);
+    }
+
+    if (isOpenGL33Supported) {
       glBindVertexArray(sceneObject.vaoId);
     }
 
     // Pass vertices
-
-    if (!alreadyInGPU) {
-      glGenBuffers(1, &sceneObject.positionBufferObjectId);
-    }
 
     glBindBuffer(GL_ARRAY_BUFFER, sceneObject.positionBufferObjectId);
 
@@ -682,16 +688,12 @@ namespace small3d {
       glBufferData(GL_ARRAY_BUFFER,
                    sceneObject.getModel().vertexDataSize,
                    sceneObject.getModel().vertexData.data(),
-                   sceneObject.isAnimated() ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+                   drawType);
     }
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
     // Pass vertex indexes
-
-    if (!alreadyInGPU) {
-      glGenBuffers(1, &sceneObject.indexBufferObjectId);
-    }
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sceneObject.indexBufferObjectId);
 
@@ -699,14 +701,10 @@ namespace small3d {
       glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                    sceneObject.getModel().indexDataSize,
                    sceneObject.getModel().indexData.data(),
-                   sceneObject.isAnimated() ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+                   drawType);
     }
 
     // Normals
-
-    if (!alreadyInGPU) {
-      glGenBuffers(1, &sceneObject.normalsBufferObjectId);
-    }
 
     glBindBuffer(GL_ARRAY_BUFFER, sceneObject.normalsBufferObjectId);
 
@@ -714,7 +712,7 @@ namespace small3d {
       glBufferData(GL_ARRAY_BUFFER,
                    sceneObject.getModel().normalsDataSize,
                    sceneObject.getModel().normalsData.data(),
-                   sceneObject.isAnimated() ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+                   drawType);
     }
 
     glEnableVertexAttribArray(1);
@@ -740,17 +738,13 @@ namespace small3d {
 
       // UV Coordinates
 
-      if (!alreadyInGPU) {
-        glGenBuffers(1, &sceneObject.uvBufferObjectId);
-      }
-
       glBindBuffer(GL_ARRAY_BUFFER, sceneObject.uvBufferObjectId);
 
       if (sceneObject.isAnimated() || !alreadyInGPU) {
         glBufferData(GL_ARRAY_BUFFER,
                      sceneObject.getModel().textureCoordsDataSize,
                      sceneObject.getModel().textureCoordsData.data(),
-                     sceneObject.isAnimated() ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+                     drawType);
       }
 
       glEnableVertexAttribArray(2);
