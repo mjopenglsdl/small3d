@@ -663,7 +663,7 @@ namespace small3d {
 
     bool alreadyInGPU = sceneObject.positionBufferObjectId != 0;
     bool animated = sceneObject.isAnimated();
-    GLuint drawType =  GL_STATIC_DRAW;
+    GLuint drawType = animated? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
 
 
     if (!alreadyInGPU) {
