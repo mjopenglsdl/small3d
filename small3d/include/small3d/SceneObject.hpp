@@ -15,6 +15,7 @@
 #include "Image.hpp"
 #include "BoundingBoxSet.hpp"
 #include <glm/glm.hpp>
+#include <GL/glew.h>
 
 using namespace std;
 
@@ -43,6 +44,13 @@ namespace small3d
 
 
   public:
+
+    GLuint vaoId = 0;
+    GLuint positionBufferObjectId = 0;
+    GLuint indexBufferObjectId = 0;
+    GLuint normalsBufferObjectId = 0;
+    GLuint textureId = 0;
+    GLuint uvBufferObjectId = 0;
 
     /**
      * @brief Constructor
@@ -73,6 +81,12 @@ namespace small3d
      * @return The object's model
      */
     Model& getModel() ;
+
+    /**
+     * Is this an animated or a static object (is it associated with more than one frames/models)?
+     * @return True if animated, False otherwise.
+     */
+    bool isAnimated() ;
 
     /**
      * @brief Get the object's texture

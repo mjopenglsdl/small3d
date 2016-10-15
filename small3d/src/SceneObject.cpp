@@ -141,4 +141,8 @@ namespace small3d {
         otherObject.boundingBoxSet.collidesWith(boundingBoxSet);
   }
 
+  bool SceneObject::isAnimated() {
+    return numFrames > 1;
+  }
+
 }

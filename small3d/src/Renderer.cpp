@@ -658,51 +658,68 @@ namespace small3d {
   }
 
   void Renderer::render(SceneObject &sceneObject, bool showBoundingBoxes) {
-    // Use the shaders prepared at initialisation
+
     glUseProgram(perspectiveProgram);
 
-    GLuint vao = 0;
+    bool alreadyInGPU = sceneObject.positionBufferObjectId != 0;
+
     if (isOpenGL33Supported) {
-      // Generate VAO
-      glGenVertexArrays(1, &vao);
-      glBindVertexArray(vao);
+      if (!alreadyInGPU) {
+        glGenVertexArrays(1, &sceneObject.vaoId);
+      }
+      glBindVertexArray(sceneObject.vaoId);
     }
 
-    GLuint positionBufferObject = 0;
-    GLuint indexBufferObject = 0;
-    GLuint normalsBufferObject = 0;
-    GLuint texture = 0;
-    GLuint uvBufferObject = 0;
+    // Pass vertices
 
-    // Pass the vertex positions to the shaders
-    glGenBuffers(1, &positionBufferObject);
+    if (!alreadyInGPU) {
+      glGenBuffers(1, &sceneObject.positionBufferObjectId);
+    }
 
-    glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sceneObject.getModel().vertexDataSize,
-                 sceneObject.getModel().vertexData.data(),
-                 GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, sceneObject.positionBufferObjectId);
+
+    if (sceneObject.isAnimated() || !alreadyInGPU) {
+      glBufferData(GL_ARRAY_BUFFER,
+                   sceneObject.getModel().vertexDataSize,
+                   sceneObject.getModel().vertexData.data(),
+                   sceneObject.isAnimated() ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+    }
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
     // Pass vertex indexes
 
-    glGenBuffers(1, &indexBufferObject);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 sceneObject.getModel().indexDataSize,
-                 sceneObject.getModel().indexData.data(),
-                 GL_STATIC_DRAW);
+    if (!alreadyInGPU) {
+      glGenBuffers(1, &sceneObject.indexBufferObjectId);
+    }
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sceneObject.indexBufferObjectId);
+
+    if (sceneObject.isAnimated() || !alreadyInGPU) {
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                   sceneObject.getModel().indexDataSize,
+                   sceneObject.getModel().indexData.data(),
+                   sceneObject.isAnimated() ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+    }
 
     // Normals
-    glGenBuffers(1, &normalsBufferObject);
-    glBindBuffer(GL_ARRAY_BUFFER, normalsBufferObject);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sceneObject.getModel().normalsDataSize,
-                 sceneObject.getModel().normalsData.data(), GL_STATIC_DRAW);
+
+    if (!alreadyInGPU) {
+      glGenBuffers(1, &sceneObject.normalsBufferObjectId);
+    }
+
+    glBindBuffer(GL_ARRAY_BUFFER, sceneObject.normalsBufferObjectId);
+
+    if (sceneObject.isAnimated() || !alreadyInGPU) {
+      glBufferData(GL_ARRAY_BUFFER,
+                   sceneObject.getModel().normalsDataSize,
+                   sceneObject.getModel().normalsData.data(),
+                   sceneObject.isAnimated() ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+    }
+
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 
     // Find the colour uniform
     GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
@@ -711,26 +728,33 @@ namespace small3d {
       // "Disable" colour since there is a texture
       glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
 
-      texture = this->getTextureHandle(sceneObject.getName());
+      sceneObject.textureId = this->getTextureHandle(sceneObject.getName());
 
-      if (texture == 0) {
-        texture = generateTexture(sceneObject.getName(), sceneObject.getTexture().getData(),
+      if (sceneObject.textureId == 0) {
+        sceneObject.textureId = generateTexture(sceneObject.getName(), sceneObject.getTexture().getData(),
                                   sceneObject.getTexture().getWidth(),
                                   sceneObject.getTexture().getHeight());
       }
 
-      glBindTexture(GL_TEXTURE_2D, texture);
+      glBindTexture(GL_TEXTURE_2D, sceneObject.textureId);
 
       // UV Coordinates
 
-      glGenBuffers(1, &uvBufferObject);
-      glBindBuffer(GL_ARRAY_BUFFER, uvBufferObject);
-      glBufferData(GL_ARRAY_BUFFER,
-                   sceneObject.getModel().textureCoordsDataSize,
-                   sceneObject.getModel().textureCoordsData.data(), GL_STATIC_DRAW);
+      if (!alreadyInGPU) {
+        glGenBuffers(1, &sceneObject.uvBufferObjectId);
+      }
+
+      glBindBuffer(GL_ARRAY_BUFFER, sceneObject.uvBufferObjectId);
+
+      if (sceneObject.isAnimated() || !alreadyInGPU) {
+        glBufferData(GL_ARRAY_BUFFER,
+                     sceneObject.getModel().textureCoordsDataSize,
+                     sceneObject.getModel().textureCoordsData.data(),
+                     sceneObject.isAnimated() ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+      }
+
       glEnableVertexAttribArray(2);
       glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
-      glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     }
     else {
@@ -765,28 +789,8 @@ namespace small3d {
       glDisableVertexAttribArray(2);
     }
 
-    if (positionBufferObject != 0) {
-      glDeleteBuffers(1, &positionBufferObject);
-    }
-
-    if (indexBufferObject != 0) {
-      glDeleteBuffers(1, &indexBufferObject);
-    }
-    if (normalsBufferObject != 0) {
-      glDeleteBuffers(1, &normalsBufferObject);
-    }
-
-    if (uvBufferObject != 0) {
-      glDeleteBuffers(1, &uvBufferObject);
-    }
-
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
-
-    if (isOpenGL33Supported) {
-      glDeleteVertexArrays(1, &vao);
-      glBindVertexArray(0);
-    }
 
     glUseProgram(0);
 
@@ -794,6 +798,39 @@ namespace small3d {
       render(sceneObject.boundingBoxSet, sceneObject.offset, sceneObject.rotation, sceneObject.getRotationAdjustment());
     }
 
+  }
+
+  void Renderer::clear(SceneObject &sceneObject) {
+
+    if (sceneObject.positionBufferObjectId != 0) {
+      glDeleteBuffers(1, &sceneObject.positionBufferObjectId);
+      sceneObject.positionBufferObjectId = 0;
+    }
+
+    if (sceneObject.indexBufferObjectId != 0) {
+      glDeleteBuffers(1, &sceneObject.indexBufferObjectId);
+      sceneObject.indexBufferObjectId = 0;
+    }
+    if (sceneObject.normalsBufferObjectId != 0) {
+      glDeleteBuffers(1, &sceneObject.normalsBufferObjectId);
+      sceneObject.normalsBufferObjectId = 0;
+    }
+
+    if (sceneObject.uvBufferObjectId != 0) {
+      glDeleteBuffers(1, &sceneObject.uvBufferObjectId);
+      sceneObject.uvBufferObjectId = 0;
+    }
+
+    if (isOpenGL33Supported) {
+      if (sceneObject.vaoId != 0)
+      glDeleteVertexArrays(1, &sceneObject.vaoId);
+      sceneObject.vaoId = 0;
+    }
+
+    if (sceneObject.getTexture().size() != 0) {
+      deleteTexture(sceneObject.getName());
+      sceneObject.textureId = 0;
+    }
   }
 
   void Renderer::render(string text, glm::uvec4 colour,
@@ -876,7 +913,6 @@ namespace small3d {
   void Renderer::swapBuffers() {
     SDL_GL_SwapWindow(sdlWindow);
   }
-
 
   /**
   * Convert error enum returned from OpenGL to a readable string error message.

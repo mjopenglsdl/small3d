@@ -220,6 +220,12 @@ namespace small3d
     void render(SceneObject &sceneObject, bool showBoundingBoxes = false);
 
     /**
+     * @brief Clear a scene object from the GPU
+     * @param sceneObject The scene object
+     */
+    void clear(SceneObject &sceneObject);
+
+    /**
      * @brief Render some text on the screen. A texture will be generated, containing the given
      * text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space.
      * @param text The text to be rendered
