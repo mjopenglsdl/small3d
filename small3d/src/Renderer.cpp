@@ -661,10 +661,19 @@ namespace small3d {
 
     glUseProgram(perspectiveProgram);
 
-    bool alreadyInGPU = sceneObject.positionBufferObjectId != 0;
-    bool animated = sceneObject.isAnimated();
-    GLuint drawType = animated? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
+    bool alreadyInGPU = true;
+    bool copyData = false;
+    GLuint drawType = GL_STATIC_DRAW;
 
+    if (sceneObject.positionBufferObjectId == 0) {
+      alreadyInGPU = false;
+      copyData = true;
+    }
+
+    if (sceneObject.isAnimated()) {
+      copyData = true;
+      drawType = GL_DYNAMIC_DRAW;
+    }
 
     if (!alreadyInGPU) {
       if (isOpenGL33Supported) {
@@ -684,7 +693,7 @@ namespace small3d {
 
     glBindBuffer(GL_ARRAY_BUFFER, sceneObject.positionBufferObjectId);
 
-    if (sceneObject.isAnimated() || !alreadyInGPU) {
+    if (copyData) {
       glBufferData(GL_ARRAY_BUFFER,
                    sceneObject.getModel().vertexDataSize,
                    sceneObject.getModel().vertexData.data(),
@@ -697,7 +706,7 @@ namespace small3d {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sceneObject.indexBufferObjectId);
 
-    if (sceneObject.isAnimated() || !alreadyInGPU) {
+    if (copyData) {
       glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                    sceneObject.getModel().indexDataSize,
                    sceneObject.getModel().indexData.data(),
@@ -708,7 +717,7 @@ namespace small3d {
 
     glBindBuffer(GL_ARRAY_BUFFER, sceneObject.normalsBufferObjectId);
 
-    if (sceneObject.isAnimated() || !alreadyInGPU) {
+    if (copyData) {
       glBufferData(GL_ARRAY_BUFFER,
                    sceneObject.getModel().normalsDataSize,
                    sceneObject.getModel().normalsData.data(),
