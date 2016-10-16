@@ -9,7 +9,7 @@ uniform float lightIntensity;
 void main()
 {
   if (colour != vec4(0, 0, 0, 0)) {
-    gl_FragColor = cosAngIncidence * colour;
+    gl_FragColor = vec4((cosAngIncidence * colour).rgb, 1.0);
 }
 else {
   if (lightIntensity == -1)

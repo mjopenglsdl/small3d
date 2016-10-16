@@ -11,7 +11,6 @@
 #include "MathFunctions.hpp"
 #include "SDL.h"
 
-
 using namespace std;
 
 namespace small3d {
@@ -110,10 +109,12 @@ namespace small3d {
 
     png_read_image(pngStructure, rowPointers);
 
-    if (colorType != PNG_COLOR_TYPE_RGB) {
+    if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA) {
       throw Exception(
-        "Image format not recognised. Only RGB png images are supported, with no transparency information saved.");
+        "Image format not recognised. Only RGB / RGBA png images are supported.");
     }
+
+    int numComponents = colorType == PNG_COLOR_TYPE_RGB ? 3 : 4;
 
     imageDataSize = (unsigned int) (4 * width * height);
 
@@ -125,18 +126,19 @@ namespace small3d {
 
       for (int x = 0; x < width; x++) {
 
-        png_byte *ptr = &(row[x * 3]);
+        png_byte *ptr = &(row[x * numComponents]);
 
-        float rgb[3];
+        float rgb[4];
 
         rgb[0] = static_cast<float>(ptr[0]);
         rgb[1] = static_cast<float>(ptr[1]);
         rgb[2] = static_cast<float>(ptr[2]);
+        rgb[3] = numComponents == 3 ? 255.0f : static_cast<float>(ptr[3]);
 
         imageData[y * width * 4 + x * 4] = ROUND_2_DECIMAL(rgb[0] / 255.0f);
         imageData[y * width * 4 + x * 4 + 1] = ROUND_2_DECIMAL(rgb[1] / 255.0f);
         imageData[y * width * 4 + x * 4 + 2] = ROUND_2_DECIMAL(rgb[2] / 255.0f);
-        imageData[y * width * 4 + x * 4 + 3] = 1.0f;
+        imageData[y * width * 4 + x * 4 + 3] = ROUND_2_DECIMAL(rgb[3] / 255.0f);
 
       }
     }
@@ -148,11 +150,9 @@ namespace small3d {
     }
     delete[] rowPointers;
 
-    if (pngInformation != nullptr || pngStructure != nullptr) {
-      png_destroy_read_struct(&pngStructure, &pngInformation, nullptr);
-      pngStructure = nullptr;
-      pngInformation = nullptr;
-    }
+    png_destroy_read_struct(&pngStructure, &pngInformation, nullptr);
+    pngStructure = nullptr;
+    pngInformation = nullptr;
   }
 
   const int Image::getWidth() const {

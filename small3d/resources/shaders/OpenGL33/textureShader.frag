@@ -11,7 +11,7 @@ out vec4 outputColour;
 void main()
 {
 if (colour != vec4(0, 0, 0, 0)) {
-    outputColour = cosAngIncidence * colour;
+    outputColour = vec4((cosAngIncidence * colour).rgb, 1.0);
 }
 else {
   if (lightIntensity == -1)
