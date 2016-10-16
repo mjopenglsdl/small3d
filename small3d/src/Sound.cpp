@@ -73,8 +73,10 @@ namespace small3d {
     defaultOutput = Pa_GetDefaultOutputDevice();
 
     if (defaultOutput == paNoDevice) {
-        //LOGERROR("No default sound output device.");
-        noOutputDevice = true;
+
+      LOGINFO("No default sound output device.");
+
+      noOutputDevice = true;
     }
   }
 
