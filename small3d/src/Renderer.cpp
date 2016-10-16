@@ -689,41 +689,40 @@ namespace small3d {
       glBindVertexArray(sceneObject.vaoId);
     }
 
-    // Pass vertices
-
-    glBindBuffer(GL_ARRAY_BUFFER, sceneObject.positionBufferObjectId);
 
     if (copyData) {
+
+      // Vertices
+      glBindBuffer(GL_ARRAY_BUFFER, sceneObject.positionBufferObjectId);
       glBufferData(GL_ARRAY_BUFFER,
                    sceneObject.getModel().vertexDataSize,
                    sceneObject.getModel().vertexData.data(),
                    drawType);
-    }
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
-    // Pass vertex indexes
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sceneObject.indexBufferObjectId);
-
-    if (copyData) {
+      // Vertex indexes
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sceneObject.indexBufferObjectId);
       glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                    sceneObject.getModel().indexDataSize,
                    sceneObject.getModel().indexData.data(),
                    drawType);
+
+      // Normals
+      glBindBuffer(GL_ARRAY_BUFFER, sceneObject.normalsBufferObjectId);
+      if (copyData) {
+        glBufferData(GL_ARRAY_BUFFER,
+                     sceneObject.getModel().normalsDataSize,
+                     sceneObject.getModel().normalsData.data(),
+                     drawType);
+      }
     }
 
-    // Normals
+    // Attribute - vertex
+    glBindBuffer(GL_ARRAY_BUFFER, sceneObject.positionBufferObjectId);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
+    // Attribute - normals
     glBindBuffer(GL_ARRAY_BUFFER, sceneObject.normalsBufferObjectId);
-
-    if (copyData) {
-      glBufferData(GL_ARRAY_BUFFER,
-                   sceneObject.getModel().normalsDataSize,
-                   sceneObject.getModel().normalsData.data(),
-                   drawType);
-    }
-
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
 
@@ -731,7 +730,9 @@ namespace small3d {
     // Find the colour uniform
     GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
 
+
     if (sceneObject.getTexture().size() != 0) {
+
       // "Disable" colour since there is a texture
       glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
 
@@ -749,7 +750,7 @@ namespace small3d {
 
       glBindBuffer(GL_ARRAY_BUFFER, sceneObject.uvBufferObjectId);
 
-      if (sceneObject.isAnimated() || !alreadyInGPU) {
+      if (copyData) {
         glBufferData(GL_ARRAY_BUFFER,
                      sceneObject.getModel().textureCoordsDataSize,
                      sceneObject.getModel().textureCoordsData.data(),
