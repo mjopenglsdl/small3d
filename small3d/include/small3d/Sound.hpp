@@ -66,8 +66,7 @@ namespace small3d {
      *
      * @param soundName The name of the sound to be played.
      * @param handle The handle of the specific sound instance. This is used so that the same sound
-     *        can be played in parallel multiple times. Try not to declare two sounds, the name and handle of which
-     *        produce the same combination (e.g. "goatbah" + "1" and "goat" + "bah1"), or there will be problems.
+     *        can be played in parallel multiple times.
      * @param repeat Repeat the sound from the beginning, once it has finished playing.
      *
      */

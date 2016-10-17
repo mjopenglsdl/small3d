@@ -14,6 +14,8 @@
 #define PORTAUDIO_SAMPLE_FORMAT paInt16
 #define SAMPLE_DATATYPE short
 
+#define SOUND_ID(name, handle) name + "/" + handle
+
 using namespace std;
 
 namespace small3d {
@@ -182,11 +184,11 @@ namespace small3d {
 
       outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
 
-      auto idStreamDataPair = streamData.find(soundName + handle);
+      auto idStreamDataPair = streamData.find(SOUND_ID(soundName, handle));
 
       if (idStreamDataPair == streamData.end()) {
-        streamData.insert(make_pair(soundName + handle, nameSoundPair->second));
-        idStreamDataPair = streamData.find(soundName + handle);
+        streamData.insert(make_pair(SOUND_ID(soundName, handle), nameSoundPair->second));
+        idStreamDataPair = streamData.find(SOUND_ID(soundName , handle));
       }
 
       idStreamDataPair->second.currentFrame = 0;
@@ -196,7 +198,7 @@ namespace small3d {
 
       PaError error;
 
-      auto handleStreamPair = streams.find(soundName + handle);
+      auto handleStreamPair = streams.find(SOUND_ID(soundName, handle));
       if (handleStreamPair != streams.end()) {
 
         Pa_AbortStream(handleStreamPair->second);
@@ -222,7 +224,7 @@ namespace small3d {
           throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
         }
 
-        streams.insert(make_pair(soundName + handle, stream));
+        streams.insert(make_pair(SOUND_ID(soundName, handle), stream));
       }
 
     }
@@ -239,7 +241,7 @@ namespace small3d {
 
       auto soundData = nameSoundPair->second;
 
-      auto handleStreamPair = streams.find(soundName + handle);
+      auto handleStreamPair = streams.find(SOUND_ID(soundName, handle));
       if (handleStreamPair == streams.end()) {
         throw Exception("Sound handle '" + handle + "' does not exist.");
       }
