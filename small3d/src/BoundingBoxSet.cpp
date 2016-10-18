@@ -108,7 +108,10 @@ namespace small3d {
 
   bool BoundingBoxSet::collidesWith(glm::vec3 point) const {
     bool collides = false;
-    glm::mat4 rotationMatrix = rotateZ(rotation.z) * rotateX(rotation.x) * rotateY(rotation.y);
+    glm::mat4 rotationMatrix = rotateZ(-rotation.z) * rotateX(-rotation.x) * rotateY(-rotation.y);
+
+    glm::vec4 pointInBoxSpace = glm::vec4(point, 1.0f) - glm::vec4(offset, 0.0f);
+    pointInBoxSpace = pointInBoxSpace * rotationMatrix;
 
     for (int idx = 0; idx < numBoxes; ++idx) {
       float minZ, maxZ, minX, maxX, minY, maxY;
@@ -117,11 +120,7 @@ namespace small3d {
         vertices[static_cast<unsigned int>(idx * 8)][2], 1);
 
       glm::vec4 rotatedCoords;
-      rotatedCoords = coords * rotationAdjustment * rotationMatrix;
-
-      rotatedCoords.x += offset.x;
-      rotatedCoords.y += offset.y;
-      rotatedCoords.z += offset.z;
+      rotatedCoords = coords * rotationAdjustment;
 
       minX = rotatedCoords.x;
       maxX = rotatedCoords.x;
@@ -133,11 +132,7 @@ namespace small3d {
       for (int checkidx = idx * 8; checkidx < (idx + 1) * 8; ++checkidx) {
         coords = glm::vec4(vertices[static_cast<unsigned int>(checkidx)][0], vertices[static_cast<unsigned int>(checkidx)][1],
           vertices[static_cast<unsigned int>(checkidx)][2], 1);
-        rotatedCoords = coords * rotationAdjustment * rotationMatrix;
-
-        rotatedCoords.x += offset.x;
-        rotatedCoords.y += offset.y;
-        rotatedCoords.z += offset.z;
+        rotatedCoords = coords * rotationAdjustment;
 
         if (rotatedCoords.x < minX)
           minX = rotatedCoords.x;
@@ -153,9 +148,9 @@ namespace small3d {
           maxZ = rotatedCoords.z;
       }
 
-      if (point.x > minX && point.x < maxX &&
-          point.y > minY && point.y < maxY &&
-          point.z > minZ && point.z < maxZ) {
+      if (pointInBoxSpace.x > minX && pointInBoxSpace.x < maxX &&
+          pointInBoxSpace.y > minY && pointInBoxSpace.y < maxY &&
+          pointInBoxSpace.z > minZ && pointInBoxSpace.z < maxZ) {
 
         collides = true;
         break;
