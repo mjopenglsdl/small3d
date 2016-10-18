@@ -66,17 +66,17 @@ namespace small3d {
 
     noOutputDevice = false;
 
-    PaError error = Pa_Initialize();
+    PaError initError = Pa_Initialize();
 
-    if (error != paNoError) {
-      throw Exception("PortAudio failed to initialise: " + string(Pa_GetErrorText(error)));
+    if (initError != paNoError) {
+      throw Exception("PortAudio failed to initialise: " + string(Pa_GetErrorText(initError)));
     }
 
     defaultOutput = Pa_GetDefaultOutputDevice();
 
     if (defaultOutput == paNoDevice) {
 
-      LOGINFO("No default sound output device.");
+      LOGERROR("No default sound output device.");
 
       noOutputDevice = true;
     }
