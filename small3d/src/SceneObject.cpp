@@ -71,7 +71,7 @@ namespace small3d {
   }
 
   void SceneObject::adjustRotation(const glm::vec3 &adjustment) {
-    rotationAdjustment = rotateX(adjustment.x) * rotateY(adjustment.y) * rotateZ(adjustment.z);
+    rotationAdjustment = rotateZ(adjustment.z) * rotateX(adjustment.x) * rotateY(adjustment.y);
     if (boundingBoxSet.vertices.size() > 0)
       boundingBoxSet.setRotationAdjustment(rotationAdjustment);
   }
