@@ -22,7 +22,7 @@ namespace small3d {
   }
 
   Logger::~Logger() {
-    this->append(info, "Logger getting destroyed");
+    this->append(loggerinfo, "Logger getting destroyed");
     logStream = NULL;
 
   }
@@ -59,13 +59,13 @@ namespace small3d {
 
     string indicator;
     switch (level) {
-    case info:
+    case loggerinfo:
       indicator = "INFO";
       break;
-    case debug:
+    case loggerdebug:
       indicator = "DEBUG";
       break;
-    case error:
+    case loggererror:
       indicator = "ERROR";
       break;
     default:

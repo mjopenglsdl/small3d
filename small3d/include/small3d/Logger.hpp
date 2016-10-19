@@ -13,9 +13,9 @@
  * omitted if deactivated.
  */
 
-#define LOGERROR(MESSAGE) logger->append(error, MESSAGE)
+#define LOGERROR(MESSAGE) logger->append(loggererror, MESSAGE)
 
-#define LOGINFO(MESSAGE) logger->append(info, MESSAGE)
+#define LOGINFO(MESSAGE) logger->append(loggerinfo, MESSAGE)
 
 #if defined(DEBUG) || defined(_DEBUG)
 #define LOGDEBUG(MESSAGE) logger->append(debug, MESSAGE)
@@ -36,7 +36,7 @@ namespace small3d {
    */
 
   enum LogLevel {
-    info, debug, error
+    loggerinfo, loggerdebug, loggererror
   };
 
   /**
