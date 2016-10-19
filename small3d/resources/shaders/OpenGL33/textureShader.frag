@@ -11,18 +11,20 @@ out vec4 outputColour;
 void main()
 {
 if (colour != vec4(0, 0, 0, 0)) {
-    outputColour = vec4((cosAngIncidence * colour).rgb, 1.0);
+    outputColour = vec4((cosAngIncidence * colour).rgb, colour.a);
 }
 else {
+
+  vec4 tcolour = texture(textureImage, textureCoords);
+  
   if (lightIntensity == -1)
   {
-    outputColour = vec4(texture(textureImage, textureCoords).rgb, 1.0);
+    outputColour = tcolour;
   }
   else
   {
-    vec4 textureWtLight = lightIntensity * cosAngIncidence 
-			* texture(textureImage, textureCoords);
-    outputColour = vec4(textureWtLight.rgb, 1.0);
+    vec4 textureWtLight = lightIntensity * cosAngIncidence * tcolour;
+    outputColour = vec4(textureWtLight.rgb, tcolour.a);
   }
 }
 
