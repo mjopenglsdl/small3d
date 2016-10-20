@@ -9,18 +9,20 @@ uniform float lightIntensity;
 void main()
 {
   if (colour != vec4(0, 0, 0, 0)) {
-    gl_FragColor = vec4((cosAngIncidence * colour).rgb, 1.0);
+    gl_FragColor = vec4((cosAngIncidence * colour).rgb, colour.a);
 }
 else {
+
+  vec4 tcolour = texture2D(textureImage, textureCoords);
+
   if (lightIntensity == -1)
   {
-    gl_FragColor = vec4(texture2D(textureImage, textureCoords).rgb, 1.0);
+    gl_FragColor = tcolour;
   }
   else
   {
-    vec4 textureWtLight = lightIntensity * cosAngIncidence 
-			* texture2D(textureImage, textureCoords);
-    gl_FragColor = vec4(textureWtLight.rgb, 1.0);
+    vec4 textureWtLight = lightIntensity * cosAngIncidence * tcolour;
+    gl_FragColor = vec4(textureWtLight.rgb, tcolour.a);
   }
 }
 
