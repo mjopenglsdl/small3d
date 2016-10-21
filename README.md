@@ -9,28 +9,40 @@ Introduction
 
 ![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
 
-This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL.
+This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. I developed it while learning how to program games with OpenGL and I am still using it for my projects and experiments.
+
+A Bit of History
+----------------
+
+*You don't need to read this to use the engine. Skip it if you're not interested.*
+
+I'm a hoybbyist and permanent beginner in game development. I had always wanted to make games since I was a kid but, even though I have been working in IT for years, mostly as a developer, my work has nothing to do with games, graphics or anything of the sort.
+
+A couple of years ago I thought that if I want to learn how to do this I might as well start. I'm interested in programming so I did not opt for a ready-made game engine. I get it that this is how most game development is carried out today and that it is a bad business decision to program everything by hand. I probably wouldn't do so if my income depended on it. If I understand it correctly, professionals who do write their own rendering logic or physics algorithms end up specialising in one specific area. Those who actually develop entire games just pick a multi-featured tool and study how to use it rather than how to push vertices to the GPU.
+
+As I've mentioned, I was not looking to start a new career so I thought to proceed the way my 80s heroes would, writing code in their living rooms. So I started making a little game in which a bug is chasing a goat. Some have told me that the bug looks like a crow and the goat looks like a unicorn, which is understandable, since I'm also doing my own 3D modelling with Blender. Once the game was finished, I thought to put the functionality that could be reused in a library and this is how the small3d engine came to be.
+
+One question I got at some point was why I did not follow the advice, "write games not engines". I've found a copy of the [article that says this](http://www.geometrian.com/programming/tutorials/write-games-not-engines/index.php) and I'm not sure that the author meant "just download an engine and get started". What I've done is not so far off from what he proposes, even though I may have been in a bit of a rush. But then again, I think it's good to be building a toolset of reusable items whenever you are working on something, no matter how much you have progressed.
 
 Features
 --------
 
 - Runs on Windows, Mac, Linux (I'm using Debian and somebody told me that it works ok on Ubuntu, too).
 - Uses OpenGL 3.3 and defaults to 2.1 if the former is not available. So, it comes with two sets of shaders.
-- Uses C++ 11
-- You can tweak the shaders, as long as you keep the same incoming variables and uniforms.
+- Uses C++11.
+- You can tweak the engine's shaders, as long as you keep the same incoming variables and uniforms.
 - Plays sounds from .ogg files.
-- Doesn't hide SDL from you. You can set up your main game loop, inputs, etc, however you want.
+- Doesn't hide SDL or OpenGL from you. You can set up your main game loop, inputs, etc, however you want and you can load your own shaders and make your own OpenGL calls if you want to do something that is not covered by the engine's features.
 - It can read and render Wavefront files, including animations. For other formats, you can write your own reader, inherriting from the [ModelLoader](https://codedocs.xyz/dimi309/small3d/classsmall3d_1_1ModelLoader.html) class.
 - Texture mapping.
-- It renders text.
 - It can render any image in any position (for example to be used as the ground, or the sky).
 - Gouraud shading. You can set the light direction and intensity.
 - Simple rotations with matrices.
 - Simple collision detection with bounding boxes.
-- Can be deployed via the [conan.io](https://www.conan.io) package manager.
-- Can also be compiled independently, using CMake.
+- It renders text.
+- It can be deployed via the [conan.io](https://www.conan.io) package manager. This is a great time saver.
+- It can also be compiled independently, using CMake.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
-- I am open to adding more features, so write to me if you have any ideas. Don't be offended if I say no though. I have spent too much time trying to expand on various directions and this made me delay finishing a decent version of the engine. I would like to keep it small and simple, so that beginners can understand easily not only how to use it, but also how the code works (so that they can send me bug fixes :)
 
 Getting Started
 ---------------
@@ -57,7 +69,12 @@ the normals listed later in the exported file for some vertices will overwrite t
 
 If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program.
 
-The engine also supports manually created bounding boxes for collision detection. In order to create these in Blender for example, just place them in the preferred position over the model and export them to Wavefront separately from the model, only with the options "Apply Modifiers", "Include Edges", "Objects as OBJ Objects" and "Keep Vertex Order". On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
+Collision Detection
+-------------------
+
+The engine supports collision detection via manually created bounding boxes. In order to create these in Blender for example, just place them in the preferred position over the model. Ideally, they should be aligned with the axes but that is not mandatory. It will just increase the detection accuracy.
+
+Export the bounding boxes to a Wavefront file separately from the model. You can do this if you "save as" a new file after placing the boxes and deleting the original model. During export, only set the options "Apply Modifiers", "Include Edges", "Objects as OBJ Objects" and "Keep Vertex Order". On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
 
 Sound
 -----
