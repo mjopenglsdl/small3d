@@ -3,6 +3,12 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.0.9
+------
+
+- Complete correction of the collision detection system. Even though it had been greatly improved, it was still missing collisions. The reason was that it was performing an AABB check for each bounding box associated with each object. By translating the point with which collision is checked to the "bounding box coordinate space", this is no longer the case and collision detection has become very accurate.
+- Correction of transparency problems. Images containing transparency information can now be correctly loaded and rendered.
+
 v1.0.8
 ------
 

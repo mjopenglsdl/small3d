@@ -826,9 +826,10 @@ namespace small3d {
     }
 
     if (isOpenGL33Supported) {
-      if (sceneObject.vaoId != 0)
-      glDeleteVertexArrays(1, &sceneObject.vaoId);
-      sceneObject.vaoId = 0;
+      if (sceneObject.vaoId != 0) {
+      	glDeleteVertexArrays(1, &sceneObject.vaoId);
+      	sceneObject.vaoId = 0;
+      }
     }
 
     if (sceneObject.getTexture().size() != 0) {
