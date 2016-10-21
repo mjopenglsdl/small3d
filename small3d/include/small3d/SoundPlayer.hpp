@@ -1,5 +1,5 @@
 /*
- *  Sound.hpp
+ *  SoundPlayer.hpp
  *
  *  Created on: 2014-12-14
  *      Author: Dimitri Kourkoulis
@@ -18,11 +18,11 @@ using namespace std;
 namespace small3d {
 
   /**
-   * @class Sound
+   * @class SoundPlayer
    * @brief Sound management class
    */
 
-  class Sound {
+  class SoundPlayer {
 
   private:
 
@@ -42,12 +42,12 @@ namespace small3d {
     /**
      * @brief Constructor
      */
-    Sound();
+    SoundPlayer();
 
     /**
      * @brief Destructor
      */
-    ~Sound();
+    ~SoundPlayer();
 
     /**
      * @brief Loads a sound from a file. For the moment, the file can

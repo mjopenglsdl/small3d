@@ -8,6 +8,8 @@ v1.0.9
 
 - Complete correction of the collision detection system. Even though it had been greatly improved, it was still missing collisions. The reason was that it was performing an AABB check for each bounding box associated with each object. By translating the point with which collision is checked to the "bounding box coordinate space", this is no longer the case and collision detection has become very accurate.
 - Correction of transparency problems. Images containing transparency information can now be correctly loaded and rendered.
+- Corrected shader compilation error reporting.
+- [BREAKING] Renamed "Sound" class to "SoundPlayer", in order to better represent what it is.
 
 v1.0.8
 ------

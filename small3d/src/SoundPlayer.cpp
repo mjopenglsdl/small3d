@@ -1,12 +1,12 @@
 /*
- *  Sound.cpp
+ *  SoundPlayer.cpp
  *
  *  Created on: 2014-12-15
  *      Author: Dimitri Kourkoulis
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "Sound.hpp"
+#include "SoundPlayer.hpp"
 #include "Exception.hpp"
 #include <SDL.h>
 
@@ -62,7 +62,7 @@ namespace small3d {
     return result;
   }
 
-  Sound::Sound() {
+  SoundPlayer::SoundPlayer() {
 
     noOutputDevice = false;
 
@@ -82,7 +82,7 @@ namespace small3d {
     }
   }
 
-  Sound::~Sound() {
+  SoundPlayer::~SoundPlayer() {
 
     for (auto it = streams.begin(); it != streams.end(); ++it) {
       Pa_AbortStream(it->second);
@@ -92,7 +92,7 @@ namespace small3d {
     Pa_Terminate();
   }
 
-  void Sound::load(string soundFilePath, string soundName) {
+  void SoundPlayer::load(string soundFilePath, string soundName) {
 
     if (!noOutputDevice) {
 
@@ -163,7 +163,7 @@ namespace small3d {
 
   }
 
-  void Sound::play(string soundName, string handle, bool repeat) {
+  void SoundPlayer::play(string soundName, string handle, bool repeat) {
 
     if (!noOutputDevice) {
 
@@ -230,7 +230,7 @@ namespace small3d {
     }
   }
 
-  void Sound::stop(string soundName, string handle) {
+  void SoundPlayer::stop(string soundName, string handle) {
     if (!noOutputDevice) {
 
       auto nameSoundPair = sounds.find(soundName);
@@ -254,7 +254,7 @@ namespace small3d {
 
   }
 
-  void Sound::deleteSound(string soundName) {
+  void SoundPlayer::deleteSound(string soundName) {
 
     vector<string> removals;
 
