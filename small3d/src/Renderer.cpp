@@ -37,6 +37,10 @@ namespace small3d {
 
     string shaderSource = this->loadShaderFromFile(shaderSourceFile);
 
+    if (shaderSource.length() == 0) {
+      throw Exception("Shader source file '" + shaderSourceFile + "' is empty or not found.");
+    }
+
     const char *shaderSourceChars = shaderSource.c_str();
     glShaderSource(shader, 1, &shaderSourceChars, NULL);
 
@@ -44,11 +48,11 @@ namespace small3d {
 
     GLint status;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    if (status == GL_FALSE || shaderSource.length() ==0 ) {
+    if (status == GL_FALSE ) {
 
       throw Exception(
-          "Failed to compile shader:\n" + shaderSource + "\nInfo: "
-          + this->getProgramInfoLog(perspectiveProgram));
+          "Failed to compile shader:\n" + shaderSource + "\n"
+          + this->getShaderInfoLog(shader));
     }
     else {
       LOGINFO("Shader " + shaderSourceFile + " compiled successfully.");
@@ -171,13 +175,42 @@ namespace small3d {
   string Renderer::getProgramInfoLog(const GLuint linkedProgram) const {
 
     GLint infoLogLength;
+
     glGetProgramiv(linkedProgram, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-    GLchar *infoLog = new GLchar[infoLogLength + 1];
-    glGetProgramInfoLog(linkedProgram, infoLogLength, NULL, infoLog);
-    string infoLogStr = infoLog;
+    GLchar infoLog[infoLogLength + 1];
 
-    delete[] infoLog;
+    GLsizei lengthReturned = 0;
+
+    glGetProgramInfoLog(linkedProgram, infoLogLength, &lengthReturned, infoLog);
+
+    string infoLogStr(infoLog);
+
+    if (lengthReturned == 0) {
+      infoLogStr = "(No info)";
+    }
+
+    return infoLogStr;
+
+  }
+
+  string Renderer::getShaderInfoLog(const GLuint shader) const {
+
+    GLint infoLogLength;
+
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+    GLchar infoLog[infoLogLength + 1];
+
+    GLsizei lengthReturned = 0;
+
+    glGetShaderInfoLog(shader, infoLogLength, &lengthReturned, infoLog);
+
+    string infoLogStr(infoLog);
+
+    if (lengthReturned == 0) {
+      infoLogStr = "(No info)";
+    }
 
     return infoLogStr;
 

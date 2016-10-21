@@ -90,6 +90,11 @@ namespace small3d
     string getProgramInfoLog(const GLuint linkedProgram) const;
 
     /**
+     * @brief Retrieve the information of what went wrong when compiling a shader
+     */
+    string getShaderInfoLog(const GLuint shader) const;
+
+    /**
      * @brief Detect if OpenGL 3.3 is supported. If not, fall back to OpenGL 2.1.
      * If neither of the two is supported, an exception is raised.
      */
