@@ -178,7 +178,7 @@ namespace small3d {
 
     glGetProgramiv(linkedProgram, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-    GLchar infoLog[infoLogLength + 1];
+    GLchar *infoLog = new GLchar[infoLogLength + 1];
 
     GLsizei lengthReturned = 0;
 
@@ -190,6 +190,8 @@ namespace small3d {
       infoLogStr = "(No info)";
     }
 
+    delete[] infoLog;
+
     return infoLogStr;
 
   }
@@ -200,7 +202,7 @@ namespace small3d {
 
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-    GLchar infoLog[infoLogLength + 1];
+    GLchar *infoLog = new GLchar[infoLogLength + 1];
 
     GLsizei lengthReturned = 0;
 
@@ -211,6 +213,8 @@ namespace small3d {
     if (lengthReturned == 0) {
       infoLogStr = "(No info)";
     }
+
+    delete[] infoLog;
 
     return infoLogStr;
 
