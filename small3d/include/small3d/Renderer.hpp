@@ -72,6 +72,16 @@ namespace small3d
     GLuint compileShader(const string &shaderSource, const GLenum shaderType);
 
     /**
+     * @brief Retrieve the information of what went wrong when linking a shader program
+     */
+    string getProgramInfoLog(const GLuint linkedProgram) const;
+
+    /**
+     * @brief Retrieve the information of what went wrong when compiling a shader
+     */
+    string getShaderInfoLog(const GLuint shader) const;
+
+    /**
     * @brief Initialise renderer (OpenGL, GLEW, etc)
     */
     void init(int width, int height, string windowTitle,
@@ -83,16 +93,6 @@ namespace small3d
      * @brief Initialise SDL
      */
     void initSDL(int &width, int &height, const string &windowTitle = "");
-
-    /**
-     * @brief Retrieve the information of what went wrong when linking a shader program
-     */
-    string getProgramInfoLog(const GLuint linkedProgram) const;
-
-    /**
-     * @brief Retrieve the information of what went wrong when compiling a shader
-     */
-    string getShaderInfoLog(const GLuint shader) const;
 
     /**
      * @brief Detect if OpenGL 3.3 is supported. If not, fall back to OpenGL 2.1.

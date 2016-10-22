@@ -388,8 +388,12 @@ namespace small3d {
       throw Exception("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
     }
     else {
-      LOGINFO("Linked text rendering program successfully");
+      LOGINFO("Linked orthographic rendering program successfully");
     }
+    glDetachShader(orthographicProgram, simpleVertexShader);
+    glDetachShader(orthographicProgram, simpleFragmentShader);
+    glDeleteShader(simpleVertexShader);
+    glDeleteShader(simpleFragmentShader);
     glUseProgram(0);
   }
 
