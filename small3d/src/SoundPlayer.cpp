@@ -254,7 +254,7 @@ namespace small3d {
 
   }
 
-  void SoundPlayer::deleteSound(string soundName) {
+  void SoundPlayer::clear(string soundName) {
 
     vector<string> removals;
 

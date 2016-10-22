@@ -85,7 +85,7 @@ namespace small3d {
      * @param soundName The name of the sound to be deleted.
      *
      */
-    void deleteSound(string soundName);
+    void clear(string soundName);
 
   };
 }

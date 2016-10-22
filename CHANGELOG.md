@@ -7,6 +7,7 @@ v1.0.10
 -------
 
 - [BREAKING] Renamed Renderer.clear(SceneObject) to Renderer.clearBuffers(SceneObject).
+- [BREAKING] Renamed SoundPlayer.deleteSound to SoundPlayer.clear.
 
 v1.0.9
 ------
