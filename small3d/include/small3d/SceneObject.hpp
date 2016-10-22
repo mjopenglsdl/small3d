@@ -74,7 +74,7 @@ namespace small3d
     /**
      * @brief Destructor
      */
-    virtual ~SceneObject() = default;
+    ~SceneObject() = default;
 
     /**
      * @brief Get the object's model
