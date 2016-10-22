@@ -9,6 +9,7 @@ v1.0.10
 - Various corrections and improvements
 - [BREAKING] Renamed Renderer.clear(SceneObject) to Renderer.clearBuffers(SceneObject).
 - [BREAKING] Renamed SoundPlayer.deleteSound to SoundPlayer.clear.
+- [BREAKING] Needless offset parameter removed from Renderer surface rendering function.
 
 v1.0.9
 ------
