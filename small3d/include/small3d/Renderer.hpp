@@ -219,8 +219,7 @@ namespace small3d
      * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
      * @param offset	The offset (position) at which the quad of the image will be drawn.
      */
-    void render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, string textureName, bool perspective = false,
-		     glm::vec3 offset = glm::vec3(0.0f, 0.0f, 0.0f));
+    void render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, string textureName, bool perspective = false);
 
     /**
      * @brief Render a scene object

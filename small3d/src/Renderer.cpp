@@ -484,7 +484,7 @@ namespace small3d {
 
 
   void Renderer::render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, string textureName,
-                        bool perspective, glm::vec3 offset) {
+                        bool perspective) {
 
     float vertices[16] = {
         bottomLeft.x, bottomLeft.y, bottomLeft.z, 1.0f,
@@ -571,7 +571,7 @@ namespace small3d {
       GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
       glUniform1f(lightIntensityUniform, lightIntensity);
 
-      positionNextObject(offset, glm::vec3(0.0f, 0.0f, 0.0f), glm::mat4x4());
+      positionNextObject(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::mat4x4());
       positionCamera();
     }
 
