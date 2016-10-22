@@ -367,7 +367,7 @@ namespace small3d {
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
 
-    glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearDepth(1.0f);
 
     // Program (with shaders) for orthographic rendering for text
@@ -951,7 +951,13 @@ namespace small3d {
   }
 
   void Renderer::clearScreen() {
-    // Clear the buffers
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  }
+
+  void Renderer::clearScreen(glm::vec4 colour) {
+
+    glClearColor(colour.r, colour.g, colour.b, colour.a);
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
 

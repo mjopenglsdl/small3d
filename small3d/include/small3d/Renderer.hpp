@@ -253,6 +253,12 @@ namespace small3d
     void clearScreen();
 
     /**
+     * @brief Clears the screen.
+     * @param colour The colour with which the screen is to be cleared
+     */
+    void clearScreen(glm::vec4 colour);
+
+    /**
      * @brief This is a double buffered system and this commands swaps
      * the buffers
      */

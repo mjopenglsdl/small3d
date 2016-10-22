@@ -10,6 +10,7 @@ v1.0.10
 - [BREAKING] Renamed Renderer.clear(SceneObject) to Renderer.clearBuffers(SceneObject).
 - [BREAKING] Renamed SoundPlayer.deleteSound to SoundPlayer.clear.
 - [BREAKING] Needless offset parameter removed from Renderer surface rendering function.
+- The colour with which to clear the screen can now optionally be set by a parameter to the Renderer.clearScreen function.
 
 v1.0.9
 ------

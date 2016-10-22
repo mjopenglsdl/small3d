@@ -46,18 +46,18 @@ Features
 
 Getting Started
 ---------------
-The best way to get started is to take a look at the source code of the sample games:
 
-- [Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D)
-- [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)
+You can do this on pretty much any operating system. If you encounter difficulties [let me know](https://github.com/dimi309/small3d/issues). We are going to create a ball that can be moved using the keyboard arrows. Even though small3d is small, it can do a lot more than this. But this exercise will get you started and then you can continue, using the [API documentation](https://codedocs.xyz/dimi309/small3d/) and having a look at the source code of two games that have already been developed with the engine ([Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) and [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)).
 
-You can experiment by modifying them before using the engine for your own projects. You can also review the [API documentation](https://codedocs.xyz/dimi309/small3d/).
+I assume that you alredy have your compiler set up. You also need to install cmake and conan and make sure they can be executed from the command prompt. 
 
-As can be seen from the games, the proposed way to use the engine is to deploy it from conan.io.
+The proposed way to use the engine is to deploy it from conan.io. If you prefer to compile it from source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though.
+
+
+
+
 
 The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d-cppan-example).
-
-If you prefer to compile it from source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though.
 
 3D models and textures
 ----------------------
