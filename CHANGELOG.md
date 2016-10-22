@@ -6,7 +6,7 @@ small3d changelog
 v1.0.10
 -------
 
-- Renamed Renderer.clear(SceneObject) to Renderer.clearBuffers(SceneObject).
+- [BREAKING] Renamed Renderer.clear(SceneObject) to Renderer.clearBuffers(SceneObject).
 
 v1.0.9
 ------
