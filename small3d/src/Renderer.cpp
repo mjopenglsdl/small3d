@@ -18,49 +18,6 @@ using namespace std;
 namespace small3d {
   string openglErrorToString(GLenum error);
 
-  string Renderer::loadShaderFromFile(const string &fileLocation) {
-    initLogger();
-    string shaderSource = "";
-    ifstream file((SDL_GetBasePath() + fileLocation).c_str());
-    string line;
-    if (file.is_open()) {
-      while (getline(file, line)) {
-        shaderSource += line + "\n";
-      }
-    }
-    return shaderSource;
-  }
-
-  GLuint Renderer::compileShader(const string &shaderSourceFile, const GLenum shaderType) {
-
-    GLuint shader = glCreateShader(shaderType);
-
-    string shaderSource = this->loadShaderFromFile(shaderSourceFile);
-
-    if (shaderSource.length() == 0) {
-      throw Exception("Shader source file '" + shaderSourceFile + "' is empty or not found.");
-    }
-
-    const char *shaderSourceChars = shaderSource.c_str();
-    glShaderSource(shader, 1, &shaderSourceChars, NULL);
-
-    glCompileShader(shader);
-
-    GLint status;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    if (status == GL_FALSE ) {
-
-      throw Exception(
-          "Failed to compile shader:\n" + shaderSource + "\n"
-          + this->getShaderInfoLog(shader));
-    }
-    else {
-      LOGINFO("Shader " + shaderSourceFile + " compiled successfully.");
-    }
-
-    return shader;
-  }
-
   Renderer::Renderer(string windowTitle, int width, int height,
                      float frustumScale , float zNear,
                      float zFar, float zOffsetFromCamera,
@@ -117,59 +74,17 @@ namespace small3d {
     SDL_Quit();
   }
 
-  void Renderer::initSDL(int &width, int &height, const string &windowTitle) {
-    sdlWindow = 0;
-
-    // initialize SDL video
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-      LOGERROR(SDL_GetError());
-      throw Exception(string("Unable to initialise SDL"));
+  string Renderer::loadShaderFromFile(const string &fileLocation) {
+    initLogger();
+    string shaderSource = "";
+    ifstream file((SDL_GetBasePath() + fileLocation).c_str());
+    string line;
+    if (file.is_open()) {
+      while (getline(file, line)) {
+        shaderSource += line + "\n";
+      }
     }
-
-#ifdef __APPLE__
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  SDL_GL_CONTEXT_PROFILE_CORE);
-#endif
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-    bool fullScreen = false;
-
-    if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
-      throw Exception("Screen width and height both have to be equal or not equal to zero at the same time.");
-    }
-    else if (width == 0) {
-      fullScreen = true;
-      SDL_DisplayMode mode;
-      if (SDL_GetDesktopDisplayMode(0, &mode) != 0)
-        throw Exception("Error while retrieving display mode:" + string(SDL_GetError()));
-      width = mode.w;
-      height = mode.h;
-      LOGINFO("Detected screen width " + intToStr(width) + " and height " + intToStr(height));
-    }
-
-
-    Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
-                   SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-
-    sdlWindow = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
-                                 SDL_WINDOWPOS_CENTERED, width, height,
-                                 flags);
-
-    if (SDL_GL_CreateContext(sdlWindow) == NULL) {
-      LOGERROR(SDL_GetError());
-      throw Exception(string("Unable to create GL context"));
-    }
-
-    if (!sdlWindow) {
-      LOGERROR(SDL_GetError());
-      throw Exception("Unable to set video");
-    }
-
+    return shaderSource;
   }
 
   string Renderer::getProgramInfoLog(const GLuint linkedProgram) const {
@@ -218,6 +133,36 @@ namespace small3d {
 
     return infoLogStr;
 
+  }
+
+  GLuint Renderer::compileShader(const string &shaderSourceFile, const GLenum shaderType) {
+
+    GLuint shader = glCreateShader(shaderType);
+
+    string shaderSource = this->loadShaderFromFile(shaderSourceFile);
+
+    if (shaderSource.length() == 0) {
+      throw Exception("Shader source file '" + shaderSourceFile + "' is empty or not found.");
+    }
+
+    const char *shaderSourceChars = shaderSource.c_str();
+    glShaderSource(shader, 1, &shaderSourceChars, NULL);
+
+    glCompileShader(shader);
+
+    GLint status;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+    if (status == GL_FALSE ) {
+
+      throw Exception(
+          "Failed to compile shader:\n" + shaderSource + "\n"
+          + this->getShaderInfoLog(shader));
+    }
+    else {
+      LOGINFO("Shader " + shaderSourceFile + " compiled successfully.");
+    }
+
+    return shader;
   }
 
   void Renderer::detectOpenGLVersion() {
@@ -269,6 +214,60 @@ namespace small3d {
       if (abort)
         throw Exception("OpenGL error while " + when);
     }
+  }
+
+  void Renderer::initSDL(int &width, int &height, const string &windowTitle) {
+    sdlWindow = 0;
+
+    // initialize SDL video
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+      LOGERROR(SDL_GetError());
+      throw Exception(string("Unable to initialise SDL"));
+    }
+
+#ifdef __APPLE__
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  SDL_GL_CONTEXT_PROFILE_CORE);
+#endif
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+    bool fullScreen = false;
+
+    if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
+      throw Exception("Screen width and height both have to be equal or not equal to zero at the same time.");
+    }
+    else if (width == 0) {
+      fullScreen = true;
+      SDL_DisplayMode mode;
+      if (SDL_GetDesktopDisplayMode(0, &mode) != 0)
+        throw Exception("Error while retrieving display mode:" + string(SDL_GetError()));
+      width = mode.w;
+      height = mode.h;
+      LOGINFO("Detected screen width " + intToStr(width) + " and height " + intToStr(height));
+    }
+
+    Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
+                   SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+
+    sdlWindow = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
+                                 SDL_WINDOWPOS_CENTERED, width, height,
+                                 flags);
+
+    if (SDL_GL_CreateContext(sdlWindow) == NULL) {
+      LOGERROR(SDL_GetError());
+      throw Exception(string("Unable to create GL context"));
+    }
+
+    if (!sdlWindow) {
+      LOGERROR(SDL_GetError());
+      throw Exception("Unable to set video");
+    }
+
   }
 
   void Renderer::init(int width, int height, string windowTitle,
@@ -841,40 +840,6 @@ namespace small3d {
 
   }
 
-  void Renderer::clear(SceneObject &sceneObject) {
-
-    if (sceneObject.positionBufferObjectId != 0) {
-      glDeleteBuffers(1, &sceneObject.positionBufferObjectId);
-      sceneObject.positionBufferObjectId = 0;
-    }
-
-    if (sceneObject.indexBufferObjectId != 0) {
-      glDeleteBuffers(1, &sceneObject.indexBufferObjectId);
-      sceneObject.indexBufferObjectId = 0;
-    }
-    if (sceneObject.normalsBufferObjectId != 0) {
-      glDeleteBuffers(1, &sceneObject.normalsBufferObjectId);
-      sceneObject.normalsBufferObjectId = 0;
-    }
-
-    if (sceneObject.uvBufferObjectId != 0) {
-      glDeleteBuffers(1, &sceneObject.uvBufferObjectId);
-      sceneObject.uvBufferObjectId = 0;
-    }
-
-    if (isOpenGL33Supported) {
-      if (sceneObject.vaoId != 0) {
-      	glDeleteVertexArrays(1, &sceneObject.vaoId);
-      	sceneObject.vaoId = 0;
-      }
-    }
-
-    if (sceneObject.getTexture().size() != 0) {
-      deleteTexture(sceneObject.getName());
-      sceneObject.textureId = 0;
-    }
-  }
-
   void Renderer::render(string text, glm::uvec4 colour,
                         glm::vec2 bottomLeft, glm::vec2 topRight,
                         string fontPath, int fontSize)
@@ -923,9 +888,9 @@ namespace small3d {
       a = a >> textSurface->format->Ashift;
 
       float ttuple[4] = {static_cast<float>(r),
-                           static_cast<float>(g),
-                           static_cast<float>(b),
-                           static_cast<float>(a)
+                         static_cast<float>(g),
+                         static_cast<float>(b),
+                         static_cast<float>(a)
       };
 
       ttuple[0]= floorf(100.0f * (ttuple[0] / 255.0f) + 0.5f) / 100.0f;
@@ -945,6 +910,40 @@ namespace small3d {
            glm::vec3(topRight.x, topRight.y, -0.5f), textTextureId);
 
     deleteTexture(textTextureId);
+  }
+
+  void Renderer::clearBuffers(SceneObject &sceneObject) {
+
+    if (sceneObject.positionBufferObjectId != 0) {
+      glDeleteBuffers(1, &sceneObject.positionBufferObjectId);
+      sceneObject.positionBufferObjectId = 0;
+    }
+
+    if (sceneObject.indexBufferObjectId != 0) {
+      glDeleteBuffers(1, &sceneObject.indexBufferObjectId);
+      sceneObject.indexBufferObjectId = 0;
+    }
+    if (sceneObject.normalsBufferObjectId != 0) {
+      glDeleteBuffers(1, &sceneObject.normalsBufferObjectId);
+      sceneObject.normalsBufferObjectId = 0;
+    }
+
+    if (sceneObject.uvBufferObjectId != 0) {
+      glDeleteBuffers(1, &sceneObject.uvBufferObjectId);
+      sceneObject.uvBufferObjectId = 0;
+    }
+
+    if (isOpenGL33Supported) {
+      if (sceneObject.vaoId != 0) {
+      	glDeleteVertexArrays(1, &sceneObject.vaoId);
+      	sceneObject.vaoId = 0;
+      }
+    }
+
+    if (sceneObject.getTexture().size() != 0) {
+      deleteTexture(sceneObject.getName());
+      sceneObject.textureId = 0;
+    }
   }
 
   void Renderer::clearScreen() {

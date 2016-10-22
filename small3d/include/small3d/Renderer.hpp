@@ -133,6 +133,30 @@ namespace small3d
   public:
 
     /**
+     * @brief Vector, indicating the direction of the light in the scene.
+     */
+
+    glm::vec3 lightDirection;
+
+    /**
+     * @brief The camera position in world space.
+     */
+
+    glm::vec3 cameraPosition;
+
+    /**
+     * @brief The camera rotation (around the x, y and z axes)
+     */
+
+    glm::vec3 cameraRotation;
+
+    /**
+     * @brief The light intensity (set to -1.0f if no lighting is to be used).
+     */
+
+    float lightIntensity;
+
+    /**
      * @brief Constructor
      * @param windowTitle The title of the game's window
      * @param width The width of the window. If width and height are not set, or set to 0, the game will run in full screen mode.
@@ -157,28 +181,9 @@ namespace small3d
              string shadersPath = "resources/shaders/");
 
     /**
-     * @brief Vector, indicating the direction of the light in the scene.
+     * @brief Destructor
      */
-
-    glm::vec3 lightDirection;
-
-    /**
-     * @brief The camera position in world space.
-     */
-
-    glm::vec3 cameraPosition;
-
-    /**
-     * @brief The camera rotation (around the x, y and z axes)
-     */
-
-    glm::vec3 cameraRotation;
-
-    /**
-     * @brief The light intensity (set to -1.0f if no lighting is to be used).
-     */
-
-    float lightIntensity;
+    ~Renderer();
 
     /**
      * @brief Generate a texture in OpenGL, using the given data
@@ -225,12 +230,6 @@ namespace small3d
     void render(SceneObject &sceneObject, bool showBoundingBoxes = false);
 
     /**
-     * @brief Clear a scene object from the GPU
-     * @param sceneObject The scene object
-     */
-    void clear(SceneObject &sceneObject);
-
-    /**
      * @brief Render some text on the screen. A texture will be generated, containing the given
      * text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space.
      * @param text The text to be rendered
@@ -244,6 +243,12 @@ namespace small3d
                 string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf", int fontSize=48);
 
     /**
+     * @brief Clear a scene object from the GPU buffers (the object itself remains intact)
+     * @param sceneObject The scene object
+     */
+    void clearBuffers(SceneObject &sceneObject);
+
+    /**
      * @brief Clears the screen.
      */
     void clearScreen();
@@ -254,10 +259,6 @@ namespace small3d
      */
     void swapBuffers();
 
-    /**
-     * @brief Destructor
-     */
-    ~Renderer();
   };
 
 }
