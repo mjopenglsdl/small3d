@@ -65,9 +65,12 @@ namespace small3d {
      * @brief Plays a sound.
      *
      * @param soundName The name of the sound to be played.
-     * @param handle The handle of the specific sound instance. This is used so that the same sound
-     *        can be played in parallel multiple times.
-     * @param repeat Repeat the sound from the beginning, once it has finished playing.
+     * @param handle The handle of the specific sound instance. You set it here. Then, to stop playing the
+     *               sound, you can call the stop function with the same handle. To repeat playing it
+     *               once it is finished, you call play with it again. To create a new sound instance
+     *               (in order to play the same sound more than once concurrently), you call play again
+     *               with the same soundName and a new handle.
+     * @param repeat Automatically repeat the sound from the beginning, once it has finished playing.
      *
      */
     void play(string soundName, string handle, bool repeat = false);
