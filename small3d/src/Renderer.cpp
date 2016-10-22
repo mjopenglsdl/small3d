@@ -258,14 +258,14 @@ namespace small3d {
                                  SDL_WINDOWPOS_CENTERED, width, height,
                                  flags);
 
-    if (SDL_GL_CreateContext(sdlWindow) == NULL) {
-      LOGERROR(SDL_GetError());
-      throw Exception(string("Unable to create GL context"));
-    }
-
     if (!sdlWindow) {
       LOGERROR(SDL_GetError());
       throw Exception("Unable to set video");
+    }
+
+    if (SDL_GL_CreateContext(sdlWindow) == NULL) {
+      LOGERROR(SDL_GetError());
+      throw Exception(string("Unable to create GL context"));
     }
 
   }
