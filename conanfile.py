@@ -39,6 +39,7 @@ class Small3dConan(ConanFile):
 
     def package(self):
         self.copy("FindSMALL3D.cmake", ".", ".")
+        self.copy(pattern="*", dst="shaders", src="small3d/resources/shaders", keep_path=True)
         self.copy(pattern="*.hpp", dst="include", src="small3d/include", keep_path=True)
 
         if self.settings.os == "Windows":
