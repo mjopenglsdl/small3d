@@ -318,8 +318,8 @@ Let's try it out:
 For Windows:
 
 	cd build
-	cmake -G "Visual Studio 14 2015 Win64" ..
 	cmake --build . --config Release
+	.\bin\ball.exe
 
 There's our ball:
 
