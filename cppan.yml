@@ -7,7 +7,7 @@ dependencies:
   pvt.cppan.demo.glm: 0
   pvt.cppan.demo.valve.sdl_ttf: 2
   pvt.cppan.demo.png: 1
-  pvt.cppan.demo.valve.sdl.sdl: 2
+  pvt.cppan.demo.valve.sdl.sdl: 2.0.4
   pvt.cppan.demo.xiph.vorbis.vorbisfile: 1
 static_only: true
 exclude_from_build:
