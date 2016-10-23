@@ -9,7 +9,7 @@ Introduction
 
 ![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
 
-This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. I developed it while learning how to program games with OpenGL and I am still using it for my projects and experiments.
+This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. I developed it while learning how to program games and I am still using it for my projects and experiments.
 
 A Bit of History
 ----------------
@@ -49,7 +49,7 @@ Getting Started
 
 Let's get right to it. You can do this on Windows, Linux or MacOS. If you encounter difficulties [let me know](https://github.com/dimi309/small3d/issues). We are going to create a ball that can be moved using the keyboard arrows. Even though small3d is small, it can do a lot more than this. But this exercise will get you started and then you can continue, using the [API documentation](https://codedocs.xyz/dimi309/small3d/) and having a look at the source code of two games that have already been developed with the engine ([Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) and [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)).
 
-I assume that you alredy have your compiler set up. You also need to install [cmake](https://cmake.org) and [conan](https://www.conan.io) and make sure they can be executed from the command line (the proposed way to use the engine is to deploy it from conan.io. If you prefer to compile it yourself swithout conan, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though).
+I assume that you alredy have your compiler set up. You also need to install [cmake](https://cmake.org) and [conan](https://www.conan.io) and make sure they can be executed from the command line. The proposed way to use the engine is to deploy it from conan.io. If you prefer to compile it yourself swithout conan, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though. The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d-cppan-example).
 
 To begin with, let's make a directory for our ball-moving masterpiece from the command line:
 
@@ -60,7 +60,7 @@ Also, create a "resources" directory inside the "ball" directory:
 	cd ball
 	mkdir resources
 
-Let's start from the code-less part. We need a Wavefront file containing a ball. You can use any tool that exports this format to create one, but I am using Blender, so I'll show you how to do this there. When you start the program you see a cube:
+Let's start from the code-less part. We need a Wavefront file containing a ball. You can use any tool that exports this format to create one, but I am using [Blender](https://www.blender.org), so I'll show you how to do this there. When you start Blender, you see a cube:
 
 ![blendercube](https://cloud.githubusercontent.com/assets/875167/19621157/15ee0f9e-988c-11e6-9c8a-b871bd7cdfa9.png)
 
@@ -105,12 +105,12 @@ We also need to mention that we will be working with cmake:
 	[generators]
 	cmake
 
-For Windows, we will need the dlls of the libraries we are using (small3d and its dependencies, which will be automatically downloaded by conan) to be copied to our binary output directory. Let's tell conan to take care of that for us:
+For Windows, we will need the dlls of the libraries we are using (small3d and its dependencies will be automatically downloaded by conan and some of them are not configured to be statically linked) to be copied to our binary output directory. Let's tell conan to take care of that for us:
 
 	[imports]
 	bin, *.dll -> ./bin
 
-If you don't use Windows, you can still add that to your conanfile. It will allow your program to compile on Windows, should you ever want to do that and, on any other system, it will cause no problem since conan will not crash or anything if it doesn't find any dlls. It just won't copy them.
+If you don't use Windows, you can still add that to your conanfile. It will allow your program to compile and run on Windows, should you ever want to do that and, on any other system, it will cause no problem since conan will not crash or anything if it doesn't find any dlls. It just won't copy them.
 
 Finally, we are going to need the small3d shaders. Let's tell conan to also copy those, under [imports]:
 
@@ -238,7 +238,7 @@ If after that we are still in the loop (so, no Esc key pressed), we will want to
 
 	const Uint8 *keyState = SDL_GetKeyboardState(NULL);
 
-We will have the up arrow move the ball away from the camera. Down will to the opposite. Guess what left and right will do :)
+We will have the up arrow move the ball away from the camera. Down will do the opposite. Guess what left and right will do :)
 
 	if (keyState[SDL_SCANCODE_UP] == 1)
 		ball.offset.z -= 0.1f;
@@ -257,7 +257,7 @@ Then we render the ball:
 	
 	renderer.render(ball);
 
-We are using a 2 buffered system (we draw on one buffer, while the user is looking at the other one), so we also need to swap the buffers:
+We are using a double-buffered system (we draw on one buffer, while the user is looking at the other one), so we also need to swap the buffers:
 
 	renderer.swapBuffers();
 
@@ -326,8 +326,6 @@ There's our ball:
 ![ball](https://cloud.githubusercontent.com/assets/875167/19624720/2fb6b99e-9904-11e6-885c-504ba726eeec.png)
 
 Try moving it around with the arrows.
-
-The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d-cppan-example).
 
 Important to remember about 3D models and textures
 --------------------------------------------------
