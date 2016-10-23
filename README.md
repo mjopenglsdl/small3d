@@ -47,9 +47,9 @@ Features
 Getting Started
 ---------------
 
-You can do this on pretty much any operating system. If you encounter difficulties [let me know](https://github.com/dimi309/small3d/issues). We are going to create a ball that can be moved using the keyboard arrows. Even though small3d is small, it can do a lot more than this. But this exercise will get you started and then you can continue, using the [API documentation](https://codedocs.xyz/dimi309/small3d/) and having a look at the source code of two games that have already been developed with the engine ([Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) and [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)).
+Let's get right to it. You can do this on Windows, Linux or MacOS. If you encounter difficulties [let me know](https://github.com/dimi309/small3d/issues). We are going to create a ball that can be moved using the keyboard arrows. Even though small3d is small, it can do a lot more than this. But this exercise will get you started and then you can continue, using the [API documentation](https://codedocs.xyz/dimi309/small3d/) and having a look at the source code of two games that have already been developed with the engine ([Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) and [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)).
 
-I assume that you alredy have your compiler set up. You also need to install [cmake](https://cmake.org) and [conan](https://www.conan.io) and make sure they can be executed from the command line (the proposed way to use the engine is to deploy it from conan.io. If you prefer to compile it from source code, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though).
+I assume that you alredy have your compiler set up. You also need to install [cmake](https://cmake.org) and [conan](https://www.conan.io) and make sure they can be executed from the command line (the proposed way to use the engine is to deploy it from conan.io. If you prefer to compile it yourself swithout conan, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though).
 
 To begin with, let's make a directory for our ball-moving masterpiece from the command line:
 
@@ -98,7 +98,7 @@ Now we are ready for the code. Create a file called "main.cpp" in the "ball" dir
 Notice that we have not downloaded small3d from anywhere. Let's tell conan to do that for us. Create a file called "conanfile.txt" in the "ball" directory. Inside that file we declare small3d as our dependency:
 
 	[requires]
-	small3d/1.0.10@coding3d/testing
+	small3d/1.0.10@coding3d/stable
 
 We also need to mention that we will be working with cmake:
 
@@ -121,7 +121,7 @@ Finally, we are going to need the small3d shaders. Let's tell conan to also copy
 So the whole conanfile.txt will look like this:
 
 	[requires]
-	small3d/1.0.10@coding3d/testing
+	small3d/1.0.10@coding3d/stable
 	
 	[generators]
 	cmake
@@ -135,7 +135,7 @@ Let's see if it works. We are going to be building in a separate directory, in o
 
 	mkdir build
 	cd build
-	conan install ..
+	conan install .. --build missing
 
 Conan will download small3d and all libraries that it depends on and place them in a local cache. It will also create its own cmake configuration file (conanbuildinfo.cmake) and, as instructed, copy small3d's shaders to the bin/resources/shaders directory. We are now ready to create our cmake configuration. Back inside the "ball" directory, let's create a CMakeLists.txt file. We will set the minimum required cmake version and declare our project:
 
@@ -190,6 +190,12 @@ Let's see if everything works:
 	cd build
 	cmake ..
 	cmake --build .
+
+On Windows, you need to do this, adding some configuration parameters, depending on your development setup. For example:
+
+	cd build
+	cmake -G "Visual Studio 14 2015 Win64" ..
+	cmake --build . --config Release
 
 This will compile our program. Inside the build/bin directory, there should be a ball (or ball.exe) executable. At this point though, it doesn't do much. Time to add our ball to the mix. Back in main.cpp, we include small3d's SceneObject class, right under the inclusion of the renderer class (or above it, it doesn't matter):
 
@@ -309,6 +315,12 @@ Let's try it out:
 	cmake --build .
 	./bin/ball
 
+For Windows:
+
+	cd build
+	cmake -G "Visual Studio 14 2015 Win64" ..
+	cmake --build . --config Release
+
 There's our ball:
 
 ![ball](https://cloud.githubusercontent.com/assets/875167/19624720/2fb6b99e-9904-11e6-885c-504ba726eeec.png)
@@ -317,13 +329,10 @@ Try moving it around with the arrows.
 
 The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d-cppan-example).
 
-3D models and textures
-----------------------
+Important to remember about 3D models and textures
+--------------------------------------------------
 
-As already mentioned, the engine can only read 3D models from Wavefront .obj files. There are many ways to create such a file, but I am exporting them from Blender.
-
-When exporting the models to Wavefront .obj files, make sure you set the options "Include Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing,
-the normals listed later in the exported file for some vertices will overwrite the previous ones.
+As we have seen, when exporting the models to Wavefront .obj files, we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
 
 If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program.
 
