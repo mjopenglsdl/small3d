@@ -13,8 +13,6 @@
 #include <vorbis/vorbisfile.h>
 #include "SoundData.hpp"
 
-using namespace std;
-
 namespace small3d {
 
   /**
@@ -26,12 +24,11 @@ namespace small3d {
 
   private:
 
-    unordered_map<string, SoundData> sounds;
+    std::unordered_map<std::string, SoundData> sounds;
 
-    unordered_map<string, PaStream* > streams;
+    std::unordered_map<std::string, PaStream* > streams;
 
-    unordered_map<string, SoundData> streamData;
-
+    std::unordered_map<std::string, SoundData> streamData;
 
     bool noOutputDevice;
 
@@ -59,7 +56,7 @@ namespace small3d {
      * @param soundName     The name by which the loaded sound will
      *                      be identified.
      */
-    void load(string soundFilePath, string soundName);
+    void load(std::string soundFilePath, std::string soundName);
 
     /**
      * @brief Plays a sound.
@@ -73,14 +70,14 @@ namespace small3d {
      * @param repeat Automatically repeat the sound from the beginning, once it has finished playing.
      *
      */
-    void play(string soundName, string handle, bool repeat = false);
+    void play(std::string soundName, std::string handle, bool repeat = false);
 
     /**
      * @brief Stop playing a sound.
      * @param soundName The name of the sound.
      * @param handle The handle of the specific instance of the sound to be stopped.
      */
-    void stop(string soundName, string handle);
+    void stop(std::string soundName, std::string handle);
 
     /**
      * @brief Deletes a sound from memory.
@@ -88,7 +85,7 @@ namespace small3d {
      * @param soundName The name of the sound to be deleted.
      *
      */
-    void clear(string soundName);
+    void clear(std::string soundName);
 
   };
 }

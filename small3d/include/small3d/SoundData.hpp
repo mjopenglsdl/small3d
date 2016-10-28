@@ -12,9 +12,6 @@
 #include <portaudio.h>
 #include <vector>
 
-
-using namespace std;
-
 namespace small3d {
   
   /**
@@ -36,7 +33,7 @@ namespace small3d {
 
     unsigned long currentFrame;
 
-    vector<char> data;
+    std::vector<char> data;
 
     /**
      * @brief Default constructor

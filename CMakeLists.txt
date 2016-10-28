@@ -1,5 +1,12 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
+
 PROJECT(small3d)
+
+IF("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+  #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything -Wno-c++98-compat -pedantic")
+ENDIF()
+
+
 IF(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN)
   INCLUDE(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
   CONAN_BASIC_SETUP()
@@ -26,11 +33,11 @@ ELSE()
   FIND_PACKAGE(PORTAUDIO REQUIRED)
 
   IF(WIN32)
-	FILE(GLOB dlls "deps/lib/*.dll")
-	FOREACH(dll ${dlls})
-	  FILE(COPY ${dll} DESTINATION "./small3d/src/Debug")
-	  FILE(COPY ${dll} DESTINATION "./small3d/src/Release")
-	ENDFOREACH()
+    FILE(GLOB dlls "deps/lib/*.dll")
+    FOREACH(dll ${dlls})
+      FILE(COPY ${dll} DESTINATION "./small3d/src/Debug")
+      FILE(COPY ${dll} DESTINATION "./small3d/src/Release")
+    ENDFOREACH()
   ENDIF()
 ENDIF()
 

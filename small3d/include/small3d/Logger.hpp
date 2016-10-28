@@ -26,9 +26,6 @@
 #include <ostream>
 #include <memory>
 
-using namespace std;
-
-
 namespace small3d {
 
   /**
@@ -46,7 +43,7 @@ namespace small3d {
 
   class Logger {
   private:
-    ostream *logStream;
+    std::ostream *logStream;
   public:
 
     /**
@@ -55,7 +52,7 @@ namespace small3d {
      * @param [in,out]	stream	The stream to which events will be logged.
      */
 
-    Logger(ostream &stream);
+    Logger(std::ostream &stream);
 
     /**
      * @brief Destructor.
@@ -70,14 +67,14 @@ namespace small3d {
      * @param	message	The message.
      */
 
-    void append(const LogLevel level, const string &message);
+    void append(const LogLevel level, const std::string &message);
   };
 
   void initLogger();
 
-  void initLogger(ostream &stream);
+  void initLogger(std::ostream &stream);
 
   void deleteLogger();
 }
 
-extern shared_ptr<small3d::Logger> logger;
+extern std::shared_ptr<small3d::Logger> logger;

@@ -10,7 +10,7 @@
 
 namespace small3d {
 
-  void ModelLoader::load(string filename, Model &model )
+  void ModelLoader::load(std::string filename, Model &model )
   {
 
   }

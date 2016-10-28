@@ -17,8 +17,6 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 
-using namespace std;
-
 namespace small3d
 {
   /**
@@ -32,7 +30,7 @@ namespace small3d
   class SceneObject
   {
   private:
-    vector<Model> model;
+    std::vector<Model> model;
     bool animating;
     int frameDelay;
     int currentFrame;
@@ -40,7 +38,7 @@ namespace small3d
     int numFrames;
     glm::mat4x4 rotationAdjustment;
     Image texture;
-    string name;
+    std::string name;
 
 
   public:
@@ -68,8 +66,8 @@ namespace small3d
      * @param boundingBoxesPath The path to the file containing the object's bounding boxes. If no such
      * 							path is given, the object cannot be checked for collision detection.
      */
-    SceneObject(string name, string modelPath, int numFrames = 1, string texturePath = "",
-                string boundingBoxesPath = "");
+    SceneObject(std::string name, std::string modelPath, int numFrames = 1, std::string texturePath = "",
+                std::string boundingBoxesPath = "");
 
     /**
      * @brief Destructor
@@ -98,7 +96,7 @@ namespace small3d
      * @brief Get the name of the object
      * @return The name of the object
      */
-    const string getName();
+    const std::string getName();
 
     /**
      * Colour of the object (if not mapping a texture)

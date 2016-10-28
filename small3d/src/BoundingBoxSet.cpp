@@ -13,6 +13,7 @@
 #include "MathFunctions.hpp"
 #include "SDL.h"
 
+using namespace std;
 
 namespace small3d {
 

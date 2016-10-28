@@ -10,8 +10,6 @@
 #include "ModelLoader.hpp"
 #include <vector>
 
-using namespace std;
-
 namespace small3d {
 
   /**
@@ -25,12 +23,12 @@ namespace small3d {
   private:
 
     // Data read from .obj file
-    vector< vector<float> > vertices;
-    vector<vector<int> > facesVertexIndices;
-    vector<vector<float> > normals;
-    vector<vector<int> > facesNormalIndices;
-    vector<vector<float> > textureCoords;
-    vector<vector<int> > textureCoordsIndices;
+    std::vector<std::vector<float> > vertices;
+    std::vector<std::vector<int> > facesVertexIndices;
+    std::vector<std::vector<float> > normals;
+    std::vector<std::vector<int> > facesNormalIndices;
+    std::vector<std::vector<float> > textureCoords;
+    std::vector<std::vector<int> > textureCoordsIndices;
 
     void loadVertexData(Model &model);
 
@@ -68,7 +66,7 @@ namespace small3d {
      * @param	model   	The model.
      */
 
-    void load(string fileLocation, Model &model);
+    void load(std::string fileLocation, Model &model);
 
   };
 

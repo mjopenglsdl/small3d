@@ -11,8 +11,6 @@
 #include <exception>
 #include <string>
 
-using namespace std;
-
 namespace small3d {
 
   /**
@@ -20,9 +18,9 @@ namespace small3d {
    * @brief The standard exception for small3d.
    */
 
-  class Exception : public exception  {
+  class Exception : public std::exception  {
   private:
-    string message;
+    std::string message;
   public:
 
     /**
@@ -37,7 +35,7 @@ namespace small3d {
      * @param	message	The message.
      */
 
-    Exception(string message);
+    Exception(std::string message);
 
     /**
      * @brief Returns a null terminated character sequence that can be used to identify the exception.

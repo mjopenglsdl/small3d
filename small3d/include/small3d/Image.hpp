@@ -14,8 +14,6 @@
 #include "Logger.hpp"
 #include <png.h>
 
-using namespace std;
-
 namespace small3d {
 
   /**
@@ -29,10 +27,10 @@ namespace small3d {
   private:
 
     int width, height;
-    vector<float> imageData;
+    std::vector<float> imageData;
     unsigned int imageDataSize;
 
-    void loadFromFile(const string &fileLocation);
+    void loadFromFile(const std::string &fileLocation);
 
   public:
 
@@ -40,7 +38,7 @@ namespace small3d {
      * @brief Default constructor
      * @param fileLocation Location of image file
      */
-    Image(string fileLocation = "");
+    Image(std::string fileLocation = "");
 
     /**
      * @brief Destructor

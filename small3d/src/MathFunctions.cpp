@@ -38,7 +38,7 @@ namespace small3d {
 		       );
   }
 
-  string intToStr( int number )
+  std::string intToStr( int number )
   {
     char buffer[100];
 #if defined(_WIN32) && !defined(__MINGW32__)
@@ -46,7 +46,7 @@ namespace small3d {
 #else
     sprintf(buffer,"%d",number);
 #endif
-    return string(buffer);
+    return std::string(buffer);
   }
 
 

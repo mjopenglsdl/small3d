@@ -14,7 +14,7 @@ namespace small3d {
 
   }
 
-  Exception::Exception(string message) : message(message) {
+  Exception::Exception(std::string message) : message(message) {
 
   }
 

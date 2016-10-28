@@ -15,8 +15,6 @@
 #include <windows.h>
 #endif
 
-using namespace std;
-
 namespace small3d {
   /**
    * @class	Model
@@ -33,7 +31,7 @@ namespace small3d {
      * the x, y, z values in each column. The fourth column is there to assist in matrix operations.
      */
 
-    vector<float> vertexData;
+    std::vector<float> vertexData;
 
     /**
      * @brief Size of the vertex data, in bytes.
@@ -47,7 +45,7 @@ namespace small3d {
      *
      */
 
-    vector<unsigned int> indexData;
+    std::vector<unsigned int> indexData;
 
     /**
      * @brief Size of the index data, in bytes
@@ -61,7 +59,7 @@ namespace small3d {
      * is the same as the position of the corresponding vertex "row" in the vertexData array.
      */
 
-    vector<float> normalsData;
+    std::vector<float> normalsData;
 
     /**
      * @brief Size of the normals data, in bytes.
@@ -75,7 +73,7 @@ namespace small3d {
      * "row" of the vertex data "table"
      */
 
-    vector<float> textureCoordsData;
+    std::vector<float> textureCoordsData;
 
     /**
      * @brief Size of the texture coordinates data, in bytes.

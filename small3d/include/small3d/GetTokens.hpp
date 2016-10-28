@@ -10,20 +10,18 @@
 
 #include <string>
 
-using namespace std;
-
 namespace small3d {
 
   /**
    * @brief Separates a string into tokens, using the given character
    * as a separator
    *
-   * @param	input		  	The input string
-   * @param	sep			  	The separator
-   * @param [in,out]	tokens	The tokens
+   * @param input The input string
+   * @param sep	The separator
+   * @param [in,out] tokens The tokens
    *
-   * @return	The number of tokens
+   * @return The number of tokens
    */
 
-  int getTokens(string input, char sep, string* tokens);
+  int getTokens(std::string input, char sep, std::string* tokens);
 }

@@ -45,6 +45,6 @@ namespace small3d {
      * @param	model   	The model.
      */
 
-    virtual void load(string filename, Model &model);
+    virtual void load(std::string filename, Model &model);
   };
 }

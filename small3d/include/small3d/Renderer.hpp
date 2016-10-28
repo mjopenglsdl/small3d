@@ -13,15 +13,11 @@
 #include <SDL_opengl.h>
 #include <SDL.h>
 
-#include <memory>
 #include "SceneObject.hpp"
-#include <vector>
 #include "Logger.hpp"
 #include <unordered_map>
 #include <glm/glm.hpp>
 #include <SDL_ttf.h>
-
-using namespace std;
 
 namespace small3d
 {
@@ -54,14 +50,14 @@ namespace small3d
 
     float zOffsetFromCamera;
 
-    unordered_map<string, TTF_Font*> fonts;
+    std::unordered_map<std::string, TTF_Font*> fonts;
 
     /**
      * @brief Load a shader's source code from a file into a string
      * @param fileLocation The file's location, relative to the game path
      * @return String containing the shader's source code
      */
-    string loadShaderFromFile(const string &fileLocation);
+    std::string loadShaderFromFile(const std::string &fileLocation);
 
     /**
      * @brief Compile a shader's source code
@@ -69,30 +65,30 @@ namespace small3d
      * @param shaderType Type of shader (GL_VERTEX_SHADER, GL_FRAGMENT_SHADER, GL_GEOMETRY_SHADER - the latter for OpenGL 3.3)
      * @return OpenGL shader reference
      */
-    GLuint compileShader(const string &shaderSource, const GLenum shaderType);
+    GLuint compileShader(const std::string &shaderSource, const GLenum shaderType);
 
     /**
      * @brief Retrieve the information of what went wrong when linking a shader program
      */
-    string getProgramInfoLog(const GLuint linkedProgram) const;
+    std::string getProgramInfoLog(const GLuint linkedProgram) const;
 
     /**
      * @brief Retrieve the information of what went wrong when compiling a shader
      */
-    string getShaderInfoLog(const GLuint shader) const;
+    std::string getShaderInfoLog(const GLuint shader) const;
 
     /**
     * @brief Initialise renderer (OpenGL, GLEW, etc)
     */
-    void init(int width, int height, string windowTitle,
+    void init(int width, int height, std::string windowTitle,
               float frustumScale , float zNear,
               float zFar, float zOffsetFromCamera,
-              string shadersPath);
+              std::string shadersPath);
 
     /**
      * @brief Initialise SDL
      */
-    void initSDL(int &width, int &height, const string &windowTitle = "");
+    void initSDL(int &width, int &height, const std::string &windowTitle = "");
 
     /**
      * @brief Detect if OpenGL 3.3 is supported. If not, fall back to OpenGL 2.1.
@@ -100,13 +96,13 @@ namespace small3d
      */
     void detectOpenGLVersion();
 
-    void checkForOpenGLErrors(string when, bool abort);
+    void checkForOpenGLErrors(std::string when, bool abort);
 
     /**
      * @brief Textures used in the scene, each corresponding to the name of one of
      * the rendered models
      */
-    unordered_map<string, GLuint> *textures;
+    std::unordered_map<std::string, GLuint> *textures;
 
     /**
      * @brief Positions the next object to be rendered.
@@ -175,10 +171,10 @@ namespace small3d
      * 				The shader code can be changed, provided that their inputs
      * 				and outputs are maintained the same.
      */
-    Renderer(string windowTitle = "", int width = 0, int height = 0,
+    Renderer(std::string windowTitle = "", int width = 0, int height = 0,
              float frustumScale = 1.0f, float zNear = 1.0f,
              float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
-             string shadersPath = "resources/shaders/");
+             std::string shadersPath = "resources/shaders/");
 
     /**
      * @brief Destructor
@@ -193,7 +189,7 @@ namespace small3d
      * @param height The height of the texture, in pixels
      * @return The texture handle
      */
-    GLuint generateTexture(string name, const float *texture, int width, int height);
+    GLuint generateTexture(std::string name, const float *texture, int width, int height);
 
     /**
      * @brief Deletes the texture indicated by the given name.
@@ -201,14 +197,14 @@ namespace small3d
      * @param	name	The name of the texture.
      */
 
-    void deleteTexture(string name);
+    void deleteTexture(std::string name);
 
     /**
      * @brief Get the handle of a texture which has already been generated (see generateTexture)
      * @param name The name of the texture
      * @return The texture handle (0 if not found)
      */
-    GLuint getTextureHandle(string name);
+    GLuint getTextureHandle(std::string name);
 
     /**
      * @brief Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each
@@ -219,7 +215,7 @@ namespace small3d
      * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
      * @param offset	The offset (position) at which the quad of the image will be drawn.
      */
-    void render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, string textureName, bool perspective = false);
+    void render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, std::string textureName, bool perspective = false);
 
     /**
      * @brief Render a scene object
@@ -238,8 +234,8 @@ namespace small3d
      * @param fontPath Path to the TrueType font (.ttf) which will be used
      * @param fontSize The size of the font which will be used
      */
-    void render(string text, glm::uvec4 colour, glm::vec2 bottomLeft, glm::vec2 topRight,
-                string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf", int fontSize=48);
+    void render(std::string text, glm::uvec4 colour, glm::vec2 bottomLeft, glm::vec2 topRight,
+                std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf", int fontSize=48);
 
     /**
      * @brief Clear a scene object from the GPU buffers (the object itself remains intact)

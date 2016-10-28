@@ -13,8 +13,6 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-using namespace std;
-
 namespace small3d {
 
   /**
@@ -68,13 +66,13 @@ namespace small3d {
      * @brief Vertex coordinates read from Wavefront .obj file
      */
 
-    vector<vector<float> > vertices;
+    std::vector<std::vector<float> > vertices;
 
     /**
      * @brief Faces vertex indexes read from Wavefront .obj file
      */
 
-    vector<vector<unsigned int> > facesVertexIndexes;
+    std::vector<std::vector<unsigned int> > facesVertexIndexes;
 
     /**
      * @brief Load the bounding boxes from a Wavefront file.
@@ -83,7 +81,7 @@ namespace small3d {
      * 							execution directory
      */
 
-    void loadFromFile(string fileLocation);
+    void loadFromFile(std::string fileLocation);
 
     /**
      * @brief Set the rotation adjustment matrix (normally used so that a SceneObject's rotation adjustment
