@@ -155,15 +155,15 @@ namespace small3d {
     pngInformation = nullptr;
   }
 
-  const int Image::getWidth() const {
+  const unsigned long Image::getWidth() const {
     return width;
   }
 
-  const int Image::getHeight() const {
+  const unsigned long Image::getHeight() const {
     return height;
   }
 
-  const unsigned int Image::size() const {
+  const unsigned long Image::size() const {
     return imageDataSize;
   }
 

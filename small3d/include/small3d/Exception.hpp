@@ -45,11 +45,6 @@ namespace small3d {
 
     virtual const char* what() const throw();
 
-    /**
-     * Destructor.
-     */
-
-    virtual ~Exception() throw();
   };
 
 }

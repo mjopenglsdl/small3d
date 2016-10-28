@@ -26,9 +26,9 @@ namespace small3d {
   class Image {
   private:
 
-    int width, height;
+    unsigned long width, height;
     std::vector<float> imageData;
-    unsigned int imageDataSize;
+    unsigned long imageDataSize;
 
     void loadFromFile(const std::string &fileLocation);
 
@@ -49,19 +49,19 @@ namespace small3d {
      * @brief Get the image width
      * @return The image width
      */
-    const int getWidth() const;
+    const unsigned long getWidth() const;
 
     /**
      * @brief Get the image height
      * @return The image height
      */
-    const int getHeight() const;
+    const unsigned long getHeight() const;
 
     /**
      * @brief Get the size of the image, in bytes
      * @return Size of the image, in bytes
      */
-    const unsigned int size() const;
+    const unsigned long size() const;
 
     /**
      * @brief Get the image data

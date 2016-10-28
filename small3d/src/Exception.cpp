@@ -23,8 +23,4 @@ namespace small3d {
   }
 
 
-  Exception::~Exception() throw() {
-
-  }
-
 }
