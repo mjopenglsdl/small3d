@@ -58,6 +58,8 @@ class Small3dConan(ConanFile):
             self.cpp_info.cppflags.append("/EHsc")
             self.cpp_info.exelinkflags.append('/NODEFAULTLIB:LIBCMTD')
             self.cpp_info.exelinkflags.append('/NODEFAULTLIB:LIBCMT')
+            self.cpp_info.exelinkflags.append('/NODEFAULTLIB:MSVCRTD')
+            self.cpp_info.exelinkflags.append('/NODEFAULTLIB:MSVCRT')
         elif self.settings.os == "Macos":
             self.cpp_info.cppflags.append("-std=c++11")
             self.cpp_info.cppflags.append("-stdlib=libc++")
