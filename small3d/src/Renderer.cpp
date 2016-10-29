@@ -715,6 +715,12 @@ namespace small3d {
       drawType = GL_DYNAMIC_DRAW;
     }
 
+    // Either GPU data gets corrupted between frames on some older chipsets, or I am doing
+    // something wrong for OpenGL 2.1 and I have not figured out what it
+    // is. But re-copying data to the buffers, even for non-animated objects
+    // resolves the issue.
+    if (!isOpenGL33Supported) copyData = true;
+
     if (!alreadyInGPU) {
       if (isOpenGL33Supported) {
         glGenVertexArrays(1, &sceneObject.vaoId);
