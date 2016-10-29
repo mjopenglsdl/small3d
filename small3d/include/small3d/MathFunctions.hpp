@@ -14,12 +14,12 @@
 /**
  * @def	ROUND_2_DECIMAL(x) (floorf(100 * x + 0.5) / 100)
  *
- * @brief	A macro that rounds a floating point number to the second decimal digit.
+ * @brief A macro that rounds a floating point number to the second decimal digit.
  *
- * @param	x	The number to be rounded.
+ * @param x The number to be rounded.
  */
 
-#define ROUND_2_DECIMAL(x) (floorf(100 * x + 0.5) / 100)
+#define ROUND_2_DECIMAL(x) (floorf(static_cast<float>(100 * x + 0.5)) / 100)
 
 namespace small3d {
 

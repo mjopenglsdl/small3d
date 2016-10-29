@@ -43,7 +43,7 @@ namespace small3d {
      * @return	Information about the exception.
      */
 
-    virtual const char* what() const throw();
+    virtual const char* what() const noexcept;
 
   };
 

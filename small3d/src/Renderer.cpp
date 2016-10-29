@@ -397,7 +397,7 @@ namespace small3d {
     glUseProgram(0);
   }
 
-  GLuint Renderer::generateTexture(string name, const float* texture, int width, int height) {
+  GLuint Renderer::generateTexture(string name, const float* texture, unsigned long width, unsigned long height) {
 
     GLuint textureHandle;
 
@@ -613,7 +613,7 @@ namespace small3d {
 
       float vertices[24];
 
-      for (int vIdx = 0; vIdx < 8; ++vIdx) {
+      for (unsigned long vIdx = 0; vIdx < 8; ++vIdx) {
         memcpy(&vertices[vIdx * 3], boundingBoxSet.vertices[idx * 8 + vIdx].data(), 3 * sizeof(float));
       }
 
@@ -640,7 +640,7 @@ namespace small3d {
 
       unsigned int vertexIndexes[24];
 
-      for (int vIdx = 0; vIdx < 6; ++vIdx) {
+      for (unsigned long vIdx = 0; vIdx < 6; ++vIdx) {
         memcpy(&vertexIndexes[vIdx * 4], boundingBoxSet.facesVertexIndexes[idx * 6 + vIdx].data(), 4 * sizeof(unsigned int));
       }
 
@@ -825,7 +825,7 @@ namespace small3d {
 
     // Draw
     glDrawElements(GL_TRIANGLES,
-                   (GLsizei) sceneObject.getModel().indexData.size(),
+                   static_cast<GLsizei>(sceneObject.getModel().indexData.size()),
                    GL_UNSIGNED_INT, 0);
 
     // Clear stuff

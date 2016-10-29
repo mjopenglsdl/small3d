@@ -18,7 +18,7 @@ namespace small3d {
 
   }
 
-  const char *Exception::what() const throw() {
+  const char *Exception::what() const noexcept {
     return message.c_str();
   }
 

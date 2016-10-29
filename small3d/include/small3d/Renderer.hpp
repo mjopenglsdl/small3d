@@ -121,7 +121,7 @@ namespace small3d
 
     /**
      * Render the bounding box set of an object. Useful for debugging collisions.
-     * @param boundingBoxSet
+     * @param boundingBoxSet The bounding box set
      */
     void render(const BoundingBoxSet &boundingBoxSet, const glm::vec3 &offset,
                 const glm::vec3 &rotation, const glm::mat4x4 &rotationAdjustment);
@@ -189,7 +189,7 @@ namespace small3d
      * @param height The height of the texture, in pixels
      * @return The texture handle
      */
-    GLuint generateTexture(std::string name, const float *texture, int width, int height);
+    GLuint generateTexture(std::string name, const float *texture, unsigned long width, unsigned long height);
 
     /**
      * @brief Deletes the texture indicated by the given name.
@@ -213,7 +213,6 @@ namespace small3d
      * @param topRight The coordinates for the top right corner of the texture
      * @param textureName The name of the texture to be used (must have been loaded with generateTexture())
      * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
-     * @param offset	The offset (position) at which the quad of the image will be drawn.
      */
     void render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, std::string textureName, bool perspective = false);
 

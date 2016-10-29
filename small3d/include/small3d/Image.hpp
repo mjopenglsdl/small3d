@@ -49,19 +49,19 @@ namespace small3d {
      * @brief Get the image width
      * @return The image width
      */
-    const unsigned long getWidth() const;
+    unsigned long getWidth() const;
 
     /**
      * @brief Get the image height
      * @return The image height
      */
-    const unsigned long getHeight() const;
+    unsigned long getHeight() const;
 
     /**
      * @brief Get the size of the image, in bytes
      * @return Size of the image, in bytes
      */
-    const unsigned long size() const;
+    unsigned long size() const;
 
     /**
      * @brief Get the image data

@@ -84,8 +84,8 @@ namespace small3d {
 
     png_read_info(pngStructure, pngInformation);
 
-    width = static_cast<int>(png_get_image_width(pngStructure, pngInformation));
-    height = static_cast<int>(png_get_image_height(pngStructure, pngInformation));
+    width = png_get_image_width(pngStructure, pngInformation);
+    height = png_get_image_height(pngStructure, pngInformation);
 
     colorType = png_get_color_type(pngStructure, pngInformation);
     png_set_interlace_handling(pngStructure);
@@ -102,7 +102,7 @@ namespace small3d {
 
     rowPointers = new png_bytep[sizeof(png_bytep) * height];
 
-    for (int y = 0; y < height; y++) {
+    for (unsigned long y = 0; y < height; y++) {
       rowPointers[y] = new png_byte[png_get_rowbytes(pngStructure,
         pngInformation)];
     }
@@ -114,17 +114,17 @@ namespace small3d {
         "Image format not recognised. Only RGB / RGBA png images are supported.");
     }
 
-    int numComponents = colorType == PNG_COLOR_TYPE_RGB ? 3 : 4;
+    unsigned int numComponents = colorType == PNG_COLOR_TYPE_RGB ? 3 : 4;
 
-    imageDataSize = (unsigned int) (4 * width * height);
+    imageDataSize = 4 * width * height;
 
     imageData.resize(imageDataSize);
 
-    for (int y = 0; y < height; y++) {
+    for (unsigned long y = 0; y < height; y++) {
 
       png_byte *row = rowPointers[y];
 
-      for (int x = 0; x < width; x++) {
+      for (unsigned long x = 0; x < width; x++) {
 
         png_byte *ptr = &(row[x * numComponents]);
 
@@ -145,7 +145,7 @@ namespace small3d {
 
     fclose(fp);
 
-    for (int y = 0; y < height; y++) {
+    for (unsigned long y = 0; y < height; y++) {
       delete[] rowPointers[y];
     }
     delete[] rowPointers;
@@ -155,15 +155,15 @@ namespace small3d {
     pngInformation = nullptr;
   }
 
-  const unsigned long Image::getWidth() const {
+  unsigned long Image::getWidth() const {
     return width;
   }
 
-  const unsigned long Image::getHeight() const {
+  unsigned long Image::getHeight() const {
     return height;
   }
 
-  const unsigned long Image::size() const {
+  unsigned long Image::size() const {
     return imageDataSize;
   }
 

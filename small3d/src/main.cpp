@@ -64,7 +64,7 @@ TEST(ImageTest, LoadImage) {
 
   const float *imageData = image.getData();
 
-  int x = 0, y = 0;
+  unsigned long x = 0, y = 0;
 
   while (y < image.getHeight()) {
     x = 0;
@@ -115,7 +115,6 @@ TEST(ModelTest, LoadModel) {
 
   loader->load("resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
 
-
   EXPECT_NE(0, modelWithNoTexture.vertexData.size());
   EXPECT_NE(0, modelWithNoTexture.indexData.size());
   EXPECT_NE(0, modelWithNoTexture.normalsData.size());
@@ -141,7 +140,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
   EXPECT_EQ(12, bboxes->facesVertexIndexes.size());
 
   cout << "Bounding boxes vertices: " << endl;
-  for (int idx = 0; idx < 16; idx++) {
+  for (unsigned long idx = 0; idx < 16; idx++) {
     cout << bboxes->vertices[idx][0] << ", " <<
     bboxes->vertices[idx][1] << ", " <<
     bboxes->vertices[idx][2] << ", " << endl;
@@ -149,7 +148,7 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
   }
 
   cout << "Bounding boxes faces vertex indexes: " << endl;
-  for (int idx = 0; idx < 12; idx++) {
+  for (unsigned long idx = 0; idx < 12; idx++) {
     cout << bboxes->facesVertexIndexes[idx][0] << ", " <<
     bboxes->facesVertexIndexes[idx][1] << ", " <<
     bboxes->facesVertexIndexes[idx][2] << ", " <<
