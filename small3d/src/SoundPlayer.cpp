@@ -154,10 +154,13 @@ namespace small3d {
     fclose(fp);
 
     char soundInfo[100];
-
+#if defined(_WIN32) && !defined(__MINGW32__)
+    sprintf_s(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %ld - size in bytes %ld", soundName.c_str(),
+            soundData.channels, soundData.rate, soundData.samples, soundData.size);
+#else
     sprintf(soundInfo, "Loaded sound %s - channels %d - rate %d - samples %ld - size in bytes %ld", soundName.c_str(),
             soundData.channels, soundData.rate, soundData.samples, soundData.size);
-
+#endif
     LOGINFO(string(soundInfo));
     }
 

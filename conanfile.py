@@ -55,6 +55,7 @@ class Small3dConan(ConanFile):
     def package_info(self):
         self.cpp_info.libs = ['small3d']
         if self.settings.os == "Windows":
+            self.cpp_info.cppflags.append("/EHsc")
             self.cpp_info.exelinkflags.append('/NODEFAULTLIB:LIBCMTD')
             self.cpp_info.exelinkflags.append('/NODEFAULTLIB:LIBCMT')
         elif self.settings.os == "Macos":

@@ -9,13 +9,15 @@ ADD_LIBRARY(small3d BoundingBoxSet.cpp Exception.cpp GetTokens.cpp
 
 TARGET_INCLUDE_DIRECTORIES(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d")
 
-if(NOT WIN32 OR MINGW)
+IF(NOT WIN32 OR MINGW)
   IF(APPLE)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
   ELSE()
     target_compile_options(small3d PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Avoid gcc problems in Ubuntu
   ENDIF()
-endif()
+ELSE()
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
+ENDIF()
 
 IF(APPLE)
   SET_TARGET_PROPERTIES(small3d PROPERTIES LINK_FLAGS

@@ -13,12 +13,12 @@ using namespace std;
 namespace small3d {
 
   int getTokens(string input, char sep, string *tokens) {
-    unsigned long curPos = 0;
+    size_t curPos = 0;
     int count = 0;
 
-    int length = input.length();
+    size_t length = input.length();
 
-    for (int idx = 0; idx < length; ++idx) {
+    for (size_t idx = 0; idx < length; ++idx) {
       if (input[idx] == sep) {
         ++count;
       }
