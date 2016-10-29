@@ -3,6 +3,12 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.0.11
+-------
+
+- Corrected data type mismatches reported by compiler warnings.
+- Added workaround to avoid corruption of mesh data on OpenGL 2.1.
+
 v1.0.10
 -------
 
