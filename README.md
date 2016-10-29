@@ -122,7 +122,7 @@ Finally, we are going to need the small3d shaders. Let's tell conan to also copy
 So the whole conanfile.txt will look like this:
 
 	[requires]
-	small3d/1.0.10@coding3d/stable
+	small3d/1.0.11@coding3d/stable
 	
 	[generators]
 	cmake
