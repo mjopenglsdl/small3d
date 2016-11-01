@@ -3,7 +3,7 @@ import os, subprocess
 
 class Small3dConan(ConanFile):
     name = "small3d"
-    version = "1.0.11"
+    version = "1.1.0"
     ZIP_FOLDER_NAME = "%s-%s" % (name, version)
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
