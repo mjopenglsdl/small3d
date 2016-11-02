@@ -11,7 +11,7 @@ if(VORBIS_INCLUDE_DIR)
     set(VORBIS_FIND_QUIETLY TRUE)
 endif(VORBIS_INCLUDE_DIR)
 
-find_package(Ogg)
+find_package(OGG)
 if(OGG_FOUND)
 	find_path(VORBIS_INCLUDE_DIR vorbis/vorbisfile.h)
 	# MSVC built vorbis may be named vorbis_static
