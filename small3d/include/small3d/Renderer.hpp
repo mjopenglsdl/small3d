@@ -17,7 +17,8 @@
 #include "Logger.hpp"
 #include <unordered_map>
 #include <glm/glm.hpp>
-#include <SDL_ttf.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 namespace small3d
 {
@@ -50,7 +51,9 @@ namespace small3d
 
     float zOffsetFromCamera;
 
-    std::unordered_map<std::string, TTF_Font*> fonts;
+    FT_Library library;
+
+    std::unordered_map<std::string, FT_Face> fontFaces;
 
     /**
      * @brief Load a shader's source code from a file into a string
