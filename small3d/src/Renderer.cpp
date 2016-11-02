@@ -859,34 +859,18 @@ namespace small3d {
 
     string faceId = intToStr(fontSize) + fontPath;
     
-    // unordered_map<string, TTF_Font*>::iterator idFontPair = fonts.find(fontId);
     unordered_map<string, FT_Face>::iterator idFacePair = fontFaces.find(faceId);
-
-    //TTF_Font *font = nullptr;
 
     FT_Face face;
 
     FT_Error error;
 
     if (idFacePair == fontFaces.end()) {
-      //string fontFullPath = SDL_GetBasePath() + fontPath;
-      //LOGINFO("Loading font from " + fontFullPath);
-      //font = TTF_OpenFont(fontFullPath.c_str(), fontSize);
 
       string faceFullPath = SDL_GetBasePath() + fontPath;
       LOGINFO("Loading font from " + faceFullPath);
       error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);
 
-      /*if (font == nullptr)
-      {
-        LOGERROR(TTF_GetError());
-        throw Exception("Failed to load font");
-      }
-      else
-      {
-        LOGINFO("TTF font loaded successfully");
-        fonts.insert(make_pair(fontId, font));
-	}*/
       if (error != 0)
       {
         throw Exception("Failed to load font from " + faceFullPath);
@@ -899,10 +883,6 @@ namespace small3d {
     } else {
       face = idFacePair->second;
     }
-
-    //SDL_Color sdlColour = {(Uint8) colour.r, (Uint8) colour.g, (Uint8) colour.b, (Uint8) colour.a};
-
-    //SDL_Surface *textSurface = TTF_RenderText_Blended(font, text.c_str(), sdlColour);
 
     // Multiplying by 64 to convert to 26.6 fractional points. Using 100dpi.
     error = FT_Set_Char_Size(face, 64 * fontSize, 0, 100, 0);
@@ -930,6 +910,8 @@ namespace small3d {
       width += slot->bitmap.width;
       height = slot->bitmap.rows;
 
+      std::cout << "Width: " << slot->bitmap.width << " - Rows: " << slot->bitmap.rows << std::endl;
+
       int bitmapSize = slot->bitmap.width * slot->bitmap.rows;
 
       for (int idx = 0; idx < bitmapSize; ++idx) {
@@ -938,56 +920,22 @@ namespace small3d {
 	  floorf(100.0f * (static_cast<float>(colour.r) / 255.0f) + 0.5f) / 100.0f,
 	  floorf(100.0f * (static_cast<float>(colour.g) / 255.0f) + 0.5f) / 100.0f,
 	  floorf(100.0f * (static_cast<float>(colour.b) / 255.0f) + 0.5f) / 100.0f,
-	  1.0f - floorf(100.0f * (static_cast<float>(slot->bitmap.buffer[idx]) / 255.0f) + 0.5f) / 100.0f };
+	  floorf(100.0f * (static_cast<float>(slot->bitmap.buffer[idx]) / 255.0f) + 0.5f) / 100.0f };
 
         texture.insert(texture.end(), &ttuple[0], &ttuple[4]);
       }
+      break;
     }
 
-    // Old part starts here
-    /*
-    int numPixels = textSurface->h * textSurface->w;
-    Uint32 *pix = static_cast<Uint32*>(textSurface->pixels);
-    float *texturef = new float[numPixels * 4];
-    for (int pidx = 0; pidx < numPixels; ++pidx)
-    {
-      Uint32 r = pix[pidx] & textSurface->format->Rmask;
-      Uint32 g = pix[pidx] & textSurface->format->Gmask;
-      Uint32 b = pix[pidx] & textSurface->format->Bmask;
-      Uint32 a = pix[pidx] & textSurface->format->Amask;
-
-      r = r >> textSurface->format->Rshift;
-      g = g >> textSurface->format->Gshift;
-      b = b >> textSurface->format->Bshift;
-      a = a >> textSurface->format->Ashift;
-
-      float ttuple[4] = {static_cast<float>(r),
-                         static_cast<float>(g),
-                         static_cast<float>(b),
-                         static_cast<float>(a)
-      };
-
-      ttuple[0]= floorf(100.0f * (ttuple[0] / 255.0f) + 0.5f) / 100.0f;
-      ttuple[1]= floorf(100.0f * (ttuple[1] / 255.0f) + 0.5f) / 100.0f;
-      ttuple[2]= floorf(100.0f * (ttuple[2] / 255.0f) + 0.5f) / 100.0f;
-      ttuple[3]= floorf(100.0f * (ttuple[3] / 255.0f) + 0.5f) / 100.0f;
-
-      memcpy(&texturef[pidx * 4], &ttuple, sizeof(ttuple));
-
-    }
-    */
-    // Old part ends here
-    
     string textTextureId = intToStr(fontSize) + "text_" + text;
-    //generateTexture(textTextureId, texturef, textSurface->w, textSurface->h);
-    //delete[] texturef;
-    //SDL_FreeSurface(textSurface);
+
     generateTexture(textTextureId, texture.data(), width, height);
 
     render(glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
            glm::vec3(topRight.x, topRight.y, -0.5f), textTextureId);
 
     deleteTexture(textTextureId);
+    
   }
 
   void Renderer::clearBuffers(SceneObject &sceneObject) {
