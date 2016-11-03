@@ -11,7 +11,6 @@
 #include <fstream>
 #include "MathFunctions.hpp"
 #include <glm/gtc/type_ptr.hpp>
-#include <iostream>
 
 using namespace std;
 
@@ -892,7 +891,7 @@ namespace small3d {
       throw Exception("Failed to set font size.");
     }
 
-    unsigned long width = 0, height = 0;
+    unsigned long width = 0, height = 0, roundUpWidth = 0;
 
     // Figure out bitmap dimensions
     for(char &c: text) {
@@ -906,15 +905,17 @@ namespace small3d {
       FT_GlyphSlot slot = face->glyph;
 
       width += slot->advance.x / 64;
+      roundUpWidth += slot->advance.x /64 + 1;
 
       if (height < slot->bitmap.rows)
 	height = slot->bitmap.rows;
     }
 
-    float *texture = new float[5 * width * height];
-    memset(texture, 0, 5 * width * height * sizeof(float));
+    float *texture = new float[4 * roundUpWidth * height];
+    memset(texture, 0, 4 * roundUpWidth * height * sizeof(float));
 
     unsigned long totalAdvance = 0;
+
     for(char &c: text) {
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
       if (error != 0) {
@@ -933,6 +934,7 @@ namespace small3d {
 	      floorf(100.0f *
 		     (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f
 	    };
+
 	    memcpy(
 		   &texture[4 * width * (height - static_cast<unsigned long>(slot->bitmap_top)
 				     + static_cast<unsigned long>(row)) // row position
@@ -945,6 +947,7 @@ namespace small3d {
 	}	  
       }
       totalAdvance += 4 * static_cast<unsigned long>(slot->advance.x / 64);
+
     }
 
     string textTextureId = intToStr(fontSize) + "text_" + text;
