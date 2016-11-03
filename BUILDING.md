@@ -67,17 +67,18 @@ MacOS
 -----
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 - [SDL2](https://www.libsdl.org/download-2.0.php)
-- [SDL2_ttf](https://www.libsdl.org/projects/SDL_ttf/)
 - [GLEW](http://glew.sourceforge.net)
 - [GLM](http://glm.g-truc.net/0.9.7/index.html)
 - [Google Test](https://github.com/google/googletest)
 - [Vorbis and OGG](https://www.xiph.org/downloads/)
 - [Portaudio](http://www.portaudio.com/download.html)
+- [Freetype](https://www.freetype.org/download.html)
+- [bzip2](http://www.bzip.org)
 
 Compile and install the dependencies:
 
 - Create a directory called *deps* inside the small3d directory.
-- For SDL2 and SDL2_ttf, download the binary packages (.framework) and place them in *deps*.
+- For SDL2, download the binary package (.framework) and place it in *deps*.
 - Build the OGG library, according to the instructions. Also, install it (with *sudo make install*).
 - Build GLEW, Google Test and Vorbis according to the instructions provided in their distributions. Don't run *make install* on them.
 - Build Portaudio according to the instructions. You may have to perform the following changes to the *configure* file beforehand, depending on the version you are using and the version of your OSX system:
@@ -90,6 +91,8 @@ Compile and install the dependencies:
 - Create a directory called *include* inside *deps* and copy the contents of the include directories of GLEW, Google Test, Vorbis and Portaudio there.
 - Create a directory called *lib* inside *deps* and copy the .a files from the lib directory of GLEW, the .a files from the Google Test build, the .a files from the Vorbis build (from inside *lib/.libs*) and the .a file from the Portaudio build (from inside *lib/.libs*) there.  
 - GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is another *glm* directory) to *deps/include*.
+- Build Freetype. You just need to run ./configure and make inside its archive directory. Copy the objs/.libs/libfreetype.a file to deps/lib. Copy the freetype include directory to deps/include.
+- Build bzip2. You just need to run make inside its archive directory. Then copy libbz2.a to deps/lib and bzlib.h to deps/include.
 
 In the end, the *deps* directory structure should look like this:
 
@@ -100,12 +103,16 @@ In the end, the *deps* directory structure should look like this:
               glm
               gtest
 			  vorbis
+			  freetype
+			  bzlib.h
+			  ft2build.h
 			  (and various files starting with *pa_* for Portaudio)
             lib
+			  libbz2.a
+			  libfreetype.a
               libglew.a
               libgtest_main.a
               libgtest.a
-            SDL2_ttf.framework
             SDL2.framework
 
 Create another directory inside *small3d*, called *build*.
