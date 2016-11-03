@@ -894,8 +894,9 @@ namespace small3d {
 
     unsigned long width = 0, height = 0;
 
-    // Figure out bitmap dimentions
+    // Figure out bitmap dimensions
     for(char &c: text) {
+      
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
 
       if (error != 0) {
@@ -904,14 +905,11 @@ namespace small3d {
 
       FT_GlyphSlot slot = face->glyph;
 
-      cout << "Advance: " << slot->advance.x / 64 << " left " << slot->bitmap_left << " top " << slot->bitmap_top << endl;
-
       width += slot->advance.x / 64;
+
       if (height < slot->bitmap.rows)
 	height = slot->bitmap.rows;
     }
-
-    std::cout << "Total width: " << width << " total height: " << height << endl;
 
     float *texture = new float[4 * width * height];
     memset(texture, 0, 4 * width * height * sizeof(float));
@@ -919,9 +917,7 @@ namespace small3d {
     int totalAdvance = 0;
 
     for(char &c: text) {
-
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
-
       if (error != 0) {
 	throw Exception("Failed to load character glyph.");
       }
@@ -930,9 +926,7 @@ namespace small3d {
 
       if (slot->bitmap.width * slot->bitmap.rows > 0) {
 	for (int row = 0; row < slot->bitmap.rows; ++row){
-	
 	  for (int col = 0; col < slot->bitmap.width; ++col) {
-
 	    float ttuple[4] = {
 	      floorf(100.0f * (static_cast<float>(colour.r) / 255.0f) + 0.5f) / 100.0f,
 	      floorf(100.0f * (static_cast<float>(colour.g) / 255.0f) + 0.5f) / 100.0f,
@@ -940,26 +934,24 @@ namespace small3d {
 	      floorf(100.0f *
 		     (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f
 	    };
-
 	    memcpy(
-		   &texture[(height - slot->bitmap_top + row) * width // row position
+		   &texture[width * (height - slot->bitmap_top + row) // row position
 			    + totalAdvance + 4 * (col + slot->bitmap_left) // column position
 			    ],
 		   &ttuple[0],
 		   4 * sizeof(float));
-	    // Have to take height minus into consideration, left distance, etc.
 	  }
 	}	  
       }
-      
       totalAdvance += 4 * slot->advance.x / 64;
-      cout << "Advance now at "<< totalAdvance <<endl;
     }
 
     string textTextureId = intToStr(fontSize) + "text_" + text;
 
     generateTexture(textTextureId, texture, width, height);
+
     delete[] texture;
+    
     render(glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
            glm::vec3(topRight.x, topRight.y, -0.5f), textTextureId);
     
