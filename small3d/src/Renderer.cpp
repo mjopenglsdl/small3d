@@ -911,11 +911,10 @@ namespace small3d {
 	height = slot->bitmap.rows;
     }
 
-    float *texture = new float[4 * width * height];
-    memset(texture, 0, 4 * width * height * sizeof(float));
+    float *texture = new float[5 * width * height];
+    memset(texture, 0, 5 * width * height * sizeof(float));
 
-    int totalAdvance = 0;
-
+    unsigned long totalAdvance = 0;
     for(char &c: text) {
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
       if (error != 0) {
@@ -935,15 +934,17 @@ namespace small3d {
 		     (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f
 	    };
 	    memcpy(
-		   &texture[width * (height - slot->bitmap_top + row) // row position
-			    + totalAdvance + 4 * (col + slot->bitmap_left) // column position
+		   &texture[4 * width * (height - static_cast<unsigned long>(slot->bitmap_top)
+				     + static_cast<unsigned long>(row)) // row position
+			    + totalAdvance + 4 * (static_cast<unsigned long>(col)
+						  + static_cast<unsigned long>(slot->bitmap_left)) // column position
 			    ],
 		   &ttuple[0],
 		   4 * sizeof(float));
 	  }
 	}	  
       }
-      totalAdvance += 4 * slot->advance.x / 64;
+      totalAdvance += 4 * static_cast<unsigned long>(slot->advance.x / 64);
     }
 
     string textTextureId = intToStr(fontSize) + "text_" + text;
