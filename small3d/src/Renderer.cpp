@@ -853,7 +853,7 @@ namespace small3d {
 
   }
 
-  void Renderer::render(string text, glm::uvec4 colour,
+  void Renderer::render(string text, glm::vec3 colour,
                         glm::vec2 bottomLeft, glm::vec2 topRight,
                         string fontPath, int fontSize)
   {
@@ -925,23 +925,18 @@ namespace small3d {
       FT_GlyphSlot slot = face->glyph;
 
       if (slot->bitmap.width * slot->bitmap.rows > 0) {
-	for (int row = 0; row < slot->bitmap.rows; ++row){
-	  for (int col = 0; col < slot->bitmap.width; ++col) {
-	    float ttuple[4] = {
-	      floorf(100.0f * (static_cast<float>(colour.r) / 255.0f) + 0.5f) / 100.0f,
-	      floorf(100.0f * (static_cast<float>(colour.g) / 255.0f) + 0.5f) / 100.0f,
-	      floorf(100.0f * (static_cast<float>(colour.b) / 255.0f) + 0.5f) / 100.0f,
-	      floorf(100.0f *
-		     (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f
-	    };
-
+	for (int row = 0; row < static_cast<int>(slot->bitmap.rows); ++row){
+	  for (int col = 0; col < static_cast<int>(slot->bitmap.width); ++col) {
+	    glm::vec4 colourAlpha = glm::vec4(colour, 0.0f);
+	    colourAlpha.a = floorf(100.0f *
+		     (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f;
 	    memcpy(
 		   &texture[4 * width * (height - static_cast<unsigned long>(slot->bitmap_top)
 				     + static_cast<unsigned long>(row)) // row position
 			    + totalAdvance + 4 * (static_cast<unsigned long>(col)
 						  + static_cast<unsigned long>(slot->bitmap_left)) // column position
 			    ],
-		   &ttuple[0],
+		   glm::value_ptr(colourAlpha),
 		   4 * sizeof(float));
 	  }
 	}	  
