@@ -6,7 +6,7 @@ small3d changelog
 v1.1.0
 ------
 
-- Stopped using SDL2-ttf. Now accessing freetype directly.
+- Stopped using SDL2_ttf. Now accessing freetype directly.
 - [BREAKING] Renderer.render function that renders text, now takes a glm::vec3 parameter for the colour, instead of a glm::uvec4. Each component has to be a float between 0.0 and 1.0.
 
 v1.0.11
