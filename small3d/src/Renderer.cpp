@@ -907,7 +907,7 @@ namespace small3d {
       width += slot->advance.x / 64;
       roundUpWidth += slot->advance.x /64 + 1;
 
-      if (height < slot->bitmap.rows)
+      if (height < static_cast<unsigned long>(slot->bitmap.rows))
 	height = slot->bitmap.rows;
     }
 

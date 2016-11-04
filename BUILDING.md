@@ -5,7 +5,6 @@ Windows
 -------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 - [SDL2](https://www.libsdl.org/download-2.0.php) (32-bit development library)
-- [SDL2_ttf](https://www.libsdl.org/projects/SDL_ttf/) (32-bit development library)
 - [GLEW](http://glew.sourceforge.net)
 - [GLM](http://glm.g-truc.net/0.9.7/index.html) (source code)
 - [PNG](http://libpng.sourceforge.net/) (source code)
@@ -13,6 +12,7 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 - [Google Test](https://github.com/google/googletest) (source code)
 - [Vorbis and OGG](https://www.xiph.org/downloads/)
 - [Portaudio](http://www.portaudio.com/download.html)
+- [FreeType](http://gnuwin32.sourceforge.net/packages/freetype.htm) (binaries archive)
 
 Inside the small3d directory, create a directory called *deps* and, within it, one called *include* and another one called *lib*.
 
@@ -50,7 +50,7 @@ Create a directory called *build1* inside the *portaudio* directory. Create the 
 Open the created solution, *portaudio.sln* with Visual Studio. Now you need to find where the file *ksguid.lib* is located inside your Windows SDK. The directory will probably look like *C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib*, depending on your SDK version. Note that we need the directory that contains the 32-bit version of the library. Once you know the directory, open the *portaudio* project properties from within the *portaudio.sln* solution in Visual studio and add the directory to *VC++ Directories > Library Directories*. Build the solution. Then, copy the .lib and .dll files from *build1/Debug* to *deps/lib* and the .h files from *portaudio/include* to *deps/include*.
 
 #### Set up the rest of the libraries
-Unzip the SDL2, SDL2_ttf, GLEW and GLM archives. For SDL2 and SDL2_ttf, copy the contents of their include directories to *small3d/deps/include* and all the .lib and .dll files from their *lib/x86* directories to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. Finally, for GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries).
+Unzip the SDL2, GLEW and GLM archives. For SDL2, copy the contents of its include directory to *small3d/deps/include* and all the .lib and .dll files from its *lib/x86* directory to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. For GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries). Finally, for FreeType, copy all the contents of the include directory to *small3d/deps/include* and *lib/freetype.lib* and *bin/freetype6.dll* to *small3d/deps/lib*. 
 
 #### Build small3d
 Create a directory inside *small3d*, called *build*. Then build the solution:
@@ -72,7 +72,7 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 - [Google Test](https://github.com/google/googletest)
 - [Vorbis and OGG](https://www.xiph.org/downloads/)
 - [Portaudio](http://www.portaudio.com/download.html)
-- [Freetype](https://www.freetype.org/download.html)
+- [FreeType](https://www.freetype.org/download.html)
 - [bzip2](http://www.bzip.org)
 
 Compile and install the dependencies:

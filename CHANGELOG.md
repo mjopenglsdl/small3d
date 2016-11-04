@@ -3,6 +3,11 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.1.0
+------
+
+- Stopped using SDL2-ttf. Now accessing freetype directly.
+
 v1.0.11
 -------
 
