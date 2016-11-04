@@ -91,8 +91,8 @@ Compile and install the dependencies:
 - Create a directory called *include* inside *deps* and copy the contents of the include directories of GLEW, Google Test, Vorbis and Portaudio there.
 - Create a directory called *lib* inside *deps* and copy the .a files from the lib directory of GLEW, the .a files from the Google Test build, the .a files from the Vorbis build (from inside *lib/.libs*) and the .a file from the Portaudio build (from inside *lib/.libs*) there.  
 - GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is another *glm* directory) to *deps/include*.
-- Build Freetype. You just need to run ./configure and make inside its archive directory. Copy the objs/.libs/libfreetype.a file to deps/lib. Copy the freetype include directory to deps/include.
-- Build bzip2. You just need to run make inside its archive directory. Then copy libbz2.a to deps/lib and bzlib.h to deps/include.
+- Build Freetype. You just need to run *./configure* and *make* inside its archive directory. Copy the *objs/.libs/libfreetype.a* file to *small3d/deps/lib*. Copy the contents of the include directory to *small3d/deps/include*.
+- Build bzip2. You just need to run make inside its archive directory. Then copy *libbz2.a* to *small3d/deps/lib* and *bzlib.h* to *small3d/deps/include*.
 
 In the end, the *deps* directory structure should look like this:
 
