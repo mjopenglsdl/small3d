@@ -15,12 +15,26 @@ class Small3dConan(ConanFile):
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = "CMakeLists.txt", "small3d/*", "FindSMALL3D.cmake", "cmake/*"
 
-    def linux_package_installed(self, package):
+    def rpm_package_installed(self, package):
+        p = subprocess.Popen(['rpm', '-q', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = p.communicate()
+        return 'install ok' in out
+
+    def ensure_rpm_dependency(self, package):
+        if not self.rpm_package_installed(package):
+            self.output.warn(package + " is not installed in this machine! Conan will try to install it.")
+            # Note: yum is automatically redirected to dnf on modern Fedora distros (see 'man yum2dnf')
+            self.run("sudo yum install -y " + package)
+            if not self.rpm_package_installed(package):
+                self.output.error(package + " Installation doesn't work... install it manually and try again")
+		exit(1)
+
+    def debian_package_installed(self, package):
         p = subprocess.Popen(['dpkg', '-s', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         return 'install ok' in out
 
-    def ensure_linux_dependency(self, package):
+    def ensure_debian_dependency(self, package):
         if not self.linux_package_installed(package):
             self.output.warn(package + " is not installed in this machine! Conan will try to install it.")
             self.run("sudo apt-get update && sudo apt-get install -y " + package)
@@ -29,8 +43,12 @@ class Small3dConan(ConanFile):
                 exit(1)
 
     def system_requirements(self):
-        if self.settings.os == "Linux":
-            self.ensure_linux_dependency("libjack-dev")
+	if subprocess.call("which apt-get", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0:
+            self.ensure_debian_dependency("libjack-dev")
+        elif subprocess.call("which yum", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0:
+            self.ensure_rpm_dependency("libjack-dev")
+        else:
+	    self.output.warn("Could not determine Linux distro, skipping system requirements check.")
 
     def build(self):
         cmake = CMake(self.settings)
