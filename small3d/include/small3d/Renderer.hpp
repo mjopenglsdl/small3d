@@ -52,6 +52,8 @@ namespace small3d
 
     FT_Library library;
 
+    float textMemory[400000];
+
     std::unordered_map<std::string, FT_Face> fontFaces;
 
     /**

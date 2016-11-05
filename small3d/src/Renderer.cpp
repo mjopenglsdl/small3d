@@ -890,7 +890,7 @@ namespace small3d {
       throw Exception("Failed to set font size.");
     }
 
-    unsigned long width = 0, height = 0, roundUpWidth = 0;
+    unsigned long width = 0, height =0;
 
     // Figure out bitmap dimensions
     for(char &c: text) {
@@ -904,14 +904,12 @@ namespace small3d {
       FT_GlyphSlot slot = face->glyph;
 
       width += slot->advance.x / 64;
-      roundUpWidth += slot->advance.x /64 + 1;
 
       if (height < static_cast<unsigned long>(slot->bitmap.rows))
 	height = slot->bitmap.rows;
     }
-
-    float *texture = new float[4 * roundUpWidth * height];
-    memset(texture, 0, 4 * roundUpWidth * height * sizeof(float));
+    
+    memset(textMemory, 0, 4 * width * height * sizeof(float));
 
     unsigned long totalAdvance = 0;
 
@@ -930,7 +928,7 @@ namespace small3d {
 	    colourAlpha.a = floorf(100.0f *
 		     (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f;
 	    memcpy(
-		   &texture[4 * width * (height - static_cast<unsigned long>(slot->bitmap_top)
+		   &textMemory[4 * width * (height - static_cast<unsigned long>(slot->bitmap_top)
 				     + static_cast<unsigned long>(row)) // row position
 			    + totalAdvance + 4 * (static_cast<unsigned long>(col)
 						  + static_cast<unsigned long>(slot->bitmap_left)) // column position
@@ -946,10 +944,8 @@ namespace small3d {
 
     string textureName = intToStr(fontSize) + "text_" + text;
 
-    generateTexture(textureName, texture, width, height);
+    generateTexture(textureName, textMemory, width, height);
 
-    delete[] texture;
-    
     renderTexture(textureName, glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
            glm::vec3(topRight.x, topRight.y, -0.5f));
     
