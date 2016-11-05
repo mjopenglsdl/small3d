@@ -14,7 +14,7 @@ Note: I mentioned something on Twitter about switching to GLFW and stopping to u
 - Now also supporting Fedora builds.
 - [BREAKING] Renderer.getTextureHandle is now private.
 - [BREAKING] Renderer.render function that is rendering textures has been renamed to Renderer.renderTexture and its parameters have been reordered for consistency.
-
+- Removed ModelLoader virtual class.
 
 v1.0.11
 -------

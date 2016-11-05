@@ -18,7 +18,6 @@
 #include "Image.hpp"
 #include "Model.hpp"
 #include "BoundingBoxSet.hpp"
-#include "ModelLoader.hpp"
 #include "WavefrontLoader.hpp"
 #include "SceneObject.hpp"
 #include "Renderer.hpp"
@@ -94,9 +93,9 @@ TEST(ImageTest, LoadImage) {
 TEST(ModelTest, LoadModel) {
 
   Model model;
-  unique_ptr<ModelLoader> loader(new WavefrontLoader());
+  WavefrontLoader loader;
 
-  loader->load("resources/models/Cube/Cube.obj", model);
+  loader.load("resources/models/Cube/Cube.obj", model);
 
   EXPECT_NE(0, model.vertexData.size());
   EXPECT_NE(0, model.indexData.size());
@@ -113,7 +112,7 @@ TEST(ModelTest, LoadModel) {
 
   Model modelWithNoTexture;
 
-  loader->load("resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
+  loader.load("resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
 
   EXPECT_NE(0, modelWithNoTexture.vertexData.size());
   EXPECT_NE(0, modelWithNoTexture.indexData.size());

@@ -34,7 +34,7 @@ Features
 - You can tweak the engine's shaders, as long as you keep the same incoming variables and uniforms.
 - Plays sounds from .ogg files.
 - Doesn't hide SDL or OpenGL from you. You can set up your main game loop, inputs, etc, however you want and you can load your own shaders and make your own OpenGL calls if you want to do something that is not covered by the engine's features.
-- It can read and render Wavefront files, including animations. For other formats, you can write your own reader, inherriting from the [ModelLoader](https://codedocs.xyz/dimi309/small3d/classsmall3d_1_1ModelLoader.html) class.
+- It can read and render Wavefront files, including animations.
 - Texture mapping.
 - It can render any image in any position (for example to be used as the ground, or the sky).
 - Gouraud shading. You can set the light direction and intensity.
