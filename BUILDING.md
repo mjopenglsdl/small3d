@@ -136,7 +136,7 @@ Debian
 ------
 First, install the dependencies:
 
-    sudo apt-get install build-essential cmake libsdl2-dev libsdl2-ttf-dev libglm-dev libglew-dev libpng12-dev portaudio19-dev libvorbis-dev
+    sudo apt-get install build-essential cmake libsdl2-dev libglm-dev libglew-dev libpng12-dev portaudio19-dev libvorbis-dev libfreetype6-dev libbz2-dev
 
 Google Test is also a dependency, but the package available for Debian (libgtest-dev) provides no binary, so it will not work. The framework needs to be installed manually. If libgtest-dev is already installed, uninstall it:
 

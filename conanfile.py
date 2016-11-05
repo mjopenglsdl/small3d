@@ -35,10 +35,10 @@ class Small3dConan(ConanFile):
         return 'install ok' in out
 
     def ensure_debian_dependency(self, package):
-        if not self.linux_package_installed(package):
+        if not self.debian_package_installed(package):
             self.output.warn(package + " is not installed in this machine! Conan will try to install it.")
             self.run("sudo apt-get update && sudo apt-get install -y " + package)
-            if not self.linux_package_installed(package):
+            if not self.debian_package_installed(package):
                 self.output.error(package + " Installation doesn't work... install it manually and try again")
                 exit(1)
 
