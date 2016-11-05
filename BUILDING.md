@@ -132,13 +132,21 @@ The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
 
 Open the project with Xcode and build it once. Then, select the *small3dTest* scheme in Xcode and run it.
 
-Debian
+Linux
 ------
-First, install the dependencies:
+First, install the dependencies. For Debian-based distributions the command is the following:
 
     sudo apt-get install build-essential cmake libsdl2-dev libglm-dev libglew-dev libpng12-dev portaudio19-dev libvorbis-dev libfreetype6-dev libbz2-dev
 
-Google Test is also a dependency, but the package available for Debian (libgtest-dev) provides no binary, so it will not work. The framework needs to be installed manually. If libgtest-dev is already installed, uninstall it:
+For Fedora, Red Hat, etc. it is this one:
+
+    sudo yum install libtool SDL2-devel glm-devel glew-devel libpng-devel portaudio-devel libvorbis-devel freetype-devel bzip2-devel
+
+Google Test is also a dependency. For Fedora, things are simple:
+
+    sudo yum install gtest-devel
+
+The package available for Debian (libgtest-dev) provides no binary, so it will not work. The framework needs to be installed manually. If libgtest-dev is already installed, uninstall it:
 
     sudo apt-get uninstall libgtest-dev
 
