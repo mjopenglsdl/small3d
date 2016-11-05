@@ -130,7 +130,7 @@ The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
     cd build
     cmake -G"Xcode" ..
 
-Open the project with Xcode and build it once. Then, select the *avoidthebug3d* or *small3dTest* scheme in Xcode and run it.
+Open the project with Xcode and build it once. Then, select the *small3dTest* scheme in Xcode and run it.
 
 Debian
 ------
