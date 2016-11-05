@@ -5,7 +5,7 @@ dependencies:
   pvt.cppan.demo.portaudio: 19
   pvt.cppan.demo.glew: 2
   pvt.cppan.demo.glm: 0
-  pvt.cppan.demo.valve.sdl_ttf: 2
+  pvt.cppan.demo.freetype: 2.7.0
   pvt.cppan.demo.png: 1
   pvt.cppan.demo.valve.sdl.sdl: 2.0.4
   pvt.cppan.demo.xiph.vorbis.vorbisfile: 1
