@@ -28,7 +28,7 @@ One question I got at some point was why I did not follow the advice, "write gam
 Features
 --------
 
-- Runs on Windows, Mac, Linux (I'm using Debian and somebody told me that it works ok on Ubuntu, too).
+- Runs on Windows, Mac, Linux (I have tested it on Debian and Fedora and somebody has told me that it works on Ubuntu, too).
 - Uses OpenGL 3.3 and defaults to 2.1 if the former is not available. So, it comes with two sets of shaders.
 - Uses C++11.
 - You can tweak the engine's shaders, as long as you keep the same incoming variables and uniforms.
