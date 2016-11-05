@@ -8,7 +8,6 @@
 
 #include "SoundPlayer.hpp"
 #include "Exception.hpp"
-#include <SDL.h>
 
 #define WORD_SIZE 2
 #define PORTAUDIO_SAMPLE_FORMAT paInt16
@@ -102,19 +101,17 @@ namespace small3d {
     FILE *fp;
     fopen_s(&fp, (SDL_GetBasePath() + soundFilePath).c_str(), "rb");
 #else
-    FILE *fp = fopen((SDL_GetBasePath() + soundFilePath).c_str(), "rb");
+    FILE *fp = fopen(soundFilePath.c_str(), "rb");
 #endif
 
     if (!fp) {
       throw Exception(
-          "Could not open file " + string(SDL_GetBasePath())
-          + soundFilePath);
+          "Could not open file " + soundFilePath);
     }
 
     if (ov_open_callbacks(fp, &vorbisFile, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0) {
       throw Exception(
-          "Could not load sound from file " + string(SDL_GetBasePath())
-          + soundFilePath);
+          "Could not load sound from file " + soundFilePath);
     }
 
     vorbis_info *vi = ov_info(&vorbisFile, -1);

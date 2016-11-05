@@ -22,7 +22,7 @@ namespace small3d {
                      float zFar, float zOffsetFromCamera,
                      string shadersPath) {
     isOpenGL33Supported = false;
-    sdlWindow = 0;
+    window = 0;
     perspectiveProgram = 0;
     orthographicProgram = 0;
     textures = new unordered_map<string, GLuint>();
@@ -69,16 +69,13 @@ namespace small3d {
       glDeleteProgram(perspectiveProgram);
     }
 
-    if (sdlWindow != 0) {
-      SDL_DestroyWindow(sdlWindow);
-    }
-    SDL_Quit();
+    glfwTerminate();
   }
 
   string Renderer::loadShaderFromFile(const string &fileLocation) {
     initLogger();
     string shaderSource = "";
-    ifstream file((SDL_GetBasePath() + fileLocation).c_str());
+    ifstream file(fileLocation.c_str());
     string line;
     if (file.is_open()) {
       while (getline(file, line)) {
@@ -218,56 +215,43 @@ namespace small3d {
   }
 
   void Renderer::initSDL(int &width, int &height, const string &windowTitle) {
-    sdlWindow = 0;
 
-    // initialize SDL video
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-      LOGERROR(SDL_GetError());
-      throw Exception(string("Unable to initialise SDL"));
+    if (!glfwInit()){
+      throw Exception("Unable to initialise GLFW");
     }
 
 #ifdef __APPLE__
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  SDL_GL_CONTEXT_PROFILE_CORE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 #endif
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     bool fullScreen = false;
 
+    GLFWmonitor *monitor = nullptr;
+    
     if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
       throw Exception("Screen width and height both have to be equal or not equal to zero at the same time.");
     }
     else if (width == 0) {
       fullScreen = true;
-      SDL_DisplayMode mode;
-      if (SDL_GetDesktopDisplayMode(0, &mode) != 0)
-        throw Exception("Error while retrieving display mode:" + string(SDL_GetError()));
-      width = mode.w;
-      height = mode.h;
+      monitor = glfwGetPrimaryMonitor();
+     
+      const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+      
+      width = mode->width;
+      height = mode->height;
+      
       LOGINFO("Detected screen width " + intToStr(width) + " and height " + intToStr(height));
     }
 
-    Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
-      SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-
-    sdlWindow = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
-                                 SDL_WINDOWPOS_CENTERED, width, height,
-                                 flags);
-
-    if (!sdlWindow) {
-      LOGERROR(SDL_GetError());
-      throw Exception("Unable to set video");
+    window = glfwCreateWindow(width, height, windowTitle.c_str(), monitor, NULL);
+    if (!window){
+      throw Exception(string("Unable to create GLFW window"));
     }
 
-    if (SDL_GL_CreateContext(sdlWindow) == NULL) {
-      LOGERROR(SDL_GetError());
-      throw Exception(string("Unable to create GL context"));
-    }
+    glfwMakeContextCurrent(window);
 
   }
 
@@ -867,7 +851,7 @@ namespace small3d {
 
     if (idFacePair == fontFaces.end()) {
 
-      string faceFullPath = SDL_GetBasePath() + fontPath;
+      string faceFullPath = fontPath;
       LOGINFO("Loading font from " + faceFullPath);
 
       error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);
@@ -999,7 +983,7 @@ namespace small3d {
   }
 
   void Renderer::swapBuffers() {
-    SDL_GL_SwapWindow(sdlWindow);
+    glfwSwapBuffers(window);
   }
 
   /**

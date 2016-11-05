@@ -11,7 +11,6 @@
 #include "Exception.hpp"
 #include "GetTokens.hpp"
 #include "MathFunctions.hpp"
-#include "SDL.h"
 
 using namespace std;
 
@@ -32,7 +31,7 @@ namespace small3d {
       throw Exception(
           "Illegal attempt to reload bounding boxes. Please use another object.");
     }
-    ifstream file((SDL_GetBasePath() + fileLocation).c_str());
+    ifstream file(fileLocation.c_str());
     string line;
     if (file.is_open()) {
       while (getline(file, line)) {
@@ -96,8 +95,7 @@ namespace small3d {
     }
     else
       throw Exception(
-          "Could not open file " + string(SDL_GetBasePath())
-          + fileLocation);
+          "Could not open file " + fileLocation);
 
   }
 

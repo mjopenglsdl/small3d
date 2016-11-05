@@ -9,8 +9,7 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <SDL_opengl.h>
-#include <SDL.h>
+#include <GLFW/glfw3.h>
 
 #include "SceneObject.hpp"
 #include "Logger.hpp"
@@ -32,7 +31,7 @@ namespace small3d
 
   private:
 
-    SDL_Window* sdlWindow;
+    GLFWwindow* window;
 
     GLuint perspectiveProgram;
 

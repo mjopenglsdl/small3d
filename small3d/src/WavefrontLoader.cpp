@@ -12,7 +12,6 @@
 #include <unordered_map>
 #include <memory>
 #include "GetTokens.hpp"
-#include <SDL.h>
 
 using namespace std;
 
@@ -182,7 +181,7 @@ namespace small3d {
   }
 
   void WavefrontLoader::load(string fileLocation, Model &model) {
-    ifstream file((SDL_GetBasePath() + fileLocation).c_str());
+    ifstream file(fileLocation.c_str());
     string line;
     if (file.is_open()) {
       clear();
@@ -320,8 +319,7 @@ namespace small3d {
     }
     else
       throw Exception(
-          "Could not open file " + string(SDL_GetBasePath())
-          + fileLocation);
+          "Could not open file " + fileLocation);
 
   }
 
