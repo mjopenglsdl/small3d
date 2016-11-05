@@ -6,8 +6,15 @@ small3d changelog
 v1.1.0
 ------
 
+Note: I mentioned something on Twitter about switching to GLFW and stopping to use SDL. I've decided not to do that after all. In the future, small3d may support GLFW in addition to SDL, but SDL support will not be dropped.
+
 - Stopped using SDL2_ttf. Now accessing freetype directly.
 - [BREAKING] Renderer.render function that renders text, now takes a glm::vec3 parameter for the colour, instead of a glm::uvec4. Each component has to be a float between 0.0 and 1.0.
+- [BREAKING] Renderer.render function that renders text has also been renamed to Renderer.write and its parameters have been reordered for consistency.
+- Now also supporting Fedora builds.
+- [BREAKING] Renderer.getTextureHandle is now private.
+- [BREAKING] Renderer.render function that is rendering textures has been renamed to Renderer.renderTexture and its parameters have been reordered for consistency.
+
 
 v1.0.11
 -------

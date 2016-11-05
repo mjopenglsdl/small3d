@@ -484,7 +484,7 @@ namespace small3d {
   }
 
 
-  void Renderer::render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, string textureName,
+  void Renderer::renderTexture(string name, const glm::vec3 &bottomLeft, const glm::vec3 &topRight, 
                         bool perspective) {
 
     float vertices[16] = {
@@ -529,10 +529,10 @@ namespace small3d {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
 
-    GLuint textureHandle = getTextureHandle(textureName);
+    GLuint textureHandle = getTextureHandle(name);
 
     if (textureHandle == 0) {
-      throw Exception("Texture " + textureName + "has not been generated");
+      throw Exception("Texture " + name + "has not been generated");
     }
 
     glBindTexture(GL_TEXTURE_2D, textureHandle);
@@ -853,9 +853,8 @@ namespace small3d {
 
   }
 
-  void Renderer::render(string text, glm::vec3 colour,
-                        glm::vec2 bottomLeft, glm::vec2 topRight,
-                        string fontPath, int fontSize)
+  void Renderer::write(string text, glm::vec3 colour, glm::vec2 bottomLeft, glm::vec2 topRight,
+		       int fontSize, string fontPath)
   {
 
     string faceId = intToStr(fontSize) + fontPath;
@@ -945,16 +944,16 @@ namespace small3d {
 
     }
 
-    string textTextureId = intToStr(fontSize) + "text_" + text;
+    string textureName = intToStr(fontSize) + "text_" + text;
 
-    generateTexture(textTextureId, texture, width, height);
+    generateTexture(textureName, texture, width, height);
 
     delete[] texture;
     
-    render(glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
-           glm::vec3(topRight.x, topRight.y, -0.5f), textTextureId);
+    renderTexture(textureName, glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
+           glm::vec3(topRight.x, topRight.y, -0.5f));
     
-    deleteTexture(textTextureId);
+    deleteTexture(textureName);
     
   }
 
