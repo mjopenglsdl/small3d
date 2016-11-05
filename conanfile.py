@@ -18,7 +18,7 @@ class Small3dConan(ConanFile):
     def rpm_package_installed(self, package):
         p = subprocess.Popen(['rpm', '-q', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
-        return 'install ok' in out
+        return 'install ok' in out or 'not installed' not in out
 
     def ensure_rpm_dependency(self, package):
         if not self.rpm_package_installed(package):
@@ -46,7 +46,8 @@ class Small3dConan(ConanFile):
 	if subprocess.call("which apt-get", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0:
             self.ensure_debian_dependency("libjack-dev")
         elif subprocess.call("which yum", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0:
-            self.ensure_rpm_dependency("libjack-dev")
+            self.ensure_rpm_dependency("jack-audio-connection-kit-devel")
+            self.ensure_rpm_dependency("alsa-lib-devel")
         else:
 	    self.output.warn("Could not determine Linux distro, skipping system requirements check.")
 
