@@ -101,7 +101,7 @@ Now we are ready for the code. Create a file called "main.cpp" in the "ball" dir
 Notice that we have not downloaded small3d from anywhere. Let's tell conan to do that for us. Create a file called "conanfile.txt" in the "ball" directory. Inside that file we declare small3d as our dependency:
 
 	[requires]
-	small3d/1.0.11@coding3d/stable
+	small3d/1.1.0@coding3d/stable
 
 We also need to mention that we will be working with cmake:
 
@@ -124,7 +124,7 @@ Finally, we are going to need the small3d shaders. Let's tell conan to also copy
 So the whole conanfile.txt will look like this:
 
 	[requires]
-	small3d/1.0.11@coding3d/stable
+	small3d/1.1.0@coding3d/stable
 	
 	[generators]
 	cmake
