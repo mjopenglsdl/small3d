@@ -1,8 +1,11 @@
 small3d
 =======
+
 **This is a version that uses GLFW. It has only been prepared for testing purposes (I am not sure I will add GLFW support) and only the independent build works for now.**
 
 ![beaver](https://raw.githubusercontent.com/coding3d/small3d/develop/assets/small3d.png)
+
+** The API documentation has moved to http://dimi309.github.io/small3d/ **
 
 Introduction
 ------------
@@ -48,7 +51,7 @@ Features
 Getting Started
 ---------------
 
-Let's get right to it. You can do this on Windows, Linux or MacOS. If you encounter difficulties [let me know](https://github.com/dimi309/small3d/issues). We are going to create a ball that can be moved using the keyboard arrows. Even though small3d is small, it can do a lot more than this. But this exercise will get you started and then you can continue, using the [API documentation](https://codedocs.xyz/dimi309/small3d/) and having a look at the source code of two games that have already been developed with the engine ([Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) and [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)). The source code for this tutorial, including the model of the ball we will be creating is [available online](https://github.com/dimi309/small3d-tutorial).
+Let's get right to it. You can do this on Windows, Linux or MacOS. If you encounter difficulties [let me know](https://github.com/dimi309/small3d/issues). We are going to create a ball that can be moved using the keyboard arrows. Even though small3d is small, it can do a lot more than this. But this exercise will get you started and then you can continue, using the [API documentation](http://dimi309.github.io/small3d/) and having a look at the source code of two games that have already been developed with the engine ([Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) and [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)). The source code for this tutorial, including the model of the ball we will be creating is [available online](https://github.com/dimi309/small3d-tutorial).
 
 I assume that you alredy have your compiler set up. You also need to install [cmake](https://cmake.org) and [conan](https://www.conan.io) and make sure they can be executed from the command line. The proposed way to use the engine is to deploy it from conan.io. If you prefer to compile it yourself without conan, there are [instructions](BUILDING.md) about how to do this, but it is quite an involved procedure. I will always make sure that the engine can be built this way though. The engine is also available on [cppan](https://cppan.org/pvt.coding3d.small3d). An example of how it can be used from there can be found [here](https://github.com/dimi309/small3d-cppan-example).
 
@@ -99,7 +102,7 @@ Now we are ready for the code. Create a file called "main.cpp" in the "ball" dir
 Notice that we have not downloaded small3d from anywhere. Let's tell conan to do that for us. Create a file called "conanfile.txt" in the "ball" directory. Inside that file we declare small3d as our dependency:
 
 	[requires]
-	small3d/1.0.11@coding3d/stable
+	small3d/1.1.0@coding3d/stable
 
 We also need to mention that we will be working with cmake:
 
@@ -122,7 +125,7 @@ Finally, we are going to need the small3d shaders. Let's tell conan to also copy
 So the whole conanfile.txt will look like this:
 
 	[requires]
-	small3d/1.0.11@coding3d/stable
+	small3d/1.1.0@coding3d/stable
 	
 	[generators]
 	cmake
