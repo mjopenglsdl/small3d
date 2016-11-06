@@ -69,12 +69,25 @@ namespace small3d {
       glDeleteProgram(perspectiveProgram);
     }
 
+#ifdef SMALL3D_GLFW
     glfwTerminate();
+#else
+    if (sdlWindow != 0) {
+      SDL_DestroyWindow(sdlWindow);
+    }
+    SDL_Quit();
+#endif
   }
 
+#ifdef SMALL3D_GLFW
   GLFWwindow* Renderer::getWindow() {
     return window;
   }
+#else
+  SDL_Window* Renderer::getWindow() {
+    return window;
+  }
+#endif
 
   string Renderer::loadShaderFromFile(const string &fileLocation) {
     initLogger();
@@ -217,8 +230,9 @@ namespace small3d {
     }
   }
 
-  void Renderer::initSDL(int &width, int &height, const string &windowTitle) {
+  void Renderer::initWindow(int &width, int &height, const string &windowTitle) {
 
+#ifdef SMALL3D_GLFW
     if (!glfwInit()){
       throw Exception("Unable to initialise GLFW");
     }
@@ -256,6 +270,58 @@ namespace small3d {
 
     glfwMakeContextCurrent(window);
 
+#else
+
+    // initialize SDL video
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+      LOGERROR(SDL_GetError());
+      throw Exception(string("Unable to initialise SDL"));
+    }
+
+#ifdef __APPLE__
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  SDL_GL_CONTEXT_PROFILE_CORE);
+#endif
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+    bool fullScreen = false;
+
+    if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
+      throw Exception("Screen width and height both have to be equal or not equal to zero at the same time.");
+    }
+    else if (width == 0) {
+      fullScreen = true;
+      SDL_DisplayMode mode;
+      if (SDL_GetDesktopDisplayMode(0, &mode) != 0)
+        throw Exception("Error while retrieving display mode:" + string(SDL_GetError()));
+      width = mode.w;
+      height = mode.h;
+      LOGINFO("Detected screen width " + intToStr(width) + " and height " + intToStr(height));
+    }
+
+    Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
+      SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+
+    sdlWindow = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
+                                 SDL_WINDOWPOS_CENTERED, width, height,
+                                 flags);
+
+    if (!sdlWindow) {
+      LOGERROR(SDL_GetError());
+      throw Exception("Unable to set video");
+    }
+
+    if (SDL_GL_CreateContext(sdlWindow) == NULL) {
+      LOGERROR(SDL_GetError());
+      throw Exception(string("Unable to create GL context"));
+    }
+
+#endif
   }
 
   void Renderer::init(int width, int height, string windowTitle,
@@ -266,7 +332,7 @@ namespace small3d {
     int screenWidth = width;
     int screenHeight = height;
 
-    this->initSDL(screenWidth, screenHeight, windowTitle);
+    this->initWindow(screenWidth, screenHeight, windowTitle);
 
     this->frustumScale = frustumScale;
     this->zNear = zNear;

@@ -9,7 +9,13 @@
 #pragma once
 
 #include <GL/glew.h>
+
+#ifdef SMALL3D_GLFW
 #include <GLFW/glfw3.h>
+#else
+#include <SDL_opengl.h>
+#include <SDL.h>
+#endif
 
 #include "SceneObject.hpp"
 #include "Logger.hpp"
@@ -31,7 +37,11 @@ namespace small3d
 
   private:
 
+#ifdef SMALL3D_GLFW
     GLFWwindow* window;
+#else
+    SDL_Window* window;
+#endif
 
     GLuint perspectiveProgram;
 
@@ -89,9 +99,9 @@ namespace small3d
               std::string shadersPath);
 
     /**
-     * @brief Initialise SDL
+     * @brief Initialise the application window
      */
-    void initSDL(int &width, int &height, const std::string &windowTitle = "");
+    void initWindow(int &width, int &height, const std::string &windowTitle = "");
 
     /**
      * @brief Detect if OpenGL 3.3 is supported. If not, fall back to OpenGL 2.1.
@@ -265,5 +275,4 @@ namespace small3d
     void swapBuffers();
 
   };
-
 }
