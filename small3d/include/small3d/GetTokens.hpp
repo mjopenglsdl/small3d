@@ -9,6 +9,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace small3d {
 
@@ -23,5 +24,5 @@ namespace small3d {
    * @return The number of tokens
    */
 
-  int getTokens(std::string input, char sep, std::string* tokens);
+  int getTokens(std::string input, char sep, std::vector<std::string> &tokens);
 }
