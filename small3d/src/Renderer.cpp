@@ -199,7 +199,6 @@ namespace small3d {
       throw Exception(
 		      "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
     }
-
   }
 
   void Renderer::checkForOpenGLErrors(string when, bool abort) {
