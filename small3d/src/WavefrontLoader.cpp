@@ -189,7 +189,7 @@ namespace small3d {
 
       while (getline(file, line)) {
         if (line[0] == 'v' || line[0] == 'f') {
-          string tokens[4]; // Max 4 such tokens in the specific kind of Wavefront file
+			vector<string> tokens;
 
           int numTokens = getTokens(line, ' ', tokens);
 
@@ -261,7 +261,7 @@ namespace small3d {
                          && t.find("//") == string::npos)   // normal and texture coordinate index are
                   // contained in the string
                 {
-                  string components[3]; // Max 3 such components in Wavefront files
+					vector<string>components;
                   int numComponents = getTokens(t, '/', components);
 
                   int componentIdx = 0;
