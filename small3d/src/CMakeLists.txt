@@ -1,10 +1,10 @@
 ADD_LIBRARY(small3d BoundingBoxSet.cpp Exception.cpp GetTokens.cpp
       Image.cpp Logger.cpp MathFunctions.cpp Model.cpp
-      ModelLoader.cpp Renderer.cpp SceneObject.cpp
+      Renderer.cpp SceneObject.cpp
       WavefrontLoader.cpp SoundPlayer.cpp ../include/small3d/BoundingBoxSet.hpp
     ../include/small3d/Exception.hpp ../include/small3d/GetTokens.hpp ../include/small3d/Image.hpp
     ../include/small3d/Logger.hpp ../include/small3d/MathFunctions.hpp ../include/small3d/Model.hpp
-    ../include/small3d/ModelLoader.hpp ../include/small3d/Renderer.hpp ../include/small3d/SceneObject.hpp
+    ../include/small3d/Renderer.hpp ../include/small3d/SceneObject.hpp
     ../include/small3d/SoundPlayer.hpp ../include/small3d/SoundData.hpp ../include/small3d/WavefrontLoader.hpp)
 
 TARGET_INCLUDE_DIRECTORIES(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d")
@@ -41,25 +41,31 @@ ELSE()
   INCLUDE_DIRECTORIES(
       ${OPENGL_INCLUDE_DIR}
       ${SDL2_INCLUDE_DIR}
-      ${SDL2_TTF_INCLUDE_DIRS}
       ${GLEW_INCLUDE_DIRS}
-  	  ${PNG_INCLUDE_DIRS}
+      ${PNG_INCLUDE_DIRS}
       ${GLM_INCLUDE_DIRS}
       ${OGG_INCLUDE_DIRS}
       ${VORBIS_INCLUDE_DIR}
-      ${PORTAUDIO_INCLUDE_DIRS})
+      ${PORTAUDIO_INCLUDE_DIRS}
+      ${FREETYPE_INCLUDE_DIRS}
+      ${BZIP2_INCLUDE_DIRS})
 
   ADD_DEFINITIONS(${PNG_DEFINITIONS})
 
   TARGET_LINK_LIBRARIES(small3d PUBLIC
       ${OPENGL_LIBRARIES}
       ${SDL2_LIBRARY}
-      ${SDL2_TTF_LIBRARIES}
-  	  ${GLEW_LIBRARIES}
+      ${GLEW_LIBRARIES}
       ${PNG_LIBRARIES}
       ${OGG_LIBRARIES}
       ${VORBIS_LIBRARIES}
-      ${PORTAUDIO_LIBRARIES})
+      ${PORTAUDIO_LIBRARIES}
+      ${FREETYPE_LIBRARIES}    
+      )
+
+  IF(NOT WIN32)
+    TARGET_LINK_LIBRARIES(small3d PUBLIC ${BZIP2_LIBRARIES})
+  ENDIF()
 
   ADD_EXECUTABLE(small3dTest main.cpp)
 

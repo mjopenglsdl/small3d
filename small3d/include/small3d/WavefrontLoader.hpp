@@ -7,8 +7,8 @@
  */
 #pragma once
 
-#include "ModelLoader.hpp"
 #include <vector>
+#include "Model.hpp"
 
 namespace small3d {
 
@@ -19,7 +19,7 @@ namespace small3d {
    *
    */
 
-  class WavefrontLoader : public ModelLoader {
+  class WavefrontLoader {
   private:
 
     // Data read from .obj file

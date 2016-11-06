@@ -40,7 +40,6 @@ namespace small3d
     Image texture;
     std::string name;
 
-
   public:
 
     GLuint vaoId = 0;

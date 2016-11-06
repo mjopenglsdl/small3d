@@ -10,7 +10,6 @@
 #include <sstream>
 #include <iomanip>
 #include "Exception.hpp"
-#include "ModelLoader.hpp"
 #include "WavefrontLoader.hpp"
 #include "MathFunctions.hpp"
 
@@ -30,7 +29,7 @@ namespace small3d {
     currentFrame = 0;
     this->numFrames = numFrames;
 
-    unique_ptr<ModelLoader> loader(new WavefrontLoader());
+    WavefrontLoader loader;
 
     if (numFrames > 1) {
       LOGINFO("Loading " + name + " animated model (this may take a while):");
@@ -42,13 +41,13 @@ namespace small3d {
         ss << setfill('0') << setw(6) << idx + 1;
         string frameNum = ss.str();
         Model model1;
-        loader->load(modelPath + "_" + frameNum + ".obj", model1);
+        loader.load(modelPath + "_" + frameNum + ".obj", model1);
         model.push_back(model1);
       }
     }
     else {
       Model model1;
-      loader->load(modelPath, model1);
+      loader.load(modelPath, model1);
       model.push_back(model1);
     }
 

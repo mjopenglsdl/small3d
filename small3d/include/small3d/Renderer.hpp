@@ -6,7 +6,6 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-
 #pragma once
 
 #include <GL/glew.h>
@@ -17,7 +16,8 @@
 #include "Logger.hpp"
 #include <unordered_map>
 #include <glm/glm.hpp>
-#include <SDL_ttf.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 namespace small3d
 {
@@ -50,7 +50,11 @@ namespace small3d
 
     float zOffsetFromCamera;
 
-    std::unordered_map<std::string, TTF_Font*> fonts;
+    FT_Library library;
+
+    float textMemory[400000];
+
+    std::unordered_map<std::string, FT_Face> fontFaces;
 
     /**
      * @brief Load a shader's source code from a file into a string
@@ -118,6 +122,13 @@ namespace small3d
      */
 
     void positionCamera();
+
+    /**
+     * @brief Get the handle of a texture which has already been generated (see generateTexture)
+     * @param name The name of the texture
+     * @return The texture handle (0 if not found)
+     */
+    GLuint getTextureHandle(std::string name);
 
     /**
      * Render the bounding box set of an object. Useful for debugging collisions.
@@ -192,30 +203,23 @@ namespace small3d
     GLuint generateTexture(std::string name, const float *texture, unsigned long width, unsigned long height);
 
     /**
+     * @brief Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each
+     * other. This function can be used for rendering the ground, the sky or a splash screen for example.
+     * @param name The name of the texture to be used (must have been loaded with generateTexture())
+     * @param bottomLeft The coordinates for the bottom left corner of the texture
+     * @param topRight The coordinates for the top right corner of the texture
+     * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
+     */
+    void renderTexture(std::string name, const glm::vec3 &bottomLeft, const glm::vec3 &topRight, bool perspective = false);
+
+    /**
      * @brief Deletes the texture indicated by the given name.
      *
      * @param	name	The name of the texture.
      */
 
     void deleteTexture(std::string name);
-
-    /**
-     * @brief Get the handle of a texture which has already been generated (see generateTexture)
-     * @param name The name of the texture
-     * @return The texture handle (0 if not found)
-     */
-    GLuint getTextureHandle(std::string name);
-
-    /**
-     * @brief Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each
-     * other. This function can be used for rendering the ground, the sky or a splash screen for example.
-     * @param bottomLeft The coordinates for the bottom left corner of the texture
-     * @param topRight The coordinates for the top right corner of the texture
-     * @param textureName The name of the texture to be used (must have been loaded with generateTexture())
-     * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
-     */
-    void render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, std::string textureName, bool perspective = false);
-
+    
     /**
      * @brief Render a scene object
      * @param sceneObject The scene object
@@ -227,14 +231,14 @@ namespace small3d
      * @brief Render some text on the screen. A texture will be generated, containing the given
      * text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space.
      * @param text The text to be rendered
-     * @param colour The colour in which the text will be rendered (r, g, b and a)
+     * @param colour The colour in which the text will be rendered (r, g, b)
      * @param bottomLeft The coordinates of the bottom left corner of the text rectangle (x, y)
      * @param topRight The coordinates of the top right corner of the text rectangle (x, y)
-     * @param fontPath Path to the TrueType font (.ttf) which will be used
      * @param fontSize The size of the font which will be used
+     * @param fontPath Path to the TrueType font (.ttf) which will be used
      */
-    void render(std::string text, glm::uvec4 colour, glm::vec2 bottomLeft, glm::vec2 topRight,
-                std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf", int fontSize=48);
+    void write(std::string text, glm::vec3 colour, glm::vec2 bottomLeft, glm::vec2 topRight, int fontSize=48,
+                std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf");
 
     /**
      * @brief Clear a scene object from the GPU buffers (the object itself remains intact)

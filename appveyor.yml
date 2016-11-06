@@ -4,12 +4,12 @@ branches:
     - master
     - develop
 environment:
-    PYTHON: "C:\\Python27-x64"
-    PYTHON_VERSION: "2.7.11"
-    PYTHON_ARCH: "64"
+    PYTHON: "C:\\Python27"
+    PYTHON_VERSION: "2.7.8"
+    PYTHON_ARCH: "32"
 
     CONAN_UPLOAD: 1
-    CONAN_REFERENCE: "small3d/1.0.11"
+    CONAN_REFERENCE: "small3d/1.1.0"
     CONAN_USERNAME: "coding3d"
     CONAN_CHANNEL: "testing"
     CONAN_TOTAL_PAGES: 2
@@ -24,4 +24,4 @@ install:
   - conan user
 
 test_script:
-  - C:\Python27-x64\python build.py
+  - C:\Python27\python build.py

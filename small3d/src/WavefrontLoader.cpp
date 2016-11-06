@@ -10,6 +10,7 @@
 #include "Exception.hpp"
 #include <fstream>
 #include <unordered_map>
+#include <memory>
 #include "GetTokens.hpp"
 #include <SDL.h>
 

@@ -11,7 +11,6 @@
 #include <fstream>
 #include "MathFunctions.hpp"
 #include <glm/gtc/type_ptr.hpp>
-#include <iostream>
 
 using namespace std;
 
@@ -35,12 +34,12 @@ namespace small3d {
 
     init(width, height, windowTitle, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
 
-    if(TTF_Init()==-1)
-    {
-      LOGERROR(TTF_GetError());
-      throw Exception("Unable to initialise font system");
-    }
+    FT_Error ftError = FT_Init_FreeType( &library );
 
+    if(ftError != 0)
+      {
+	throw Exception("Unable to initialise font system");
+      }
   }
 
   Renderer::~Renderer() {
@@ -52,9 +51,11 @@ namespace small3d {
     }
     delete textures;
 
-    for(auto idFontPair : fonts) {
-      TTF_CloseFont(idFontPair.second);
+    for(auto idFacePair : fontFaces) {
+      FT_Done_Face(idFacePair.second);
     }
+
+    FT_Done_FreeType(library);
 
     if (!noShaders) {
       glUseProgram(0);
@@ -155,8 +156,8 @@ namespace small3d {
     if (status == GL_FALSE ) {
 
       throw Exception(
-          "Failed to compile shader:\n" + shaderSource + "\n"
-          + this->getShaderInfoLog(shader));
+		      "Failed to compile shader:\n" + shaderSource + "\n"
+		      + this->getShaderInfoLog(shader));
     }
     else {
       LOGINFO("Shader " + shaderSourceFile + " compiled successfully.");
@@ -195,7 +196,7 @@ namespace small3d {
     else {
       noShaders = true;
       throw Exception(
-          "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
+		      "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
     }
 
   }
@@ -252,7 +253,7 @@ namespace small3d {
     }
 
     Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
-                   SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+      SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
     sdlWindow = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
                                  SDL_WINDOWPOS_CENTERED, width, height,
@@ -296,16 +297,16 @@ namespace small3d {
       vertexShaderPath = shadersPath + "OpenGL33/perspectiveMatrixLightedShader.vert";
       fragmentShaderPath = shadersPath + "OpenGL33/textureShader.frag";
       simpleVertexShaderPath =
-          shadersPath + "OpenGL33/simpleShader.vert";
+	shadersPath + "OpenGL33/simpleShader.vert";
       simpleFragmentShaderPath = shadersPath + "OpenGL33/simpleShader.frag";
 
     }
     else {
       vertexShaderPath =
-          shadersPath + "OpenGL21/perspectiveMatrixLightedShader.vert";
+	shadersPath + "OpenGL21/perspectiveMatrixLightedShader.vert";
       fragmentShaderPath = shadersPath + "OpenGL21/textureShader.frag";
       simpleVertexShaderPath =
-          shadersPath + "OpenGL21/simpleShader.vert";
+	shadersPath + "OpenGL21/simpleShader.vert";
       simpleFragmentShaderPath = shadersPath + "OpenGL21/simpleShader.frag";
     }
 
@@ -439,15 +440,15 @@ namespace small3d {
   }
 
   void Renderer::positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation,
-    const glm::mat4x4 &rotationAdjustment) {
+				    const glm::mat4x4 &rotationAdjustment) {
     // Rotation
 
     GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                         "xRotationMatrix");
+							"xRotationMatrix");
     GLint yRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                         "yRotationMatrix");
+							"yRotationMatrix");
     GLint zRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                         "zRotationMatrix");
+							"zRotationMatrix");
     GLint rotationAdjustmentMatrixUniform = glGetUniformLocation(perspectiveProgram,
                                                                  "rotationAdjustmentMatrix");
 
@@ -465,11 +466,11 @@ namespace small3d {
     // Camera rotation
 
     GLint xCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                               "xCameraRotationMatrix");
+							      "xCameraRotationMatrix");
     GLint yCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                               "yCameraRotationMatrix");
+							      "yCameraRotationMatrix");
     GLint zCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                               "zCameraRotationMatrix");
+							      "zCameraRotationMatrix");
 
 
     glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(-cameraRotation.x)));
@@ -483,14 +484,14 @@ namespace small3d {
   }
 
 
-  void Renderer::render(const glm::vec3 &bottomLeft, const glm::vec3 &topRight, string textureName,
+  void Renderer::renderTexture(string name, const glm::vec3 &bottomLeft, const glm::vec3 &topRight, 
                         bool perspective) {
 
     float vertices[16] = {
-        bottomLeft.x, bottomLeft.y, bottomLeft.z, 1.0f,
-        topRight.x, bottomLeft.y, bottomLeft.z, 1.0f,
-        topRight.x, topRight.y, topRight.z, 1.0f,
-        bottomLeft.x, topRight.y, topRight.z, 1.0f
+      bottomLeft.x, bottomLeft.y, bottomLeft.z, 1.0f,
+      topRight.x, bottomLeft.y, bottomLeft.z, 1.0f,
+      topRight.x, topRight.y, topRight.z, 1.0f,
+      bottomLeft.x, topRight.y, topRight.z, 1.0f
     };
 
     glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
@@ -516,10 +517,10 @@ namespace small3d {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     unsigned int vertexIndexes[6] =
-        {
-            0, 1, 2,
-            2, 3, 0
-        };
+      {
+	0, 1, 2,
+	2, 3, 0
+      };
 
     GLuint indexBufferObject = 0;
 
@@ -528,21 +529,21 @@ namespace small3d {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
 
-    GLuint textureHandle = getTextureHandle(textureName);
+    GLuint textureHandle = getTextureHandle(name);
 
     if (textureHandle == 0) {
-      throw Exception("Texture " + textureName + "has not been generated");
+      throw Exception("Texture " + name + "has not been generated");
     }
 
     glBindTexture(GL_TEXTURE_2D, textureHandle);
 
     float textureCoords[8] =
-        {
-            0.0f, 1.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
-            0.0f, 0.0f
-        };
+      {
+	0.0f, 1.0f,
+	1.0f, 1.0f,
+	1.0f, 0.0f,
+	0.0f, 0.0f
+      };
 
     GLuint coordBuffer = 0;
 
@@ -564,7 +565,7 @@ namespace small3d {
 
       // Lighting
       GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
-                                                          "lightDirection");
+							 "lightDirection");
       glUniform3fv(lightDirectionUniform, 1,
                    glm::value_ptr(lightDirection));
 
@@ -596,7 +597,7 @@ namespace small3d {
   }
 
   void Renderer::render(const BoundingBoxSet &boundingBoxSet, const glm::vec3 &offset,
-  const glm::vec3 &rotation, const glm::mat4x4 &rotationAdjustment) {
+			const glm::vec3 &rotation, const glm::mat4x4 &rotationAdjustment) {
     glUseProgram(perspectiveProgram);
     int numBoxes = boundingBoxSet.getNumBoxes();
 
@@ -641,7 +642,9 @@ namespace small3d {
       unsigned int vertexIndexes[24];
 
       for (unsigned long vIdx = 0; vIdx < 6; ++vIdx) {
-        memcpy(&vertexIndexes[vIdx * 4], boundingBoxSet.facesVertexIndexes[idx * 6 + vIdx].data(), 4 * sizeof(unsigned int));
+        memcpy(&vertexIndexes[vIdx * 4],
+	       boundingBoxSet.facesVertexIndexes[idx * 6 + vIdx].data(),
+	       4 * sizeof(unsigned int));
       }
 
       // Vertex indexes to GPU
@@ -786,8 +789,8 @@ namespace small3d {
 
       if (sceneObject.textureId == 0) {
         sceneObject.textureId = generateTexture(sceneObject.getName(), sceneObject.getTexture().getData(),
-                                  sceneObject.getTexture().getWidth(),
-                                  sceneObject.getTexture().getHeight());
+						sceneObject.getTexture().getWidth(),
+						sceneObject.getTexture().getHeight());
       }
 
       glBindTexture(GL_TEXTURE_2D, sceneObject.textureId);
@@ -814,7 +817,7 @@ namespace small3d {
 
     // Lighting
     GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
-                                                        "lightDirection");
+						       "lightDirection");
     glUniform3fv(lightDirectionUniform, 1,
                  glm::value_ptr(lightDirection));
 
@@ -850,76 +853,104 @@ namespace small3d {
 
   }
 
-  void Renderer::render(string text, glm::uvec4 colour,
-                        glm::vec2 bottomLeft, glm::vec2 topRight,
-                        string fontPath, int fontSize)
+  void Renderer::write(string text, glm::vec3 colour, glm::vec2 bottomLeft, glm::vec2 topRight,
+		       int fontSize, string fontPath)
   {
 
-    string fontId = intToStr(fontSize) + fontPath;
-    unordered_map<string, TTF_Font*>::iterator idFontPair = fonts.find(fontId);
+    string faceId = intToStr(fontSize) + fontPath;
+    
+    unordered_map<string, FT_Face>::iterator idFacePair = fontFaces.find(faceId);
 
-    TTF_Font *font = nullptr;
+    FT_Face face;
 
-    if (idFontPair == fonts.end()) {
-      string fontFullPath = SDL_GetBasePath() + fontPath;
-      LOGINFO("Loading font from " + fontFullPath);
-      font = TTF_OpenFont(fontFullPath.c_str(), fontSize);
+    FT_Error error;
 
-      if (font == nullptr)
-      {
-        LOGERROR(TTF_GetError());
-        throw Exception("Failed to load font");
+    if (idFacePair == fontFaces.end()) {
+
+      string faceFullPath = SDL_GetBasePath() + fontPath;
+      LOGINFO("Loading font from " + faceFullPath);
+
+      error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);
+
+      if (error != 0) {
+	throw Exception("Failed to load font from " + faceFullPath);
       }
-      else
-      {
-        LOGINFO("TTF font loaded successfully");
-        fonts.insert(make_pair(fontId, font));
+      else{
+	LOGINFO("Font loaded successfully");
+	fontFaces.insert(make_pair(faceId, face));
       }
     } else {
-      font = idFontPair->second;
+      face = idFacePair->second;
     }
 
-    SDL_Color sdlColour = {(Uint8) colour.r, (Uint8) colour.g, (Uint8) colour.b, (Uint8) colour.a};
+    // Multiplying by 64 to convert to 26.6 fractional points. Using 100dpi.
+    error = FT_Set_Char_Size(face, 64 * fontSize, 0, 100, 0);
 
-    SDL_Surface *textSurface = TTF_RenderText_Blended(font, text.c_str(), sdlColour);
-    int numPixels = textSurface->h * textSurface->w;
-    Uint32 *pix = static_cast<Uint32*>(textSurface->pixels);
-    float *texturef = new float[numPixels * 4];
-    for (int pidx = 0; pidx < numPixels; ++pidx)
-    {
-      Uint32 r = pix[pidx] & textSurface->format->Rmask;
-      Uint32 g = pix[pidx] & textSurface->format->Gmask;
-      Uint32 b = pix[pidx] & textSurface->format->Bmask;
-      Uint32 a = pix[pidx] & textSurface->format->Amask;
+    if (error != 0) {
+      throw Exception("Failed to set font size.");
+    }
 
-      r = r >> textSurface->format->Rshift;
-      g = g >> textSurface->format->Gshift;
-      b = b >> textSurface->format->Bshift;
-      a = a >> textSurface->format->Ashift;
+    unsigned long width = 0, height =0;
 
-      float ttuple[4] = {static_cast<float>(r),
-                         static_cast<float>(g),
-                         static_cast<float>(b),
-                         static_cast<float>(a)
-      };
+    // Figure out bitmap dimensions
+    for(char &c: text) {
+      
+      error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
 
-      ttuple[0]= floorf(100.0f * (ttuple[0] / 255.0f) + 0.5f) / 100.0f;
-      ttuple[1]= floorf(100.0f * (ttuple[1] / 255.0f) + 0.5f) / 100.0f;
-      ttuple[2]= floorf(100.0f * (ttuple[2] / 255.0f) + 0.5f) / 100.0f;
-      ttuple[3]= floorf(100.0f * (ttuple[3] / 255.0f) + 0.5f) / 100.0f;
+      if (error != 0) {
+	throw Exception("Failed to load character glyph.");
+      }
 
-      memcpy(&texturef[pidx * 4], &ttuple, sizeof(ttuple));
+      FT_GlyphSlot slot = face->glyph;
+
+      width += slot->advance.x / 64;
+
+      if (height < static_cast<unsigned long>(slot->bitmap.rows))
+	height = slot->bitmap.rows;
+    }
+    
+    memset(textMemory, 0, 4 * width * height * sizeof(float));
+
+    unsigned long totalAdvance = 0;
+
+    for(char &c: text) {
+      error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
+      if (error != 0) {
+	throw Exception("Failed to load character glyph.");
+      }
+
+      FT_GlyphSlot slot = face->glyph;
+
+      if (slot->bitmap.width * slot->bitmap.rows > 0) {
+	for (int row = 0; row < static_cast<int>(slot->bitmap.rows); ++row){
+	  for (int col = 0; col < static_cast<int>(slot->bitmap.width); ++col) {
+	    glm::vec4 colourAlpha = glm::vec4(colour, 0.0f);
+	    colourAlpha.a = floorf(100.0f *
+		     (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f;
+	    memcpy(
+		   &textMemory[4 * width * (height - static_cast<unsigned long>(slot->bitmap_top)
+				     + static_cast<unsigned long>(row)) // row position
+			    + totalAdvance + 4 * (static_cast<unsigned long>(col)
+						  + static_cast<unsigned long>(slot->bitmap_left)) // column position
+			    ],
+		   glm::value_ptr(colourAlpha),
+		   4 * sizeof(float));
+	  }
+	}	  
+      }
+      totalAdvance += 4 * static_cast<unsigned long>(slot->advance.x / 64);
 
     }
-    string textTextureId = intToStr(fontSize) + "text_" + text;
-    generateTexture(textTextureId, texturef, textSurface->w, textSurface->h);
-    delete[] texturef;
-    SDL_FreeSurface(textSurface);
 
-    render(glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
-           glm::vec3(topRight.x, topRight.y, -0.5f), textTextureId);
+    string textureName = intToStr(fontSize) + "text_" + text;
 
-    deleteTexture(textTextureId);
+    generateTexture(textureName, textMemory, width, height);
+
+    renderTexture(textureName, glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
+           glm::vec3(topRight.x, topRight.y, -0.5f));
+    
+    deleteTexture(textureName);
+    
   }
 
   void Renderer::clearBuffers(SceneObject &sceneObject) {
@@ -972,40 +1003,40 @@ namespace small3d {
   }
 
   /**
-  * Convert error enum returned from OpenGL to a readable string error message.
-  * @param error The error code returned from OpenGL
-  */
+   * Convert error enum returned from OpenGL to a readable string error message.
+   * @param error The error code returned from OpenGL
+   */
   string openglErrorToString(GLenum error) {
     string errorString;
 
     switch (error) {
-      case GL_NO_ERROR:
-        errorString = "GL_NO_ERROR: No error has been recorded. The value of this symbolic constant is guaranteed to be 0.";
-        break;
-      case GL_INVALID_ENUM:
-        errorString = "GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument. The offending command is ignored and has no other side effect than to set the error flag.";
-        break;
-      case GL_INVALID_VALUE:
-        errorString = "GL_INVALID_VALUE: A numeric argument is out of range. The offending command is ignored and has no other side effect than to set the error flag.";
-        break;
-      case GL_INVALID_OPERATION:
-        errorString = "GL_INVALID_OPERATION: The specified operation is not allowed in the current state. The offending command is ignored and has no other side effect than to set the error flag.";
-        break;
-      case GL_INVALID_FRAMEBUFFER_OPERATION:
-        errorString = "GL_INVALID_FRAMEBUFFER_OPERATION: The framebuffer object is not complete. The offending command is ignored and has no other side effect than to set the error flag.";
-        break;
-      case GL_OUT_OF_MEMORY:
-        errorString = "GL_OUT_OF_MEMORY: There is not enough memory left to execute the command. The state of the GL is undefined, except for the state of the error flags, after this error is recorded.";
-        break;
-      case GL_STACK_UNDERFLOW:
-        errorString = "GL_STACK_UNDERFLOW: An attempt has been made to perform an operation that would cause an internal stack to underflow.";
-        break;
-      case GL_STACK_OVERFLOW:
-        errorString = "GL_STACK_OVERFLOW: An attempt has been made to perform an operation that would cause an internal stack to overflow.";
-        break;
-      default:
-        errorString = "Unknown error";
-        break;
+    case GL_NO_ERROR:
+      errorString = "GL_NO_ERROR: No error has been recorded. The value of this symbolic constant is guaranteed to be 0.";
+      break;
+    case GL_INVALID_ENUM:
+      errorString = "GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument. The offending command is ignored and has no other side effect than to set the error flag.";
+      break;
+    case GL_INVALID_VALUE:
+      errorString = "GL_INVALID_VALUE: A numeric argument is out of range. The offending command is ignored and has no other side effect than to set the error flag.";
+      break;
+    case GL_INVALID_OPERATION:
+      errorString = "GL_INVALID_OPERATION: The specified operation is not allowed in the current state. The offending command is ignored and has no other side effect than to set the error flag.";
+      break;
+    case GL_INVALID_FRAMEBUFFER_OPERATION:
+      errorString = "GL_INVALID_FRAMEBUFFER_OPERATION: The framebuffer object is not complete. The offending command is ignored and has no other side effect than to set the error flag.";
+      break;
+    case GL_OUT_OF_MEMORY:
+      errorString = "GL_OUT_OF_MEMORY: There is not enough memory left to execute the command. The state of the GL is undefined, except for the state of the error flags, after this error is recorded.";
+      break;
+    case GL_STACK_UNDERFLOW:
+      errorString = "GL_STACK_UNDERFLOW: An attempt has been made to perform an operation that would cause an internal stack to underflow.";
+      break;
+    case GL_STACK_OVERFLOW:
+      errorString = "GL_STACK_OVERFLOW: An attempt has been made to perform an operation that would cause an internal stack to overflow.";
+      break;
+    default:
+      errorString = "Unknown error";
+      break;
     }
     return errorString;
   }

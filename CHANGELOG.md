@@ -3,6 +3,19 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.1.0
+------
+
+Note: I have mentioned something on Twitter about switching to GLFW and stopping to use SDL. I've decided not to do that after all. In the future, small3d may support GLFW in addition to SDL, but SDL support will not be dropped. Other than that, changes in this version reflect the intention to keep small3d small and easy to understand. Another goal is for small3d to run on as many different platforms as possible, without imposing the requirement to have the latest and greatest technology.
+
+- Now also supporting Fedora. Instructions have been updated accordingly for the independent build and conan builds have been tested too.
+- Stopped using SDL2_ttf. Now accessing freetype directly.
+- [BREAKING] Renderer.render function that renders text, now takes a glm::vec3 parameter for the colour, instead of a glm::uvec4. Each component has to be a float between 0.0 and 1.0.
+- [BREAKING] Renderer.render function that renders text has also been renamed to Renderer.write and its parameters have been reordered for consistency.
+- [BREAKING] Renderer.getTextureHandle is now private.
+- [BREAKING] Renderer.render function that renders textures has been renamed to Renderer.renderTexture and its parameters have been reordered for consistency.
+- Removed ModelLoader virtual class.
+
 v1.0.11
 -------
 

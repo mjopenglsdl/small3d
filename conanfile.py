@@ -3,34 +3,53 @@ import os, subprocess
 
 class Small3dConan(ConanFile):
     name = "small3d"
-    version = "1.0.11"
+    version = "1.1.0"
     ZIP_FOLDER_NAME = "%s-%s" % (name, version)
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
     url="http://github.com/dimi309/small3d"
-    requires = "SDL2/2.0.4@lasote/stable","SDL2_ttf/2.0.14@coding3d/ci","glew/2.0.0@coding3d/stable", \
+    requires = "SDL2/2.0.4@lasote/stable","freetype/2.6.3@lasote/stable","glew/2.0.0@coding3d/stable", \
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.7.6@dlarudgus20/stable", \
         "vorbis/1.3.5@coding3d/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
     default_options = "glew:shared=False"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = "CMakeLists.txt", "small3d/*", "FindSMALL3D.cmake", "cmake/*"
 
-    def linux_package_installed(self, package):
+    def rpm_package_installed(self, package):
+        p = subprocess.Popen(['rpm', '-q', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = p.communicate()
+        return 'install ok' in out or 'not installed' not in out
+
+    def ensure_rpm_dependency(self, package):
+        if not self.rpm_package_installed(package):
+            self.output.warn(package + " is not installed in this machine! Conan will try to install it.")
+            # Note: yum is automatically redirected to dnf on modern Fedora distros (see 'man yum2dnf')
+            self.run("sudo yum install -y " + package)
+            if not self.rpm_package_installed(package):
+                self.output.error(package + " Installation doesn't work... install it manually and try again")
+		exit(1)
+
+    def debian_package_installed(self, package):
         p = subprocess.Popen(['dpkg', '-s', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         return 'install ok' in out
 
-    def ensure_linux_dependency(self, package):
-        if not self.linux_package_installed(package):
+    def ensure_debian_dependency(self, package):
+        if not self.debian_package_installed(package):
             self.output.warn(package + " is not installed in this machine! Conan will try to install it.")
             self.run("sudo apt-get update && sudo apt-get install -y " + package)
-            if not self.linux_package_installed(package):
+            if not self.debian_package_installed(package):
                 self.output.error(package + " Installation doesn't work... install it manually and try again")
                 exit(1)
 
     def system_requirements(self):
-        if self.settings.os == "Linux":
-            self.ensure_linux_dependency("libjack-dev")
+	if subprocess.call("which apt-get", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0:
+            self.ensure_debian_dependency("libjack-dev")
+        elif subprocess.call("which yum", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0:
+            self.ensure_rpm_dependency("jack-audio-connection-kit-devel")
+            self.ensure_rpm_dependency("alsa-lib-devel")
+        else:
+	    self.output.warn("Could not determine Linux distro, skipping system requirements check.")
 
     def build(self):
         cmake = CMake(self.settings)
