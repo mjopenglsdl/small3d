@@ -1,11 +1,11 @@
 ADD_LIBRARY(small3d BoundingBoxSet.cpp Exception.cpp GetTokens.cpp
-      Image.cpp Logger.cpp MathFunctions.cpp Model.cpp
-      Renderer.cpp SceneObject.cpp
-      WavefrontLoader.cpp SoundPlayer.cpp ../include/small3d/BoundingBoxSet.hpp
-    ../include/small3d/Exception.hpp ../include/small3d/GetTokens.hpp ../include/small3d/Image.hpp
-    ../include/small3d/Logger.hpp ../include/small3d/MathFunctions.hpp ../include/small3d/Model.hpp
-    ../include/small3d/Renderer.hpp ../include/small3d/SceneObject.hpp
-    ../include/small3d/SoundPlayer.hpp ../include/small3d/SoundData.hpp ../include/small3d/WavefrontLoader.hpp)
+  Image.cpp Logger.cpp MathFunctions.cpp Model.cpp
+  Renderer.cpp SceneObject.cpp
+  WavefrontLoader.cpp SoundPlayer.cpp ../include/small3d/BoundingBoxSet.hpp
+  ../include/small3d/Exception.hpp ../include/small3d/GetTokens.hpp ../include/small3d/Image.hpp
+  ../include/small3d/Logger.hpp ../include/small3d/MathFunctions.hpp ../include/small3d/Model.hpp
+  ../include/small3d/Renderer.hpp ../include/small3d/SceneObject.hpp
+  ../include/small3d/SoundPlayer.hpp ../include/small3d/SoundData.hpp ../include/small3d/WavefrontLoader.hpp)
 
 TARGET_INCLUDE_DIRECTORIES(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d")
 
@@ -13,20 +13,16 @@ IF(NOT WIN32 OR MINGW)
   IF(APPLE)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
   ELSE()
-    target_compile_options(small3d PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Avoid gcc problems in Ubuntu
+    TARGET_COMPILE_OPTIONS(small3d PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Avoid gcc problems in Ubuntu
   ENDIF()
 ELSE()
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 ENDIF()
 
-IF(APPLE)
-  SET_TARGET_PROPERTIES(small3d PROPERTIES LINK_FLAGS
-      "-framework OpenGL Cocoa IOKit AudioUnit AudioToolbox CoreAudio")
-
-ELSEIF(WIN32 AND NOT MINGW)
+IF(WIN32 AND NOT MINGW)
   SET_TARGET_PROPERTIES(small3d PROPERTIES LINK_FLAGS
     "/NODEFAULTLIB:\"LIBCMTD\" /NODEFAULTLIB:\"LIBCMT\"")
-ELSE()
+ELSEIF(UNIX AND NOT APPLE)
   TARGET_LINK_LIBRARIES(small3d PUBLIC "-ljack -lasound")
 ENDIF()
 
@@ -48,27 +44,27 @@ ELSE()
   ENDIF()
 
   INCLUDE_DIRECTORIES(
-      ${OPENGL_INCLUDE_DIR}
-      ${PNG_INCLUDE_DIRS}
-      ${GLM_INCLUDE_DIRS}
-      ${OGG_INCLUDE_DIRS}
-      ${VORBIS_INCLUDE_DIR}
-      ${PORTAUDIO_INCLUDE_DIRS}
-      ${FREETYPE_INCLUDE_DIRS}
-      ${BZIP2_INCLUDE_DIRS}
-      )
+    ${OPENGL_INCLUDE_DIR}
+    ${PNG_INCLUDE_DIRS}
+    ${GLM_INCLUDE_DIRS}
+    ${OGG_INCLUDE_DIRS}
+    ${VORBIS_INCLUDE_DIR}
+    ${PORTAUDIO_INCLUDE_DIRS}
+    ${FREETYPE_INCLUDE_DIRS}
+    ${BZIP2_INCLUDE_DIRS}
+    )
 
   ADD_DEFINITIONS(${PNG_DEFINITIONS})
 
   TARGET_LINK_LIBRARIES(small3d PUBLIC
-      ${OPENGL_LIBRARIES}
-      ${GLEW_LIBRARIES}
-      ${PNG_LIBRARIES}
-      ${OGG_LIBRARIES}
-      ${VORBIS_LIBRARIES}
-      ${PORTAUDIO_LIBRARIES}
-      ${FREETYPE_LIBRARIES}    
-      )
+    ${OPENGL_LIBRARIES}
+    ${GLEW_LIBRARIES}
+    ${PNG_LIBRARIES}
+    ${OGG_LIBRARIES}
+    ${VORBIS_LIBRARIES}
+    ${PORTAUDIO_LIBRARIES}
+    ${FREETYPE_LIBRARIES}    
+    )
 
   IF(NOT WIN32)
     TARGET_LINK_LIBRARIES(small3d PUBLIC ${BZIP2_LIBRARIES})
@@ -82,16 +78,26 @@ ELSE()
   ADD_EXECUTABLE(small3dTest main.cpp)
 
   TARGET_INCLUDE_DIRECTORIES(small3dTest PUBLIC
-      "${small3d_SOURCE_DIR}/small3d/include")
+    "${small3d_SOURCE_DIR}/small3d/include")
 
   FIND_PACKAGE(GTest REQUIRED)
   INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
   TARGET_LINK_LIBRARIES(small3dTest PUBLIC ${GTEST_BOTH_LIBRARIES} small3d )
-  SET_TARGET_PROPERTIES(small3dTest PROPERTIES LINK_FLAGS
-    "-framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
 
-  ADD_CUSTOM_COMMAND(TARGET small3dTest POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different       
-    "${small3d_BINARY_DIR}/small3d/src/small3dTest"     
-    "${small3d_BINARY_DIR}/bin/small3dTest")            
+  IF(APPLE)
+
+    SET(SMALL3DTEST_LINK_FLAGS "-framework AudioUnit -framework AudioToolbox -framework CoreAudio")
+
+    IF(DEFINED WITH_GLFW AND WITH_GLFW)
+      SET(SMALL3DTEST_LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS} -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
+    ENDIF()
+
+    SET_TARGET_PROPERTIES(small3dTest PROPERTIES LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS}")
+
+    ADD_CUSTOM_COMMAND(TARGET small3dTest POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different       
+      "${small3d_BINARY_DIR}/small3d/src/small3dTest"     
+      "${small3d_BINARY_DIR}/bin/small3dTest")
+  ENDIF()
+  
 ENDIF()
