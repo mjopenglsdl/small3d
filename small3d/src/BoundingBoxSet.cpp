@@ -36,10 +36,10 @@ namespace small3d {
     if (file.is_open()) {
       while (getline(file, line)) {
         if (line[0] == 'v' || line[0] == 'f') {
-          string *tokens = new string[5]; // Max 5 such tokens in the specific kind of
-          // Wavefront file
+			vector<string> tokens;
 
-          int numTokens = getTokens(line, ' ', tokens);
+          // Wavefront file
+          getTokens(line, ' ', tokens);
 
           int idx = 0;
 
@@ -47,7 +47,7 @@ namespace small3d {
             // get vertex
             vector<float> v;
 
-            for (int tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
+            for (size_t tokenIdx = 0; tokenIdx < tokens.size(); ++tokenIdx) {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex indicator
               {
@@ -61,7 +61,7 @@ namespace small3d {
             // get vertex index
             vector<unsigned int> v;
 
-            for (int tokenIdx = 0; tokenIdx < numTokens; ++tokenIdx) {
+            for (size_t tokenIdx = 0; tokenIdx < tokens.size(); ++tokenIdx) {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is face indicator
               {
@@ -70,10 +70,6 @@ namespace small3d {
               ++idx;
             }
             facesVertexIndexes.push_back(v);
-          }
-
-          if (tokens != NULL) {
-            delete[] tokens;
           }
         }
       }
