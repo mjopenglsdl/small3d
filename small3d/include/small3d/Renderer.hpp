@@ -138,6 +138,8 @@ namespace small3d
 
   public:
 
+    GLFWwindow* getWindow();
+
     /**
      * @brief Vector, indicating the direction of the light in the scene.
      */

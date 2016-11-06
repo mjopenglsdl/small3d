@@ -72,6 +72,10 @@ namespace small3d {
     glfwTerminate();
   }
 
+  GLFWwindow* Renderer::getWindow() {
+    return window;
+  }
+
   string Renderer::loadShaderFromFile(const string &fileLocation) {
     initLogger();
     string shaderSource = "";

@@ -68,6 +68,11 @@ ELSE()
     TARGET_LINK_LIBRARIES(small3d PUBLIC ${BZIP2_LIBRARIES})
   ENDIF()
 
+  ADD_CUSTOM_COMMAND(TARGET small3d POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different       
+    "${small3d_BINARY_DIR}/small3d/src/libsmall3d.a"    
+    "${small3d_BINARY_DIR}/lib/libsmall3d.a")           
+
   ADD_EXECUTABLE(small3dTest main.cpp)
 
   TARGET_INCLUDE_DIRECTORIES(small3dTest PUBLIC
@@ -77,5 +82,10 @@ ELSE()
   INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
   TARGET_LINK_LIBRARIES(small3dTest PUBLIC ${GTEST_BOTH_LIBRARIES} small3d )
   SET_TARGET_PROPERTIES(small3dTest PROPERTIES LINK_FLAGS
-      "-framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
+    "-framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
+
+  ADD_CUSTOM_COMMAND(TARGET small3dTest POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different       
+    "${small3d_BINARY_DIR}/small3d/src/small3dTest"     
+    "${small3d_BINARY_DIR}/bin/small3dTest")            
 ENDIF()
