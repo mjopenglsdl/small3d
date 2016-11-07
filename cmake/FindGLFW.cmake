@@ -1,9 +1,22 @@
-find_path(GLFW_INCLUDE_DIR NAMES GLFW PATHS include)
-find_library(GLFW_LIBRARY NAMES glfw3 PATHS lib)
+find_path(GLFW_INCLUDE_DIRS
+  NAMES
+  GLFW
+  PATHS
+  include
+  /usr/include/GL
+  )
 
-SET(GLFW_FOUND TRUE)
+find_library(
+  GLFW_LIBRARIES
+  NAMES
+  glfw3
+  glfw
+  PATHS
+  lib
+  /usr/lib
+  /usr/lib/i386-linux-gnu
+  )
 
-set(GLFW_INCLUDE_DIRS ${GLFW_INCLUDE_DIR})
-set(GLFW_LIBRARIES ${GLFW_LIBRARY})
+INCLUDE(FindPackageHandleStandardArgs)
 
-mark_as_advanced(GLFW_LIBRARY GLFW_INCLUDE_DIR)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(GLFW REQUIRED_VARS GLFW_LIBRARIES GLFW_INCLUDE_DIRS)

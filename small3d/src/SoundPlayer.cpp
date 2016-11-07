@@ -8,6 +8,7 @@
 
 #include "SoundPlayer.hpp"
 #include "Exception.hpp"
+#include <cstring>
 
 #define WORD_SIZE 2
 #define PORTAUDIO_SAMPLE_FORMAT paInt16
