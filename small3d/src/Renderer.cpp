@@ -261,11 +261,11 @@ namespace small3d {
     
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-    glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+    /*glfwWindowHint(GLFW_RED_BITS, mode->redBits);
     glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
     glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
     glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
-
+    */
     if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
       throw Exception("Screen width and height both have to be equal or not equal to zero at the same time.");
     }
