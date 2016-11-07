@@ -14,7 +14,15 @@
 
 using namespace std;
 
+
 namespace small3d {
+
+  void error_callback(int error, const char* description)
+  {
+    LOGERROR(string(description));
+  }
+
+  
   string openglErrorToString(GLenum error);
 
   Renderer::Renderer(string windowTitle, int width, int height,
@@ -233,6 +241,9 @@ namespace small3d {
   void Renderer::initWindow(int &width, int &height, const string &windowTitle) {
 
 #ifdef SMALL3D_GLFW
+
+    glfwSetErrorCallback(error_callback);
+    
     if (!glfwInit()){
       throw Exception("Unable to initialise GLFW");
     }
@@ -240,23 +251,27 @@ namespace small3d {
 #ifdef __APPLE__
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-#endif
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif
 
     bool fullScreen = false;
 
-    GLFWmonitor *monitor = nullptr;
+    GLFWmonitor *monitor = glfwGetPrimaryMonitor();
     
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+    glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+    glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+    glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+    glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
     if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
       throw Exception("Screen width and height both have to be equal or not equal to zero at the same time.");
     }
     else if (width == 0) {
       fullScreen = true;
-      monitor = glfwGetPrimaryMonitor();
      
-      const GLFWvidmode *mode = glfwGetVideoMode(monitor);
-      
       width = mode->width;
       height = mode->height;
       
