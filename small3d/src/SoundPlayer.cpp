@@ -99,7 +99,7 @@ namespace small3d {
 
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
-    fopen_s(&fp, (SDL_GetBasePath() + soundFilePath).c_str(), "rb");
+    fopen_s(&fp, (soundFilePath).c_str(), "rb");
 #else
     FILE *fp = fopen(soundFilePath.c_str(), "rb");
 #endif

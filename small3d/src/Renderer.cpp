@@ -72,8 +72,8 @@ namespace small3d {
 #ifdef SMALL3D_GLFW
     glfwTerminate();
 #else
-    if (sdlWindow != 0) {
-      SDL_DestroyWindow(sdlWindow);
+    if (window != 0) {
+      SDL_DestroyWindow(window);
     }
     SDL_Quit();
 #endif
@@ -307,16 +307,16 @@ namespace small3d {
     Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
       SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
-    sdlWindow = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
+    window = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
                                  SDL_WINDOWPOS_CENTERED, width, height,
                                  flags);
 
-    if (!sdlWindow) {
+    if (!window) {
       LOGERROR(SDL_GetError());
       throw Exception("Unable to set video");
     }
 
-    if (SDL_GL_CreateContext(sdlWindow) == NULL) {
+    if (SDL_GL_CreateContext(window) == NULL) {
       LOGERROR(SDL_GetError());
       throw Exception(string("Unable to create GL context"));
     }
@@ -1052,7 +1052,11 @@ namespace small3d {
   }
 
   void Renderer::swapBuffers() {
+#ifdef SMALL3D_GLFW
     glfwSwapBuffers(window);
+#else
+    SDL_GL_SwapWindow(window);
+#endif
   }
 
   /**

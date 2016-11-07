@@ -148,7 +148,11 @@ namespace small3d
 
   public:
 
+#ifdef SMALL3D_GLFW
     GLFWwindow* getWindow();
+#else
+    SDL_Window* getWindow();
+#endif
 
     /**
      * @brief Vector, indicating the direction of the light in the scene.

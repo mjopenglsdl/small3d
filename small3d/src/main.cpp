@@ -13,6 +13,7 @@
 #endif
 #endif
 
+#include "Renderer.hpp"
 #include <gtest/gtest.h>
 #include "Logger.hpp"
 #include "Image.hpp"
@@ -20,7 +21,7 @@
 #include "BoundingBoxSet.hpp"
 #include "WavefrontLoader.hpp"
 #include "SceneObject.hpp"
-#include "Renderer.hpp"
+
 
 
 
