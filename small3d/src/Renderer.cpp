@@ -237,7 +237,6 @@ namespace small3d {
       throw Exception("Unable to initialise GLFW");
     }
 
-
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
