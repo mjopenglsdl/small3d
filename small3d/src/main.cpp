@@ -22,18 +22,15 @@
 #include "WavefrontLoader.hpp"
 #include "SceneObject.hpp"
 
-
-
-
 /* MinGW produces the following linking error, if the unit tests
  * are linked to the renderer:
  *    undefined reference to `SDL_SetMainReady'
- * This started occurring when GLEW was removed from the small3d block
- * and placed in an independent block. It probably has something to do
- * with the order in which the SDL libraries are linked (see
- * http://www.cplusplus.com/forum/beginner/110753/). It does not occur
- * in the sample game, only in these unit tests, when they are built
- * under MinGW.
+ * This started occurring when the GLEW source code was removed from the 
+ * small3d repository and the project was linked to the GLEW library.
+ * It probably has something to do with the order in which the SDL libraries 
+ * are linked (see http://www.cplusplus.com/forum/beginner/110753/).
+ * It does not occur in the sample game, only in these unit tests, when they 
+ * are built under MinGW.
  */
 #ifndef __MINGW32__
 
@@ -166,9 +163,8 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 }
 
 
-//This cannot run on the CI environment because there is no video device available there.
-
-// Cannot run this with MinGW (see comment above Renderer.h include directive)
+// The following cannot run on the CI environment because there is no video device available there.
+// Also, the test doesn't run with MinGW (see comment above Renderer.h include directive)
 #ifndef __MINGW32__
 TEST(RendererTest, StartAndUse) {
 
@@ -182,8 +178,6 @@ TEST(RendererTest, StartAndUse) {
 
 }
 #endif
-
-
 
 int main(int argc, char **argv) {
   // Set up a console, if using MinGW
