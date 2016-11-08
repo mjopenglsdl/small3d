@@ -4,7 +4,7 @@ small3d - Building from source code
 Windows
 -------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
-- [SDL2](https://www.libsdl.org/download-2.0.php) (32-bit development library)
+- [SDL2](https://www.libsdl.org/download-2.0.php) (32-bit development library) or [GLFW](http://www.glfw.org/), depending on which one you prefer to use.
 - [GLEW](http://glew.sourceforge.net)
 - [GLM](http://glm.g-truc.net/0.9.7/index.html) (source code)
 - [PNG](http://libpng.sourceforge.net/) (source code)
@@ -17,40 +17,41 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 Inside the small3d directory, create a directory called *deps* and, within it, one called *include* and another one called *lib*.
 
 #### Build and set up PNG with ZLIB
-Unzip the libpng and zlib archives. Place the diectories that will be created in the same parent directory. Then, using Visual Studio, open *libpng/projects/vstudio/vstudio.sln*. Build the whole solution. If zlib cannot be found during the build and you receive an error, make sure the zlib directory name matches exactly the name by which it is referenced in the zlib project within the libpng solution. After the build has been completed, copy all the .lib and .dll files from *libpng/projects/vstudio/Debug* to *small3d/deps/lib*. Finally, copy all the .h files from *libpng* and *zlib* to *small3d/deps/include*.
+Unzip the libpng and zlib archives. Place the diectories that will be created in the same parent directory. Then, using Visual Studio, open *libpng/projects/vstudio/vstudio.sln*. Build the whole solution. If zlib cannot be found during the build and you receive an error, make sure the zlib directory name matches exactly the name by which it is referenced in the zlib project within the libpng solution. After the build has been completed, copy all the .lib files from *libpng/projects/vstudio/Debug* to *small3d/deps/lib* and the .dll files from the same directory to *small3d/deps/bin*. Finally, copy all the .h files from *libpng* and *zlib* to *small3d/deps/include*.
 
 #### Build and set up Google Test
 Unzip the Google Test archive. From within it, execute:
 
     cmake -DBUILD_SHARED_LIBS=ON
 
-With Visual Studio, open *gtest.sln*, build it, and then copy all the .dll and .lib files from the *Debug* or *Release* directory to *small3d/deps/lib*. Finally, copy the *gtest* directory from *include* to *small3d/deps/include*.
+With Visual Studio, open *gtest.sln*, build it, and then copy all the .lib files from the *Debug* or *Release* directory to *small3d/deps/lib* and the .dll files from the same directory to *small3d/deps/bin*. Finally, copy the *gtest* directory from *include* to *small3d/deps/include*.
 
 #### Build and set up OGG and Vorbis
-Unzip the OGG archive. Open the solution libogg_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary, and build it. Then, copy the .dll and .lib files from there to *small3d/deps/lib* and the *ogg* directory from *include* to *deps/include*.
+Unzip the OGG archive. Open the solution libogg_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary, and build it. Then, copy the .lib files from there to *small3d/deps/lib*, the .dll files to *small3d/deps/bin* and the *ogg* directory from *include* to *deps/include*.
 
-Unzip the Vorbis archive. Open the solution vorbis_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary. For each of the projects in the solution, add the *include* directory from the OGG archive in *Properties > VC++ Directories > Include Directories* and the *wind32/VS2010/Win32/Debug* directory from the OGG archive in *Properties > VC++ Directories > Library Directories*. Build the entire solution. Then, copy the *vorbis* directory from *include* to *deps/include* and all the .lib and .dll files from *wind32/VS2010/Win32/Debug* to *deps/lib*.
+Unzip the Vorbis archive. Open the solution vorbis_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary. For each of the projects in the solution, add the *include* directory from the OGG archive in *Properties > VC++ Directories > Include Directories* and the *wind32/VS2010/Win32/Debug* directory from the OGG archive in *Properties > VC++ Directories > Library Directories*. Build the entire solution. Then, copy the *vorbis* directory from *include* to *deps/include* and all the .lib files from *wind32/VS2010/Win32/Debug* to *small3d/deps/lib* and the .dll files to *small3d/deps/bin*.
 
 #### Build and set up Portaudio
-Unzip the Portaudio archive. Delete the *portaudio/src/hostapi/asio* directory. Also, around line 54 of the CMakeLists.txt file, you will find the following code:
-
-    IF(ASIOSDK_FOUND)
-    OPTION(PA_USE_ASIO "Enable support for ASIO" ON)
-    ELSE(ASIOSDK_FOUND)
-    OPTION(PA_USE_ASIO "Enable support for ASIO" OFF)
-    ENDIF(ASIOSDK_FOUND)
-
-In the second line, replace "ON" with "OFF". All of this is to save trouble by building Portaudio without ASIO support.
-
-Create a directory called *build1* inside the *portaudio* directory. Create the solution using cmake:
+Unzip the Portaudio archive. Create a directory called *build1* inside the *portaudio* directory. Create the solution using cmake:
 
     cd build1
     cmake ..
 
-Open the created solution, *portaudio.sln* with Visual Studio. Now you need to find where the file *ksguid.lib* is located inside your Windows SDK. The directory will probably look like *C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib*, depending on your SDK version. Note that we need the directory that contains the 32-bit version of the library. Once you know the directory, open the *portaudio* project properties from within the *portaudio.sln* solution in Visual studio and add the directory to *VC++ Directories > Library Directories*. Build the solution. Then, copy the .lib and .dll files from *build1/Debug* to *deps/lib* and the .h files from *portaudio/include* to *deps/include*.
+Open the created solution, *portaudio.sln*, with Visual Studio. Build the solution. Then, from *build1/Debug* copy the *portaudio_x86.lib* file to *small3d/deps/lib*, the *portaudio_x86.dll* file to *small3d/deps/bin* and the .h files from *portaudio/include* to *deps/include*.
 
 #### Set up the rest of the libraries
-Unzip the SDL2, GLEW and GLM archives. For SDL2, copy the contents of its include directory to *small3d/deps/include* and all the .lib and .dll files from its *lib/x86* directory to *small3d/deps/lib*. For GLEW, copy the contents of *lib/Release/Win32* to *small3d/deps/lib* and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/lib*. For GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries). Finally, for FreeType, copy all the contents of the include directory to *small3d/deps/include* and *lib/freetype.lib* and *bin/freetype6.dll* to *small3d/deps/lib*. 
+If your are going to use SDL2, unzip its archive, copy the contents of its include directory to *small3d/deps/include*, all the .lib files from its *lib/x86* directory to *small3d/deps/lib* and the .dll files from the same location to *small3d/deps/bin*.
+
+In order to use GLFW, from inside its archive directory, execute:
+
+	mkdir build
+	cd build
+	cmake ..
+	cmake --build .
+
+Then, copy the file *glfw3.lib* from *build/src/Debug* to *small3d/deps/lib* and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/inclue*.
+
+Unzip the GLEW and GLM archives. For GLEW, copy the .lib files from *lib/Release/Win32* to *small3d/deps/lib*, and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/bin*. For GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries). Finally, for FreeType, copy all the contents of the include directory to *small3d/deps/include*, *lib/freetype.lib* to *small3d/deps/lib* and *bin/freetype6.dll* to *small3d/deps/bin*. 
 
 #### Build small3d
 Create a directory inside *small3d*, called *build*. Then build the solution:
@@ -59,9 +60,7 @@ Create a directory inside *small3d*, called *build*. Then build the solution:
     cmake ..
     cmake --build .
 
-The unit tests can be run by executing *small3dTest.exe* in *build/small3d/src/Debug*.
-
-The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced.
+The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced. The unit tests can be run by executing *small3dTest.exe* in *build/bin*.
 
 MacOS
 -----
