@@ -44,12 +44,13 @@ Unzip the OGG archive. Open the solution libogg_dynamic.sln in *win32/VS2010*, u
 Unzip the Vorbis archive. Open the solution vorbis_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary. For each of the projects in the solution, add the *include* directory from the OGG archive in *Properties > VC++ Directories > Include Directories* and the *wind32/VS2010/Win32/Debug* directory from the OGG archive in *Properties > VC++ Directories > Library Directories*. Build the entire solution. Then, copy the *vorbis* directory from *include* to *deps/include* and all the .lib files from *wind32/VS2010/Win32/Debug* to *small3d/deps/lib* and the .dll files to *small3d/deps/bin*.
 
 #### Build and set up Portaudio
-Unzip the Portaudio archive. Create a directory called *build1* inside the *portaudio* directory. Create the solution using cmake:
+Unzip the Portaudio archive. Create a directory called *build1* inside the *portaudio* directory. Build the solution using cmake:
 
     cd build1
     cmake ..
+    cmake --build .
 
-Open the created solution, *portaudio.sln*, with Visual Studio. Build the solution. Then, from *build1/Debug* copy the *portaudio_x86.lib* file to *small3d/deps/lib*, the *portaudio_x86.dll* file to *small3d/deps/bin* and the .h files from *portaudio/include* to *deps/include*.
+Then, from *build1/Debug* copy the *portaudio_x86.lib* file to *small3d/deps/lib*, the *portaudio_x86.dll* file to *small3d/deps/bin* and the .h files from *portaudio/include* to *deps/include*.
 
 #### Set up the rest of the libraries
 
