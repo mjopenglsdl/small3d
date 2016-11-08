@@ -53,6 +53,7 @@ else (PORTAUDIO_LIBRARIES AND PORTAUDIO_INCLUDE_DIRS)
       NAMES
         portaudio
         portaudio_x86
+	portaudio_static
       PATHS
         /usr/lib
         /usr/local/lib

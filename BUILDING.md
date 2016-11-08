@@ -74,7 +74,8 @@ The above mentioned steps are for a 32-bit debug build. With the appropriate mod
 MacOS
 -----
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
-- [SDL2](https://www.libsdl.org/download-2.0.php)
+
+- [SDL2](https://www.libsdl.org/download-2.0.php) (.framework package) or [GLFW](http://www.glfw.org/), depending on which one you prefer to use.
 - [GLEW](http://glew.sourceforge.net)
 - [GLM](http://glm.g-truc.net/0.9.7/index.html)
 - [Google Test](https://github.com/google/googletest)
@@ -83,24 +84,40 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 - [FreeType](https://www.freetype.org/download.html)
 - [bzip2](http://www.bzip.org)
 
-Compile and install the dependencies:
+Inside the small3d directory, create a directory called *deps* and, within it, one called *include* and one called *lib*.
 
-- Create a directory called *deps* inside the small3d directory.
-- For SDL2, download the binary package (.framework) and place it in *deps*.
-- Build the OGG library, according to the instructions. Also, install it (with *sudo make install*).
-- Build GLEW, Google Test and Vorbis according to the instructions provided in their distributions. Don't run *make install* on them.
-- Build Portaudio according to the instructions. You may have to perform the following changes to the *configure* file beforehand, depending on the version you are using and the version of your OSX system:
-	- Around line 15790, replace CFLAGS="$CFLAGS -I\$(top_srcdir)/src/os/unix **-Werror**" with CFLAGS="$CFLAGS -I\$(top_srcdir)/src/os/unix **-Wall**"
-	- Around line 15821, there are some condition statements, checking the version of your operating system. By copy pasting one of them, add a condition for your version, before the final *else* statement, if it is newer than the ones mentioned there, for example:
+#### Set up SDL2 or GLFW
 
-	  			elif xcodebuild -version -sdk macosx10.11 Path >/dev/null 2>&1 ; then
-	       			mac_version_min="-mmacosx-version-min=10.4"
-	       	 		mac_sysroot="-isysroot `xcodebuild -version -sdk macosx10.11 Path`"
-- Create a directory called *include* inside *deps* and copy the contents of the include directories of GLEW, Google Test, Vorbis and Portaudio there.
-- Create a directory called *lib* inside *deps* and copy the .a files from the lib directory of GLEW, the .a files from the Google Test build, the .a files from the Vorbis build (from inside *lib/.libs*) and the .a file from the Portaudio build (from inside *lib/.libs*) there.  
-- GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is another *glm* directory) to *deps/include*.
-- Build Freetype. You just need to run *./configure* and *make* inside its archive directory. Copy the *objs/.libs/libfreetype.a* file to *small3d/deps/lib*. Copy the contents of the include directory to *small3d/deps/include*.
-- Build bzip2. You just need to run make inside its archive directory. Then copy *libbz2.a* to *small3d/deps/lib* and *bzlib.h* to *small3d/deps/include*.
+If you are going to use SDL2, place its .framework package in *deps*. Otherwise, in order to use GLFW, from inside its archive directory, execute:
+
+	mkdir build
+	cd build
+	cmake ..
+	cmake --build .
+
+Then, copy the file *libglfw3.a* from *build/src* to *small3d/deps/lib* and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/include*.
+
+#### Set up OGG, GLEW and Google Test
+
+Build the OGG library, according to the instructions. Also, install it (with *sudo make install*). Build GLEW, Google Test and Vorbis according to the instructions provided in their distributions. Don't run *make install* on them. Copy the contents of their include directories to *small3d/deps/include*. Copy the .a files from the lib directory of GLEW, the .a files from the Google Test build, the .a files from the Vorbis build (from inside *lib/.libs*) to *small3d/deps/lib*.
+
+#### Set up Portaudio
+
+Unzip the Portaudio archive. Create a directory called *build1* inside the *portaudio* directory. Build the solution using cmake:
+
+    cd build1
+    cmake ..
+    cmake --build .
+	
+Copy the *libportaudio_static.a* from inside *lib/.libs* of the portaudio archive to *small3d/deps/lib* and the contents of the archive's *include* directory to *small3d/deps/include*.  
+
+#### GLM, Freetype and Bzip2
+
+GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is in another *glm* directory) to *deps/include*.
+
+Build Freetype. You just need to run *./configure* and *make* inside its archive directory. Copy the *objs/.libs/libfreetype.a* file to *small3d/deps/lib*. Copy the contents of the include directory to *small3d/deps/include*.
+
+Build bzip2. You just need to run make inside its archive directory. Then copy *libbz2.a* to *small3d/deps/lib* and *bzlib.h* to *small3d/deps/include*.
 
 In the end, the *deps* directory structure should look like this:
 
@@ -121,22 +138,38 @@ In the end, the *deps* directory structure should look like this:
               libglew.a
               libgtest_main.a
               libgtest.a
+			  libportaudio_static.a
             SDL2.framework
 
 Create another directory inside *small3d*, called *build*.
 
 #### For plain-old make
 
+If you are using SDL2:
+
     cd build
     cmake ..
     cmake --build .
 
-The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
+If you are using GLFW:
+
+	cd build
+	cmake -DWITH_GLFW=1 ..
+	cmake --build .
+
+The unit tests can be run by executing *small3dTest* in *build/bin*.
 
 #### For Xcode
 
+For SDL2:
+
     cd build
     cmake -G"Xcode" ..
+	
+For GLFW:
+
+    cd build
+    cmake -G"Xcode" -DWITH_GLFW=1 ..
 
 Open the project with Xcode and build it once. Then, select the *small3dTest* scheme in Xcode and run it.
 
