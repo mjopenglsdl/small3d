@@ -27,6 +27,7 @@
 #include "SceneObject.hpp"
 #include "Logger.hpp"
 #include <unordered_map>
+#include <vector>
 #include <glm/glm.hpp>
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -68,8 +69,8 @@ namespace small3d
 
     FT_Library library;
 
-    float textMemory[400000];
-
+    std::vector<float> textMemory;
+    
     std::unordered_map<std::string, FT_Face> fontFaces;
 
     /**

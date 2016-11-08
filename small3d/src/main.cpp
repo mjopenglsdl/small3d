@@ -172,15 +172,13 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 #ifndef __MINGW32__
 TEST(RendererTest, StartAndUse) {
 
-shared_ptr<SceneObject> object(
-new SceneObject("animal",
-"resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj", 1,
-                "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png"));
-shared_ptr<vector<shared_ptr<SceneObject> > > scene(
-new vector<shared_ptr<SceneObject> >());
-scene->push_back(object);
+  //SceneObject object("animal",
+  //		  "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj",
+  //		  1,
+  //		  "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png");
 
-unique_ptr<Renderer> renderer(new Renderer("test", 640, 480));
+Renderer renderer("test", 640, 480);
+//renderer.render(object);
 
 }
 #endif

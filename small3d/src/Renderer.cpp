@@ -976,8 +976,10 @@ namespace small3d {
       if (height < static_cast<unsigned long>(slot->bitmap.rows))
 	height = slot->bitmap.rows;
     }
+
+    textMemory.resize(4 * width * height * sizeof(float));
     
-    memset(textMemory, 0, 4 * width * height * sizeof(float));
+    memset(&textMemory[0], 0, 4 * width * height * sizeof(float));
 
     unsigned long totalAdvance = 0;
 
@@ -1012,7 +1014,7 @@ namespace small3d {
 
     string textureName = intToStr(fontSize) + "text_" + text;
 
-    generateTexture(textureName, textMemory, width, height);
+    generateTexture(textureName, &textMemory[0], width, height);
 
     renderTexture(textureName, glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
            glm::vec3(topRight.x, topRight.y, -0.5f));
