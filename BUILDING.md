@@ -56,11 +56,17 @@ Open the created solution, *portaudio.sln*, with Visual Studio. Build the soluti
 Unzip the GLEW and GLM archives. For GLEW, copy the .lib files from *lib/Release/Win32* to *small3d/deps/lib*, and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/bin*. For GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries). Finally, for FreeType, copy all the contents of the include directory to *small3d/deps/include*, *lib/freetype.lib* to *small3d/deps/lib* and *bin/freetype6.dll* to *small3d/deps/bin*. 
 
 #### Build small3d
-Create a directory inside *small3d*, called *build*. Then build the solution:
+Create a directory inside *small3d*, called *build*. Then, if you are using SDL2, build the solution like this:
 
     cd build
     cmake ..
     cmake --build .
+
+For building with GLFW, things are a little different:
+
+	cd build
+	cmake -DWITH_GLFW=1 ..
+	cmake --build .
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced. The unit tests can be run by executing *small3dTest.exe* in *build/bin*.
 
