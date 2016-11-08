@@ -1,7 +1,7 @@
 small3d
 =======
 
-**This is a version that uses GLFW. It has only been prepared for testing purposes (I am not sure I will add GLFW support) and only the independent build works for now.**
+**This is a version that supports GLFW, in addition to SDL2. It is not yet ready and only the independent build works for now.**
 
 ![beaver](https://raw.githubusercontent.com/coding3d/small3d/develop/assets/small3d.png)
 

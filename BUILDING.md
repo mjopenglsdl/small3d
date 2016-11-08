@@ -16,6 +16,18 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 
 Inside the small3d directory, create a directory called *deps* and, within it, one called *include* and another one called *lib*.
 
+#### Set up SDL2 or GLFW
+If your are going to use SDL2, unzip its archive, copy the contents of its include directory to *small3d/deps/include*, all the .lib files from its *lib/x86* directory to *small3d/deps/lib* and the .dll files from the same location to *small3d/deps/bin*.
+
+In order to use GLFW, from inside its archive directory, execute:
+
+	mkdir build
+	cd build
+	cmake ..
+	cmake --build .
+
+Then, copy the file *glfw3.lib* from *build/src/Debug* to *small3d/deps/lib* and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/inclue*.
+
 #### Build and set up PNG with ZLIB
 Unzip the libpng and zlib archives. Place the diectories that will be created in the same parent directory. Then, using Visual Studio, open *libpng/projects/vstudio/vstudio.sln*. Build the whole solution. If zlib cannot be found during the build and you receive an error, make sure the zlib directory name matches exactly the name by which it is referenced in the zlib project within the libpng solution. After the build has been completed, copy all the .lib files from *libpng/projects/vstudio/Debug* to *small3d/deps/lib* and the .dll files from the same directory to *small3d/deps/bin*. Finally, copy all the .h files from *libpng* and *zlib* to *small3d/deps/include*.
 
@@ -40,16 +52,6 @@ Unzip the Portaudio archive. Create a directory called *build1* inside the *port
 Open the created solution, *portaudio.sln*, with Visual Studio. Build the solution. Then, from *build1/Debug* copy the *portaudio_x86.lib* file to *small3d/deps/lib*, the *portaudio_x86.dll* file to *small3d/deps/bin* and the .h files from *portaudio/include* to *deps/include*.
 
 #### Set up the rest of the libraries
-If your are going to use SDL2, unzip its archive, copy the contents of its include directory to *small3d/deps/include*, all the .lib files from its *lib/x86* directory to *small3d/deps/lib* and the .dll files from the same location to *small3d/deps/bin*.
-
-In order to use GLFW, from inside its archive directory, execute:
-
-	mkdir build
-	cd build
-	cmake ..
-	cmake --build .
-
-Then, copy the file *glfw3.lib* from *build/src/Debug* to *small3d/deps/lib* and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/inclue*.
 
 Unzip the GLEW and GLM archives. For GLEW, copy the .lib files from *lib/Release/Win32* to *small3d/deps/lib*, and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/bin*. For GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries). Finally, for FreeType, copy all the contents of the include directory to *small3d/deps/include*, *lib/freetype.lib* to *small3d/deps/lib* and *bin/freetype6.dll* to *small3d/deps/bin*. 
 
