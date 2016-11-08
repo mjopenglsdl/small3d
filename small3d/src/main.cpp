@@ -172,13 +172,13 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 #ifndef __MINGW32__
 TEST(RendererTest, StartAndUse) {
 
-  //SceneObject object("animal",
-  //		  "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj",
-  //		  1,
-  //		  "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png");
+  SceneObject object("animal",
+		     "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj",
+		     1,
+		     "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png");
 
-Renderer renderer("test", 640, 480);
-//renderer.render(object);
+  Renderer renderer("test", 640, 480);
+  renderer.render(object);
 
 }
 #endif
