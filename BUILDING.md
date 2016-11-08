@@ -14,7 +14,7 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 - [Portaudio](http://www.portaudio.com/download.html)
 - [FreeType](http://gnuwin32.sourceforge.net/packages/freetype.htm) (binaries archive)
 
-Inside the small3d directory, create a directory called *deps* and, within it, one called *include* and another one called *lib*.
+Inside the small3d directory, create a directory called *deps* and, within it, one called *include*, one called *lib* and another one, called *bin*.
 
 #### Set up SDL2 or GLFW
 If your are going to use SDL2, unzip its archive, copy the contents of its include directory to *small3d/deps/include*, all the .lib files from its *lib/x86* directory to *small3d/deps/lib* and the .dll files from the same location to *small3d/deps/bin*.
