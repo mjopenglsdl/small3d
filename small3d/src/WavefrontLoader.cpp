@@ -178,10 +178,15 @@ namespace small3d {
 
   WavefrontLoader::WavefrontLoader() {
     clear();
+    
+#ifndef SMALL3D_GLFW
+    basePath = string(SDL_GetBasePath());
+#endif
+    
   }
 
   void WavefrontLoader::load(string fileLocation, Model &model) {
-    ifstream file(fileLocation.c_str());
+    ifstream file((basePath + fileLocation).c_str());
     string line;
     if (file.is_open()) {
       clear();
@@ -319,7 +324,7 @@ namespace small3d {
     }
     else
       throw Exception(
-          "Could not open file " + fileLocation);
+          "Could not open file " + basePath + fileLocation);
 
   }
 

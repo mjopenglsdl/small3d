@@ -20,6 +20,10 @@ namespace small3d {
     height = 0;
     imageDataSize=0;
 
+#ifndef SMALL3D_GLFW
+    basePath = string(SDL_GetBasePath());
+#endif
+    
     if (fileLocation != "")
       this->loadFromFile(fileLocation);
   }
@@ -29,13 +33,13 @@ namespace small3d {
     // http://zarb.org/~gc/html/libpng.html
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
-    fopen_s(&fp, fileLocation.c_str(), "rb");
+    fopen_s(&fp, (basePath + fileLocation).c_str(), "rb");
 #else
-    FILE *fp = fopen(fileLocation.c_str(), "rb");
+    FILE *fp = fopen((basePath + fileLocation).c_str(), "rb");
 #endif
     if (!fp) {
       throw Exception(
-        "Could not open file " + fileLocation);
+        "Could not open file " + basePath + fileLocation);
     }
 
     png_infop pngInformation = nullptr;
@@ -49,7 +53,7 @@ namespace small3d {
 
     if (png_sig_cmp(header, 0, 8)) {
       throw Exception(
-        "File " + fileLocation
+        "File " + basePath + fileLocation
         + " is not recognised as a PNG file.");
     }
 

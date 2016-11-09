@@ -14,6 +14,10 @@
 #include "Logger.hpp"
 #include <png.h>
 
+#ifndef SMALL3D_GLFW
+#include <SDL.h>
+#endif
+
 namespace small3d {
 
   /**
@@ -29,7 +33,7 @@ namespace small3d {
     unsigned long width, height;
     std::vector<float> imageData;
     unsigned long imageDataSize;
-
+    std::string basePath;
     void loadFromFile(const std::string &fileLocation);
 
   public:

@@ -13,6 +13,10 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+#ifndef SMALL3D_GLFW
+#include <SDL.h>
+#endif
+
 namespace small3d {
 
   /**
@@ -29,8 +33,9 @@ namespace small3d {
 
   class BoundingBoxSet {
   private:
-
     int numBoxes;
+    std::string basePath;
+    
   public:
     int getNumBoxes() const;
 

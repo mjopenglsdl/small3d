@@ -45,6 +45,8 @@ namespace small3d
 
   private:
 
+    std::string basePath;
+    
 #ifdef SMALL3D_GLFW
     GLFWwindow* window;
 #else

@@ -24,6 +24,11 @@ namespace small3d {
     vertices.clear();
     facesVertexIndexes.clear();
     numBoxes = 0;
+
+#ifndef SMALL3D_GLFW
+    basePath = string(SDL_GetBasePath());
+#endif
+    
   }
 
   void BoundingBoxSet::loadFromFile(string fileLocation) {
@@ -31,7 +36,7 @@ namespace small3d {
       throw Exception(
           "Illegal attempt to reload bounding boxes. Please use another object.");
     }
-    ifstream file(fileLocation.c_str());
+    ifstream file((basePath + fileLocation).c_str());
     string line;
     if (file.is_open()) {
       while (getline(file, line)) {
@@ -91,7 +96,7 @@ namespace small3d {
     }
     else
       throw Exception(
-          "Could not open file " + fileLocation);
+          "Could not open file " + basePath + fileLocation);
 
   }
 

@@ -40,6 +40,10 @@ namespace small3d {
     cameraRotation = glm::vec3(0, 0, 0);
     lightIntensity = 1.0f;
 
+#ifndef SMALL3D_GLFW
+    basePath = string(SDL_GetBasePath());
+#endif
+    
     init(width, height, windowTitle, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
 
     FT_Error ftError = FT_Init_FreeType( &library );
@@ -100,7 +104,7 @@ namespace small3d {
   string Renderer::loadShaderFromFile(const string &fileLocation) {
     initLogger();
     string shaderSource = "";
-    ifstream file(fileLocation.c_str());
+    ifstream file((basePath + fileLocation).c_str());
     string line;
     if (file.is_open()) {
       while (getline(file, line)) {
@@ -932,7 +936,7 @@ namespace small3d {
 
     if (idFacePair == fontFaces.end()) {
 
-      string faceFullPath = fontPath;
+      string faceFullPath = basePath + fontPath;
       LOGINFO("Loading font from " + faceFullPath);
 
       error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);

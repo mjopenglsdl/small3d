@@ -66,6 +66,10 @@ namespace small3d {
 
     noOutputDevice = false;
 
+#ifndef SMALL3D_GLFW
+    basePath = string(SDL_GetBasePath());
+#endif
+    
     PaError initError = Pa_Initialize();
 
     if (initError != paNoError) {
@@ -100,19 +104,19 @@ namespace small3d {
 
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
-    fopen_s(&fp, (soundFilePath).c_str(), "rb");
+    fopen_s(&fp, (basePath + soundFilePath).c_str(), "rb");
 #else
-    FILE *fp = fopen(soundFilePath.c_str(), "rb");
+    FILE *fp = fopen((basePath + soundFilePath).c_str(), "rb");
 #endif
 
     if (!fp) {
       throw Exception(
-          "Could not open file " + soundFilePath);
+          "Could not open file " + basePath + soundFilePath);
     }
 
     if (ov_open_callbacks(fp, &vorbisFile, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0) {
       throw Exception(
-          "Could not load sound from file " + soundFilePath);
+          "Could not load sound from file " + basePath + soundFilePath);
     }
 
     vorbis_info *vi = ov_info(&vorbisFile, -1);

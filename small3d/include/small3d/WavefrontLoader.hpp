@@ -7,6 +7,10 @@
  */
 #pragma once
 
+#ifndef SMALL3D_GLFW
+#include <SDL.h>
+#endif
+
 #include <vector>
 #include "Model.hpp"
 
@@ -21,6 +25,8 @@ namespace small3d {
 
   class WavefrontLoader {
   private:
+
+    std::string basePath;
 
     // Data read from .obj file
     std::vector<std::vector<float> > vertices;
