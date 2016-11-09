@@ -197,7 +197,7 @@ Then, when building with SDL2, you need:
 	
 And for GLFW:
 
-	sudo yum install
+	sudo yum install glfw-devel
 
 Google Test is also a dependency. For Fedora, things are simple:
 
