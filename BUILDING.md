@@ -177,11 +177,27 @@ Linux
 ------
 First, install the dependencies. For Debian-based distributions the command is the following:
 
-    sudo apt-get install build-essential cmake libsdl2-dev libglm-dev libglew-dev libpng12-dev portaudio19-dev libvorbis-dev libfreetype6-dev libbz2-dev
+    sudo apt-get install build-essential cmake libglm-dev libglew-dev libpng12-dev portaudio19-dev libvorbis-dev libfreetype6-dev libbz2-dev
+	
+Also, if you are planning to use SDL2, you need this:
 
-For Fedora, Red Hat, etc. it is this one:
+	sudo apt-get install libsdl2-dev
+	
+If on the other hand you will be using GLFW:
 
-    sudo yum install libtool SDL2-devel glm-devel glew-devel libpng-devel portaudio-devel libvorbis-devel freetype-devel bzip2-devel
+	sudo apt-get install libglfw3-dev
+
+For Fedora, Red Hat, etc. the dependencies can be acquired as follows:
+
+    sudo yum install libtool glm-devel glew-devel libpng-devel portaudio-devel libvorbis-devel freetype-devel bzip2-devel
+	
+Then, when building with SDL2, you need:
+
+	sudo yum install SDL2-devel
+	
+And for GLFW:
+
+	sudo yum install
 
 Google Test is also a dependency. For Fedora, things are simple:
 
@@ -200,10 +216,16 @@ Then, run the following:
     sudo cp -a include/gtest /usr/include
     sudo cp -a libgtest_main.so libgtest.so /usr/lib/
 
-Clone the [small3d repository](https://github.com/coding3d/small3d). Create another directory inside *small3d*, called *build*. Then build the project:
+Clone the [small3d repository](https://github.com/coding3d/small3d). Create another directory inside *small3d*, called *build*. Then build the project, either with SDL2, like this:
 
     cd build
     cmake ..
     cmake --build .
+	
+Or with GLFW, like this:
 
-The unit tests can be run by executing *small3dTest* in *build/small3d/src*.
+	cd build
+	cmake -DWITH_GLFW=1 ..
+	cmake --build .
+
+The unit tests can be run by executing *small3dTest* in *build/bin*.
