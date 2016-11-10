@@ -55,9 +55,15 @@ namespace small3d {
 
     /**
      * @brief Default constructor
+     *
+     * @param basePath   The path under which all accessed files and directories are
+     *                   to be found. If this is not set, it is assumed to be the directory
+     *                   containing the application executable when using SDL, or the
+     *                   directory from where the execution command is entered when 
+     *                   using GLFW.
      */
 
-    WavefrontLoader();
+    WavefrontLoader(std::string basePath = "");
 
     /**
      * @brief Destructor.

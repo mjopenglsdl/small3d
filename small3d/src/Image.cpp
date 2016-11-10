@@ -14,15 +14,20 @@ using namespace std;
 
 namespace small3d {
 
-  Image::Image(string fileLocation) : imageData() {
+  Image::Image(string fileLocation, string basePath) : imageData() {
     initLogger();
     width = 0;
     height = 0;
     imageDataSize=0;
 
+    if (basePath.empty()) {
 #ifndef SMALL3D_GLFW
-    basePath = string(SDL_GetBasePath());
+    this->basePath = string(SDL_GetBasePath());
 #endif
+    }
+    else {
+      this->basePath = basePath;
+    }
     
     if (fileLocation != "")
       this->loadFromFile(fileLocation);

@@ -28,7 +28,7 @@ namespace small3d {
   Renderer::Renderer(string windowTitle, int width, int height,
                      float frustumScale , float zNear,
                      float zFar, float zOffsetFromCamera,
-                     string shadersPath) {
+                     string shadersPath, string basePath) {
     isOpenGL33Supported = false;
     window = 0;
     perspectiveProgram = 0;
@@ -40,9 +40,14 @@ namespace small3d {
     cameraRotation = glm::vec3(0, 0, 0);
     lightIntensity = 1.0f;
 
+    if (basePath.empty()) {
 #ifndef SMALL3D_GLFW
-    basePath = string(SDL_GetBasePath());
+    this->basePath = string(SDL_GetBasePath());
 #endif
+    }
+    else {
+      this->basePath = basePath;
+    }
     
     init(width, height, windowTitle, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
 

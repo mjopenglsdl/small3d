@@ -62,13 +62,18 @@ namespace small3d {
     return result;
   }
 
-  SoundPlayer::SoundPlayer() {
+  SoundPlayer::SoundPlayer(string basePath) {
 
     noOutputDevice = false;
 
+    if (basePath.empty()) {
 #ifndef SMALL3D_GLFW
-    basePath = string(SDL_GetBasePath());
+    this->basePath = string(SDL_GetBasePath());
 #endif
+    }
+    else {
+      this->basePath = basePath;
+    }
     
     PaError initError = Pa_Initialize();
 

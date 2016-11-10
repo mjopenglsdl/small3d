@@ -52,21 +52,26 @@ namespace small3d
     /**
      * @brief Constructor
      *
-     * @param name The name of the object
-     * @param modelPath The path to the file containing the object's model
-     * @param texturePath The path to the file containing the object's texture. If the object
-     * 					  is animated, it has to be the path up to the name part of the model.
-     * 					  The program will append an underscore, a 6-digit index number and the
-     * 					  .obj suffix for each frame. (e.g. goatAnim will become goatAnim_000001.obj,
-     * 					  goatAnim_000002.obj, etc.)
-     * @param numFrames The number of frames, if the object is animated. A single animation
-     * 					sequence is supported per object and the first frame is considered to
-     * 					be the non-moving state.
-     * @param boundingBoxesPath The path to the file containing the object's bounding boxes. If no such
-     * 							path is given, the object cannot be checked for collision detection.
+     * @param name                The name of the object
+     * @param modelPath           The path to the file containing the object's model
+     * @param texturePath         The path to the file containing the object's texture. If the object
+     * 				  is animated, it has to be the path up to the name part of the model.
+     * 				  The program will append an underscore, a 6-digit index number and the
+     * 				  .obj suffix for each frame. (e.g. goatAnim will become goatAnim_000001.obj,
+     * 				  goatAnim_000002.obj, etc.)
+     * @param numFrames           The number of frames, if the object is animated. A single animation
+     * 				  sequence is supported per object and the first frame is considered to
+     * 				  be the non-moving state.
+     * @param boundingBoxSetPath  The path to the file containing the object's bounding box set. If no such
+     * 				  path is given, the object cannot be checked for collision detection.
+     * @param basePath            The path under which all accessed files and directories are
+     *                            to be found. If this is not set, it is assumed to be the directory
+     *                            containing the application executable when using SDL, or the
+     *                            directory from where the execution command is entered when 
+     *                            using GLFW.
      */
     SceneObject(std::string name, std::string modelPath, int numFrames = 1, std::string texturePath = "",
-                std::string boundingBoxesPath = "");
+                std::string boundingBoxSetPath = "", std::string basePath = "");
 
     /**
      * @brief Destructor

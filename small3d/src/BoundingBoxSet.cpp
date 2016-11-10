@@ -19,15 +19,20 @@ namespace small3d {
   /**
    * Constructor
    */
-  BoundingBoxSet::BoundingBoxSet() {
+  BoundingBoxSet::BoundingBoxSet(string basePath) {
     initLogger();
     vertices.clear();
     facesVertexIndexes.clear();
     numBoxes = 0;
 
+    if (basePath.empty()) {
 #ifndef SMALL3D_GLFW
-    basePath = string(SDL_GetBasePath());
+      this->basePath = string(SDL_GetBasePath());
 #endif
+    }
+    else {
+      this->basePath = basePath;
+    }
     
   }
 
