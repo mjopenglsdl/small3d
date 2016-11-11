@@ -1,13 +1,12 @@
 from conans import ConanFile, CMake
 import os
 
-# This easily allows to copy the package in other user or channel
 channel = os.getenv("CONAN_CHANNEL", "testing")
 username = os.getenv("CONAN_USERNAME", "coding3d")
 
 class TestGlew(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "small3d/1.1.0@%s/%s" % (username, channel)
+    requires = "small3d/1.1.1@%s/%s" % (username, channel)
     generators = "cmake"
 
     def build(self):
