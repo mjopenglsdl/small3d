@@ -6,7 +6,9 @@ small3d changelog
 v1.1.1
 ------
 
+- No breaking changes!
 - Added support for GLFW.
+- Improvement in the way memory is allocated for text rendering, thus avoiding some occasional segmentation faults on Windows that kept occurring.
 
 v1.1.0
 ------
