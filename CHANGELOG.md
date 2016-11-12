@@ -1,5 +1,5 @@
 small3d changelog
-=======================================================
+=================
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
@@ -7,9 +7,9 @@ v1.1.1
 ------
 
 - No breaking changes!
-- Added support for GLFW.
-- Improvement in the way memory is allocated for text rendering, thus avoiding some occasional segmentation faults on Windows that kept occurring.
-- Improvement of the documentation for building the engine without a package manager. Check out the updated [instructions](https://github.com/dimi309/small3d/blob/master/BUILDING.md). Also, each of the branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository is an example of a way the game engine can be deployed and used (with SDL or GLFW, with or without conan, as well as with cppan).
+- Added support for GLFW. It is supported on all platforms by the independent build and on Windows when building with conan (I have not managed to successfully test a conan GLFW package that works on Linux or MacOS, at least for the moment).
+- Improvement in the way memory is allocated for text rendering, thus avoiding some occasional segmentation faults on Windows.
+- Improvement of the documentation for building the engine without a package manager. Check out the updated [instructions](https://github.com/dimi309/small3d/blob/master/BUILDING.md). Also, each of the branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository is now an example of a way the game engine can be deployed and used (with SDL or GLFW, with or without conan, as well as with cppan).
 
 v1.1.0
 ------
