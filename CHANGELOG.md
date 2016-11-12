@@ -9,6 +9,7 @@ v1.1.1
 - No breaking changes!
 - Added support for GLFW.
 - Improvement in the way memory is allocated for text rendering, thus avoiding some occasional segmentation faults on Windows that kept occurring.
+- Improvement of the documentation for building the engine without a package manager. Check out the updated [instructions](https://github.com/dimi309/small3d/blob/master/BUILDING.md). Also, each of the branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository is an example of a way the game engine can be deployed and used (with SDL or GLFW, with or without conan, as well as with cppan).
 
 v1.1.0
 ------

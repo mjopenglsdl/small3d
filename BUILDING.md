@@ -69,7 +69,7 @@ For building with GLFW, things are a little different:
 	cmake -DWITH_GLFW=1 ..
 	cmake --build .
 
-The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced. The unit tests can be run by executing *small3dTest.exe* in *build/bin*.
+The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced. The unit tests can be run by executing *small3dTest.exe* in *build/bin*. For building your own project, you need the files from the *build/include* directory, the libraries from the *build/lib* directory and the dlls from the *build/bin* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
 
 MacOS
 -----
@@ -143,7 +143,7 @@ In the end, the *deps* directory structure should look like this:
 
 Create another directory inside *small3d*, called *build*.
 
-#### For plain-old make
+#### Build small3d
 
 If you are using SDL2:
 
@@ -157,21 +157,7 @@ If you are using GLFW:
 	cmake -DWITH_GLFW=1 ..
 	cmake --build .
 
-The unit tests can be run by executing *small3dTest* in *build/bin*.
-
-#### For Xcode
-
-For SDL2:
-
-    cd build
-    cmake -G"Xcode" ..
-	
-For GLFW:
-
-    cd build
-    cmake -G"Xcode" -DWITH_GLFW=1 ..
-
-Open the project with Xcode and build it once. Then, select the *small3dTest* scheme in Xcode and run it.
+The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files in the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
 
 Linux
 ------
@@ -228,4 +214,4 @@ Or with GLFW, like this:
 	cmake -DWITH_GLFW=1 ..
 	cmake --build .
 
-The unit tests can be run by executing *small3dTest* in *build/bin*.
+The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files from the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
