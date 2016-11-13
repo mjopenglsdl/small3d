@@ -57,7 +57,7 @@ namespace small3d {
             // get vertex
             vector<float> v;
 
-            for (size_t tokenIdx = 0; tokenIdx < tokens.size(); ++tokenIdx) {
+            for (size_t tokenIdx = 0, tokenCount= tokens.size(); tokenIdx < tokenCount; ++tokenIdx) {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex indicator
               {
@@ -71,7 +71,7 @@ namespace small3d {
             // get vertex index
             vector<unsigned int> v;
 
-            for (size_t tokenIdx = 0; tokenIdx < tokens.size(); ++tokenIdx) {
+            for (size_t tokenIdx = 0, tokenCount = tokens.size(); tokenIdx < tokenCount; ++tokenIdx) {
               string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is face indicator
               {
