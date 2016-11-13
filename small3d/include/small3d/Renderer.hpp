@@ -8,13 +8,21 @@
 
 #pragma once
 
+#define GLM_FORCE_RADIANS
+
 #include <GL/glew.h>
+
+#ifdef SMALL3D_GLFW
+#include <GLFW/glfw3.h>
+#else
 #include <SDL_opengl.h>
 #include <SDL.h>
+#endif
 
 #include "SceneObject.hpp"
 #include "Logger.hpp"
 #include <unordered_map>
+#include <vector>
 #include <glm/glm.hpp>
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -32,7 +40,13 @@ namespace small3d
 
   private:
 
-    SDL_Window* sdlWindow;
+    std::string basePath;
+    
+#ifdef SMALL3D_GLFW
+    GLFWwindow* window;
+#else
+    SDL_Window* window;
+#endif
 
     GLuint perspectiveProgram;
 
@@ -52,8 +66,8 @@ namespace small3d
 
     FT_Library library;
 
-    float textMemory[400000];
-
+    std::vector<float> textMemory;
+    
     std::unordered_map<std::string, FT_Face> fontFaces;
 
     /**
@@ -90,9 +104,9 @@ namespace small3d
               std::string shadersPath);
 
     /**
-     * @brief Initialise SDL
+     * @brief Initialise the application window
      */
-    void initSDL(int &width, int &height, const std::string &windowTitle = "");
+    void initWindow(int &width, int &height, const std::string &windowTitle = "");
 
     /**
      * @brief Detect if OpenGL 3.3 is supported. If not, fall back to OpenGL 2.1.
@@ -139,6 +153,12 @@ namespace small3d
 
   public:
 
+#ifdef SMALL3D_GLFW
+    GLFWwindow* getWindow();
+#else
+    SDL_Window* getWindow();
+#endif
+
     /**
      * @brief Vector, indicating the direction of the light in the scene.
      */
@@ -181,11 +201,16 @@ namespace small3d
      * 				it and the names of the shaders must remain as provided.
      * 				The shader code can be changed, provided that their inputs
      * 				and outputs are maintained the same.
+     * @param basePath          The path under which all accessed files and directories are
+     *                          to be found. If this is not set, it is assumed to be the directory
+     *                          containing the application executable when using SDL, or the
+     *                          directory from where the execution command is entered when 
+     *                          using GLFW.
      */
     Renderer(std::string windowTitle = "", int width = 0, int height = 0,
              float frustumScale = 1.0f, float zNear = 1.0f,
              float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
-             std::string shadersPath = "resources/shaders/");
+             std::string shadersPath = "resources/shaders/", std::string basePath = "");
 
     /**
      * @brief Destructor
@@ -264,5 +289,4 @@ namespace small3d
     void swapBuffers();
 
   };
-
 }

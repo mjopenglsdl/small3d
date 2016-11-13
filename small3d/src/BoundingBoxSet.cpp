@@ -11,7 +11,6 @@
 #include "Exception.hpp"
 #include "GetTokens.hpp"
 #include "MathFunctions.hpp"
-#include "SDL.h"
 
 using namespace std;
 
@@ -20,11 +19,21 @@ namespace small3d {
   /**
    * Constructor
    */
-  BoundingBoxSet::BoundingBoxSet() {
+  BoundingBoxSet::BoundingBoxSet(string basePath) {
     initLogger();
     vertices.clear();
     facesVertexIndexes.clear();
     numBoxes = 0;
+
+    if (basePath.empty()) {
+#ifndef SMALL3D_GLFW
+      this->basePath = string(SDL_GetBasePath());
+#endif
+    }
+    else {
+      this->basePath = basePath;
+    }
+    
   }
 
   void BoundingBoxSet::loadFromFile(string fileLocation) {
@@ -32,7 +41,7 @@ namespace small3d {
       throw Exception(
           "Illegal attempt to reload bounding boxes. Please use another object.");
     }
-    ifstream file((SDL_GetBasePath() + fileLocation).c_str());
+    ifstream file((basePath + fileLocation).c_str());
     string line;
     if (file.is_open()) {
       while (getline(file, line)) {
@@ -92,8 +101,7 @@ namespace small3d {
     }
     else
       throw Exception(
-          "Could not open file " + string(SDL_GetBasePath())
-          + fileLocation);
+          "Could not open file " + basePath + fileLocation);
 
   }
 

@@ -9,18 +9,26 @@
 #include "Image.hpp"
 #include "Exception.hpp"
 #include "MathFunctions.hpp"
-#include "SDL.h"
 
 using namespace std;
 
 namespace small3d {
 
-  Image::Image(string fileLocation) : imageData() {
+  Image::Image(string fileLocation, string basePath) : imageData() {
     initLogger();
     width = 0;
     height = 0;
     imageDataSize=0;
 
+    if (basePath.empty()) {
+#ifndef SMALL3D_GLFW
+    this->basePath = string(SDL_GetBasePath());
+#endif
+    }
+    else {
+      this->basePath = basePath;
+    }
+    
     if (fileLocation != "")
       this->loadFromFile(fileLocation);
   }
@@ -30,14 +38,13 @@ namespace small3d {
     // http://zarb.org/~gc/html/libpng.html
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
-    fopen_s(&fp, (SDL_GetBasePath() + fileLocation).c_str(), "rb");
+    fopen_s(&fp, (basePath + fileLocation).c_str(), "rb");
 #else
-    FILE *fp = fopen((SDL_GetBasePath() + fileLocation).c_str(), "rb");
+    FILE *fp = fopen((basePath + fileLocation).c_str(), "rb");
 #endif
     if (!fp) {
       throw Exception(
-        "Could not open file " + string(SDL_GetBasePath())
-        + fileLocation);
+        "Could not open file " + basePath + fileLocation);
     }
 
     png_infop pngInformation = nullptr;
@@ -51,7 +58,7 @@ namespace small3d {
 
     if (png_sig_cmp(header, 0, 8)) {
       throw Exception(
-        "File " + string(SDL_GetBasePath()) + fileLocation
+        "File " + basePath + fileLocation
         + " is not recognised as a PNG file.");
     }
 

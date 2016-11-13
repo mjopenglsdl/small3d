@@ -14,15 +14,23 @@
 
 using namespace std;
 
+
 namespace small3d {
+
+  void error_callback(int error, const char* description)
+  {
+    LOGERROR(string(description));
+  }
+
+  
   string openglErrorToString(GLenum error);
 
   Renderer::Renderer(string windowTitle, int width, int height,
                      float frustumScale , float zNear,
                      float zFar, float zOffsetFromCamera,
-                     string shadersPath) {
+                     string shadersPath, string basePath) {
     isOpenGL33Supported = false;
-    sdlWindow = 0;
+    window = 0;
     perspectiveProgram = 0;
     orthographicProgram = 0;
     textures = new unordered_map<string, GLuint>();
@@ -32,6 +40,15 @@ namespace small3d {
     cameraRotation = glm::vec3(0, 0, 0);
     lightIntensity = 1.0f;
 
+    if (basePath.empty()) {
+#ifndef SMALL3D_GLFW
+    this->basePath = string(SDL_GetBasePath());
+#endif
+    }
+    else {
+      this->basePath = basePath;
+    }
+    
     init(width, height, windowTitle, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
 
     FT_Error ftError = FT_Init_FreeType( &library );
@@ -69,16 +86,30 @@ namespace small3d {
       glDeleteProgram(perspectiveProgram);
     }
 
-    if (sdlWindow != 0) {
-      SDL_DestroyWindow(sdlWindow);
+#ifdef SMALL3D_GLFW
+    glfwTerminate();
+#else
+    if (window != 0) {
+      SDL_DestroyWindow(window);
     }
     SDL_Quit();
+#endif
   }
+
+#ifdef SMALL3D_GLFW
+  GLFWwindow* Renderer::getWindow() {
+    return window;
+  }
+#else
+  SDL_Window* Renderer::getWindow() {
+    return window;
+  }
+#endif
 
   string Renderer::loadShaderFromFile(const string &fileLocation) {
     initLogger();
     string shaderSource = "";
-    ifstream file((SDL_GetBasePath() + fileLocation).c_str());
+    ifstream file((basePath + fileLocation).c_str());
     string line;
     if (file.is_open()) {
       while (getline(file, line)) {
@@ -198,7 +229,6 @@ namespace small3d {
       throw Exception(
 		      "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
     }
-
   }
 
   void Renderer::checkForOpenGLErrors(string when, bool abort) {
@@ -217,8 +247,51 @@ namespace small3d {
     }
   }
 
-  void Renderer::initSDL(int &width, int &height, const string &windowTitle) {
-    sdlWindow = 0;
+  void Renderer::initWindow(int &width, int &height, const string &windowTitle) {
+
+#ifdef SMALL3D_GLFW
+
+    glfwSetErrorCallback(error_callback);
+    
+    if (!glfwInit()){
+      throw Exception("Unable to initialise GLFW");
+    }
+
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif
+
+    bool fullScreen = false;
+
+    GLFWmonitor *monitor = nullptr; // If NOT null, a full-screen window will be created.
+    
+    if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
+      throw Exception("Screen width and height both have to be equal or not equal to zero at the same time.");
+    }
+    else if (width == 0) {
+
+      fullScreen = true;
+
+      monitor = glfwGetPrimaryMonitor();
+
+      const GLFWvidmode* mode = glfwGetVideoMode(monitor);     
+      width = mode->width;
+      height = mode->height;
+      
+      LOGINFO("Detected screen width " + intToStr(width) + " and height " + intToStr(height));
+    }
+
+    window = glfwCreateWindow(width, height, windowTitle.c_str(), monitor, nullptr);
+    if (!window){
+      throw Exception(string("Unable to create GLFW window"));
+    }
+
+    glfwMakeContextCurrent(window);
+
+#else
 
     // initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -255,20 +328,21 @@ namespace small3d {
     Uint32 flags = fullScreen ? SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP :
       SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
-    sdlWindow = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
+    window = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED,
                                  SDL_WINDOWPOS_CENTERED, width, height,
                                  flags);
 
-    if (!sdlWindow) {
+    if (!window) {
       LOGERROR(SDL_GetError());
       throw Exception("Unable to set video");
     }
 
-    if (SDL_GL_CreateContext(sdlWindow) == NULL) {
+    if (SDL_GL_CreateContext(window) == NULL) {
       LOGERROR(SDL_GetError());
       throw Exception(string("Unable to create GL context"));
     }
 
+#endif
   }
 
   void Renderer::init(int width, int height, string windowTitle,
@@ -279,7 +353,7 @@ namespace small3d {
     int screenWidth = width;
     int screenHeight = height;
 
-    this->initSDL(screenWidth, screenHeight, windowTitle);
+    this->initWindow(screenWidth, screenHeight, windowTitle);
 
     this->frustumScale = frustumScale;
     this->zNear = zNear;
@@ -867,7 +941,7 @@ namespace small3d {
 
     if (idFacePair == fontFaces.end()) {
 
-      string faceFullPath = SDL_GetBasePath() + fontPath;
+      string faceFullPath = basePath + fontPath;
       LOGINFO("Loading font from " + faceFullPath);
 
       error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);
@@ -908,8 +982,10 @@ namespace small3d {
       if (height < static_cast<unsigned long>(slot->bitmap.rows))
 	height = slot->bitmap.rows;
     }
+
+    textMemory.resize(4 * width * height * sizeof(float));
     
-    memset(textMemory, 0, 4 * width * height * sizeof(float));
+    memset(&textMemory[0], 0, 4 * width * height * sizeof(float));
 
     unsigned long totalAdvance = 0;
 
@@ -944,7 +1020,7 @@ namespace small3d {
 
     string textureName = intToStr(fontSize) + "text_" + text;
 
-    generateTexture(textureName, textMemory, width, height);
+    generateTexture(textureName, &textMemory[0], width, height);
 
     renderTexture(textureName, glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
            glm::vec3(topRight.x, topRight.y, -0.5f));
@@ -999,7 +1075,11 @@ namespace small3d {
   }
 
   void Renderer::swapBuffers() {
-    SDL_GL_SwapWindow(sdlWindow);
+#ifdef SMALL3D_GLFW
+    glfwSwapBuffers(window);
+#else
+    SDL_GL_SwapWindow(window);
+#endif
   }
 
   /**

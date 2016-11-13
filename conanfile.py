@@ -3,15 +3,16 @@ import os, subprocess
 
 class Small3dConan(ConanFile):
     name = "small3d"
-    version = "1.1.0"
+    version = "1.1.1"
     ZIP_FOLDER_NAME = "%s-%s" % (name, version)
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
+    options = {"glfw": [True, False]} 
     url="http://github.com/dimi309/small3d"
-    requires = "SDL2/2.0.4@lasote/stable","freetype/2.6.3@lasote/stable","glew/2.0.0@coding3d/stable", \
+    requires = "freetype/2.6.3@lasote/stable","glew/2.0.0@coding3d/stable", \
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.7.6@dlarudgus20/stable", \
         "vorbis/1.3.5@coding3d/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
-    default_options = "glew:shared=False"
+    default_options = "glew:shared=False", "glfw=False"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = "CMakeLists.txt", "small3d/*", "FindSMALL3D.cmake", "cmake/*"
 
@@ -51,12 +52,20 @@ class Small3dConan(ConanFile):
         else:
 	    self.output.warn("Could not determine Linux distro, skipping system requirements check.")
 
+    def requirements(self):
+        if self.options.glfw:
+            self.requires("glfw3/3.2.1@lasote/vcpkg")
+        else:
+            self.requires("SDL2/2.0.4@lasote/stable")
+
     def build(self):
+        glfw_option = "-DWITH_GLFW=1" if self.options.glfw else ""
         cmake = CMake(self.settings)
-        self.run("cmake %s -DBUILD_WITH_CONAN=TRUE %s" % (self.conanfile_directory, cmake.command_line))
+        self.run("cmake %s -DBUILD_WITH_CONAN=TRUE %s %s" % (self.conanfile_directory, glfw_option, cmake.command_line))
         self.run("cmake --build . %s" % cmake.build_config)
 
     def package(self):
+
         self.copy("FindSMALL3D.cmake", ".", ".")
         self.copy(pattern="*", dst="shaders", src="small3d/resources/shaders", keep_path=True)
         self.copy(pattern="*.hpp", dst="include", src="small3d/include", keep_path=True)

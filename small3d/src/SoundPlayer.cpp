@@ -8,7 +8,7 @@
 
 #include "SoundPlayer.hpp"
 #include "Exception.hpp"
-#include <SDL.h>
+#include <cstring>
 
 #define WORD_SIZE 2
 #define PORTAUDIO_SAMPLE_FORMAT paInt16
@@ -62,10 +62,19 @@ namespace small3d {
     return result;
   }
 
-  SoundPlayer::SoundPlayer() {
+  SoundPlayer::SoundPlayer(string basePath) {
 
     noOutputDevice = false;
 
+    if (basePath.empty()) {
+#ifndef SMALL3D_GLFW
+    this->basePath = string(SDL_GetBasePath());
+#endif
+    }
+    else {
+      this->basePath = basePath;
+    }
+    
     PaError initError = Pa_Initialize();
 
     if (initError != paNoError) {
@@ -100,21 +109,19 @@ namespace small3d {
 
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
-    fopen_s(&fp, (SDL_GetBasePath() + soundFilePath).c_str(), "rb");
+    fopen_s(&fp, (basePath + soundFilePath).c_str(), "rb");
 #else
-    FILE *fp = fopen((SDL_GetBasePath() + soundFilePath).c_str(), "rb");
+    FILE *fp = fopen((basePath + soundFilePath).c_str(), "rb");
 #endif
 
     if (!fp) {
       throw Exception(
-          "Could not open file " + string(SDL_GetBasePath())
-          + soundFilePath);
+          "Could not open file " + basePath + soundFilePath);
     }
 
     if (ov_open_callbacks(fp, &vorbisFile, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0) {
       throw Exception(
-          "Could not load sound from file " + string(SDL_GetBasePath())
-          + soundFilePath);
+          "Could not load sound from file " + basePath + soundFilePath);
     }
 
     vorbis_info *vi = ov_info(&vorbisFile, -1);
