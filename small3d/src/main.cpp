@@ -13,14 +13,17 @@
 #endif
 #endif
 
-#include "Renderer.hpp"
 #include <gtest/gtest.h>
+
+#include "Renderer.hpp"
 #include "Logger.hpp"
 #include "Image.hpp"
 #include "Model.hpp"
 #include "BoundingBoxSet.hpp"
 #include "WavefrontLoader.hpp"
 #include "SceneObject.hpp"
+
+#include "GetTokens.hpp"
 
 /* MinGW produces the following linking error, if the unit tests
  * are linked to the renderer:
@@ -39,6 +42,8 @@
 using namespace small3d;
 using namespace std;
 
+
+///////// CLASSES ////////////////
 TEST(LoggerTest, LogSomething) {
   deleteLogger();
   ostringstream oss;
@@ -178,6 +183,18 @@ TEST(RendererTest, StartAndUse) {
 
 }
 #endif
+
+
+///////// FUNCTIONS ////////////////
+TEST(TokenTest, GetFourTokens) {
+	string strTest = "a-b-c-d";
+	std::vector<std::string> tokens;
+
+	int tokenCount=getTokens(strTest, '-', tokens);
+
+	EXPECT_EQ(4, tokenCount);
+	EXPECT_EQ("b", tokens[1]);
+}
 
 int main(int argc, char **argv) {
   // Set up a console, if using MinGW
