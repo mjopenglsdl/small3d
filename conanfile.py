@@ -3,7 +3,7 @@ import os, subprocess
 
 class Small3dConan(ConanFile):
     name = "small3d"
-    version = "1.1.1"
+    version = "1.1.2"
     ZIP_FOLDER_NAME = "%s-%s" % (name, version)
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
@@ -56,7 +56,7 @@ class Small3dConan(ConanFile):
         if self.options.glfw:
             self.requires("glfw3/3.2.1@lasote/vcpkg")
         else:
-            self.requires("SDL2/2.0.4@lasote/stable")
+            self.requires("SDL2/2.0.5@lasote/stable")
 
     def build(self):
         glfw_option = "-DWITH_GLFW=1" if self.options.glfw else ""
