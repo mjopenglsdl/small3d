@@ -513,6 +513,10 @@ namespace small3d {
     return handle;
   }
 
+  bool Renderer::supportsOpenGL33() {
+    return isOpenGL33Supported;
+  }
+
   void Renderer::positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation,
 				    const glm::mat4x4 &rotationAdjustment) {
     // Rotation
@@ -668,6 +672,84 @@ namespace small3d {
     }
 
     checkForOpenGLErrors("rendering image", true);
+  }
+
+  void Renderer::renderSurface(glm::vec3 colour, const glm::vec3 &bottomLeft, const glm::vec3 &topRight) {
+     float vertices[16] = {
+      bottomLeft.x, bottomLeft.y, bottomLeft.z, 1.0f,
+      topRight.x, bottomLeft.y, bottomLeft.z, 1.0f,
+      topRight.x, topRight.y, topRight.z, 1.0f,
+      bottomLeft.x, topRight.y, topRight.z, 1.0f
+    };
+
+    glUseProgram(perspectiveProgram);
+
+    GLuint vao = 0;
+    if (isOpenGL33Supported) {
+      // Generate VAO
+      glGenVertexArrays(1, &vao);
+      glBindVertexArray(vao);
+    }
+
+    glEnableVertexAttribArray(0);
+
+    GLuint boxBuffer = 0;
+    glGenBuffers(1, &boxBuffer);
+
+    glBindBuffer(GL_ARRAY_BUFFER, boxBuffer);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) * 16,
+                 &vertices[0],
+                 GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    unsigned int vertexIndexes[6] =
+      {
+	0, 1, 2,
+	2, 3, 0
+      };
+
+    GLuint indexBufferObject = 0;
+
+    glGenBuffers(1, &indexBufferObject);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                 sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
+
+    // Find the colour uniform
+    GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
+
+    // Set the colour
+    glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(colour, 1.0f)));
+
+    // Lighting
+    GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
+							 "lightDirection");
+    glUniform3fv(lightDirectionUniform, 1,
+                   glm::value_ptr(lightDirection));
+
+    GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
+    glUniform1f(lightIntensityUniform, lightIntensity);
+
+    positionNextObject(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::mat4x4());
+    positionCamera();
+
+    glDrawElements(GL_TRIANGLES,
+                   6, GL_UNSIGNED_INT, 0);
+
+    glDeleteBuffers(1, &indexBufferObject);
+    glDeleteBuffers(1, &boxBuffer);
+
+    glDisableVertexAttribArray(0);
+
+    if (isOpenGL33Supported) {
+      glDeleteVertexArrays(1, &vao);
+      glBindVertexArray(0);
+    }
+
+    checkForOpenGLErrors("rendering surface", true);
+    
   }
 
   void Renderer::render(const BoundingBoxSet &boundingBoxSet, const glm::vec3 &offset,

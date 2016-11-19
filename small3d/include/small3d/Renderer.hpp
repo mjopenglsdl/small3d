@@ -244,6 +244,24 @@ namespace small3d
      */
 
     void deleteTexture(std::string name);
+
+    /**
+     * @brief Is OpenGL 3.3 supported?
+     *
+     * @return True if OpenGL 3.3 is supported, false otherwise
+     */
+
+    bool supportsOpenGL33();
+
+    /**
+     * @brief Render a single-coloured surface.
+     *
+     * @param colour The colour of the surface (vector of 3 components for r, g, b)
+     * @param bottomLeft The coordinates for the bottom left corner of the surface
+     * @param topRight The coordinates for the top right corner of the surface
+     */
+    
+    void renderSurface(glm::vec3 colour, const glm::vec3 &bottomLeft, const glm::vec3 &topRight);
     
     /**
      * @brief Render a scene object
