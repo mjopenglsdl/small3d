@@ -42,8 +42,6 @@
 using namespace small3d;
 using namespace std;
 
-
-///////// CLASSES ////////////////
 TEST(LoggerTest, LogSomething) {
   deleteLogger();
   ostringstream oss;
@@ -81,11 +79,6 @@ TEST(ImageTest, LoadImage) {
       EXPECT_GE(colour[2], 0.0f);
       EXPECT_LE(colour[2], 1.0f);
       EXPECT_EQ(1.0f, colour[3]);
-
-      // Uncomment the following to actually see RGB values for each test image pixel
-      // 			cout << "At (" << x << ", " << y << ") R: " << setprecision( 2 ) << colour[0] << endl;
-      // 			cout << "At (" << x << ", " << y << ") G: " << setprecision( 2 ) << colour[1] << endl;
-      // 			cout << "At (" << x << ", " << y << ") B: " << setprecision( 2 ) << colour[2] << endl;
 
       ++x;
     }
