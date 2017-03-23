@@ -4,6 +4,7 @@ import os, subprocess
 class Small3dConan(ConanFile):
     name = "small3d"
     version = "1.1.3"
+    description = "A small, cross-platform 3D game engine (C++, OpenGL, SDL or GLFW) - runs on Win/MacOS/Linux"
     ZIP_FOLDER_NAME = "%s-%s" % (name, version)
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
