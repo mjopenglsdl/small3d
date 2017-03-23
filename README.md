@@ -6,8 +6,6 @@ small3d
 
 ![beaver](https://cloud.githubusercontent.com/assets/875167/20235630/4f653bc4-a897-11e6-97cc-d6d009fe527c.png)
 
-**The API documentation is available at http://dimi309.github.io/small3d/**
-
 Introduction
 ------------
 
