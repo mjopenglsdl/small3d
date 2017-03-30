@@ -13,20 +13,6 @@ Introduction
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. I developed it while learning how to program games and I am still using it for my projects and experiments.
 
-A Bit of History
-----------------
-
-*You don't need to read this to use the engine. Skip it if you're not interested.*
-
-I'm a hoybbyist and permanent beginner in game development. I had always wanted to make games since I was a kid but, even though I have been working in IT for years, mostly as a developer, my work has nothing to do with games, graphics or anything of the sort.
-
-A couple of years ago I thought that if I want to learn how to do this I might as well start. I'm interested in programming so I did not opt for a ready-made game engine. I get it that this is how most game development is carried out today and that it is a bad business decision to program everything by hand ("by hand" is relative as can be attested by the libraries I am using - we are always "standing on the shoulders of giants"). I probably wouldn't do so if my income depended on it. If I understand it correctly, professionals who do write their own rendering logic or physics algorithms end up specialising in one specific area. Those who actually develop entire games just pick a multi-featured tool and study how to use it rather than how to push vertices to the GPU.
-
-As I've mentioned, I was not looking to start a new career so I thought to proceed the way my 80s heroes would, writing code in their living rooms. So I started making a little game in which a bug is chasing a goat. Some have told me that the bug looks like a crow and the goat looks like a unicorn, which is understandable, since I'm also doing my own 3D modelling with Blender. Once the game was finished, I thought to put the functionality that could be reused in a library and this is how the small3d engine came to be.
-
-One question I got at some point was why I did not follow the advice, "write games not engines". I've found a copy of the [article that says this](http://www.geometrian.com/programming/tutorials/write-games-not-engines/index.php) and I'm not sure that the author meant "just download an engine and get started". What I've done is not so far off from what he proposes, even though I may have been in a bit of a rush. But then again, I think it's good to be building a toolset of reusable items whenever you are working on something, no matter how much you have progressed.
-
-
 Features
 --------
 
@@ -51,7 +37,7 @@ Features
 Getting Started
 ---------------
 
-Let's get right to it. You can do this on Windows, Linux or MacOS. If you encounter difficulties [let me know](https://github.com/dimi309/small3d/issues). We are going to create a ball that can be moved using the keyboard arrows. Even though small3d is small, it can do a lot more than this. This exercise will just get you started. You can then have a look at the source code of two games that have already been developed with the engine ([Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) and [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)) and maybe also build the API documentation, using Doxygen for example. The source code for this tutorial, including the model of the ball we will be creating is [available online](https://github.com/dimi309/small3d-tutorial).
+This will work on Windows, Linux and MacOS / OSX. If you encounter difficulties [let me know](https://github.com/dimi309/small3d/issues). We are going to create a ball that can be moved using the keyboard arrows. Even though small3d is small, it can do a lot more than this. This exercise will just get you started. You can then have a look at the source code of two games that have already been developed with the engine ([Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) and [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)) and maybe also build the API documentation, using Doxygen for example. The source code for this tutorial, including the model of the ball we will be creating is [available online](https://github.com/dimi309/small3d-tutorial).
 
 I assume that you already have your compiler set up. You also need to install [cmake](https://cmake.org) and [conan](https://www.conan.io) and make sure they can be executed from the command line. I prefer to use the engine by deploying it from conan.io and that's what I'm doing in the tutorial below. It saves me a lot of time. However, if you prefer to compile it yourself without conan, there are [instructions](BUILDING.md) about how to do this. Also, the [Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) repository has five branches, each being an example of a way the engine can be used (with GLFW or SDL, using conan or building independently, as well as building with [cppan](https://cppan.org/pvt.coding3d.small3d)).
 
