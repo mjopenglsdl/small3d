@@ -60,13 +60,13 @@ else(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN)
   set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
   
   if(DEFINED WITH_GLFW AND WITH_GLFW)
-    find_PACKAGE(GLFW REQUIRED)
+    find_package(GLFW REQUIRED)
   else()
-    find_PACKAGE(SDL2 REQUIRED)
+    find_package(SDL2 REQUIRED)
   endif()
 
   if(NOT WIN32)
-    find_PACKAGE(BZip2 REQUIRED)
+    find_package(BZip2 REQUIRED)
   endif(NOT WIN32)
   
   find_package(OpenGL REQUIRED)
