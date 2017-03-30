@@ -6,6 +6,8 @@ small3d changelog
 v1.1.3
 ------
 
+(still open)
+
 - Building unit tests is now possible with the conan build and optional in both conan and independent builds (with cmake -DBUILD\_UNIT\_TESTS). For unit testing with the conan build, the Google Test library has to be deployed in /deps and not referenced from conan, since that would complicate the deployment of small3d on conan.
 
 v1.1.2
