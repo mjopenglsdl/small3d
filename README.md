@@ -1,9 +1,6 @@
 small3d
 =======
 
-[![Build status](https://ci.appveyor.com/api/projects/status/vl7gmu89v7194o2t?svg=true)](https://ci.appveyor.com/project/coding3d/small3d) [![Build Status](https://travis-ci.org/dimi309/small3d.svg?branch=master)](https://travis-ci.org/dimi309/small3d) [![badge](https://img.shields.io/badge/conan.io-small3d%2F1.1.1-green.svg?logo=data:image/png;base64%2CiVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAA1VBMVEUAAABhlctjlstkl8tlmMtlmMxlmcxmmcxnmsxpnMxpnM1qnc1sn85voM91oM11oc1xotB2oc56pNF6pNJ2ptJ8ptJ8ptN9ptN8p9N5qNJ9p9N9p9R8qtOBqdSAqtOAqtR%2BrNSCrNJ/rdWDrNWCsNWCsNaJs9eLs9iRvNuVvdyVv9yXwd2Zwt6axN6dxt%2Bfx%2BChyeGiyuGjyuCjyuGly%2BGlzOKmzOGozuKoz%2BKqz%2BOq0OOv1OWw1OWw1eWx1eWy1uay1%2Baz1%2Baz1%2Bez2Oe02Oe12ee22ujUGwH3AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfgBQkREyOxFIh/AAAAiklEQVQI12NgAAMbOwY4sLZ2NtQ1coVKWNvoc/Eq8XDr2wB5Ig62ekza9vaOqpK2TpoMzOxaFtwqZua2Bm4makIM7OzMAjoaCqYuxooSUqJALjs7o4yVpbowvzSUy87KqSwmxQfnsrPISyFzWeWAXCkpMaBVIC4bmCsOdgiUKwh3JojLgAQ4ZCE0AMm2D29tZwe6AAAAAElFTkSuQmCC)](http://www.conan.io/source/small3d/1.1.1/coding3d/stable)
-
-
 ![beaver](https://cloud.githubusercontent.com/assets/875167/20235630/4f653bc4-a897-11e6-97cc-d6d009fe527c.png)
 
 Introduction
@@ -30,297 +27,12 @@ Features
 - Simple rotations with matrices.
 - Simple collision detection with bounding boxes.
 - It renders text.
-- It can be deployed via the [conan.io](https://www.conan.io) package manager. This is a great time saver.
-- It can also be compiled independently, using CMake.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
 
-Getting Started
----------------
-
-This will work on Windows, Linux and MacOS / OSX. If you encounter difficulties [let me know](https://github.com/dimi309/small3d/issues). We are going to create a ball that can be moved using the keyboard arrows. Even though small3d is small, it can do a lot more than this. This exercise will just get you started. You can then have a look at the source code of two games that have already been developed with the engine ([Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) and [Chase the Goat 3D](https://github.com/dimi309/ChaseTheGoat3D)) and maybe also build the API documentation, using Doxygen for example. The source code for this tutorial, including the model of the ball we will be creating is [available online](https://github.com/dimi309/small3d-tutorial).
-
-I assume that you already have your compiler set up. You also need to install [cmake](https://cmake.org) and [conan](https://www.conan.io) and make sure they can be executed from the command line. I prefer to use the engine by deploying it from conan.io and that's what I'm doing in the tutorial below. It saves me a lot of time. However, if you prefer to compile it yourself without conan, there are [instructions](BUILDING.md) about how to do this. Also, the [Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D) repository has five branches, each being an example of a way the engine can be used (with GLFW or SDL, using conan or building independently, as well as building with [cppan](https://cppan.org/pvt.coding3d.small3d)).
-
-To begin with, let's make a directory for our ball-moving masterpiece from the command line:
-
-	mkdir ball
-
-Also, create a "resources" directory inside the "ball" directory:
-
-	cd ball
-	mkdir resources
-
-Let's start from the code-less part. We need a Wavefront file containing a ball. You can use any tool that exports this format to create one, but I am using [Blender](https://www.blender.org), so I'll show you how to do this there. When you start Blender, you see a cube:
-
-![blendercube](https://cloud.githubusercontent.com/assets/875167/19621157/15ee0f9e-988c-11e6-9c8a-b871bd7cdfa9.png)
-
-Press "a" to select the cube. If the cube is selected already, pressing "a" will de-select it. Press it again in that case. Then "x" to delete the cube. You will be asked to confirm the deletion:
-
-![blenderconfirmdeletion](https://cloud.githubusercontent.com/assets/875167/19621164/2c33f778-988c-11e6-8dc0-aec7be490bcc.png)
-
-Just press enter to do so. Then, from the menu at the bottom left of the 3D view, select Add > Mesh > UV Sphere:
-
-![blenderaddsphere](https://cloud.githubusercontent.com/assets/875167/19621171/41a9a346-988c-11e6-9522-02972fdfc57e.png)
-
-This will create, as the name implies, a sphere:
-
-![blendersphere](https://cloud.githubusercontent.com/assets/875167/19621175/561dfc78-988c-11e6-94f0-711369ce364b.png)
-
-With the sphere selected (use the "a" key if it is not), click on the "Smooth" button, under "Shading" on the "Edit" menu on the left of the screen:
-
-![smoothshading](https://cloud.githubusercontent.com/assets/875167/19621180/6ad2ff56-988c-11e6-96bf-36df739e85e7.png)
-
-This is important for the way the sphere will be exported. We now need to create the Wavefront file. From the menu at the top, select File > Export > Wavefront (.obj). We need to set some options on the "Export OBJ" menu on the left. Only select "Write Normals", "Triangulate Faces" and "Keep Vertex Order":
-
-![wavefrontexportoptions](https://cloud.githubusercontent.com/assets/875167/19621183/7da81a76-988c-11e6-9e50-604699e62900.png)
-
-Save the exported file as "ball.obj" in the "resources" directory, created earlier (there is a location and name selector at the top and an "Export OBJ" button to actually save the file).
-
-Now we are ready for the code. Create a file called "main.cpp" in the "ball" directory, with your editor or IDE. For starters let's just make our program use small3d. One class that we will definitely need is Renderer. This one creates a window and, as the name implies, takes care of all the rendering. So here is our main.cpp, with Renderer included:
-
-	#include <small3d/Renderer.hpp>
-	
-	int main(int argc, char **argv) {
-		
-		return 0;
-	}
-
-Notice that we have not downloaded small3d from anywhere. Let's tell conan to do that for us. Create a file called "conanfile.txt" in the "ball" directory. Inside that file we declare small3d as our dependency:
-
-	[requires]
-	small3d/1.1.1@coding3d/stable
-
-We also need to mention that we will be working with cmake:
-
-	[generators]
-	cmake
-
-For Windows, we will need the dlls of the libraries we are using (small3d and its dependencies will be automatically downloaded by conan and some of them are not configured to be statically linked) to be copied to our binary output directory. Let's tell conan to take care of that for us:
-
-	[imports]
-	bin, *.dll -> ./bin
-
-If you don't use Windows, you can still add that to your conanfile. It will allow your program to compile and run on Windows, should you ever want to do that and, on any other system, it will cause no problem since conan will not crash or anything if it doesn't find any dlls. It just won't copy them.
-
-Finally, we are going to need the small3d shaders. Let's tell conan to also copy those, under [imports]:
-
-	[imports]
-	bin, *.dll -> ./bin
-	shaders, * -> ./bin/resources/shaders
-
-So the whole conanfile.txt will look like this:
-
-	[requires]
-	small3d/1.1.1@coding3d/stable
-	
-	[generators]
-	cmake
-	
-	[imports]
-	bin, *.dll -> ./bin
-	shaders, * -> ./bin/resources/shaders
-	
-
-Let's see if it works. We are going to be building in a separate directory, in order to keep things clean. From inside the "ball" directory, execute:
-
-	mkdir build
-	cd build
-	conan install .. --build missing
-
-Conan will download small3d and all libraries that it depends on and place them in a local cache. It will also create its own cmake configuration file (conanbuildinfo.cmake) and, as instructed, copy small3d's shaders to the bin/resources/shaders directory. We are now ready to create our cmake configuration. Back inside the "ball" directory, let's create a CMakeLists.txt file. We will set the minimum required cmake version and declare our project:
-
-	CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
-	PROJECT(demo)
-
-Then we will link our project with conan, by including the conan cmake configuration created in the previous step and then setting up conan with a command contained in it:
-
-	INCLUDE(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-	CONAN_BASIC_SETUP()
-
-Since conan does all the hard work of gathering information about our project and environment, let's use that to set up the flags for our build:
-
-	set(CMAKE_C_FLAGS "${CONAN_C_FLAGS}")
-	set(CMAKE_CXX_FLAGS "${CONAN_CXX_FLAGS}")
-	set(CMAKE_SHARED_LINKER_FLAGS "${CONAN_SHARED_LINKER_FLAGS}")
-
-We can now declare our executable, also linking it with the conan downloaded libraries:
-
-	ADD_EXECUTABLE(ball main.cpp)
-	TARGET_LINK_LIBRARIES(ball PUBLIC "${CONAN_LIBS}")
-
-Each library may require some special link flags. Conan knows about those too, so we'll let it take care of them for us:
-
-	SET_TARGET_PROPERTIES(ball PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}")
-
-And, finally, in order for our compiled program to be able to easily access our ball model, which we created earlier, let's have it copied by cmake to the binary output directory:
-
-	FILE(COPY "resources" DESTINATION "${PROJECT_BINARY_DIR}/bin")
-
-So the whole CMakeLists.txt file should look like this:
-
-	CMAKE_MINIMUM_REQUIRED(VERSION 3.0.2)
-	PROJECT(demo)
-	
-	INCLUDE(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-	CONAN_BASIC_SETUP()
-	
-	set(CMAKE_C_FLAGS "${CONAN_C_FLAGS}")
-	set(CMAKE_CXX_FLAGS "${CONAN_CXX_FLAGS}")
-	set(CMAKE_SHARED_LINKER_FLAGS "${CONAN_SHARED_LINKER_FLAGS}")
-	
-	ADD_EXECUTABLE(ball main.cpp)
-	TARGET_LINK_LIBRARIES(ball PUBLIC "${CONAN_LIBS}")
-	SET_TARGET_PROPERTIES(ball PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}")
-	
-	FILE(COPY "resources" DESTINATION "${PROJECT_BINARY_DIR}/bin")
-	
-
-Let's see if everything works:
-
-	cd build
-	cmake ..
-	cmake --build .
-
-On Windows, you need to do this, adding some configuration parameters, depending on your development setup. For example:
-
-	cd build
-	cmake -G "Visual Studio 14 2015 Win64" ..
-	cmake --build . --config Release
-
-This will compile our program. Inside the build/bin directory, there should be a ball (or ball.exe) executable. At this point though, it doesn't do much. Time to add our ball to the mix. Back in main.cpp, we include small3d's SceneObject class, right under the inclusion of the renderer class (or above it, it doesn't matter):
-
-	#include <small3d/Renderer.hpp>
-	#include <small3d/SceneObject.hpp>
-
-We also need to be using the small3d namespace, so this goes under our include statements:
-
-	using namespace small3d;
-
-And finally, we go to the main program, and we create the renderer:
-
-	Renderer renderer("Ball demo");
-
-We create the ball:
-
-	SceneObject ball("ball", "resources/ball.obj");
-
-Let's say it's yellow:
-
-	ball.colour = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
-
-small3d uses vectors a lot as parameters for convenience. In this case, the vector symbolises an rgb colour, together with the alpha channel (last component).
-
-On the other hand, when positioning the ball, the components are in order, x (-left, +right), y(+up, -down), and z(-away from the camera, +towards the camera):
-
-	ball.offset = glm::vec3(0.0f, -1.0f, -8.0f);
-
-So let's start our main loop now. small3d uses SDL and you can use it too! The first thing to do in every iteration, is to check whether we want to exit the program. Let's say that we'll be doing that with the Esc key:
-
-	while(true){
-        SDL_Event event;
-        if (SDL_PollEvent(&event)) {
-			if (event.key.keysym.sym == SDLK_ESCAPE) {
-				break;
-			}
-	  }
-
-If after that we are still in the loop (so, no Esc key pressed), we will want to move the ball around with the keyboard. We get the key state:
-
-	const Uint8 *keyState = SDL_GetKeyboardState(NULL);
-
-We will have the up arrow move the ball away from the camera. Down will do the opposite. Guess what left and right will do :)
-
-	if (keyState[SDL_SCANCODE_UP] == 1)
-		ball.offset.z -= 0.1f;
-	else if (keyState[SDL_SCANCODE_DOWN] == 1)
-		ball.offset.z += 0.1f;
-	else if (keyState[SDL_SCANCODE_LEFT] == 1)
-		ball.offset.x -= 0.1f;
-	else if (keyState[SDL_SCANCODE_RIGHT] == 1)
-		ball.offset.x += 0.1f;
-
-Ok, the ball is positioned. Now we need to actually draw it. We clear the screen first:
-
-	renderer.clearScreen();
-
-Then we render the ball:
-	
-	renderer.render(ball);
-
-We are using a double-buffered system (we draw on one buffer, while the user is looking at the other one), so we also need to swap the buffers:
-
-	renderer.swapBuffers();
-
-And we close the loop :)
-
-	}
-
-That's it! The whole program should look like this:
-
-	#include <small3d/Renderer.hpp>
-	#include <small3d/SceneObject.hpp>
-
-	using namespace small3d;
-	
-	int main(int argc, char **argv) {
-	
-		Renderer renderer("Ball demo");
-	
-		SceneObject ball("ball", "resources/ball.obj");
-		ball.colour = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
-		ball.offset = glm::vec3(0.0f, -1.0f, -8.0f);
-	
-		while(true){
-	        SDL_Event event;
-	        if (SDL_PollEvent(&event)) {
-				if (event.key.keysym.sym == SDLK_ESCAPE) {
-					break;
-				}
-		  }
-	  
-		const Uint8 *keyState = SDL_GetKeyboardState(NULL);
-	
-		if (keyState[SDL_SCANCODE_UP] == 1)
-			ball.offset.z -= 0.1f;
-		else if (keyState[SDL_SCANCODE_DOWN] == 1)
-			ball.offset.z += 0.1f;
-		else if (keyState[SDL_SCANCODE_LEFT] == 1)
-			ball.offset.x -= 0.1f;
-		else if (keyState[SDL_SCANCODE_RIGHT] == 1)
-			ball.offset.x += 0.1f;
-	  
-		renderer.clearScreen();
-		renderer.render(ball);
-		renderer.swapBuffers();
-		
-		}
-	
-	return 0;
-
-	}
-
-Let's try it out:
-
-	cd build
-	cmake --build .
-	./bin/ball
-
-For Windows:
-
-	cd build
-	cmake --build . --config Release
-	.\bin\ball.exe
-
-There's our ball:
-
-![ball](https://cloud.githubusercontent.com/assets/875167/19624720/2fb6b99e-9904-11e6-885c-504ba726eeec.png)
-
-Try moving it around with the arrows.
-
-Important to remember about 3D models and textures
+Note on 3D models and textures
 --------------------------------------------------
 
-As we have seen, when exporting the models to Wavefront .obj files, we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
+When exporting Blender models to Wavefront .obj files, we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
 
 If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program.
 
@@ -357,5 +69,222 @@ Then, *module-alsa-sink* and *module-alsa-source* need to be enabled, by uncomme
 
 It is advised to make a backup of *default.pa* before making these modifications. A more detailed description of the procedure can be found in this [article](http://thehumble.ninja/2014/02/06/fixing-alsa-lib-pcmc7843snd_pcm_recover-underrun-occurred-while-keeping-pulseaudio-in-your-system/).
 
+Building
+========
+
+Windows
+-------
+Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
+- [SDL2](https://www.libsdl.org/download-2.0.php) (32-bit development library) or [GLFW](http://www.glfw.org/), depending on which one you prefer to use.
+- [GLEW](http://glew.sourceforge.net)
+- [GLM](http://glm.g-truc.net/0.9.7/index.html) (source code)
+- [PNG](http://libpng.sourceforge.net/) (source code)
+- [ZLIB](http://zlib.net/) (source code)
+- [Google Test](https://github.com/google/googletest) (source code)
+- [Vorbis and OGG](https://www.xiph.org/downloads/)
+- [Portaudio](http://www.portaudio.com/download.html)
+- [FreeType](http://gnuwin32.sourceforge.net/packages/freetype.htm) (binaries archive)
+
+Inside the small3d directory, create a directory called *deps* and, within it, one called *include*, one called *lib* and another one, called *bin*.
+
+#### Set up SDL2 or GLFW
+If your are going to use SDL2, unzip its archive, copy the contents of its include directory to *small3d/deps/include*, all the .lib files from its *lib/x86* directory to *small3d/deps/lib* and the .dll files from the same location to *small3d/deps/bin*.
+
+In order to use GLFW, from inside its archive directory, execute:
+
+	mkdir build
+	cd build
+	cmake ..
+	cmake --build .
+
+Then, copy the file *glfw3.lib* from *build/src/Debug* to *small3d/deps/lib* and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/include*.
+
+#### Build and set up PNG with ZLIB
+Unzip the libpng and zlib archives. Place the diectories that will be created in the same parent directory. Then, using Visual Studio, open *libpng/projects/vstudio/vstudio.sln*. Build the whole solution. If zlib cannot be found during the build and you receive an error, make sure the zlib directory name matches exactly the name by which it is referenced in the zlib project within the libpng solution. After the build has been completed, copy all the .lib files from *libpng/projects/vstudio/Debug* to *small3d/deps/lib* and the .dll files from the same directory to *small3d/deps/bin*. Finally, copy all the .h files from *libpng* and *zlib* to *small3d/deps/include*.
+
+#### Build and set up Google Test
+Unzip the Google Test archive. From within it, execute:
+
+    cmake -DBUILD_SHARED_LIBS=ON
+
+With Visual Studio, open *gtest.sln*, build it, and then copy all the .lib files from the *Debug* or *Release* directory to *small3d/deps/lib* and the .dll files from the same directory to *small3d/deps/bin*. Finally, copy the *gtest* directory from *include* to *small3d/deps/include*.
+
+#### Build and set up OGG and Vorbis
+Unzip the OGG archive. Open the solution libogg_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary, and build it. Then, copy the .lib files from there to *small3d/deps/lib*, the .dll files to *small3d/deps/bin* and the *ogg* directory from *include* to *deps/include*.
+
+Unzip the Vorbis archive. Open the solution vorbis_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary. For each of the projects in the solution, add the *include* directory from the OGG archive in *Properties > VC++ Directories > Include Directories* and the *wind32/VS2010/Win32/Debug* directory from the OGG archive in *Properties > VC++ Directories > Library Directories*. Build the entire solution. Then, copy the *vorbis* directory from *include* to *deps/include* and all the .lib files from *wind32/VS2010/Win32/Debug* to *small3d/deps/lib* and the .dll files to *small3d/deps/bin*.
+
+#### Build and set up Portaudio
+Unzip the Portaudio archive. Create a directory called *build1* inside the *portaudio* directory. Build the solution using cmake:
+
+    cd build1
+    cmake ..
+    cmake --build .
+
+Then, from *build1/Debug* copy the *portaudio_x86.lib* file to *small3d/deps/lib*, the *portaudio_x86.dll* file to *small3d/deps/bin* and the .h files from *portaudio/include* to *deps/include*.
+
+#### Set up the rest of the libraries
+
+Unzip the GLEW and GLM archives. For GLEW, copy the .lib files from *lib/Release/Win32* to *small3d/deps/lib*, and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/bin*. For GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries). Finally, for FreeType, copy all the contents of the include directory to *small3d/deps/include*, *lib/freetype.lib* to *small3d/deps/lib* and *bin/freetype6.dll* to *small3d/deps/bin*. 
+
+#### Build small3d
+Create a directory inside *small3d*, called *build*. Then, if you are using SDL2, build the solution like this:
+
+    cd build
+    cmake -DBUILD_UNIT_TESTS=1 ..
+    cmake --build .
+
+For building with GLFW, things are a little different:
+
+	cd build
+	cmake -DWITH_GLFW=1 -DBUILD_UNIT_TESTS=1 ..
+	cmake --build .
+
+The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced. The unit tests can be run by executing *small3dTest.exe* in *build/bin*. For building your own project, you need the files from the *build/include* directory, the libraries from the *build/lib* directory and the dlls from the *build/bin* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
+
+MacOS
+-----
+Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
+
+- [SDL2](https://www.libsdl.org/download-2.0.php) (.framework package) or [GLFW](http://www.glfw.org/), depending on which one you prefer to use.
+- [GLEW](http://glew.sourceforge.net)
+- [GLM](http://glm.g-truc.net/0.9.7/index.html)
+- [Google Test](https://github.com/google/googletest)
+- [Vorbis and OGG](https://www.xiph.org/downloads/)
+- [Portaudio](http://www.portaudio.com/download.html)
+- [FreeType](https://www.freetype.org/download.html)
+- [bzip2](http://www.bzip.org)
+
+Inside the small3d directory, create a directory called *deps* and, within it, one called *include* and one called *lib*.
+
+#### Set up SDL2 or GLFW
+
+If you are going to use SDL2, place its .framework package in *deps*. Otherwise, in order to use GLFW, from inside its archive directory, execute:
+
+	mkdir build
+	cd build
+	cmake ..
+	cmake --build .
+
+Then, copy the file *libglfw3.a* from *build/src* to *small3d/deps/lib* and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/include*.
+
+#### Set up OGG, GLEW and Google Test
+
+Build the OGG library, according to the instructions. Also, install it (with *sudo make install*). Build GLEW, Google Test and Vorbis according to the instructions provided in their distributions. Don't run *make install* on them. Copy the contents of their include directories to *small3d/deps/include*. Copy the .a files from the lib directory of GLEW, the .a files from the Google Test build, the .a files from the Vorbis build (from inside *lib/.libs*) to *small3d/deps/lib*.
+
+#### Set up Portaudio
+
+Unzip the Portaudio archive. Create a directory called *build1* inside the *portaudio* directory. Build the solution using cmake:
+
+    cd build1
+    cmake ..
+    cmake --build .
+	
+Copy the *libportaudio_static.a* from inside *lib/.libs* of the portaudio archive to *small3d/deps/lib* and the contents of the archive's *include* directory to *small3d/deps/include*.  
+
+#### GLM, Freetype and Bzip2
+
+GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is in another *glm* directory) to *deps/include*.
+
+Build Freetype. You just need to run *./configure* and *make* inside its archive directory. Copy the *objs/.libs/libfreetype.a* file to *small3d/deps/lib*. Copy the contents of the include directory to *small3d/deps/include*.
+
+Build bzip2. You just need to run make inside its archive directory. Then copy *libbz2.a* to *small3d/deps/lib* and *bzlib.h* to *small3d/deps/include*.
+
+In the end, the *deps* directory structure should look like this:
+
+    small3d
+        deps
+            include
+              GL
+              glm
+              gtest
+			  vorbis
+			  freetype
+			  bzlib.h
+			  ft2build.h
+			  (and various files starting with *pa_* for Portaudio)
+            lib
+			  libbz2.a
+			  libfreetype.a
+              libglew.a
+              libgtest_main.a
+              libgtest.a
+			  libportaudio_static.a
+            SDL2.framework
+
+Create another directory inside *small3d*, called *build*.
+
+#### Build small3d
+
+If you are using SDL2:
+
+    cd build
+    cmake -DBUILD_UNIT_TESTS=1 ..
+    cmake --build .
+
+If you are using GLFW:
+
+	cd build
+	cmake -DWITH_GLFW=1 -DBUILD_UNIT_TESTS=1 ..
+	cmake --build .
+
+The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files in the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
+
+Linux
+------
+First, install the dependencies. For Debian-based distributions the command is the following:
+
+    sudo apt-get install build-essential cmake libglm-dev libglew-dev libpng12-dev portaudio19-dev libvorbis-dev libfreetype6-dev libbz2-dev
+	
+Also, if you are planning to use SDL2, you need this:
+
+	sudo apt-get install libsdl2-dev
+	
+If on the other hand you will be using GLFW:
+
+	sudo apt-get install libglfw3-dev
+
+For Fedora, Red Hat, etc. the dependencies can be acquired as follows:
+
+    sudo yum install libtool glm-devel glew-devel libpng-devel portaudio-devel libvorbis-devel freetype-devel bzip2-devel
+	
+Then, when building with SDL2, you need:
+
+	sudo yum install SDL2-devel
+	
+And for GLFW:
+
+	sudo yum install glfw-devel
+
+Google Test is also a dependency. For Fedora, things are simple:
+
+    sudo yum install gtest-devel
+
+The package available for Debian (libgtest-dev) provides no binary, so it will not work. The framework needs to be installed manually. If libgtest-dev is already installed, uninstall it:
+
+    sudo apt-get uninstall libgtest-dev
+
+Then, run the following:
+
+    wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz
+    tar xvf release-1.7.0.tar.gz
+    cd googletest-release-1.7.0/
+    cmake -DBUILD_SHARED_LIBS=ON
+    sudo cp -a include/gtest /usr/include
+    sudo cp -a libgtest_main.so libgtest.so /usr/lib/
+
+Clone the [small3d repository](https://github.com/coding3d/small3d). Create another directory inside *small3d*, called *build*. Then build the project, either with SDL2, like this:
+
+    cd build
+    cmake -DBUILD_UNIT_TESTS=1 ..
+    cmake --build .
+	
+Or with GLFW, like this:
+
+	cd build
+	cmake -DWITH_GLFW=1 -DBUILD_UNIT_TESTS=1 ..
+	cmake --build .
+
+The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files from the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
 
 ![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)

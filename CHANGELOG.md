@@ -3,12 +3,14 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
-v1.1.3
+v1.2.0
 ------
 
 (still open)
 
-- Building unit tests is now possible with the conan build and optional in both conan and independent builds (with cmake -DBUILD\_UNIT\_TESTS). For unit testing with the conan build, the Google Test library has to be deployed in /deps and not referenced from conan, since that would complicate the deployment of small3d on conan.
+- Building unit tests is now optional and activated by the cmake parameter -DBUILD\_UNIT\_TESTS=1.
+- Conan and cppan packaging configuration files have been removed from the repository and will be made available in separate repositories.
+- The documentation has been reorganised into a single README file.
 
 v1.1.2
 ------
