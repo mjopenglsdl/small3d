@@ -131,13 +131,13 @@ Unzip the GLEW and GLM archives. For GLEW, copy the .lib files from *lib/Release
 Create a directory inside *small3d*, called *build*. Then, if you are using SDL2, build the solution like this:
 
     cd build
-    cmake -DBUILD_UNIT_TESTS=1 ..
+    cmake ..
     cmake --build .
 
 For building with GLFW, things are a little different:
 
 	cd build
-	cmake -DWITH_GLFW=1 -DBUILD_UNIT_TESTS=1 ..
+	cmake -DWITH_GLFW=1 ..
 	cmake --build .
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced. The unit tests can be run by executing *small3dTest.exe* in *build/bin*. For building your own project, you need the files from the *build/include* directory, the libraries from the *build/lib* directory and the dlls from the *build/bin* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
@@ -266,13 +266,13 @@ Create another directory inside *small3d*, called *build*.
 If you are using SDL2:
 
     cd build
-    cmake -DBUILD_UNIT_TESTS=1 ..
+    cmake ..
     cmake --build .
 
 If you are using GLFW:
 
 	cd build
-	cmake -DWITH_GLFW=1 -DBUILD_UNIT_TESTS=1 ..
+	cmake -DWITH_GLFW=1 ..
 	cmake --build .
 
 The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files in the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
@@ -323,13 +323,13 @@ Then, run the following:
 Clone the [small3d repository](https://github.com/coding3d/small3d). Create another directory inside *small3d*, called *build*. Then build the project, either with SDL2, like this:
 
     cd build
-    cmake -DBUILD_UNIT_TESTS=1 ..
+    cmake ..
     cmake --build .
 	
 Or with GLFW, like this:
 
 	cd build
-	cmake -DWITH_GLFW=1 -DBUILD_UNIT_TESTS=1 ..
+	cmake -DWITH_GLFW=1 ..
 	cmake --build .
 
 The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files from the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
