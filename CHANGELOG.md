@@ -8,9 +8,9 @@ v1.2.0
 
 (still open)
 
-- Building unit tests is now optional and activated by the cmake parameter -DBUILD\_UNIT\_TESTS=1.
 - Conan and cppan packaging configuration files have been removed from the repository and will be made available in separate repositories.
 - The documentation has been reorganised into a single README file.
+- [BREAKING] Dropped support for SDL. Only using GLFW now.
 
 v1.1.2
 ------
