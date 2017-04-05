@@ -14,7 +14,7 @@ Features
 --------
 
 - Runs on Windows, Mac, Linux (I have tested it on Debian and Fedora and somebody has told me that it works on Ubuntu, too).
-- It works GLFW.
+- It works with GLFW.
 - Uses OpenGL 3.3 and defaults to 2.1 if the former is not available. So, it comes with two sets of shaders.
 - Uses C++11.
 - You can tweak the engine's shaders, as long as you keep the same incoming variables and uniforms.
@@ -75,7 +75,7 @@ Building
 Windows
 -------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
-- [SDL2](https://www.libsdl.org/download-2.0.php) (32-bit development library) or [GLFW](http://www.glfw.org/), depending on which one you prefer to use.
+- [GLFW](http://www.glfw.org/) (source code)
 - [GLEW](http://glew.sourceforge.net)
 - [GLM](http://glm.g-truc.net/0.9.7/index.html) (source code)
 - [PNG](http://libpng.sourceforge.net/) (source code)
@@ -87,8 +87,7 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 
 Inside the small3d directory, create a directory called *deps* and, within it, one called *include*, one called *lib* and another one, called *bin*.
 
-#### Set up SDL2 or GLFW
-If your are going to use SDL2, unzip its archive, copy the contents of its include directory to *small3d/deps/include*, all the .lib files from its *lib/x86* directory to *small3d/deps/lib* and the .dll files from the same location to *small3d/deps/bin*.
+#### Set up GLFW
 
 In order to use GLFW, from inside its archive directory, execute:
 
@@ -128,17 +127,11 @@ Then, from *build1/Debug* copy the *portaudio_x86.lib* file to *small3d/deps/lib
 Unzip the GLEW and GLM archives. For GLEW, copy the .lib files from *lib/Release/Win32* to *small3d/deps/lib*, and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/bin*. For GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries). Finally, for FreeType, copy all the contents of the include directory to *small3d/deps/include*, *lib/freetype.lib* to *small3d/deps/lib* and *bin/freetype6.dll* to *small3d/deps/bin*. 
 
 #### Build small3d
-Create a directory inside *small3d*, called *build*. Then, if you are using SDL2, build the solution like this:
+Create a directory inside *small3d*, called *build*. Then, build the solution like this:
 
     cd build
     cmake ..
     cmake --build .
-
-For building with GLFW, things are a little different:
-
-	cd build
-	cmake -DWITH_GLFW=1 ..
-	cmake --build .
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced. The unit tests can be run by executing *small3dTest.exe* in *build/bin*. For building your own project, you need the files from the *build/include* directory, the libraries from the *build/lib* directory and the dlls from the *build/bin* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
 
@@ -257,7 +250,7 @@ In the end, the *deps* directory structure should look like this:
               libgtest_main.a
               libgtest.a
 			  libportaudio_static.a
-            SDL2.framework
+			  libglfw3.a
 
 Create another directory inside *small3d*, called *build*.
 
