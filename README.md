@@ -76,7 +76,7 @@ Windows
 -------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 - [GLFW](http://www.glfw.org/) (source code)
-- [GLEW](http://glew.sourceforge.net)
+- [GLEW](http://glew.sourceforge.net) (binaries for Windows, 32 and 64 bits are contained in the archive. Don't be fooled by its name)
 - [GLM](http://glm.g-truc.net/0.9.7/index.html) (source code)
 - [PNG](http://libpng.sourceforge.net/) (source code)
 - [ZLIB](http://zlib.net/) (source code)
@@ -97,6 +97,11 @@ In order to use GLFW, from inside its archive directory, execute:
 	cmake --build .
 
 Then, copy the file *glfw3.lib* from *build/src/Debug* to *small3d/deps/lib* and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/include*.
+
+#### Set up GLEW and GLM
+From the binary archive of GLEW, copy the *include/GL* directory to *small3d/deps/include*. Copy the *glew32s.lib* file from *lib/Release/x64* (assuming you have a 64 bit machine) to *small3d/deps/lib*. 
+
+GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is in another *glm* directory) to *small3d/deps/include*.
 
 #### Build and set up PNG with ZLIB
 Unzip the libpng and zlib archives. Place the diectories that will be created in the same parent directory. Then, using Visual Studio, open *libpng/projects/vstudio/vstudio.sln*. Build the whole solution. If zlib cannot be found during the build and you receive an error, make sure the zlib directory name matches exactly the name by which it is referenced in the zlib project within the libpng solution. After the build has been completed, copy all the .lib files from *libpng/projects/vstudio/Debug* to *small3d/deps/lib* and the .dll files from the same directory to *small3d/deps/bin*. Finally, copy all the .h files from *libpng* and *zlib* to *small3d/deps/include*.
@@ -122,9 +127,9 @@ Unzip the Portaudio archive. Create a directory called *build1* inside the *port
 
 Then, from *build1/Debug* copy the *portaudio_x86.lib* file to *small3d/deps/lib*, the *portaudio_x86.dll* file to *small3d/deps/bin* and the .h files from *portaudio/include* to *deps/include*.
 
-#### Set up the rest of the libraries
+#### Freetype
 
-Unzip the GLEW and GLM archives. For GLEW, copy the .lib files from *lib/Release/Win32* to *small3d/deps/lib*, and the *GL* directory from include to *small3d/deps/include*. Also copy *bin/Release/Win32/glew32.dll* to *small3d/deps/bin*. For GLM, copy the *glm* directory from within the other *glm* directory to *small3d/deps/include* (there are no binaries/libraries). Finally, for FreeType, copy all the contents of the include directory to *small3d/deps/include*, *lib/freetype.lib* to *small3d/deps/lib* and *bin/freetype6.dll* to *small3d/deps/bin*. 
+Copy all the contents of the include directory to *small3d/deps/include*, *lib/freetype.lib* to *small3d/deps/lib* and *bin/freetype6.dll* to *small3d/deps/bin*. 
 
 #### Build small3d
 Create a directory inside *small3d*, called *build*. Then, build the solution like this:
