@@ -77,7 +77,7 @@ Windows
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 - [GLFW](http://www.glfw.org/) (source code)
 - [GLEW](http://glew.sourceforge.net) (binaries for Windows, 32 and 64 bits are contained in the archive. Don't be fooled by its name)
-- [GLM](http://glm.g-truc.net/0.9.7/index.html) (source code)
+- [GLM](https://github.com/g-truc/glm) (source code)
 - [PNG](http://libpng.sourceforge.net/) (source code)
 - [ZLIB](http://zlib.net/) (source code)
 - [Google Test](https://github.com/google/googletest) (source code)
@@ -96,10 +96,10 @@ In order to use GLFW, from inside its archive directory, execute:
 	cmake ..
 	cmake --build .
 
-Then, copy the file *glfw3.lib* from *build/src/Debug* to *small3d/deps/lib* and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/include*.
+Then, copy the file *glfw3.lib* from *build/src/Debug* to *small3d/deps/lib*, the file  and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/include*.
 
 #### Set up GLEW and GLM
-From the binary archive of GLEW, copy the *include/GL* directory to *small3d/deps/include*. Copy the *glew32s.lib* file from *lib/Release/x64* (assuming you have a 64 bit machine) to *small3d/deps/lib*. 
+From the binary archive of GLEW, copy the *include/GL* directory to *small3d/deps/include*. Copy the *glew32.lib* file from *lib/Release/Win32* to *small3d/deps/lib* and the *glew32.dll* file from *bin/Release/Win32* to *small3d/deps/bin*.
 
 GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is in another *glm* directory) to *small3d/deps/include*.
 
@@ -110,11 +110,12 @@ Unzip the libpng and zlib archives. Place the diectories that will be created in
 Unzip the Google Test archive. From within it, execute:
 
     cmake -DBUILD_SHARED_LIBS=ON
+	cmake --build .
 
-With Visual Studio, open *gtest.sln*, build it, and then copy all the .lib files from the *Debug* or *Release* directory to *small3d/deps/lib* and the .dll files from the same directory to *small3d/deps/bin*. Finally, copy the *gtest* directory from *include* to *small3d/deps/include*.
+Copy all the .lib files from the *googlemock/gtest/Debug* directory to *small3d/deps/lib* and the .dll files from the same directory to *small3d/deps/bin*. Finally, copy the *gtest* directory from *googletest/include* to *small3d/deps/include*.
 
 #### Build and set up OGG and Vorbis
-Unzip the OGG archive. Open the solution libogg_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary, and build it. Then, copy the .lib files from there to *small3d/deps/lib*, the .dll files to *small3d/deps/bin* and the *ogg* directory from *include* to *deps/include*.
+Unzip the OGG archive. Open the solution libogg_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary, and build it. Then, copy the libogg.lib file from *win32/VS2010/Win32/Debug* to *small3d/deps/lib*, the libogg.dll file from the same *Debug* directory to *small3d/deps/bin* and the *ogg* directory from *include* to *deps/include*.
 
 Unzip the Vorbis archive. Open the solution vorbis_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary. For each of the projects in the solution, add the *include* directory from the OGG archive in *Properties > VC++ Directories > Include Directories* and the *wind32/VS2010/Win32/Debug* directory from the OGG archive in *Properties > VC++ Directories > Library Directories*. Build the entire solution. Then, copy the *vorbis* directory from *include* to *deps/include* and all the .lib files from *wind32/VS2010/Win32/Debug* to *small3d/deps/lib* and the .dll files to *small3d/deps/bin*.
 
@@ -146,7 +147,7 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 
 - [GLFW](http://www.glfw.org/)
 - [GLEW](http://glew.sourceforge.net)
-- [GLM](http://glm.g-truc.net/0.9.7/index.html)
+- [GLM](https://github.com/g-truc/glm)
 - [PNG](http://libpng.sourceforge.net/)
 - [Google Test](https://github.com/google/googletest)
 - [Vorbis and OGG](https://www.xiph.org/downloads/)
