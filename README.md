@@ -14,12 +14,12 @@ Features
 --------
 
 - Runs on Windows, Mac, Linux (I have tested it on Debian and Fedora and somebody has told me that it works on Ubuntu, too).
-- It can be built with either SDL or GLFW.
+- It works GLFW.
 - Uses OpenGL 3.3 and defaults to 2.1 if the former is not available. So, it comes with two sets of shaders.
 - Uses C++11.
 - You can tweak the engine's shaders, as long as you keep the same incoming variables and uniforms.
 - Plays sounds from .ogg files.
-- Doesn't hide SDL, GLFW or OpenGL from you. You can set up your main game loop, inputs, etc, however you want, use its functionality, but also code around it making your own OpenGL calls for example.
+- Doesn't hide GLFW or OpenGL from you. You can set up your main game loop, inputs, etc, however you want, use its functionality, but also code around it making your own OpenGL calls for example.
 - It can read and render Wavefront files, including animations.
 - Texture mapping.
 - It can render any image in any position (for example to be used as the ground, or the sky).
@@ -146,7 +146,7 @@ MacOS / OSX
 -----------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 
-- [SDL2](https://www.libsdl.org/download-2.0.php) (.framework package) or [GLFW](http://www.glfw.org/), depending on which one you prefer to use.
+- [GLFW](http://www.glfw.org/)
 - [GLEW](http://glew.sourceforge.net)
 - [GLM](http://glm.g-truc.net/0.9.7/index.html)
 - [PNG](http://libpng.sourceforge.net/)
@@ -263,16 +263,10 @@ Create another directory inside *small3d*, called *build*.
 
 #### Build small3d
 
-If you are using SDL2:
-
-    cd build
-    cmake ..
-    cmake --build .
-
-If you are using GLFW:
+Execute:
 
 	cd build
-	cmake -DWITH_GLFW=1 ..
+	cmake ..
 	cmake --build .
 
 The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files in the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
@@ -281,28 +275,12 @@ Linux
 ------
 First, install the dependencies. For Debian-based distributions the command is the following:
 
-    sudo apt-get install build-essential cmake libglm-dev libglew-dev libpng12-dev portaudio19-dev libvorbis-dev libfreetype6-dev libbz2-dev
+    sudo apt-get install build-essential cmake libglm-dev libglew-dev libpng12-dev portaudio19-dev libvorbis-dev libfreetype6-dev libbz2-dev libglfw3-dev
 	
-Also, if you are planning to use SDL2, you need this:
-
-	sudo apt-get install libsdl2-dev
-	
-If on the other hand you will be using GLFW:
-
-	sudo apt-get install libglfw3-dev
-
 For Fedora, Red Hat, etc. the dependencies can be acquired as follows:
 
-    sudo yum install libtool glm-devel glew-devel libpng-devel portaudio-devel libvorbis-devel freetype-devel bzip2-devel
+    sudo yum install libtool glm-devel glew-devel libpng-devel portaudio-devel libvorbis-devel freetype-devel bzip2-devel glfw-devel
 	
-Then, when building with SDL2, you need:
-
-	sudo yum install SDL2-devel
-	
-And for GLFW:
-
-	sudo yum install glfw-devel
-
 Google Test is also a dependency. For Fedora, things are simple:
 
     sudo yum install gtest-devel
@@ -320,18 +298,12 @@ Then, run the following:
     sudo cp -a include/gtest /usr/include
     sudo cp -a libgtest_main.so libgtest.so /usr/lib/
 
-Clone the [small3d repository](https://github.com/coding3d/small3d). Create another directory inside *small3d*, called *build*. Then build the project, either with SDL2, like this:
+Clone the [small3d repository](https://github.com/coding3d/small3d). Create another directory inside *small3d*, called *build*. Then build the project, like this:
 
     cd build
     cmake ..
     cmake --build .
 	
-Or with GLFW, like this:
-
-	cd build
-	cmake -DWITH_GLFW=1 ..
-	cmake --build .
-
 The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files from the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
 
 ![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)

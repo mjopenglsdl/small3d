@@ -25,15 +25,11 @@ elseif(UNIX AND NOT APPLE)
 
 endif(WIN32 AND NOT MINGW)
 
-if(DEFINED WITH_GLFW AND WITH_GLFW)
-  include_directories(${GLFW_INCLUDE_DIRS})
-  target_link_libraries(small3d PUBLIC ${GLFW_LIBRARIES})
-else()
-  include_directories(${SDL2_INCLUDE_DIR})
-  target_link_libraries(small3d PUBLIC ${SDL2_LIBRARY})
-endif()
+
+
 
 include_directories(
+  ${GLFW_INCLUDE_DIRS}
   ${OPENGL_INCLUDE_DIR}
   ${PNG_INCLUDE_DIRS}
   ${GLM_INCLUDE_DIRS}
@@ -48,6 +44,7 @@ add_definitions(${PNG_DEFINITIONS})
 
 target_link_libraries(small3d PUBLIC
   ${OPENGL_LIBRARIES}
+  ${GLFW_LIBRARIES}
   ${GLEW_LIBRARIES}
   ${PNG_LIBRARIES}
   ${OGG_LIBRARIES}
@@ -77,11 +74,7 @@ target_link_libraries(small3dTest PUBLIC ${GTEST_BOTH_LIBRARIES} small3d )
 
 if(APPLE)
 
-  set(SMALL3DTEST_LINK_FLAGS "-framework AudioUnit -framework AudioToolbox -framework CoreAudio")
-
-  if(DEFINED WITH_GLFW AND WITH_GLFW)
-    set(SMALL3DTEST_LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS} -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
-  endif()
+  set(SMALL3DTEST_LINK_FLAGS "-framework AudioUnit -framework AudioToolbox -framework CoreAudio -framework Cocoa -framework IOKit -framework CoreVideo")
 
   set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS}")
 

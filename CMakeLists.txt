@@ -10,9 +10,7 @@ endif(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
 file(COPY "small3d/include" DESTINATION ".")
 file(COPY "small3d/resources" DESTINATION "./bin")
 
-if(DEFINED WITH_GLFW AND WITH_GLFW)
-  add_definitions(-DSMALL3D_GLFW)
-endif(DEFINED WITH_GLFW AND WITH_GLFW)
+add_definitions(-DSMALL3D_GLFW)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${small3d_BINARY_DIR}/bin")
 if(WIN32 AND NOT MINGW)
@@ -51,11 +49,7 @@ endif ()
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-if(DEFINED WITH_GLFW AND WITH_GLFW)
-  find_package(GLFW REQUIRED)
-else()
-  find_package(SDL2 REQUIRED)
-endif()
+find_package(GLFW REQUIRED)
 
 if(NOT WIN32)
   find_package(BZip2 REQUIRED)
