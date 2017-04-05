@@ -25,51 +25,40 @@ elseif(UNIX AND NOT APPLE)
 
 endif(WIN32 AND NOT MINGW)
 
-if(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN)
+if(DEFINED WITH_GLFW AND WITH_GLFW)
+  include_directories(${GLFW_INCLUDE_DIRS})
+  target_link_libraries(small3d PUBLIC ${GLFW_LIBRARIES})
+else()
+  include_directories(${SDL2_INCLUDE_DIR})
+  target_link_libraries(small3d PUBLIC ${SDL2_LIBRARY})
+endif()
 
-  set(CMAKE_C_FLAGS "${CONAN_C_FLAGS}")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CONAN_CXX_FLAGS}")
-  set(CMAKE_SHARED_LINKER_FLAGS "${CONAN_SHARED_LINKER_FLAGS}")
-  target_link_libraries(small3d PUBLIC ${CONAN_LIBS})
+include_directories(
+  ${OPENGL_INCLUDE_DIR}
+  ${PNG_INCLUDE_DIRS}
+  ${GLM_INCLUDE_DIRS}
+  ${OGG_INCLUDE_DIRS}
+  ${VORBIS_INCLUDE_DIR}
+  ${PORTAUDIO_INCLUDE_DIRS}
+  ${FREETYPE_INCLUDE_DIRS}
+  ${BZIP2_INCLUDE_DIRS}
+  )
 
-else(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN)
+add_definitions(${PNG_DEFINITIONS})
 
-  if(DEFINED WITH_GLFW AND WITH_GLFW)
-    include_directories(${GLFW_INCLUDE_DIRS})
-    target_link_libraries(small3d PUBLIC ${GLFW_LIBRARIES})
-  else()
-    include_directories(${SDL2_INCLUDE_DIR})
-    target_link_libraries(small3d PUBLIC ${SDL2_LIBRARY})
-  endif()
+target_link_libraries(small3d PUBLIC
+  ${OPENGL_LIBRARIES}
+  ${GLEW_LIBRARIES}
+  ${PNG_LIBRARIES}
+  ${OGG_LIBRARIES}
+  ${VORBIS_LIBRARIES}
+  ${PORTAUDIO_LIBRARIES}
+  ${FREETYPE_LIBRARIES}    
+  )
 
-  include_directories(
-    ${OPENGL_INCLUDE_DIR}
-    ${PNG_INCLUDE_DIRS}
-    ${GLM_INCLUDE_DIRS}
-    ${OGG_INCLUDE_DIRS}
-    ${VORBIS_INCLUDE_DIR}
-    ${PORTAUDIO_INCLUDE_DIRS}
-    ${FREETYPE_INCLUDE_DIRS}
-    ${BZIP2_INCLUDE_DIRS}
-    )
-
-  add_definitions(${PNG_DEFINITIONS})
-
-  target_link_libraries(small3d PUBLIC
-    ${OPENGL_LIBRARIES}
-    ${GLEW_LIBRARIES}
-    ${PNG_LIBRARIES}
-    ${OGG_LIBRARIES}
-    ${VORBIS_LIBRARIES}
-    ${PORTAUDIO_LIBRARIES}
-    ${FREETYPE_LIBRARIES}    
-    )
-
-  if(NOT WIN32)
-    target_link_libraries(small3d PUBLIC ${BZIP2_LIBRARIES})
-  endif(NOT WIN32)          
-  
-endif(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN)
+if(NOT WIN32)
+  target_link_libraries(small3d PUBLIC ${BZIP2_LIBRARIES})
+endif(NOT WIN32)          
 
 # Unit testing
 
