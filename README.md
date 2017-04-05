@@ -142,13 +142,14 @@ For building with GLFW, things are a little different:
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced. The unit tests can be run by executing *small3dTest.exe* in *build/bin*. For building your own project, you need the files from the *build/include* directory, the libraries from the *build/lib* directory and the dlls from the *build/bin* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
 
-MacOS
------
+MacOS / OSX
+-----------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 
 - [SDL2](https://www.libsdl.org/download-2.0.php) (.framework package) or [GLFW](http://www.glfw.org/), depending on which one you prefer to use.
 - [GLEW](http://glew.sourceforge.net)
 - [GLM](http://glm.g-truc.net/0.9.7/index.html)
+- [PNG](http://libpng.sourceforge.net/)
 - [Google Test](https://github.com/google/googletest)
 - [Vorbis and OGG](https://www.xiph.org/downloads/)
 - [Portaudio](http://www.portaudio.com/download.html)
@@ -157,9 +158,9 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 
 Inside the small3d directory, create a directory called *deps* and, within it, one called *include* and one called *lib*.
 
-#### Set up SDL2 or GLFW
+#### Set up GLFW
 
-If you are going to use SDL2, place its .framework package in *deps*. Otherwise, in order to use GLFW, from inside its archive directory, execute:
+Build GLFW. From inside its archive directory, execute:
 
 	mkdir build
 	cd build
@@ -168,9 +169,53 @@ If you are going to use SDL2, place its .framework package in *deps*. Otherwise,
 
 Then, copy the file *libglfw3.a* from *build/src* to *small3d/deps/lib* and the *GLFW* directory from inside the archive's *include* directory to *small3d/deps/include*.
 
-#### Set up OGG, GLEW and Google Test
+#### Set up OGG and VORBIS
 
-Build the OGG library, according to the instructions. Also, install it (with *sudo make install*). Build GLEW, Google Test and Vorbis according to the instructions provided in their distributions. Don't run *make install* on them. Copy the contents of their include directories to *small3d/deps/include*. Copy the .a files from the lib directory of GLEW, the .a files from the Google Test build, the .a files from the Vorbis build (from inside *lib/.libs*) to *small3d/deps/lib*.
+Build the OGG library. First you need to edit its *configure* file. Replace the two occurrences of the string:
+
+`-install_name \$rpath/\$soname`
+
+with:
+
+`-install_name \$soname`
+
+Then execute:
+
+    ./configure
+    make
+
+Copy the *include/ogg* directory from the archive to *small3d/deps/include* and the *libogg.a* file from *src/.libs* to *small3d/deps/lib*.
+
+Then build the VORBIS library. The procedure is similar to that for OGG, but there are some differences. First, remove the *rpath* strings, as described above. Then, assuming that your small3d directory is in *Users/user/code* for example, execute:
+
+    export LIBS=-L/Users/user/code/small3d/deps/lib
+    export CFLAGS=-I/Users/user/code/small3d/deps/include
+
+And then:
+    
+     ./configure --with-ogg=/Users/user/code/small3d/deps
+     make
+
+Copy the *include/vorbis* directory from the archive to *small3d/deps/include* and all the *.a* files from *lib/.libs* to *small3d/deps/lib*.
+
+#### Set up GLEW
+
+Build GLEW. You just need to execute:
+
+    make
+
+from inside its archive directory. Then copy the .a files from the *lib* directory to *small3d/deps/lib* and the *include/GL* directory to *small3d/deps/include*.
+
+#### Set up Google Test
+
+Here's a quick way to build Google Test. From inside its archive directory, execuke:
+    
+    mkdir build
+    cd build
+    cmake ..
+    cmake --build .
+
+Then, copy the *googletest/include/gtest* directory to *small3d/deps/include* and the *.a* files from *build/googlemock/gtest* to *small3d/deps/lib*.
 
 #### Set up Portaudio
 
@@ -180,15 +225,17 @@ Unzip the Portaudio archive. Create a directory called *build1* inside the *port
     cmake ..
     cmake --build .
 	
-Copy the *libportaudio_static.a* from inside *lib/.libs* of the portaudio archive to *small3d/deps/lib* and the contents of the archive's *include* directory to *small3d/deps/include*.  
+Copy the *libportaudio_static.a* from *build1* to *small3d/deps/lib* and the contents of the portaudio archive's *include* directory to *small3d/deps/include*.  
 
-#### GLM, Freetype and Bzip2
+#### GLM, Freetype, Bzip2 and PNG
 
 GLM does not require compiling. Copy the contents of the *glm* directory from inside the distribution (it is in another *glm* directory) to *deps/include*.
 
 Build Freetype. You just need to run *./configure* and *make* inside its archive directory. Copy the *objs/.libs/libfreetype.a* file to *small3d/deps/lib*. Copy the contents of the include directory to *small3d/deps/include*.
 
 Build bzip2. You just need to run make inside its archive directory. Then copy *libbz2.a* to *small3d/deps/lib* and *bzlib.h* to *small3d/deps/include*.
+
+Build PNG. You just need to run *./configure* and *make* inside its archive directory. Copy the *libpng16.a* file from *.libs* to *small3d/deps/lib*. Copy the contents of the include directory to *small3d/deps/include*.
 
 In the end, the *deps* directory structure should look like this:
 
