@@ -62,31 +62,29 @@ endif(NOT WIN32)
 
 # Unit testing
 
-if(DEFINED BUILD_UNIT_TESTS AND BUILD_UNIT_TESTS)
+if(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN AND(APPLE OR WIN32))
+  set(DEPS_PATH "${CMAKE_SOURCE_DIR}/deps")
+  set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${DEPS_PATH}")
+endif(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN AND(APPLE OR WIN32))
 
-  if(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN AND(APPLE OR WIN32))
-    set(DEPS_PATH "${CMAKE_SOURCE_DIR}/deps")
-    set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${DEPS_PATH}")
-  endif(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN AND(APPLE OR WIN32))
-  
-  add_executable(small3dTest main.cpp)
+add_executable(small3dTest main.cpp)
 
-  target_include_directories(small3dTest PUBLIC "${small3d_SOURCE_DIR}/small3d/include")
+target_include_directories(small3dTest PUBLIC "${small3d_SOURCE_DIR}/small3d/include")
 
-  find_package(GTest REQUIRED)
-  include_directories(${GTEST_INCLUDE_DIRS})
-  target_link_libraries(small3dTest PUBLIC ${GTEST_BOTH_LIBRARIES} small3d )
-  
-  if(APPLE)
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+target_link_libraries(small3dTest PUBLIC ${GTEST_BOTH_LIBRARIES} small3d )
 
-    set(SMALL3DTEST_LINK_FLAGS "-framework AudioUnit -framework AudioToolbox -framework CoreAudio")
+if(APPLE)
 
-    if(DEFINED WITH_GLFW AND WITH_GLFW)
-      set(SMALL3DTEST_LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS} -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
-    endif()
+  set(SMALL3DTEST_LINK_FLAGS "-framework AudioUnit -framework AudioToolbox -framework CoreAudio")
 
-    set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS}")
+  if(DEFINED WITH_GLFW AND WITH_GLFW)
+    set(SMALL3DTEST_LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS} -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo")
+  endif()
 
-  endif(APPLE)
+  set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS}")
 
-endif(DEFINED BUILD_UNIT_TESTS AND BUILD_UNIT_TESTS)
+endif(APPLE)
+
+
