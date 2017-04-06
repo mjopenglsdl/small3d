@@ -8,7 +8,7 @@ Introduction
 
 ![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
 
-This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. I developed it while learning how to program games and I am still using it for my projects and experiments.
+This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. I developed it while learning how to program games and I am still using it for my projects and experiments. In order to learn how to use it, have a look at the example game, [Avoid the Bug 3D](https://github.com/dimi309/AvoidTheBug3D).
 
 Features
 --------
@@ -20,7 +20,7 @@ Features
 - You can tweak the engine's shaders, as long as you keep the same incoming variables and uniforms.
 - Plays sounds from .ogg files.
 - Doesn't hide GLFW or OpenGL from you. You can set up your main game loop, inputs, etc, however you want, use its functionality, but also code around it making your own OpenGL calls for example.
-- It can read and render Wavefront files, including animations.
+- It can read and render Wavefront files, including animations. Personally, I use Blender to create the models and export these files.
 - Texture mapping.
 - It can render any image in any position (for example to be used as the ground, or the sky).
 - Gouraud shading. You can set the light direction and intensity.
@@ -29,51 +29,8 @@ Features
 - It renders text.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
 
-Note on 3D models and textures
---------------------------------------------------
-
-When exporting Blender models to Wavefront .obj files, we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
-
-If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program.
-
-Collision Detection
+Building in Windows
 -------------------
-
-The engine supports collision detection via manually created bounding boxes. In order to create these in Blender for example, just place them in the preferred position over the model. Ideally, they should be aligned with the axes but that is not mandatory. It will just increase the detection accuracy.
-
-![boundingboxes](https://cloud.githubusercontent.com/assets/875167/19620357/2e03f446-987c-11e6-8517-dfed5ebd885e.png)
-
-Export the bounding boxes to a Wavefront file separately from the model. You can do this if you "save as" a new file after placing the boxes and deleting the original model. During export, only set the options "Apply Modifiers", "Include Edges", "Objects as OBJ Objects" and "Keep Vertex Order". On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
-
-Sound
------
-
-small3d can play sounds from .ogg files on all supported platforms. On Linux, you might hear some noise and receive the following error:
-
-**ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred**
-
-One way to solve this is to edit the file */etc/pulse/default.pa* (with sudo), disabling *module-udev-detect* and *module-detect*, by commenting out the following lines (inserting a \# in front of each):
-
-	### Automatically load driver modules depending on the hardware available
-	#.ifexists module-udev-detect.so
-	#load-module module-udev-detect
-	#.else
-	### Use the static hardware detection module (for systems that lack udev support)
-	#load-module module-detect
-	#.endif
-
-Then, *module-alsa-sink* and *module-alsa-source* need to be enabled, by uncommenting all lines that look like the following (by removing the \# from in front of each). There could be two or more:
-
-	load-module module-alsa-sink
-	load-module module-alsa-source device=hw:1,0
-
-It is advised to make a backup of *default.pa* before making these modifications. A more detailed description of the procedure can be found in this [article](http://thehumble.ninja/2014/02/06/fixing-alsa-lib-pcmc7843snd_pcm_recover-underrun-occurred-while-keeping-pulseaudio-in-your-system/).
-
-Building
-========
-
-Windows
--------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 - [GLFW](http://www.glfw.org/) (source code)
 - [GLEW](http://glew.sourceforge.net) (binaries for Windows, 32 and 64 bits are contained in the archive. Don't be fooled by its name)
@@ -141,8 +98,8 @@ Create a directory inside *small3d*, called *build*. Then, build the solution li
 
 The above mentioned steps are for a 32-bit debug build. With the appropriate modifications and using 64-bit dependencies, a 64-bit build can be produced. The unit tests can be run by executing *small3dTest.exe* in *build/bin*. For building your own project, you need the files from the *build/include* directory, the libraries from the *build/lib* directory and the dlls from the *build/bin* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
 
-MacOS / OSX
------------
+Building in MacOS / OSX
+-----------------------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
 
 - [GLFW](http://www.glfw.org/)
@@ -270,8 +227,8 @@ Execute:
 
 The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files in the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
 
-Linux
-------
+Building in Linux
+-----------------
 First, install the dependencies. For Debian-based distributions the command is the following:
 
     sudo apt-get install build-essential cmake libglm-dev libglew-dev libpng12-dev portaudio19-dev libvorbis-dev libfreetype6-dev libbz2-dev libglfw3-dev
@@ -306,3 +263,43 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Create anot
 The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files from the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful, as well as the *small3d/FindSMALL3D.cmake* module. The branches of the [Avoid the Bug](https://github.com/dimi309/AvoidTheBug3D) game's repository are examples of the various ways in which small3d can be deployed.
 
 ![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)
+
+Note on 3D models and textures
+------------------------------
+
+When exporting Blender models to Wavefront .obj files, we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
+
+If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program.
+
+Collision Detection
+-------------------
+
+The engine supports collision detection via manually created bounding boxes. In order to create these in Blender for example, just place them in the preferred position over the model. Ideally, they should be aligned with the axes but that is not mandatory. It will just increase the detection accuracy.
+
+![boundingboxes](https://cloud.githubusercontent.com/assets/875167/19620357/2e03f446-987c-11e6-8517-dfed5ebd885e.png)
+
+Export the bounding boxes to a Wavefront file separately from the model. You can do this if you "save as" a new file after placing the boxes and deleting the original model. During export, only set the options "Apply Modifiers", "Include Edges", "Objects as OBJ Objects" and "Keep Vertex Order". On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
+
+Sound
+-----
+
+small3d can play sounds from .ogg files on all supported platforms. On Linux, you might hear some noise and receive the following error:
+
+**ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred**
+
+One way to solve this is to edit the file */etc/pulse/default.pa* (with sudo), disabling *module-udev-detect* and *module-detect*, by commenting out the following lines (inserting a \# in front of each):
+
+	### Automatically load driver modules depending on the hardware available
+	#.ifexists module-udev-detect.so
+	#load-module module-udev-detect
+	#.else
+	### Use the static hardware detection module (for systems that lack udev support)
+	#load-module module-detect
+	#.endif
+
+Then, *module-alsa-sink* and *module-alsa-source* need to be enabled, by uncommenting all lines that look like the following (by removing the \# from in front of each). There could be two or more:
+
+	load-module module-alsa-sink
+	load-module module-alsa-source device=hw:1,0
+
+It is advised to make a backup of *default.pa* before making these modifications. A more detailed description of the procedure can be found in this [article](http://thehumble.ninja/2014/02/06/fixing-alsa-lib-pcmc7843snd_pcm_recover-underrun-occurred-while-keeping-pulseaudio-in-your-system/).
