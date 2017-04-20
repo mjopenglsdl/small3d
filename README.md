@@ -40,7 +40,7 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Then, downl
 - [Google Test](https://github.com/google/googletest) (source code)
 - [Vorbis and OGG](https://www.xiph.org/downloads/)
 - [Portaudio](http://www.portaudio.com/download.html)
-- [FreeType](http://gnuwin32.sourceforge.net/packages/freetype.htm) (binaries archive)
+- [FreeType](http://download.savannah.gnu.org/releases/freetype/) (source code - the latest version I've used is 2.7.1)
 
 Inside the small3d directory, create a directory called *deps* and, within it, one called *include*, one called *lib* and another one, called *bin*.
 
@@ -87,7 +87,8 @@ Then, from *build1/Debug* copy the *portaudio_x86.lib* file to *small3d/deps/lib
 
 #### Freetype
 
-Copy all the contents of the include directory to *small3d/deps/include*, *lib/freetype.lib* to *small3d/deps/lib* and *bin/freetype6.dll* to *small3d/deps/bin*. 
+Unzip the Freetype archive. Open the solution *freetype/builds/windows/vc2010/freetype.sln*, upgrading it to your Visual Studio version if necessary. Then build it. 
+Copy all the contents of the *freetype/include directory* to *small3d/deps/include* and *freetype/objs/vc2010/Win32/freetype27(d).lib* to *small3d/deps/lib/freetype.lib* (rename it, removing the version bit, so that cmake can find it more easily). 
 
 #### Build small3d
 Create a directory inside *small3d*, called *build*. Then, build the solution like this:
