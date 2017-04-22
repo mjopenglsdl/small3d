@@ -304,3 +304,5 @@ Then, *module-alsa-sink* and *module-alsa-source* need to be enabled, by uncomme
 	load-module module-alsa-source device=hw:1,0
 
 It is advised to make a backup of *default.pa* before making these modifications. A more detailed description of the procedure can be found in this [article](http://thehumble.ninja/2014/02/06/fixing-alsa-lib-pcmc7843snd_pcm_recover-underrun-occurred-while-keeping-pulseaudio-in-your-system/).
+
+![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)
