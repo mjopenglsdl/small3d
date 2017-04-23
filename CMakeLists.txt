@@ -7,10 +7,10 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
   #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything -Wno-c++98-compat -pedantic")
 endif(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
 
+add_definitions(-DSMALL3D_GLFW)
+
 file(COPY "small3d/include" DESTINATION ".")
 file(COPY "small3d/resources" DESTINATION "./bin")
-
-add_definitions(-DSMALL3D_GLFW)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${small3d_BINARY_DIR}/bin")
 if(WIN32 AND NOT MINGW)
@@ -38,7 +38,6 @@ if(NOT UNIX OR APPLE)
   endif(NOT APPLE)
 endif(NOT UNIX OR APPLE)
 
-subdirs(small3d)
 if (APPLE OR WIN32)
   set(DEPS_PATH "${CMAKE_SOURCE_DIR}/deps")
   set(CMAKE_PREFIX_PATH ${DEPS_PATH})
@@ -48,6 +47,8 @@ if (APPLE OR WIN32)
 endif ()
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+
+subdirs(small3d)
 
 find_package(GLFW REQUIRED)
 

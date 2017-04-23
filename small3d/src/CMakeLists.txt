@@ -25,9 +25,6 @@ elseif(UNIX AND NOT APPLE)
 
 endif(WIN32 AND NOT MINGW)
 
-
-
-
 include_directories(
   ${GLFW_INCLUDE_DIRS}
   ${OPENGL_INCLUDE_DIR}
@@ -59,11 +56,6 @@ endif(NOT WIN32)
 
 # Unit testing
 
-if(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN AND(APPLE OR WIN32))
-  set(DEPS_PATH "${CMAKE_SOURCE_DIR}/deps")
-  set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${DEPS_PATH}")
-endif(DEFINED BUILD_WITH_CONAN AND BUILD_WITH_CONAN AND(APPLE OR WIN32))
-
 add_executable(small3dTest main.cpp)
 
 target_include_directories(small3dTest PUBLIC "${small3d_SOURCE_DIR}/small3d/include")
@@ -79,5 +71,3 @@ if(APPLE)
   set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS}")
 
 endif(APPLE)
-
-
