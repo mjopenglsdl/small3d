@@ -17,6 +17,8 @@
 #include <SDL.h>
 #endif
 
+using namespace portaudio;
+
 namespace small3d {
 
   /**
