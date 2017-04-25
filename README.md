@@ -244,7 +244,7 @@ Google Test is also a dependency. For Fedora, things are simple:
 
 The package available for Debian (libgtest-dev) provides no binary, so it will not work. The framework needs to be installed manually. If libgtest-dev is already installed, uninstall it:
 
-    sudo apt-get uninstall libgtest-dev
+    sudo apt-get remove libgtest-dev
 
 Then, run the following:
 
@@ -252,6 +252,7 @@ Then, run the following:
     tar xvf release-1.7.0.tar.gz
     cd googletest-release-1.7.0/
     cmake -DBUILD_SHARED_LIBS=ON
+    cmake --build .
     sudo cp -a include/gtest /usr/include
     sudo cp -a libgtest_main.so libgtest.so /usr/lib/
 
