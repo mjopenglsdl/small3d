@@ -13,10 +13,6 @@
 #include <vorbis/vorbisfile.h>
 #include "SoundData.hpp"
 
-#ifndef SMALL3D_GLFW
-#include <SDL.h>
-#endif
-
 namespace small3d {
 
   /**
@@ -46,10 +42,8 @@ namespace small3d {
      * @brief Constructor
      * 
      * @param basePath   The path under which all accessed files and directories are
-     *                   to be found. If this is not set, it is assumed to be the directory
-     *                   containing the application executable when using SDL, or the
-     *                   directory from where the execution command is entered when 
-     *                   using GLFW.
+     *                   to be found. If this is not set, it is assumed to be the
+     *                   directory from where the execution command is entered. 
      */
     SoundPlayer(std::string basePath = "");
 

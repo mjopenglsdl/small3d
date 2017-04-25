@@ -66,14 +66,7 @@ namespace small3d {
 
     noOutputDevice = false;
 
-    if (basePath.empty()) {
-#ifndef SMALL3D_GLFW
-    this->basePath = string(SDL_GetBasePath());
-#endif
-    }
-    else {
-      this->basePath = basePath;
-    }
+    this->basePath = basePath;
     
     PaError initError = Pa_Initialize();
 

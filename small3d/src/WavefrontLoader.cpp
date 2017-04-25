@@ -179,14 +179,7 @@ namespace small3d {
   WavefrontLoader::WavefrontLoader(string basePath) {
     clear();
     
-    if (basePath.empty()) {
-#ifndef SMALL3D_GLFW
-    this->basePath = string(SDL_GetBasePath());
-#endif
-    }
-    else {
-      this->basePath = basePath;
-    }
+    this->basePath = basePath;
     
   }
 
