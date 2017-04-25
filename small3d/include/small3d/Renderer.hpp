@@ -12,12 +12,7 @@
 
 #include <GL/glew.h>
 
-#ifdef SMALL3D_GLFW
 #include <GLFW/glfw3.h>
-#else
-#include <SDL_opengl.h>
-#include <SDL.h>
-#endif
 
 #include "SceneObject.hpp"
 #include "Logger.hpp"
@@ -42,11 +37,7 @@ namespace small3d
 
     std::string basePath;
     
-#ifdef SMALL3D_GLFW
     GLFWwindow* window;
-#else
-    SDL_Window* window;
-#endif
 
     GLuint perspectiveProgram;
 
@@ -153,11 +144,7 @@ namespace small3d
 
   public:
 
-#ifdef SMALL3D_GLFW
     GLFWwindow* getWindow();
-#else
-    SDL_Window* getWindow();
-#endif
 
     /**
      * @brief Vector, indicating the direction of the light in the scene.
@@ -203,9 +190,7 @@ namespace small3d
      * 				and outputs are maintained the same.
      * @param basePath          The path under which all accessed files and directories are
      *                          to be found. If this is not set, it is assumed to be the directory
-     *                          containing the application executable when using SDL, or the
-     *                          directory from where the execution command is entered when 
-     *                          using GLFW.
+     *                          from where the execution command is entered.
      */
     Renderer(std::string windowTitle = "", int width = 0, int height = 0,
              float frustumScale = 1.0f, float zNear = 1.0f,

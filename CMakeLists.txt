@@ -7,8 +7,6 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
   #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything -Wno-c++98-compat -pedantic")
 endif(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
 
-add_definitions(-DSMALL3D_GLFW)
-
 file(COPY "small3d/include" DESTINATION ".")
 file(COPY "small3d/resources" DESTINATION "./bin")
 
