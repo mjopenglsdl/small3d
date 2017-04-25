@@ -14,10 +14,6 @@
 #include "Logger.hpp"
 #include <png.h>
 
-#ifndef SMALL3D_GLFW
-#include <SDL.h>
-#endif
-
 namespace small3d {
 
   /**
@@ -44,9 +40,7 @@ namespace small3d {
      * @param fileLocation   Location of image file
      * @param basePath       The path under which all accessed files and directories are
      *                       to be found. If this is not set, it is assumed to be the directory
-     *                       containing the application executable when using SDL, or the
-     *                       directory from where the execution command is entered when 
-     *                       using GLFW.
+     *                       from where the execution command is entered. 
      */
     Image(std::string fileLocation = "", std::string basePath = "");
 

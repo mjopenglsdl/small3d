@@ -21,13 +21,7 @@ namespace small3d {
     imageDataSize=0;
 
     if (basePath.empty()) {
-#ifndef SMALL3D_GLFW
-    this->basePath = string(SDL_GetBasePath());
-#endif
-    }
-    else {
       this->basePath = basePath;
-    }
     
     if (fileLocation != "")
       this->loadFromFile(fileLocation);
