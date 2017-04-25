@@ -20,8 +20,7 @@ namespace small3d {
     height = 0;
     imageDataSize=0;
 
-    if (basePath.empty()) {
-      this->basePath = basePath;
+    this->basePath = basePath;
     
     if (fileLocation != "")
       this->loadFromFile(fileLocation);
