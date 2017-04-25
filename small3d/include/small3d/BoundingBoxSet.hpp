@@ -13,10 +13,6 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#ifndef SMALL3D_GLFW
-#include <SDL.h>
-#endif
-
 namespace small3d {
 
   /**
@@ -61,9 +57,7 @@ namespace small3d {
      *
      * @param basePath  The path under which all accessed files and directories are
      *                  to be found. If this is not set, it is assumed to be the directory
-     *                  containing the application executable when using SDL, or the
-     *                  directory from where the execution command is entered when 
-     *                  using GLFW.
+     *                  from where the execution command is entered. 
      */
 
     BoundingBoxSet(std::string basePath = "");

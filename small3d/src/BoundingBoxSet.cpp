@@ -25,14 +25,7 @@ namespace small3d {
     facesVertexIndexes.clear();
     numBoxes = 0;
 
-    if (basePath.empty()) {
-#ifndef SMALL3D_GLFW
-      this->basePath = string(SDL_GetBasePath());
-#endif
-    }
-    else {
-      this->basePath = basePath;
-    }
+    this->basePath = basePath;
     
   }
 
