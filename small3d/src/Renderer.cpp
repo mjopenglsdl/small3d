@@ -201,8 +201,13 @@ namespace small3d {
 #ifdef __APPLE__
     glewExperimental = GL_TRUE;
 #endif
-    GLenum initResult = glewInit();
 
+#ifdef __LINUX__
+    glewExperimental = GL_TRUE;
+#endif
+    
+    GLenum initResult = glewInit();
+   
     if (initResult != GLEW_OK) {
       throw Exception("Error initialising GLEW");
     }
