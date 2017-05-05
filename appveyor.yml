@@ -15,7 +15,7 @@ install:
 test_script:
   - git clone https://github.com/dimi309/conan-packages
   - cd conan-packages\\small3d
-  - export coding3d\\stable
+  - conan export coding3d/stable
   - cd ..\\..
   - git clone https://github.com/dimi309/small3d-tutorial
   - cd small3d-tutorial\\ChaseTheGoat
