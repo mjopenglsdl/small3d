@@ -1,0 +1,26 @@
+build: false
+branches:
+  only:
+    - master
+environment:
+    PYTHON: "C:\\Python27"
+    PYTHON_VERSION: "2.7.8"
+    PYTHON_ARCH: "32"
+
+install:
+  - set PATH=%PATH%;%PYTHON%/Scripts/
+  - pip.exe install conan
+  - conan user
+
+test_script:
+  - git clone https://github.com/dimi309/conan-packages
+  - cd conan-packages\\small3d
+  - export coding3d\\stable
+  - cd ..\\..
+  - git clone https://github.com/dimi309/small3d-tutorial
+  - cd small3d-tutorial\\ChaseTheGoat
+  - mkdir build
+  - cd build
+  - conan install .. --build missing
+  - cmake -G"Visual Studio 14 2015 Win64" ..
+  - cmake --build .
