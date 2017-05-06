@@ -6,13 +6,6 @@
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-// Without undefining strict ANSI, compilation in MinGW fails when C++11 is enabled
-#ifdef __MINGW32__
-#ifdef __STRICT_ANSI__
-#undef __STRICT_ANSI__
-#endif
-#endif
-
 #include <gtest/gtest.h>
 
 #include "Renderer.hpp"
@@ -24,20 +17,6 @@
 #include "SceneObject.hpp"
 
 #include "GetTokens.hpp"
-
-/* MinGW produces the following linking error, if the unit tests
- * are linked to the renderer:
- *    undefined reference to `SDL_SetMainReady'
- * This started occurring when the GLEW source code was removed from the 
- * small3d repository and the project was linked to the GLEW library.
- * It probably has something to do with the order in which the SDL libraries 
- * are linked (see http://www.cplusplus.com/forum/beginner/110753/).
- * It does not occur in the sample game, only in these unit tests, when they 
- * are built under MinGW.
- */
-#ifndef __MINGW32__
-
-#endif
 
 using namespace small3d;
 using namespace std;
@@ -161,9 +140,6 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 }
 
 
-// The following cannot run on the CI environment because there is no video device available there.
-// Also, the test doesn't run with MinGW (see comment above Renderer.h include directive)
-#ifndef __MINGW32__
 TEST(RendererTest, StartAndUse) {
 
   SceneObject object("animal",
@@ -175,8 +151,6 @@ TEST(RendererTest, StartAndUse) {
   renderer.render(object);
 
 }
-#endif
-
 
 ///////// FUNCTIONS ////////////////
 TEST(TokenTest, GetFourTokens) {
@@ -190,14 +164,6 @@ TEST(TokenTest, GetFourTokens) {
 }
 
 int main(int argc, char **argv) {
-  // Set up a console, if using MinGW
-  // This is because the mwindows linker flag,
-  // used by blocks referenced by small3d,
-  // eliminates the default one.
-#ifdef __MINGW32__
-  AllocConsole();
-  freopen("CONOUT$", "w", stdout);
-#endif
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
