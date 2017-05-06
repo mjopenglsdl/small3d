@@ -5,6 +5,7 @@ branches:
   only:
     - master
 install:
+  - pwd
   - sudo ./.travis/install.sh
 script:
   - echo hello
