@@ -8,7 +8,7 @@ Introduction
 
 ![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
 
-This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. I developed it while learning how to program games and I am still using it for my projects and experiments. In order to learn how to use it, have a look at the [tutorial](https://github.com/dimi309/small3d-tutorial).
+This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. I developed it while learning how to program games and I am still using it for my projects and experiments. In order to learn how to use it, have a look at the [tutorial](https://github.com/dimi309/small3d-tutorial) and the [API documentation](http://dimi309.github.io/small3d/)
 
 Features
 --------
