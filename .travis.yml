@@ -6,6 +6,9 @@ branches:
 install:
   - chmod +x ./.travis/install.sh
   - sudo ./.travis/install.sh
+  - sudo apt-get update
+  - sudo apt-get install --only-upgrade cmake
 script:
+  - sudo chmod -R 777 /home/travis/.conan/settings.yml
   - chmod +x ./.travis/run.sh
-  - sudo ./.travis/run.sh
+  - ./.travis/run.sh
