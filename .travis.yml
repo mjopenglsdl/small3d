@@ -8,4 +8,14 @@ install:
   - chmod +x ./.travis/install.sh
   - sudo ./.travis/install.sh
 script:
-  - echo hello
+  - git clone https://github.com/dimi309/conan-packages
+  - cd conan-packages/small3d
+  - conan export coding3d/stable
+  - cd ../..
+  - git clone https://github.com/dimi309/small3d-tutorial
+  - cd small3d-tutorial/ChaseTheGoat3D
+  - mkdir build
+  - cd build
+  - conan install .. --build missing
+  - cmake ..
+  - cmake --build .
