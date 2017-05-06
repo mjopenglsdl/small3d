@@ -10,8 +10,8 @@ if [[ "$(uname -s)" == 'Darwin' ]]; then
     pyenv activate conan
 fi
 
+sudo chmod -R 777 /home/travis/.conan
 conan user
-# sudo chmod -R 777 /home/travis/.conan
 git clone https://github.com/dimi309/conan-packages
 cd conan-packages/small3d
 conan export coding3d/stable
