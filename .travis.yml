@@ -1,0 +1,7 @@
+os: linux
+sudo: required
+language: python
+install:
+  - ./.travis/install.sh
+script:
+  - echo hello
