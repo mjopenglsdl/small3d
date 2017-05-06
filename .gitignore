@@ -24,3 +24,4 @@ conanbuildinfo.cmake
 conaninfo.txt
 *.pyc
 /Win32
+/whatever
