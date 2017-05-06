@@ -69,7 +69,7 @@ Unzip the Google Test archive. From within it, execute:
     cmake -DBUILD_SHARED_LIBS=ON
 	cmake --build .
 
-Copy all the .lib files from the *googlemock/gtest/Debug* directory to *small3d/deps/lib* and the .dll files from the same directory to *small3d/deps/bin*. Finally, copy the *gtest* directory from *googletest/include* to *small3d/deps/include*.
+Copy all the .lib files from the *googlemock/gtest/Debug* directory to *small3d/deps/lib* and the .dll and .pdb files from the same directory to *small3d/deps/bin*. Finally, copy the *gtest* directory from *googletest/include* to *small3d/deps/include*.
 
 #### Build and set up OGG and Vorbis
 Unzip the OGG archive. Open the solution libogg_dynamic.sln in *win32/VS2010*, upgrading it to your Visual Studio version if necessary, and build it. Then, copy the libogg.lib file from *win32/VS2010/Win32/Debug* to *small3d/deps/lib*, the libogg.dll file from the same *Debug* directory to *small3d/deps/bin* and the *ogg* directory from *include* to *deps/include*.

@@ -58,6 +58,10 @@ endif(NOT WIN32)
 
 add_executable(small3dTest main.cpp)
 
+if(WIN32 AND NOT MINGW)
+  set_target_properties(small3dTest PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${small3d_BINARY_DIR}/bin")
+endif(WIN32 AND NOT MINGW)
+
 target_include_directories(small3dTest PUBLIC "${small3d_SOURCE_DIR}/small3d/include")
 
 find_package(GTest REQUIRED)
