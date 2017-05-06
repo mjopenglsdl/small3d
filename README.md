@@ -28,6 +28,47 @@ Features
 - Simple collision detection with bounding boxes.
 - It renders text.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
+- **It can be deployed via a package manager ([conan.io](https://www.conan.io/)). This is a huge time saver and you can see in the abovementioned [tutorial](https://github.com/dimi309/small3d-tutorial) how to use it and avoid building the engine and all its dependencies yourself. Of course, independent builds are also supported so, if you don't mind doing all the hard work, you can follow the building instructions further down this document.**
+
+Note on 3D models and textures
+------------------------------
+
+When exporting Blender models to Wavefront .obj files, we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
+
+If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program.
+
+Collision Detection
+-------------------
+
+The engine supports collision detection via manually created bounding boxes. In order to create these in Blender for example, just place them in the preferred position over the model. Ideally, they should be aligned with the axes but that is not mandatory. It will just increase the detection accuracy.
+
+![boundingboxes](https://cloud.githubusercontent.com/assets/875167/19620357/2e03f446-987c-11e6-8517-dfed5ebd885e.png)
+
+Export the bounding boxes to a Wavefront file separately from the model. You can do this if you "save as" a new file after placing the boxes and deleting the original model. During export, only set the options "Apply Modifiers", "Include Edges", "Objects as OBJ Objects" and "Keep Vertex Order". On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
+
+Sound
+-----
+
+small3d can play sounds from .ogg files on all supported platforms. On Linux, you might hear some noise and receive the following error:
+
+**ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred**
+
+One way to solve this is to edit the file */etc/pulse/default.pa* (with sudo), disabling *module-udev-detect* and *module-detect*, by commenting out the following lines (inserting a \# in front of each):
+
+	### Automatically load driver modules depending on the hardware available
+	#.ifexists module-udev-detect.so
+	#load-module module-udev-detect
+	#.else
+	### Use the static hardware detection module (for systems that lack udev support)
+	#load-module module-detect
+	#.endif
+
+Then, *module-alsa-sink* and *module-alsa-source* need to be enabled, by uncommenting all lines that look like the following (by removing the \# from in front of each). There could be two or more:
+
+	load-module module-alsa-sink
+	load-module module-alsa-source device=hw:1,0
+
+It is advised to make a backup of *default.pa* before making these modifications. A more detailed description of the procedure can be found in this [article](http://thehumble.ninja/2014/02/06/fixing-alsa-lib-pcmc7843snd_pcm_recover-underrun-occurred-while-keeping-pulseaudio-in-your-system/).
 
 Building in Windows
 -------------------
@@ -263,47 +304,5 @@ Clone the [small3d repository](https://github.com/coding3d/small3d). Create anot
     cmake --build .
 	
 The unit tests can be run by executing *small3dTest* in *build/bin*. For building your own project, you need the files from the *build/include* directory and the libraries from the *build/lib* directory. If you are using cmake, the modules in *small3d/cmake* can be useful.
-
-![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)
-
-Note on 3D models and textures
-------------------------------
-
-When exporting Blender models to Wavefront .obj files, we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
-
-If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program.
-
-Collision Detection
--------------------
-
-The engine supports collision detection via manually created bounding boxes. In order to create these in Blender for example, just place them in the preferred position over the model. Ideally, they should be aligned with the axes but that is not mandatory. It will just increase the detection accuracy.
-
-![boundingboxes](https://cloud.githubusercontent.com/assets/875167/19620357/2e03f446-987c-11e6-8517-dfed5ebd885e.png)
-
-Export the bounding boxes to a Wavefront file separately from the model. You can do this if you "save as" a new file after placing the boxes and deleting the original model. During export, only set the options "Apply Modifiers", "Include Edges", "Objects as OBJ Objects" and "Keep Vertex Order". On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
-
-Sound
------
-
-small3d can play sounds from .ogg files on all supported platforms. On Linux, you might hear some noise and receive the following error:
-
-**ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred**
-
-One way to solve this is to edit the file */etc/pulse/default.pa* (with sudo), disabling *module-udev-detect* and *module-detect*, by commenting out the following lines (inserting a \# in front of each):
-
-	### Automatically load driver modules depending on the hardware available
-	#.ifexists module-udev-detect.so
-	#load-module module-udev-detect
-	#.else
-	### Use the static hardware detection module (for systems that lack udev support)
-	#load-module module-detect
-	#.endif
-
-Then, *module-alsa-sink* and *module-alsa-source* need to be enabled, by uncommenting all lines that look like the following (by removing the \# from in front of each). There could be two or more:
-
-	load-module module-alsa-sink
-	load-module module-alsa-source device=hw:1,0
-
-It is advised to make a backup of *default.pa* before making these modifications. A more detailed description of the procedure can be found in this [article](http://thehumble.ninja/2014/02/06/fixing-alsa-lib-pcmc7843snd_pcm_recover-underrun-occurred-while-keeping-pulseaudio-in-your-system/).
 
 ![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)

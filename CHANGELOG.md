@@ -10,12 +10,7 @@ v1.2.0
 
 - Conan and cppan packaging configuration files have been removed from the repository and will be made available in separate repositories.
 - The documentation has been reorganised into a single README file.
-- [BREAKING] Dropped support for SDL. Only using GLFW now.
-
-v1.1.2
-------
-
-- Now using SDL 2.0.5
+- [BREAKING] Dropped support for SDL. Only using GLFW now. (I've changed my mind about keeping SDL since v1.1.0. Sorry...)
 
 v1.1.1
 ------
