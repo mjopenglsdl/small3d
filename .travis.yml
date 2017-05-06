@@ -12,10 +12,10 @@ matrix:
       language: generic
       env:
 install:
-  - chmod +x ./.travis/install.sh
-  - sudo ./.travis/install.sh
   - sudo apt-get update
   - sudo apt-get install --only-upgrade cmake
+  - chmod +x ./.travis/install.sh
+  - ./.travis/install.sh
 script:
   - chmod +x ./.travis/run.sh
   - ./.travis/run.sh
