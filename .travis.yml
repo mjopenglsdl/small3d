@@ -1,4 +1,3 @@
-language: python
 branches:
   only:
     - master
@@ -6,9 +5,12 @@ matrix:
   include:
     - os: linux
       dist: trusty
+      language: python
       sudo: required
-    - os: osx
-      osx_image: xcode7.2
+    - os: osx 
+      osx_image: xcode7.3 # apple-clang 7.3
+      language: generic
+      env:
 install:
   - chmod +x ./.travis/install.sh
   - sudo ./.travis/install.sh
