@@ -8,8 +8,9 @@ v1.2.0
 
 (still open)
 
-- Conan and cppan packaging configuration files have been removed from the repository and will be made available in separate repositories.
+- Conan and cppan packaging configuration files have been removed from the repository. The conan configuration has been moved to the [repository containing my other conan contributions](https://github.com/dimi309/conan-packages).
 - The documentation has been reorganised into a single README file.
+- The tutorial that was part of the README file has been moved to [its own repository](https://github.com/dimi309/small3d-tutorial), together with the sample games.
 - [BREAKING] Dropped support for SDL. Only using GLFW now. (I've changed my mind about keeping SDL since v1.1.0. Sorry...)
 
 v1.1.1
