@@ -20,8 +20,7 @@ elseif(APPLE)
 
 elseif(UNIX AND NOT APPLE)
 
-  target_compile_options(small3d PUBLIC "-std=c++11" "-Wl,--no-as-needed") # Avoid gcc problems in Ubuntu
-  target_link_libraries(small3d PUBLIC "-ljack -lasound")
+  target_compile_options(small3d PUBLIC "-std=c++11")
 
 endif(WIN32 AND NOT MINGW)
 
