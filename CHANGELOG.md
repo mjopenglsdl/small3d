@@ -6,8 +6,6 @@ small3d changelog
 v1.2.0
 ------
 
-(still open)
-
 - Conan and cppan packaging configuration files have been removed from the repository. The conan configuration has been moved to the [repository containing my other conan contributions](https://github.com/dimi309/conan-packages).
 - The documentation has been reorganised into a single README file.
 - The tutorial that was part of the README file has been moved to [its own repository](https://github.com/dimi309/small3d-tutorial), together with the sample games.
