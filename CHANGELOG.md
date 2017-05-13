@@ -12,6 +12,8 @@ v1.2.0
 - The documentation has been reorganised into a single README file.
 - The tutorial that was part of the README file has been moved to [its own repository](https://github.com/dimi309/small3d-tutorial), together with the sample games.
 - [BREAKING] Dropped support for SDL. Only using GLFW now. (I've changed my mind about keeping SDL since v1.1.0. Sorry...)
+- Bug fixes and improvements for cross-platform compilation. Tested on Windows, MacOS, Debian and Fedora.
+- Improvement of "manual" building instructions.
 
 v1.1.1
 ------
