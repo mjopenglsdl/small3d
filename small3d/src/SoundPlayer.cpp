@@ -184,7 +184,7 @@ namespace small3d {
       outputParams.device = defaultOutput;
       outputParams.channelCount = soundData->channels;
       outputParams.hostApiSpecificStreamInfo = NULL;
-      outputParams.suggestedLatency = O.8f;
+      outputParams.suggestedLatency = 0.8f;
 
       outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
 
