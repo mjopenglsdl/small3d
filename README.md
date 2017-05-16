@@ -46,30 +46,6 @@ The engine supports collision detection via manually created bounding boxes. In 
 
 Export the bounding boxes to a Wavefront file separately from the model. You can do this if you "save as" a new file after placing the boxes and deleting the original model. During export, only set the options "Apply Modifiers", "Include Edges", "Objects as OBJ Objects" and "Keep Vertex Order". On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
 
-Sound
------
-
-small3d can play sounds from .ogg files on all supported platforms. On Linux, you might hear some noise and receive the following error:
-
-**ALSA lib pcm.c:7843:(snd_pcm_recover) underrun occurred**
-
-One way to solve this is to edit the file */etc/pulse/default.pa* (with sudo), disabling *module-udev-detect* and *module-detect*, by commenting out the following lines (inserting a \# in front of each):
-
-	### Automatically load driver modules depending on the hardware available
-	#.ifexists module-udev-detect.so
-	#load-module module-udev-detect
-	#.else
-	### Use the static hardware detection module (for systems that lack udev support)
-	#load-module module-detect
-	#.endif
-
-Then, *module-alsa-sink* and *module-alsa-source* need to be enabled, by uncommenting all lines that look like the following (by removing the \# from in front of each). There could be two or more:
-
-	load-module module-alsa-sink
-	load-module module-alsa-source device=hw:1,0
-
-It is advised to make a backup of *default.pa* before making these modifications. A more detailed description of the procedure can be found in this [article](http://thehumble.ninja/2014/02/06/fixing-alsa-lib-pcmc7843snd_pcm_recover-underrun-occurred-while-keeping-pulseaudio-in-your-system/).
-
 Building in Windows
 -------------------
 Clone the [small3d repository](https://github.com/coding3d/small3d). Then, download and install cmake. And then, download the following dependencies:
