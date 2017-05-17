@@ -184,7 +184,11 @@ namespace small3d {
       outputParams.device = defaultOutput;
       outputParams.channelCount = soundData->channels;
       outputParams.hostApiSpecificStreamInfo = NULL;
-      outputParams.suggestedLatency = 0.8f;
+
+// Avoid sound corruption on Linux systems 
+#ifdef __linux__
+      outputParams.suggestedLatency = 0.6f;
+#endif
 
       outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
 
