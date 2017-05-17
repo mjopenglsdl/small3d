@@ -246,7 +246,7 @@ namespace small3d
      * @param topRight The coordinates for the top right corner of the surface
      */
     
-    void renderSurface(glm::vec3 colour, const glm::vec3 &bottomLeft, const glm::vec3 &topRight);
+    void renderSurface(glm::vec3 colour, const glm::vec3 bottomLeft, const glm::vec3 topRight, bool perspective = false);
     
     /**
      * @brief Render a scene object

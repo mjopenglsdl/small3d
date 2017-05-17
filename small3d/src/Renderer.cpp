@@ -21,7 +21,6 @@ namespace small3d {
   {
     LOGERROR(string(description));
   }
-
   
   string openglErrorToString(GLenum error);
 
@@ -490,7 +489,7 @@ namespace small3d {
 
 
   void Renderer::renderTexture(string name, const glm::vec3 &bottomLeft, const glm::vec3 &topRight, 
-                        bool perspective) {
+                               bool perspective) {
 
     float vertices[16] = {
       bottomLeft.x, bottomLeft.y, bottomLeft.z, 1.0f,
@@ -601,15 +600,15 @@ namespace small3d {
     checkForOpenGLErrors("rendering image", true);
   }
 
-  void Renderer::renderSurface(glm::vec3 colour, const glm::vec3 &bottomLeft, const glm::vec3 &topRight) {
-     float vertices[16] = {
+  void Renderer::renderSurface(glm::vec3 colour, const glm::vec3 bottomLeft, const glm::vec3 topRight, bool perspective) {
+    float vertices[16] = {
       bottomLeft.x, bottomLeft.y, bottomLeft.z, 1.0f,
       topRight.x, bottomLeft.y, bottomLeft.z, 1.0f,
       topRight.x, topRight.y, topRight.z, 1.0f,
       bottomLeft.x, topRight.y, topRight.z, 1.0f
     };
 
-    glUseProgram(perspectiveProgram);
+    glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
 
     GLuint vao = 0;
     if (isOpenGL33Supported) {
@@ -644,24 +643,26 @@ namespace small3d {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
 
-    // Find the colour uniform
-    GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
+    if (perspective) {
+      // Find the colour uniform
+      GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
 
-    // Set the colour
-    glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(colour, 1.0f)));
+      // Set the colour
+      glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(colour, 1.0f)));
 
-    // Lighting
-    GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
+      // Lighting
+      GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
 							 "lightDirection");
-    glUniform3fv(lightDirectionUniform, 1,
+      glUniform3fv(lightDirectionUniform, 1,
                    glm::value_ptr(lightDirection));
 
-    GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
-    glUniform1f(lightIntensityUniform, lightIntensity);
+      GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
+      glUniform1f(lightIntensityUniform, lightIntensity);
 
-    positionNextObject(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::mat4x4());
-    positionCamera();
-
+      positionNextObject(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::mat4x4());
+      positionCamera();
+    }
+    
     glDrawElements(GL_TRIANGLES,
                    6, GL_UNSIGNED_INT, 0);
 
@@ -1011,13 +1012,13 @@ namespace small3d {
 	  for (int col = 0; col < static_cast<int>(slot->bitmap.width); ++col) {
 	    glm::vec4 colourAlpha = glm::vec4(colour, 0.0f);
 	    colourAlpha.a = floorf(100.0f *
-		     (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f;
+                                   (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f;
 	    memcpy(
 		   &textMemory[4 * width * (height - static_cast<unsigned long>(slot->bitmap_top)
-				     + static_cast<unsigned long>(row)) // row position
-			    + totalAdvance + 4 * (static_cast<unsigned long>(col)
-						  + static_cast<unsigned long>(slot->bitmap_left)) // column position
-			    ],
+                                            + static_cast<unsigned long>(row)) // row position
+                               + totalAdvance + 4 * (static_cast<unsigned long>(col)
+                                                     + static_cast<unsigned long>(slot->bitmap_left)) // column position
+                               ],
 		   glm::value_ptr(colourAlpha),
 		   4 * sizeof(float));
 	  }
@@ -1032,7 +1033,7 @@ namespace small3d {
     generateTexture(textureName, &textMemory[0], width, height);
 
     renderTexture(textureName, glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
-           glm::vec3(topRight.x, topRight.y, -0.5f));
+                  glm::vec3(topRight.x, topRight.y, -0.5f));
     
     deleteTexture(textureName);
     
