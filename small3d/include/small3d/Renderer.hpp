@@ -244,6 +244,7 @@ namespace small3d
      * @param colour The colour of the surface (vector of 3 components for r, g, b)
      * @param bottomLeft The coordinates for the bottom left corner of the surface
      * @param topRight The coordinates for the top right corner of the surface
+     * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
      */
     
     void renderSurface(glm::vec3 colour, const glm::vec3 bottomLeft, const glm::vec3 topRight, bool perspective = false);
