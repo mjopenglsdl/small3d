@@ -643,13 +643,14 @@ namespace small3d {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
 
+    // Find the colour uniform
+    GLint colourUniform = glGetUniformLocation(perspective ? perspectiveProgram : orthographicProgram, "colour");
+
+    // Set the colour
+    glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(colour, 1.0f)));
+    
     if (perspective) {
-      // Find the colour uniform
-      GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
-
-      // Set the colour
-      glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(colour, 1.0f)));
-
+      
       // Lighting
       GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
 							 "lightDirection");
@@ -665,6 +666,10 @@ namespace small3d {
     
     glDrawElements(GL_TRIANGLES,
                    6, GL_UNSIGNED_INT, 0);
+
+    // Clear the colour uniform
+    glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
+
 
     glDeleteBuffers(1, &indexBufferObject);
     glDeleteBuffers(1, &boxBuffer);
