@@ -115,9 +115,9 @@ GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><b>getWindow</b>
 <tr class="memitem:ae1a3877a175a6e3eb97986a9605c857c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#ae1a3877a175a6e3eb97986a9605c857c">supportsOpenGL33</a> ()</td></tr>
 <tr class="memdesc:ae1a3877a175a6e3eb97986a9605c857c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is OpenGL 3.3 supported?  <a href="#ae1a3877a175a6e3eb97986a9605c857c">More...</a><br /></td></tr>
 <tr class="separator:ae1a3877a175a6e3eb97986a9605c857c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add1c5fbd8efe417059a052678542bfd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#add1c5fbd8efe417059a052678542bfd6">renderSurface</a> (glm::vec3 colour, const glm::vec3 &amp;bottomLeft, const glm::vec3 &amp;topRight)</td></tr>
-<tr class="memdesc:add1c5fbd8efe417059a052678542bfd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a single-coloured surface.  <a href="#add1c5fbd8efe417059a052678542bfd6">More...</a><br /></td></tr>
-<tr class="separator:add1c5fbd8efe417059a052678542bfd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd2bcc7e6696b515d7569182c0606f1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#acd2bcc7e6696b515d7569182c0606f1f">renderSurface</a> (glm::vec3 colour, const glm::vec3 bottomLeft, const glm::vec3 topRight, bool perspective=false)</td></tr>
+<tr class="memdesc:acd2bcc7e6696b515d7569182c0606f1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a single-coloured surface.  <a href="#acd2bcc7e6696b515d7569182c0606f1f">More...</a><br /></td></tr>
+<tr class="separator:acd2bcc7e6696b515d7569182c0606f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae503fb2cab82111e42869bb9d18ed202"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#ae503fb2cab82111e42869bb9d18ed202">render</a> (<a class="el" href="classsmall3d_1_1_scene_object.html">SceneObject</a> &amp;sceneObject, bool showBoundingBoxes=false)</td></tr>
 <tr class="memdesc:ae503fb2cab82111e42869bb9d18ed202"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a scene object.  <a href="#ae503fb2cab82111e42869bb9d18ed202">More...</a><br /></td></tr>
 <tr class="separator:ae503fb2cab82111e42869bb9d18ed202"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -415,8 +415,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 
 </div>
 </div>
-<a id="add1c5fbd8efe417059a052678542bfd6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add1c5fbd8efe417059a052678542bfd6">&#9670;&nbsp;</a></span>renderSurface()</h2>
+<a id="acd2bcc7e6696b515d7569182c0606f1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd2bcc7e6696b515d7569182c0606f1f">&#9670;&nbsp;</a></span>renderSurface()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -430,14 +430,20 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
+          <td class="paramtype">const glm::vec3&#160;</td>
           <td class="paramname"><em>bottomLeft</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
-          <td class="paramname"><em>topRight</em>&#160;</td>
+          <td class="paramtype">const glm::vec3&#160;</td>
+          <td class="paramname"><em>topRight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>perspective</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -453,6 +459,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
     <tr><td class="paramname">colour</td><td>The colour of the surface (vector of 3 components for r, g, b) </td></tr>
     <tr><td class="paramname">bottomLeft</td><td>The coordinates for the bottom left corner of the surface </td></tr>
     <tr><td class="paramname">topRight</td><td>The coordinates for the top right corner of the surface </td></tr>
+    <tr><td class="paramname">perspective</td><td>If set to true, use perspective rendering, otherwise use simple (orthographic) rendering. </td></tr>
   </table>
   </dd>
 </dl>
