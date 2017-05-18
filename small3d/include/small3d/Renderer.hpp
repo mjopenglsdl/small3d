@@ -287,8 +287,8 @@ namespace small3d
     void clearScreen(glm::vec4 colour);
 
     /**
-     * @brief This is a double buffered system and this commands swaps
-     * the buffers
+     * @brief This is a double buffered system and this command swaps
+     * the buffers.
      */
     void swapBuffers();
 
