@@ -187,7 +187,7 @@ namespace small3d {
 
 // Avoid sound corruption on Linux systems 
 #ifdef __linux__
-      outputParams.suggestedLatency = 0.6f;
+      outputParams.suggestedLatency = 0.8f;
 #endif
 
       outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
