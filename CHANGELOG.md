@@ -3,6 +3,13 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.2.1
+------
+(still open)
+
+- Various bug fixes and code improvements.
+- [BREAKING] The Renderer and SoundPlayer classes are now singletons. 
+
 v1.2.0
 ------
 
