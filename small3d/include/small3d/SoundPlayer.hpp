@@ -35,8 +35,6 @@ namespace small3d {
     bool noOutputDevice;
 
     PaDeviceIndex defaultOutput;
-    
-    inline static int instanceCount = 0;
 
   public:
 
