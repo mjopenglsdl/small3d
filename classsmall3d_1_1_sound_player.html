@@ -79,6 +79,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classsmall3d_1_1_sound_player-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">small3d::SoundPlayer Class Reference</div>  </div>
@@ -92,9 +93,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae58312625cea939d65d0b442ca6d5593"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_sound_player.html#ae58312625cea939d65d0b442ca6d5593">SoundPlayer</a> (std::string basePath=&quot;&quot;)</td></tr>
-<tr class="memdesc:ae58312625cea939d65d0b442ca6d5593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ae58312625cea939d65d0b442ca6d5593">More...</a><br /></td></tr>
-<tr class="separator:ae58312625cea939d65d0b442ca6d5593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a167d4f4e5ed2d6cb31afc210b1d39a85"><td class="memItemLeft" align="right" valign="top"><a id="a167d4f4e5ed2d6cb31afc210b1d39a85"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SoundPlayer</b> (<a class="el" href="classsmall3d_1_1_sound_player.html">SoundPlayer</a> const &amp;)=delete</td></tr>
+<tr class="separator:a167d4f4e5ed2d6cb31afc210b1d39a85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab069f22d211df8577f5a8395cd20431d"><td class="memItemLeft" align="right" valign="top"><a id="ab069f22d211df8577f5a8395cd20431d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classsmall3d_1_1_sound_player.html">SoundPlayer</a> const &amp;)=delete</td></tr>
+<tr class="separator:ab069f22d211df8577f5a8395cd20431d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b4920b001c719c388c2e64cc599449d"><td class="memItemLeft" align="right" valign="top"><a id="a7b4920b001c719c388c2e64cc599449d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_sound_player.html#a7b4920b001c719c388c2e64cc599449d">~SoundPlayer</a> ()</td></tr>
 <tr class="memdesc:a7b4920b001c719c388c2e64cc599449d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -111,37 +115,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acb3a150772f072f7a0569aee1786918d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_sound_player.html#acb3a150772f072f7a0569aee1786918d">clear</a> (std::string soundName)</td></tr>
 <tr class="memdesc:acb3a150772f072f7a0569aee1786918d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes a sound from memory.  <a href="#acb3a150772f072f7a0569aee1786918d">More...</a><br /></td></tr>
 <tr class="separator:acb3a150772f072f7a0569aee1786918d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a89506f2a294201e7ba37b9c20a9eb4e2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classsmall3d_1_1_sound_player.html">SoundPlayer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_sound_player.html#a89506f2a294201e7ba37b9c20a9eb4e2">getInstance</a> (std::string basePath=&quot;&quot;)</td></tr>
+<tr class="memdesc:a89506f2a294201e7ba37b9c20a9eb4e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the instance of the <a class="el" href="classsmall3d_1_1_sound_player.html" title="Sound management class. ">SoundPlayer</a> (the <a class="el" href="classsmall3d_1_1_sound_player.html" title="Sound management class. ">SoundPlayer</a> is a singleton).  <a href="#a89506f2a294201e7ba37b9c20a9eb4e2">More...</a><br /></td></tr>
+<tr class="separator:a89506f2a294201e7ba37b9c20a9eb4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Sound management class. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae58312625cea939d65d0b442ca6d5593"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae58312625cea939d65d0b442ca6d5593">&#9670;&nbsp;</a></span>SoundPlayer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">small3d::SoundPlayer::SoundPlayer </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>basePath</em> = <code>&quot;&quot;</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">basePath</td><td>The path under which all accessed files and directories are to be found. If this is not set, it is assumed to be the directory from where the execution command is entered. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="acb3a150772f072f7a0569aee1786918d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acb3a150772f072f7a0569aee1786918d">&#9670;&nbsp;</a></span>clear()</h2>
 
@@ -165,6 +148,41 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a89506f2a294201e7ba37b9c20a9eb4e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89506f2a294201e7ba37b9c20a9eb4e2">&#9670;&nbsp;</a></span>getInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classsmall3d_1_1_sound_player.html">SoundPlayer</a> &amp; small3d::SoundPlayer::getInstance </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>basePath</em> = <code>&quot;&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the instance of the <a class="el" href="classsmall3d_1_1_sound_player.html" title="Sound management class. ">SoundPlayer</a> (the <a class="el" href="classsmall3d_1_1_sound_player.html" title="Sound management class. ">SoundPlayer</a> is a singleton). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">basePath</td><td>The path under which all accessed files and directories are to be found. If this is not set, it is assumed to be the directory from where the execution command is entered. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classsmall3d_1_1_sound_player.html" title="Sound management class. ">SoundPlayer</a> object. It can only be assigned to a pointer by its address (<a class="el" href="classsmall3d_1_1_sound_player.html" title="Sound management class. ">SoundPlayer</a> *r = &amp;<a class="el" href="classsmall3d_1_1_sound_player.html#a89506f2a294201e7ba37b9c20a9eb4e2" title="Get the instance of the SoundPlayer (the SoundPlayer is a singleton). ">SoundPlayer::getInstance()</a>, sicne declaring another <a class="el" href="classsmall3d_1_1_sound_player.html" title="Sound management class. ">SoundPlayer</a> variable and assigning to it would invoke the default constructor, which has been deleted. </dd></dl>
 
 </div>
 </div>
