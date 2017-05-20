@@ -63,6 +63,10 @@ namespace small3d {
   }
 
   SoundPlayer::SoundPlayer(string basePath) {
+    
+    if (SoundPlayer::instanceCount > 0)
+      throw Exception("More than one SoundPlayer objects cannot be created.");
+    else ++SoundPlayer::instanceCount;
 
     noOutputDevice = false;
 
