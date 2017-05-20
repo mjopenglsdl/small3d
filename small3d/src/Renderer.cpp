@@ -957,7 +957,7 @@ namespace small3d {
     if (idFacePair == fontFaces.end()) {
 
       string faceFullPath = basePath + fontPath;
-      LOGINFO("Loading font from " + faceFullPath);
+      LOGDEBUG("Loading font from " + faceFullPath);
 
       error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);
 
@@ -965,7 +965,7 @@ namespace small3d {
 	throw Exception("Failed to load font from " + faceFullPath);
       }
       else{
-	LOGINFO("Font loaded successfully");
+	LOGDEBUG("Font loaded successfully");
 	fontFaces.insert(make_pair(faceId, face));
       }
     } else {
