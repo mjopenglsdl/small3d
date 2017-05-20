@@ -16,6 +16,8 @@ using namespace std;
 
 
 namespace small3d {
+
+  int Renderer::instanceCount = 0;
   
   void error_callback(int error, const char* description)
   {
@@ -29,9 +31,9 @@ namespace small3d {
                      float zFar, float zOffsetFromCamera,
                      string shadersPath, string basePath) {
     
-    if (Renderer::instanceCount > 0)
+    if (instanceCount > 0)
       throw Exception("More than one Renderer objects cannot be created.");
-    else ++Renderer::instanceCount;
+    else ++instanceCount;
     
     isOpenGL33Supported = false;
     window = 0;

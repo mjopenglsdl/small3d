@@ -19,6 +19,8 @@
 using namespace std;
 
 namespace small3d {
+  
+  int SoundPlayer::instanceCount = 0;
 
   static int audioCallback(const void *inputBuffer, void *outputBuffer,
                            unsigned long framesPerBuffer,
@@ -64,9 +66,9 @@ namespace small3d {
 
   SoundPlayer::SoundPlayer(string basePath) {
     
-    if (SoundPlayer::instanceCount > 0)
+    if (instanceCount > 0)
       throw Exception("More than one SoundPlayer objects cannot be created.");
-    else ++SoundPlayer::instanceCount;
+    else ++instanceCount;
 
     noOutputDevice = false;
 
