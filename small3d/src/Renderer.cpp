@@ -86,7 +86,7 @@ namespace small3d {
     return window;
   }
 
-  string Renderer::loadShaderFromFile(const string &fileLocation) {
+  string Renderer::loadShaderFromFile(string fileLocation) {
     initLogger();
     string shaderSource = "";
     ifstream file((basePath + fileLocation).c_str());
@@ -147,7 +147,7 @@ namespace small3d {
 
   }
 
-  GLuint Renderer::compileShader(const string &shaderSourceFile, const GLenum shaderType) {
+  GLuint Renderer::compileShader(string shaderSourceFile, const GLenum shaderType) {
 
     GLuint shader = glCreateShader(shaderType);
 

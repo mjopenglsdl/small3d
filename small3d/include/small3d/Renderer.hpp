@@ -66,7 +66,7 @@ namespace small3d
      * @param fileLocation The file's location, relative to the game path
      * @return String containing the shader's source code
      */
-    std::string loadShaderFromFile(const std::string &fileLocation);
+    std::string loadShaderFromFile(std::string fileLocation);
 
     /**
      * @brief Compile a shader's source code
@@ -74,7 +74,7 @@ namespace small3d
      * @param shaderType Type of shader (GL_VERTEX_SHADER, GL_FRAGMENT_SHADER, GL_GEOMETRY_SHADER - the latter for OpenGL 3.3)
      * @return OpenGL shader reference
      */
-    GLuint compileShader(const std::string &shaderSource, const GLenum shaderType);
+    GLuint compileShader(std::string shaderSource, const GLenum shaderType);
 
     /**
      * @brief Retrieve the information of what went wrong when linking a shader program
