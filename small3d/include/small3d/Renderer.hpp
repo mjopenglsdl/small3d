@@ -141,9 +141,11 @@ namespace small3d
      */
     void render(const BoundingBoxSet &boundingBoxSet, const glm::vec3 &offset,
                 const glm::vec3 &rotation, const glm::mat4x4 &rotationAdjustment);
+    
+    inline static int instanceCount = 0;
 
   public:
-
+    
     GLFWwindow* getWindow();
 
     /**
@@ -293,4 +295,5 @@ namespace small3d
     void swapBuffers();
 
   };
+  
 }
