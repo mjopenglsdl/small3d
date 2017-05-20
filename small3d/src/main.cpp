@@ -148,40 +148,19 @@ TEST(RendererTest, StartAndUse) {
                      1,
                      "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png");
   
-  Renderer renderer("test", 640, 480);
+  Renderer *renderer = &Renderer::getInstance("test", 640, 480);
   
-  string singletonError = "";
+  renderer->render(object);
   
-  try {
-    Renderer renderer2;
-  }
-  catch(Exception &e) {
-    singletonError = e.what();
-  }
-  
-  EXPECT_EQ("More than one Renderer objects cannot be created.", singletonError);
-  
-  renderer.render(object);
-  
-  renderer.renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f),
+  renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f),
                          glm::vec3(1.0f, 1.0f, 1.0f), false);
   
 }
 
 TEST(SoundPlayerTest, Singleton) {
   
-  SoundPlayer sp;
+  SoundPlayer *sp = &SoundPlayer::getInstance();
   
-  string singletonError = "";
-  
-  try {
-    SoundPlayer sp2;
-  }
-  catch(Exception &e) {
-    singletonError = e.what();
-  }
-  
-  EXPECT_EQ("More than one SoundPlayer objects cannot be created.", singletonError);
 }
 
 ///////// FUNCTIONS ////////////////

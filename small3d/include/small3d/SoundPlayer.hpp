@@ -38,16 +38,24 @@ namespace small3d {
     
     static int instanceCount;
     
+    SoundPlayer(std::string basePath);
+    
   public:
+    
+    SoundPlayer(SoundPlayer const&) = delete;
+    void operator=(SoundPlayer const&) = delete;
 
     /**
-     * @brief Constructor
+     * @brief Get the instance of the SoundPlayer (the SoundPlayer is a singleton).
      * 
      * @param basePath   The path under which all accessed files and directories are
      *                   to be found. If this is not set, it is assumed to be the
-     *                   directory from where the execution command is entered. 
+     *                   directory from where the execution command is entered.
+     * @return The SoundPlayer object. It can only be assigned to a pointer by its address 
+     *         (SoundPlayer *r = &SoundPlayer::getInstance(), sicne declaring another SoundPlayer variable and 
+     *         assigning to it would invoke the default constructor, which has been deleted.
      */
-    SoundPlayer(std::string basePath = "");
+    static SoundPlayer& getInstance(std::string basePath = "");
 
     /**
      * @brief Destructor

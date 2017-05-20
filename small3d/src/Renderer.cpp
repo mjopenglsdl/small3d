@@ -17,8 +17,6 @@ using namespace std;
 
 namespace small3d {
 
-  int Renderer::instanceCount = 0;
-  
   void error_callback(int error, const char* description)
   {
     LOGERROR(string(description));
@@ -30,10 +28,6 @@ namespace small3d {
                      float frustumScale , float zNear,
                      float zFar, float zOffsetFromCamera,
                      string shadersPath, string basePath) {
-    
-    if (instanceCount > 0)
-      throw Exception("More than one Renderer objects cannot be created.");
-    else ++instanceCount;
     
     isOpenGL33Supported = false;
     window = 0;
@@ -56,6 +50,12 @@ namespace small3d {
     {
       throw Exception("Unable to initialise font system");
     }
+  }
+  
+  Renderer& Renderer::getInstance(std::string windowTitle, int width, int height, float frustumScale, float zNear,
+                                  float zFar, float zOffsetFromCamera, std::string shadersPath, std::string basePath) {
+    static Renderer instance(windowTitle, width, height, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath, basePath);
+    return instance;
   }
   
   Renderer::~Renderer() {

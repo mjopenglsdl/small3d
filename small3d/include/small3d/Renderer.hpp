@@ -142,9 +142,18 @@ namespace small3d
     void render(const BoundingBoxSet &boundingBoxSet, const glm::vec3 &offset,
                 const glm::vec3 &rotation, const glm::mat4x4 &rotationAdjustment);
     
-    static int instanceCount;
+    /**
+     * Hidden constructor, because Renderer is a singleton
+     */
+    Renderer(std::string windowTitle, int width, int height, float frustumScale, float zNear,
+             float zFar, float zOffsetFromCamera, std::string shadersPath, std::string basePath);
+    
+    Renderer() {};
     
   public:
+    
+    Renderer(Renderer const&) = delete;
+    void operator=(Renderer const&) = delete;
     
     // Get the GLFW window object, associated with the Renderer.
     GLFWwindow* getWindow();
@@ -174,7 +183,7 @@ namespace small3d
     float lightIntensity;
 
     /**
-     * @brief Constructor
+     * @brief Get the isntance of the Renderer (the Renderer is a singleton).
      * @param windowTitle The title of the game's window
      * @param width The width of the window. If width and height are not set, or set to 0, the game will run in full screen mode.
      * @param height The height of the window
@@ -194,8 +203,11 @@ namespace small3d
      * @param basePath          The path under which all accessed files and directories are
      *                          to be found. If this is not set, it is assumed to be the directory
      *                          from where the execution command is entered.
+     * @return The Renderer object. It can only be assigned to a pointer by its address (Renderer *r = &Renderer::getInstance(...), 
+     *         sicne declaring another Renderer variable and assigning to it would invoke the default constructor, which has 
+     *         been deleted.
      */
-    Renderer(std::string windowTitle = "", int width = 0, int height = 0,
+    static Renderer& getInstance(std::string windowTitle = "", int width = 0, int height = 0,
              float frustumScale = 1.0f, float zNear = 1.0f,
              float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
              std::string shadersPath = "resources/shaders/", std::string basePath = "");
