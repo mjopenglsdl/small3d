@@ -44,6 +44,8 @@ namespace small3d {
     
     SoundPlayer(SoundPlayer const&) = delete;
     void operator=(SoundPlayer const&) = delete;
+    SoundPlayer(SoundPlayer &&) = delete;
+    void operator=(SoundPlayer &&) = delete;
 
     /**
      * @brief Get the instance of the SoundPlayer (the SoundPlayer is a singleton).

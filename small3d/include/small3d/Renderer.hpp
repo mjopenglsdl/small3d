@@ -154,6 +154,8 @@ namespace small3d
     
     Renderer(Renderer const&) = delete;
     void operator=(Renderer const&) = delete;
+    Renderer(Renderer &&) = delete;
+    void operator=(Renderer &&) = delete;
     
     // Get the GLFW window object, associated with the Renderer.
     GLFWwindow* getWindow();
