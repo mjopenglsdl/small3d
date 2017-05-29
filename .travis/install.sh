@@ -23,4 +23,9 @@ else
 fi
 
 pip install conan_package_tools
+
+conan remote remove conan.io
+conan remote add conan.io https://api.bintray.com/conan/dimi309/conan-packages
+conan remote add oldconan https://server.conan.io
 conan user
+

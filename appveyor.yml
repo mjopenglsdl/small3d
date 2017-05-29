@@ -10,27 +10,30 @@ environment:
 install:
   - set PATH=%PATH%;%PYTHON%/Scripts/
   - pip.exe install conan
+  - conan remote remove conan.io
+  - conan remote add conan.io https://api.bintray.com/conan/dimi309/conan-packages
+  - conan remote add oldconan https://server.conan.io
   - conan user
 
 test_script:
   - git clone https://github.com/dimi309/conan-packages
   - cd conan-packages\\glew
-  - conan export coding3d/stable
+  - conan export dimi309/stable
   - cd ..\\..
   - cd conan-packages\\glfw
-  - conan export coding3d/stable
+  - conan export dimi309/stable
   - cd ..\\..
   - cd conan-packages\\glm
-  - conan export coding3d/stable
+  - conan export dimi309/stable
   - cd ..\\..
   - cd conan-packages\\ogg
-  - conan export coding3d/stable
+  - conan export dimi309/stable
   - cd ..\\..
   - cd conan-packages\\small3d
-  - conan export coding3d/stable
+  - conan export dimi309/stable
   - cd ..\\..
   - cd conan-packages\\vorbis
-  - conan export coding3d/stable
+  - conan export dimi309/stable
   - cd ..\\..
   - git clone https://github.com/dimi309/small3d-tutorial
   - cd small3d-tutorial\\ChaseTheGoat3D

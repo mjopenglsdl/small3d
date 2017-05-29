@@ -13,27 +13,27 @@ fi
 git clone https://github.com/dimi309/conan-packages
 
 cd conan-packages/glew
-conan export coding3d/stable
+conan export dimi309/stable
 cd ../..
 
 cd conan-packages/glfw
-conan export coding3d/stable
+conan export dimi309/stable
 cd ../..
 
 cd conan-packages/glm
-conan export coding3d/stable
+conan export dimi309/stable
 cd ../..
 
 cd conan-packages/ogg
-conan export coding3d/stable
+conan export dimi309/stable
 cd ../..
 
 cd conan-packages/small3d
-conan export coding3d/stable
+conan export dimi309/stable
 cd ../..
 
 cd conan-packages/vorbis
-conan export coding3d/stable
+conan export dimi309/stable
 cd ../..
 
 git clone https://github.com/dimi309/small3d-tutorial
