@@ -28,7 +28,7 @@ Features
 - Simple collision detection with bounding boxes.
 - It renders text.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
-- **It can be deployed via a package manager ([conan.io](https://www.conan.io/)). This is a huge time saver and you can see in the abovementioned [tutorial](https://github.com/dimi309/small3d-tutorial) how to use it and avoid building the engine and all its dependencies yourself. Of course, independent builds are also supported so, if you don't mind doing all the hard work, you can follow the building instructions further down this document.**
+- **It can be deployed via a package manager (conan). This is a huge time saver and you can see in the abovementioned [tutorial](https://github.com/dimi309/small3d-tutorial) how to use it and avoid building the engine and all its dependencies yourself. Of course, independent builds are also supported so, if you don't mind doing all the hard work, you can follow the building instructions further down this document.**
 
 Note on 3D models and textures
 ------------------------------
