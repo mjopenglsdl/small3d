@@ -13,7 +13,7 @@ class Small3dConan(ConanFile):
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.8.4@dimi309/stable", \
         "vorbis/1.3.5@dimi309/stable", "portaudio/rc.v190600.20161001@jgsogo/stable", "gtest/1.8.0@lasote/stable"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
-    exports = "*"
+    exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt"]
 
     def rpm_package_installed(self, package):
         p = subprocess.Popen(['rpm', '-q', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
