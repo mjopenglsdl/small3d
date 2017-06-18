@@ -12,7 +12,6 @@ target_include_directories(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include
 if(WIN32 AND NOT MINGW)
 
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
-  set_target_properties(small3d PROPERTIES LINK_FLAGS "/NODEFAULTLIB:\"LIBCMTD\" /NODEFAULTLIB:\"LIBCMT\"")
 
 elseif(APPLE)
 
@@ -23,51 +22,3 @@ elseif(UNIX AND NOT APPLE)
   target_compile_options(small3d PUBLIC "-std=c++11")
 
 endif(WIN32 AND NOT MINGW)
-
-include_directories(
-  ${GLFW_INCLUDE_DIRS}
-  ${OPENGL_INCLUDE_DIR}
-  ${PNG_INCLUDE_DIRS}
-  ${GLM_INCLUDE_DIRS}
-  ${OGG_INCLUDE_DIRS}
-  ${VORBIS_INCLUDE_DIR}
-  ${PORTAUDIO_INCLUDE_DIRS}
-  ${FREETYPE_INCLUDE_DIRS}
-  ${BZIP2_INCLUDE_DIRS}
-  )
-
-add_definitions(${PNG_DEFINITIONS})
-
-target_link_libraries(small3d PUBLIC
-  ${GLFW_LIBRARIES}
-  ${GLEW_LIBRARIES}
-  ${PNG_LIBRARIES}
-  ${OGG_LIBRARIES}
-  ${VORBIS_LIBRARIES}
-  ${PORTAUDIO_LIBRARIES}
-  ${FREETYPE_LIBRARIES}    
-  )
-
-if(NOT WIN32)
-  target_link_libraries(small3d PUBLIC ${BZIP2_LIBRARIES})
-endif(NOT WIN32)          
-
-# Unit testing
-
-add_executable(small3dTest main.cpp)
-
-if(MSVC)
-  set_target_properties(small3dTest PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${small3d_BINARY_DIR}/bin")
-endif(MSVC)
-
-target_include_directories(small3dTest PUBLIC "${small3d_SOURCE_DIR}/small3d/include")
-
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-target_link_libraries(small3dTest PUBLIC ${CONAN_LIBS} small3d)
-
-if(UNIX AND NOT APPLE)
-  set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS} -lpng -lz")
-else(UNIX AND NOT APPLE)
-  set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}")
-endif(UNIX AND NOT APPLE)

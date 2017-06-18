@@ -15,18 +15,3 @@ endif(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
 file(COPY "small3d/resources" DESTINATION "./bin")
 
 subdirs(small3d)
-
-find_package(GLFW REQUIRED)
-
-if(NOT WIN32)
-  find_package(BZip2 REQUIRED)
-endif(NOT WIN32)
-
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
-find_package(PNG REQUIRED)
-find_package(GLM)
-find_package(OGG REQUIRED)
-find_package(VORBIS REQUIRED)
-find_package(Portaudio REQUIRED)
-find_package(Freetype REQUIRED)
