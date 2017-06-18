@@ -1,16 +1,34 @@
-branches:
-  only:
-    - master
+os: linux
+services:
+   - docker
+sudo: required
+language: python
+env:
+  global:
+    - CONAN_REFERENCE="small3d/master"
+    - CONAN_USERNAME="dimi309"
+    - CONAN_CHANNEL="testing"
+    - CONAN_TOTAL_PAGES=1
+    - CONAN_CURRENT_PAGE=1
+    - CONAN_REMOTES="https://api.bintray.com/conan/dimi309/conan-packages"
+
+  matrix:
+    - CONAN_GCC_VERSIONS=4.6 CONAN_USE_DOCKER=1
+    - CONAN_GCC_VERSIONS=4.8 CONAN_USE_DOCKER=1
+    - CONAN_GCC_VERSIONS=4.9 CONAN_USE_DOCKER=1
+    - CONAN_GCC_VERSIONS=5.2 CONAN_USE_DOCKER=1
+    - CONAN_GCC_VERSIONS=5.3 CONAN_USE_DOCKER=1
 matrix:
-  include:
-    - os: linux
-      dist: trusty
-      language: python
-      sudo: required
-    - os: osx 
-      osx_image: xcode7.3 # apple-clang 7.3
-      language: generic
-      env:
+   include:
+       - os: osx
+         osx_image: xcode7.3
+         language: generic
+         env:
+       - os: osx
+         osx_image: xcode8.1
+         language: generic
+         env:
+
 install:
   - chmod +x ./.travis/install.sh
   - ./.travis/install.sh

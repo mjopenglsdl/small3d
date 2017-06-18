@@ -1,44 +1,26 @@
 build: false
-branches:
-  only:
-    - master
 environment:
     PYTHON: "C:\\Python27"
     PYTHON_VERSION: "2.7.8"
     PYTHON_ARCH: "32"
+    CONAN_REFERENCE: "small3d/master"
+    CONAN_USERNAME: "dimi309"
+    CONAN_CHANNEL: "testing"
+    CONAN_TOTAL_PAGES: 4
+    CONAN_REMOTES: "https://api.bintray.com/conan/dimi309/conan-packages"
+
+    matrix:
+        - CONAN_CURRENT_PAGE: 1
+        - CONAN_CURRENT_PAGE: 2
+        - CONAN_CURRENT_PAGE: 3
+        - CONAN_CURRENT_PAGE: 4
+
 
 install:
   - set PATH=%PATH%;%PYTHON%/Scripts/
-  - pip.exe install conan
-  - conan remote remove conan.io
-  - conan remote add conan.io https://api.bintray.com/conan/dimi309/conan-packages
-  - conan remote add oldconan https://server.conan.io
+  - pip.exe install conan_package_tools
   - conan user
 
 test_script:
-  - git clone https://github.com/dimi309/conan-packages
-  - cd conan-packages\\glew
-  - conan export dimi309/stable
-  - cd ..\\..
-  - cd conan-packages\\glfw
-  - conan export dimi309/stable
-  - cd ..\\..
-  - cd conan-packages\\glm
-  - conan export dimi309/stable
-  - cd ..\\..
-  - cd conan-packages\\ogg
-  - conan export dimi309/stable
-  - cd ..\\..
-  - cd conan-packages\\small3d
-  - conan export dimi309/stable
-  - cd ..\\..
-  - cd conan-packages\\vorbis
-  - conan export dimi309/stable
-  - cd ..\\..
-  - git clone https://github.com/dimi309/small3d-tutorial
-  - cd small3d-tutorial\\ChaseTheGoat3D
-  - mkdir build
-  - cd build
-  - conan install .. --build missing
-  - cmake -G"Visual Studio 14 2015 Win64" ..
-  - cmake --build . --config Release
+  - C:\Python27\python build.py
+
