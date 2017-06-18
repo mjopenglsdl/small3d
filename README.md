@@ -40,7 +40,7 @@ Prerequisites:
 - [CMake](https://cmake.org/)
 - [Git](https://git-scm.com/)
 
-GLM and GLFW, which are referenced by the code, are deployed by conan. In order for GLFW to "see" the Vulkan SDK, make sure you compile it locally. Here's how to build and run the project:
+Here's how to build and run the project:
 
 	conan remote add bintraydimi309 https://api.bintray.com/conan/dimi309/conan-packages # Only execute this once. Conan will remember it afterwards.
 	git clone https://github.com/dimi309/small3d
