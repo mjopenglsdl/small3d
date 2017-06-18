@@ -1,6 +1,6 @@
 from conans import ConanFile, CMake
-from conans.tools import download, unzip, replace_in_file, os_info
-import os, subprocess
+from conans.tools import os_info
+import subprocess
 
 class Small3dConan(ConanFile):
     name = "small3d"
@@ -8,14 +8,12 @@ class Small3dConan(ConanFile):
     description = "A small, cross-platform 3D game engine (C++, OpenGL, GLFW) - runs on Win/MacOS/Linux"
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
-    options = {"localUnitTests": [True, False]}
     url="http://github.com/dimi309/conan-packages"
     requires = "glfw/master@dimi309/stable", "freetype/2.6.3@lasote/stable","glew/2.0.0@dimi309/stable", \
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.8.4@dimi309/stable", \
-        "vorbis/1.3.5@dimi309/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
-    default_options = "localUnitTests=False"
+        "vorbis/1.3.5@dimi309/stable", "portaudio/rc.v190600.20161001@jgsogo/stable", "gtest/1.8.0@lasote/stable"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
-    exports = ["FindSMALL3D.cmake"]
+    exports = "*"
 
     def rpm_package_installed(self, package):
         p = subprocess.Popen(['rpm', '-q', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -53,10 +51,6 @@ class Small3dConan(ConanFile):
             else:
                 self.output.warn("Could not determine package manager, skipping Linux system requirements installation.")
     
-    def requirements(self):
-        if self.options.localUnitTests:
-            self.requires("gtest/1.8.0@lasote/stable")
-            
     def build(self):
 
         if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
@@ -70,11 +64,10 @@ class Small3dConan(ConanFile):
     def package(self):
 
         self.copy("FindSMALL3D.cmake", ".", ".")
-        self.copy(pattern="*", dst="shaders", src="%s/small3d/resources/shaders" % self.ZIP_FOLDER_NAME, keep_path=True)
-        self.copy(pattern="*.hpp", dst="include", src="%s/small3d/include" % self.ZIP_FOLDER_NAME, keep_path=True)
+        self.copy(pattern="*", dst="shaders", src="%s/small3d/resources/shaders" % self.conanfile_directory, keep_path=True)
+        self.copy(pattern="*.hpp", dst="include", src="%s/small3d/include" % self.conanfile_directory, keep_path=True)
 
         if self.settings.os == "Windows":
-            self.copy(pattern="*.dll", dst="bin", keep_path=False)
             self.copy(pattern="*.pdb", dst="bin", keep_path=False)
             self.copy(pattern="*.lib", dst="lib", keep_path=False)
         else:
@@ -84,8 +77,7 @@ class Small3dConan(ConanFile):
                 self.copy(pattern="*.so*", dst="lib", keep_path=False)
                 self.copy(pattern="*.a", dst="lib", keep_path=False)
     def imports(self):
-        if self.options.localUnitTests:
-            self.copy("*.dll", "", "")
+        self.copy("*.dll", "", "")
             
     def package_info(self):
         self.cpp_info.libs = ['small3d']
