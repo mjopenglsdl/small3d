@@ -66,10 +66,8 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 target_link_libraries(small3dTest PUBLIC ${CONAN_LIBS} small3d)
 
-if(APPLE)
-
-  set(SMALL3DTEST_LINK_FLAGS "-framework AudioUnit -framework AudioToolbox -framework CoreAudio -framework Cocoa -framework IOKit -framework CoreVideo")
-
-  set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${SMALL3DTEST_LINK_FLAGS}")
-
-endif(APPLE)
+if(LINUX)
+  set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS} -lpng -lz")
+else(LINUX)
+  set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}
+endif(LINUX)

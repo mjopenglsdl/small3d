@@ -89,3 +89,4 @@ class Small3dConan(ConanFile):
             self.cpp_info.cppflags.append("-std=c++11")
             if self.settings.os == "Macos":
                 self.cpp_info.cppflags.append("-stdlib=libc++")
+
