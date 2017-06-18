@@ -8,7 +8,8 @@ v1.2.1
 (still open)
 
 - Various bug fixes and code improvements.
-- [BREAKING] The Renderer and SoundPlayer classes are now singletons. 
+- [BREAKING] The Renderer and SoundPlayer classes are now singletons.
+- [BREAKING] I will no longer be maintaining builds that don't use conan. Conan saves time.
 
 v1.2.0
 ------
