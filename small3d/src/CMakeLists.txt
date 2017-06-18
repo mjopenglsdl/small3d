@@ -39,7 +39,6 @@ include_directories(
 add_definitions(${PNG_DEFINITIONS})
 
 target_link_libraries(small3d PUBLIC
-  ${OPENGL_LIBRARIES}
   ${GLFW_LIBRARIES}
   ${GLEW_LIBRARIES}
   ${PNG_LIBRARIES}
@@ -65,7 +64,7 @@ target_include_directories(small3dTest PUBLIC "${small3d_SOURCE_DIR}/small3d/inc
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
-target_link_libraries(small3dTest PUBLIC ${GTEST_BOTH_LIBRARIES} small3d )
+target_link_libraries(small3dTest PUBLIC ${CONAN_LIBS} small3d)
 
 if(APPLE)
 
