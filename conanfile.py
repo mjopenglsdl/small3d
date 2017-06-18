@@ -76,8 +76,6 @@ class Small3dConan(ConanFile):
             else:
                 self.copy(pattern="*.so*", dst="lib", keep_path=False)
                 self.copy(pattern="*.a", dst="lib", keep_path=False)
-    def imports(self):
-        self.copy("*.dll", "", "")
             
     def package_info(self):
         self.cpp_info.libs = ['small3d']

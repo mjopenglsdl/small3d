@@ -8,16 +8,16 @@
 
 #include <gtest/gtest.h>
 
-#include "Renderer.hpp"
-#include "Logger.hpp"
-#include "Image.hpp"
-#include "Model.hpp"
-#include "BoundingBoxSet.hpp"
-#include "WavefrontLoader.hpp"
-#include "SceneObject.hpp"
-#include "Exception.hpp"
-#include "SoundPlayer.hpp"
-#include "GetTokens.hpp"
+#include <small3d/Renderer.hpp>
+#include <small3d/Logger.hpp>
+#include <small3d/Image.hpp>
+#include <small3d/Model.hpp>
+#include <small3d/BoundingBoxSet.hpp>
+#include <small3d/WavefrontLoader.hpp>
+#include <small3d/SceneObject.hpp>
+#include <small3d/Exception.hpp>
+#include <small3d/SoundPlayer.hpp>
+#include <small3d/GetTokens.hpp>
 
 using namespace small3d;
 using namespace std;
