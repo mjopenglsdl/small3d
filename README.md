@@ -30,8 +30,8 @@ Features
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
 - **It can be deployed via a package manager (conan). This is a huge time saver and you can see in the abovementioned [tutorial](https://github.com/dimi309/small3d-tutorial) how to use it.**
 
-Building locally and running the unit tests
--------------------------------------------
+Building locally
+----------------
 
 Prerequisites:
 
@@ -40,7 +40,7 @@ Prerequisites:
 - [CMake](https://cmake.org/)
 - [Git](https://git-scm.com/)
 
-Here's how to build and run the project:
+Here's how to build the project, without packaging it:
 
 	conan remote add bintraydimi309 https://api.bintray.com/conan/dimi309/conan-packages # Only execute this once. Conan will remember it afterwards.
 	git clone https://github.com/dimi309/small3d
@@ -50,8 +50,6 @@ Here's how to build and run the project:
 	conan install ..
 	cmake ..
 	cmake --build .
-	cd bin
-	./small3dTest # Or "small3dTest.exe" if you are on Windows
 	
 If you are using Visual Studio, depending on its version, you can get some compiler detection and linking errors. Feel free to [ask me](https://github.com/dimi309/volcanique/issues) and I'll be happy to help.
 
@@ -71,6 +69,24 @@ In your home directory, make sure that the .conan/conan.conf file contains these
 	compiler=Visual Studio
 	compiler.version=15
 	compiler.runtime=MDd
+	
+Unit testing
+------------
+
+From inside the project repository, execute:
+	
+	conan test_package
+	
+That will build, package and publish the project locally, in the "testing" channel, and make sure it works. Then, build and run the unit tests:
+
+	cd unit_testing
+	mkdir build
+	cd build
+	conan install .. --build missing
+	cmake ..
+	cmake --build .
+	cd bin
+	./unittests # or unittests.exe if you are using Windows
 
 Note on 3D models and textures
 ------------------------------
