@@ -66,8 +66,8 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 target_link_libraries(small3dTest PUBLIC ${CONAN_LIBS} small3d)
 
-if(LINUX)
+if(UNIX AND NOT APPLE)
   set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS} -lpng -lz")
-else(LINUX)
-  set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}
-endif(LINUX)
+else(UNIX AND NOT APPLE)
+  set_target_properties(small3dTest PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}")
+endif(UNIX AND NOT APPLE)
