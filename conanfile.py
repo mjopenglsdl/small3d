@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake
-from conans.tools import os_info
+from conans.tools import os_info, ConanException
 import subprocess
 
 class Small3dConan(ConanFile):
@@ -14,6 +14,10 @@ class Small3dConan(ConanFile):
         "vorbis/1.3.5@dimi309/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
+
+    def configure(self):
+        if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
+            ConanException("On Windows, only Visual Studio compilation is supported for the time being.")
 
     def rpm_package_installed(self, package):
         p = subprocess.Popen(['rpm', '-q', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -52,10 +56,6 @@ class Small3dConan(ConanFile):
                 self.output.warn("Could not determine package manager, skipping Linux system requirements installation.")
     
     def build(self):
-
-        if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
-            self.output.error("On Windows, only Visual Studio compilation is supported for the time being.")
-            quit()
         
         cmake = CMake(self)
         self.run("cmake %s %s" % (self.conanfile_directory, cmake.command_line))
@@ -72,11 +72,7 @@ class Small3dConan(ConanFile):
             self.copy(pattern="*.pdb", dst="bin", keep_path=False)
             self.copy(pattern="*.lib", dst="lib", keep_path=False)
         else:
-            if self.settings.os == "Macos":
-                self.copy(pattern="*.a", dst="lib", keep_path=False)
-            else:
-                self.copy(pattern="*.so*", dst="lib", keep_path=False)
-                self.copy(pattern="*.a", dst="lib", keep_path=False)
+            self.copy(pattern="*.a", dst="lib", keep_path=False)
             
     def package_info(self):
         self.cpp_info.libs = ['small3d']
@@ -88,4 +84,3 @@ class Small3dConan(ConanFile):
             self.cpp_info.cppflags.append("-std=c++11")
             if self.settings.os == "Macos":
                 self.cpp_info.cppflags.append("-stdlib=libc++")
-
