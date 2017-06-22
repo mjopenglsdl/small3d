@@ -13,7 +13,7 @@ class Small3dConan(ConanFile):
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.8.4@dimi309/stable", \
         "vorbis/1.3.5@dimi309/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
-    exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt"]
+    exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
 
     def rpm_package_installed(self, package):
         p = subprocess.Popen(['rpm', '-q', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -66,6 +66,7 @@ class Small3dConan(ConanFile):
         self.copy("FindSMALL3D.cmake", ".", ".")
         self.copy(pattern="*", dst="shaders", src="%s/small3d/resources/shaders" % self.conanfile_directory, keep_path=True)
         self.copy(pattern="*.hpp", dst="include", src="%s/small3d/include" % self.conanfile_directory, keep_path=True)
+        self.copy("LICENSE*", dst="licenses",  ignore_case=True, keep_path=False)
 
         if self.settings.os == "Windows":
             self.copy(pattern="*.pdb", dst="bin", keep_path=False)
