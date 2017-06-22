@@ -15,4 +15,4 @@ set_target_properties(unittests PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}
 if(MSVC)
   set_target_properties(unittests PROPERTIES LINK_FLAGS_RELEASE "-NODEFAULTLIB:MSVCRTD")
   set_target_properties(unittests PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${unittests_BINARY_DIR}/bin")
-endif(MSVC)
+endif()

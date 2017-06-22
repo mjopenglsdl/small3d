@@ -72,7 +72,11 @@ class Small3dConan(ConanFile):
             self.copy(pattern="*.pdb", dst="bin", keep_path=False)
             self.copy(pattern="*.lib", dst="lib", keep_path=False)
         else:
-            self.copy(pattern="*.a", dst="lib", keep_path=False)
+            if self.settings.os == "Macos":
+                self.copy(pattern="*.a", dst="lib", keep_path=False)
+            else:
+                self.copy(pattern="*.so*", dst="lib", keep_path=False)
+                self.copy(pattern="*.a", dst="lib", keep_path=False)
             
     def package_info(self):
         self.cpp_info.libs = ['small3d']
@@ -80,3 +84,8 @@ class Small3dConan(ConanFile):
             self.cpp_info.cppflags.append("/EHsc")
             self.cpp_info.exelinkflags.append('-NODEFAULTLIB:LIBCMTD')
             self.cpp_info.exelinkflags.append('-NODEFAULTLIB:LIBCMT')
+        else:
+            self.cpp_info.cppflags.append("-std=c++11")
+            if self.settings.os == "Macos":
+                self.cpp_info.cppflags.append("-stdlib=libc++")
+
