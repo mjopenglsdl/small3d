@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake
-from conans.tools import os_info
+from conans.tools import os_info, ConanException
 import subprocess
 
 class Small3dConan(ConanFile):
@@ -14,6 +14,12 @@ class Small3dConan(ConanFile):
         "vorbis/1.3.5@dimi309/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
+
+    def configure(self):
+        if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
+            raise ConanException("On Windows, only Visual Studio compilation is supported for the time being.")
+        if (self.settings.compiler == "gcc" or self.settings.compiler == "clang") and self.settings.compiler.libcxx != "libstdc++11":
+            raise ConanException("When building with gcc or clang, compiler.libcxx must be equal to libstdc++11.")
 
     def rpm_package_installed(self, package):
         p = subprocess.Popen(['rpm', '-q', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -53,10 +59,6 @@ class Small3dConan(ConanFile):
     
     def build(self):
 
-        if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
-            self.output.error("On Windows, only Visual Studio compilation is supported for the time being.")
-            quit()
-        
         cmake = CMake(self)
         self.run("cmake %s %s" % (self.conanfile_directory, cmake.command_line))
         self.run("cmake --build . %s" % cmake.build_config)
