@@ -8,7 +8,7 @@
 
 #include "BoundingBoxSet.hpp"
 #include <fstream>
-#include "Exception.hpp"
+#include <stdexcept>
 #include "GetTokens.hpp"
 #include "MathFunctions.hpp"
 
@@ -32,7 +32,7 @@ namespace small3d {
   
   void BoundingBoxSet::loadFromFile(string fileLocation) {
     if (vertices.size() != 0) {
-      throw Exception(
+      throw runtime_error(
                       "Illegal attempt to reload bounding boxes. Please use another object.");
     }
     ifstream file((basePath + fileLocation).c_str());
@@ -94,7 +94,7 @@ namespace small3d {
       LOGINFO("Loaded " + intToStr(numBoxes) + " bounding boxes.");
     }
     else
-      throw Exception(
+      throw runtime_error(
                       "Could not open file " + basePath + fileLocation);
     
   }

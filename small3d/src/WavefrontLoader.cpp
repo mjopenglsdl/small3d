@@ -7,7 +7,7 @@
  */
 
 #include "WavefrontLoader.hpp"
-#include "Exception.hpp"
+#include <stdexcept>
 #include <fstream>
 #include <unordered_map>
 #include <memory>
@@ -58,7 +58,7 @@ namespace small3d {
 
 
     if (model.vertexData.size() == 0) {
-      throw Exception(
+      throw runtime_error(
           "There are no vertices or vertex data has not yet been created.");
     }
 
@@ -94,7 +94,7 @@ namespace small3d {
       // by index to the array of vertex components
 
       if (model.vertexData.size() == 0) {
-        throw Exception(
+        throw runtime_error(
             "There are no vertices or vertex data has not yet been created.");
       }
 
@@ -282,7 +282,7 @@ namespace small3d {
                         n.push_back(atoi(component.c_str()));
                         break;
                       default:
-                        throw Exception("Unexpected component index number while parsing Wavefront file.");
+                        throw runtime_error("Unexpected component index number while parsing Wavefront file.");
                         break;
                     }
                     ++componentIdx;
@@ -321,7 +321,7 @@ namespace small3d {
 
     }
     else
-      throw Exception(
+      throw runtime_error(
           "Could not open file " + basePath + fileLocation);
 
   }

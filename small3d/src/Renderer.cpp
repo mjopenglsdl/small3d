@@ -7,7 +7,7 @@
  */
 
 #include "Renderer.hpp"
-#include "Exception.hpp"
+#include <stdexcept>
 #include <fstream>
 #include "MathFunctions.hpp"
 #include <glm/gtc/type_ptr.hpp>
@@ -48,7 +48,7 @@ namespace small3d {
     
     if(ftError != 0)
     {
-      throw Exception("Unable to initialise font system");
+      throw runtime_error("Unable to initialise font system");
     }
   }
   
@@ -161,7 +161,7 @@ namespace small3d {
     string shaderSource = this->loadShaderFromFile(shaderSourceFile);
     
     if (shaderSource.length() == 0) {
-      throw Exception("Shader source file '" + shaderSourceFile + "' is empty or not found.");
+      throw runtime_error("Shader source file '" + shaderSourceFile + "' is empty or not found.");
     }
     
     const char *shaderSourceChars = shaderSource.c_str();
@@ -173,7 +173,7 @@ namespace small3d {
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
     if (status == GL_FALSE ) {
       
-      throw Exception(
+      throw runtime_error(
                       "Failed to compile shader:\n" + shaderSource + "\n"
                       + this->getShaderInfoLog(shader));
     }
@@ -191,7 +191,7 @@ namespace small3d {
     GLenum initResult = glewInit();
     
     if (initResult != GLEW_OK) {
-      throw Exception("Error initialising GLEW");
+      throw runtime_error("Error initialising GLEW");
     }
     else {
       string glewVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glewGetString(GLEW_VERSION)));
@@ -213,7 +213,7 @@ namespace small3d {
     }
     else {
       noShaders = true;
-      throw Exception(
+      throw runtime_error(
                       "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
     }
   }
@@ -230,7 +230,7 @@ namespace small3d {
       while (errorCode != GL_NO_ERROR);
       
       if (abort)
-        throw Exception("OpenGL error while " + when);
+        throw runtime_error("OpenGL error while " + when);
     }
   }
   
@@ -239,7 +239,7 @@ namespace small3d {
     glfwSetErrorCallback(error_callback);
     
     if (!glfwInit()){
-      throw Exception("Unable to initialise GLFW");
+      throw runtime_error("Unable to initialise GLFW");
     }
     
 #ifdef __APPLE__
@@ -254,7 +254,7 @@ namespace small3d {
     GLFWmonitor *monitor = nullptr; // If NOT null, a full-screen window will be created.
     
     if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
-      throw Exception("Screen width and height both have to be equal or not equal to zero at the same time.");
+      throw runtime_error("Screen width and height both have to be equal or not equal to zero at the same time.");
     }
     else if (width == 0) {
       
@@ -271,7 +271,7 @@ namespace small3d {
     
     window = glfwCreateWindow(width, height, windowTitle.c_str(), monitor, nullptr);
     if (!window){
-      throw Exception(string("Unable to create GLFW window"));
+      throw runtime_error(string("Unable to create GLFW window"));
     }
     
     glfwMakeContextCurrent(window);
@@ -341,7 +341,7 @@ namespace small3d {
     GLint status;
     glGetProgramiv(perspectiveProgram, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-      throw Exception("Failed to link program:\n" + this->getProgramInfoLog(perspectiveProgram));
+      throw runtime_error("Failed to link program:\n" + this->getProgramInfoLog(perspectiveProgram));
     }
     else {
       LOGINFO("Linked main rendering program successfully");
@@ -393,7 +393,7 @@ namespace small3d {
     
     glGetProgramiv(orthographicProgram, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-      throw Exception("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
+      throw runtime_error("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
     }
     else {
       LOGINFO("Linked orthographic rendering program successfully");
@@ -543,7 +543,7 @@ namespace small3d {
     GLuint textureHandle = getTextureHandle(name);
     
     if (textureHandle == 0) {
-      throw Exception("Texture " + name + "has not been generated");
+      throw runtime_error("Texture " + name + "has not been generated");
     }
     
     glBindTexture(GL_TEXTURE_2D, textureHandle);
@@ -969,7 +969,7 @@ namespace small3d {
       error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);
       
       if (error != 0) {
-        throw Exception("Failed to load font from " + faceFullPath);
+        throw runtime_error("Failed to load font from " + faceFullPath);
       }
       else{
         LOGDEBUG("Font loaded successfully");
@@ -983,7 +983,7 @@ namespace small3d {
     error = FT_Set_Char_Size(face, 64 * fontSize, 0, 100, 0);
     
     if (error != 0) {
-      throw Exception("Failed to set font size.");
+      throw runtime_error("Failed to set font size.");
     }
     
     unsigned long width = 0, height =0;
@@ -994,7 +994,7 @@ namespace small3d {
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
       
       if (error != 0) {
-        throw Exception("Failed to load character glyph.");
+        throw runtime_error("Failed to load character glyph.");
       }
       
       FT_GlyphSlot slot = face->glyph;
@@ -1014,7 +1014,7 @@ namespace small3d {
     for(char &c: text) {
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
       if (error != 0) {
-        throw Exception("Failed to load character glyph.");
+        throw runtime_error("Failed to load character glyph.");
       }
       
       FT_GlyphSlot slot = face->glyph;

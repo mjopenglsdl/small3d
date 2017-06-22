@@ -9,7 +9,7 @@
 #include "SceneObject.hpp"
 #include <sstream>
 #include <iomanip>
-#include "Exception.hpp"
+#include <stdexcept>
 #include "WavefrontLoader.hpp"
 #include "MathFunctions.hpp"
 
@@ -112,7 +112,7 @@ namespace small3d {
 
   bool SceneObject::collidesWith(glm::vec3 point) {
     if (boundingBoxSet.vertices.size() == 0) {
-      throw Exception("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
+      throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
 
     boundingBoxSet.offset = this->offset;
@@ -123,11 +123,11 @@ namespace small3d {
 
   bool SceneObject::collidesWith(SceneObject &otherObject) {
     if (boundingBoxSet.vertices.size() == 0) {
-      throw Exception("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
+      throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
 
     if (otherObject.boundingBoxSet.vertices.size() == 0) {
-      throw Exception(
+      throw runtime_error(
           "No bounding boxes have been provided for " + otherObject.name + ", so collision detection is not enabled.");
     }
 

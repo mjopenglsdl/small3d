@@ -15,7 +15,6 @@
 #include <small3d/BoundingBoxSet.hpp>
 #include <small3d/WavefrontLoader.hpp>
 #include <small3d/SceneObject.hpp>
-#include <small3d/Exception.hpp>
 #include <small3d/SoundPlayer.hpp>
 #include <small3d/GetTokens.hpp>
 

@@ -7,7 +7,7 @@
  */
 
 #include "SoundPlayer.hpp"
-#include "Exception.hpp"
+#include <stdexcept>
 #include <cstring>
 
 #define WORD_SIZE 2
@@ -71,7 +71,7 @@ namespace small3d {
     PaError initError = Pa_Initialize();
     
     if (initError != paNoError) {
-      throw Exception("PortAudio failed to initialise: " + string(Pa_GetErrorText(initError)));
+      throw runtime_error("PortAudio failed to initialise: " + string(Pa_GetErrorText(initError)));
     }
     
     defaultOutput = Pa_GetDefaultOutputDevice();
@@ -113,12 +113,12 @@ namespace small3d {
 #endif
       
       if (!fp) {
-        throw Exception(
+        throw runtime_error(
                         "Could not open file " + basePath + soundFilePath);
       }
       
       if (ov_open_callbacks(fp, &vorbisFile, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0) {
-        throw Exception(
+        throw runtime_error(
                         "Could not load sound from file " + basePath + soundFilePath);
       }
       
@@ -178,7 +178,7 @@ namespace small3d {
       auto nameSoundPair = sounds.find(soundName);
       
       if (nameSoundPair == sounds.end()) {
-        throw Exception("Sound '" + soundName + "' has not been loaded.");
+        throw runtime_error("Sound '" + soundName + "' has not been loaded.");
       }
       
       SoundData *soundData = &nameSoundPair->second;
@@ -218,7 +218,7 @@ namespace small3d {
         
         error = Pa_StartStream(handleStreamPair->second);
         if (error != paNoError) {
-          throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
+          throw runtime_error("Failed to start stream: " + string(Pa_GetErrorText(error)));
         }
         
       } else {
@@ -229,12 +229,12 @@ namespace small3d {
                               1024, paNoFlag,
                               audioCallback, &idStreamDataPair->second);
         if (error != paNoError) {
-          throw Exception("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
+          throw runtime_error("Failed to open PortAudio stream: " + string(Pa_GetErrorText(error)));
         }
         
         error = Pa_StartStream(stream);
         if (error != paNoError) {
-          throw Exception("Failed to start stream: " + string(Pa_GetErrorText(error)));
+          throw runtime_error("Failed to start stream: " + string(Pa_GetErrorText(error)));
         }
         
         streams.insert(make_pair(SOUND_ID(soundName, handle), stream));
@@ -249,14 +249,14 @@ namespace small3d {
       auto nameSoundPair = sounds.find(soundName);
       
       if (nameSoundPair == sounds.end()) {
-        throw Exception("Sound '" + soundName + "' has not been loaded.");
+        throw runtime_error("Sound '" + soundName + "' has not been loaded.");
       }
       
       auto soundData = nameSoundPair->second;
       
       auto handleStreamPair = streams.find(SOUND_ID(soundName, handle));
       if (handleStreamPair == streams.end()) {
-        throw Exception("Sound handle '" + handle + "' does not exist.");
+        throw runtime_error("Sound handle '" + handle + "' does not exist.");
       }
       
       auto stream = handleStreamPair->second;
@@ -300,7 +300,7 @@ namespace small3d {
     auto nameSoundPair = sounds.find(soundName);
     
     if (nameSoundPair == sounds.end()) {
-      throw Exception("Sound '" + soundName + "' has not been loaded or has already been deleted.");
+      throw runtime_error("Sound '" + soundName + "' has not been loaded or has already been deleted.");
     }
     
     sounds.erase(soundName);
