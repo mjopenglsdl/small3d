@@ -7,16 +7,6 @@ add_library(small3d BoundingBoxSet.cpp GetTokens.cpp Image.cpp Logger.cpp MathFu
 
 target_include_directories(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d")
 
-if(WIN32 AND NOT MINGW)
-
+if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
-
-elseif(APPLE)
-
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
-
-elseif(UNIX AND NOT APPLE)
-
-  target_compile_options(small3d PUBLIC "-std=c++11")
-
-endif(WIN32 AND NOT MINGW)
+endif(MSVC)
