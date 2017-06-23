@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['normalsdata',['normalsData',['../classsmall3d_1_1_model.html#aa9e45810ced27f9336e2e77bca2f8ba6',1,'small3d::Model']]],
-  ['normalsdatasize',['normalsDataSize',['../classsmall3d_1_1_model.html#a0612b22dd1eaced76b45853e8b0dead9',1,'small3d::Model']]]
+  ['offset',['offset',['../classsmall3d_1_1_bounding_box_set.html#aa23c6213f50c0bc72d41aee9117e4341',1,'small3d::BoundingBoxSet::offset()'],['../classsmall3d_1_1_scene_object.html#a1628b6b7c19ef46e3d42d7973c86a666',1,'small3d::SceneObject::offset()']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['vertexdata',['vertexData',['../classsmall3d_1_1_model.html#adf9422b7594956d857bc9da9da7b13e4',1,'small3d::Model']]],
-  ['vertexdatasize',['vertexDataSize',['../classsmall3d_1_1_model.html#a565b8dc14e87c7b540bdff278b0587cf',1,'small3d::Model']]],
-  ['vertices',['vertices',['../classsmall3d_1_1_bounding_box_set.html#ad6565272cb69deaf226f4ae892975f93',1,'small3d::BoundingBoxSet']]]
+  ['wavefrontloader',['WavefrontLoader',['../classsmall3d_1_1_wavefront_loader.html',1,'small3d::WavefrontLoader'],['../classsmall3d_1_1_wavefront_loader.html#a9935968ddac97622e322aa302eed8a4b',1,'small3d::WavefrontLoader::WavefrontLoader()']]],
+  ['write',['write',['../classsmall3d_1_1_renderer.html#a7316118b664823a391316d98321029bc',1,'small3d::Renderer']]]
 ];

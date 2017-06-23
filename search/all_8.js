@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['lightdirection',['lightDirection',['../classsmall3d_1_1_renderer.html#a77353e63ccea1c4f33ff9cba9eb81978',1,'small3d::Renderer']]],
-  ['lightintensity',['lightIntensity',['../classsmall3d_1_1_renderer.html#a16cad6462cacc418e9d470fa90677c40',1,'small3d::Renderer']]],
-  ['load',['load',['../classsmall3d_1_1_sound_player.html#a2316f474d8d8346929ddf3e35df2c0bd',1,'small3d::SoundPlayer::load()'],['../classsmall3d_1_1_wavefront_loader.html#a5a6faf3aa8d5e43a323c0b1278deac5d',1,'small3d::WavefrontLoader::load()']]],
-  ['loadfromfile',['loadFromFile',['../classsmall3d_1_1_bounding_box_set.html#a87aa59e164c76b4be2c9c6abc19bd78a',1,'small3d::BoundingBoxSet']]],
-  ['logger',['Logger',['../classsmall3d_1_1_logger.html',1,'small3d::Logger'],['../classsmall3d_1_1_logger.html#aef98c7a18c5d5dec39d3ab28a171cfb8',1,'small3d::Logger::Logger()']]]
+  ['make_20sure_20you_20are_20using_20your_20nvidia_20chip_20on_20linux',['Make sure you are using your NVIDIA chip on Linux',['../md_small3ddoc_various__switching_between_intel_nvidia.html',1,'']]],
+  ['model',['Model',['../classsmall3d_1_1_model.html',1,'small3d::Model'],['../classsmall3d_1_1_model.html#aa116b5b0c66b9e7f4dfd401ab5233a79',1,'small3d::Model::Model()']]]
 ];
