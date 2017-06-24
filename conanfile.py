@@ -10,7 +10,7 @@ class Small3dConan(ConanFile):
     settings = "os", "arch", "build_type", "compiler"
     url="http://github.com/dimi309/conan-packages"
     requires = "glfw/3.2.1@dimi309/stable", "freetype/2.6.3@lasote/stable","glew/2.0.0@dimi309/stable", \
-        "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.8.4@dimi309/stable", \
+        "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/master@g-truc/stable", \
         "vorbis/1.3.5@dimi309/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
