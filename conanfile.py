@@ -1,6 +1,5 @@
 from conans import ConanFile, CMake
 from conans.tools import ConanException
-import subprocess
 
 class Small3dConan(ConanFile):
     name = "small3d"
