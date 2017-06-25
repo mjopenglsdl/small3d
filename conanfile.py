@@ -16,7 +16,7 @@ class Small3dConan(ConanFile):
 
     def configure(self):
         if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
-            ConanException("On Windows, only Visual Studio compilation is supported for the time being.")
+            raise ConanException("On Windows, only Visual Studio compilation is supported for the time being.")
 
     def build(self):
         
