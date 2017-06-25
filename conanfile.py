@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake
-from conans.tools import os_info, ConanException, SystemPackageTool
+from conans.tools import ConanException
 import subprocess
 
 class Small3dConan(ConanFile):
@@ -19,22 +19,6 @@ class Small3dConan(ConanFile):
         if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
             ConanException("On Windows, only Visual Studio compilation is supported for the time being.")
 
-    def system_requirements(self):
-        if os_info.is_linux:
-            skip_package_install = False
-            if os_info.with_apt:
-                mesadev = "libglu1-mesa-dev"
-            elif os_info.with_yum:
-                mesadev = "mesa-libGLU-devel"
-            else:
-                skip_package_install = True
-
-            if not skip_package_install:
-                installer = SystemPackageTool()
-                installer.install(mesadev)
-            else:
-                self.output.warn("Could not determine Linux package manager, skipping system requirements installation.")
-    
     def build(self):
         
         cmake = CMake(self)
