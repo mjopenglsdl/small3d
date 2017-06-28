@@ -19,7 +19,7 @@ class Small3dConan(ConanFile):
             raise ConanException("On Windows, only Visual Studio compilation is supported for the time being.")
 
         if self.settings.compiler == "gcc" and self.settings.compiler.libcxx != "libstdc++11":
-            raise ConanException("When using the gcc compiler, small3d requires libstdc++11 as compiler.libcxx, in the conan.conf file or via the -s option.")
+            raise ConanException("When using the gcc compiler, small3d requires libstdc++11 as compiler.libcxx, in the conan.conf file or via the -s parameter.")
 
     def build(self):
         
