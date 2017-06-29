@@ -36,7 +36,7 @@ Building locally
 Prerequisites:
 
 - A compiler. You can use gcc, Xcode, llvm or Visual Studio, depending on your system. Sadly, MinGW builds are not supported yet.
-- [conan](https://github.com/conan-io/conan)
+- [conan](https://github.com/conan-io/conan) - If you are using the gcc compiler, please set compiler.libcxx to libstdc++11
 - [CMake](https://cmake.org/)
 - [Git](https://git-scm.com/)
 
