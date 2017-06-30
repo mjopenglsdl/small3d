@@ -28,7 +28,7 @@ Features
 - Simple collision detection with bounding boxes.
 - It renders text.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
-- **It can be deployed via a package manager (conan). This is a huge time saver and you can see in the abovementioned [tutorial](https://github.com/dimi309/small3d-tutorial) how to use it.**
+- **It is deployed via a package manager (conan). This is a huge time saver and you can see in the abovementioned [tutorial](https://github.com/dimi309/small3d-tutorial) how to use it.**
 
 Building locally
 ----------------
@@ -40,9 +40,12 @@ Prerequisites:
 - [CMake](https://cmake.org/)
 - [Git](https://git-scm.com/)
 
-Here's how to build the project, without packaging it:
+To build the project without packaging it, first add my bintray repository as a remote to your conan configuration:
 
-	conan remote add bintraydimi309 https://api.bintray.com/conan/dimi309/conan-packages # Only execute this once. Conan will remember it afterwards.
+	conan remote add bintraydimi309 https://api.bintray.com/conan/dimi309/conan-packages
+
+You only need to execute this once. Conan will remember it afterwards. Then, run the following:
+
 	git clone https://github.com/dimi309/small3d
 	cd small3d
 	mkdir build
@@ -53,15 +56,13 @@ Here's how to build the project, without packaging it:
 	
 And then execute `./unittests` on MacOS or Linux, or `unittests.exe` if you are running Windows.
 
-If you are using Visual Studio, depending on its version, you can get some compiler detection and linking errors. Feel free to [ask me](https://github.com/dimi309/volcanique/issues) and I'll be happy to help.
+If you encounter any problems, feel free to [ask me](https://github.com/dimi309/volcanique/issues) and I'll be happy to help.
 
-Nonetheless, here's a sure-fire way to make the above mentioned commands work just like that with Visual Studio 2017:
-
-Set the vs150comntools environment variable:
+If you are using Visual Studio 2017, conan may not be able to detect it. In that case, set the vs150comntools environment variable:
 	
 	set vs150comntools=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\
 
-In your home directory, make sure that the .conan/conan.conf file contains these lines exactly under settings_defaults:
+In your home directory, make sure that the .conan/conan.conf file contains these lines or something similar that you prefer under settings_defaults:
 
 	[settings_defaults]
 
