@@ -48,9 +48,11 @@ Here's how to build the project, without packaging it:
 	mkdir build
 	cd build
 	conan install ..
-	cmake ..
-	cmake --build .
+	conan build ..
+	cd build
 	
+And then execute `./unittests` on MacOS or Linux, or `unittests.exe` if you are running Windows.
+
 If you are using Visual Studio, depending on its version, you can get some compiler detection and linking errors. Feel free to [ask me](https://github.com/dimi309/volcanique/issues) and I'll be happy to help.
 
 Nonetheless, here's a sure-fire way to make the above mentioned commands work just like that with Visual Studio 2017:
@@ -70,24 +72,6 @@ In your home directory, make sure that the .conan/conan.conf file contains these
 	compiler.version=15
 	compiler.runtime=MDd
 	
-Unit testing
-------------
-
-From inside the project repository, execute:
-	
-	conan test_package
-	
-That will build, package and publish the project locally, in the "testing" channel, and make sure it works. Then, build and run the unit tests:
-
-	cd unit_testing
-	mkdir build
-	cd build
-	conan install .. --build missing
-	cmake ..
-	cmake --build .
-	cd bin
-	./unittests # or unittests.exe if you are using Windows
-
 Note on 3D models and textures
 ------------------------------
 
