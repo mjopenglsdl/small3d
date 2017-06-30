@@ -9,7 +9,7 @@ class Small3dConan(ConanFile):
     settings = "os", "arch", "build_type", "compiler"
     url="http://github.com/dimi309/conan-packages"
     requires = "glfw/3.2.1@dimi309/stable", "freetype/2.6.3@lasote/stable","glew/2.0.0@dimi309/stable", \
-        "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/master@g-truc/stable", \
+        "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.8@g-truc/stable", \
         "vorbis/1.3.5@dimi309/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
@@ -21,10 +21,14 @@ class Small3dConan(ConanFile):
         if self.settings.compiler == "gcc" and self.settings.compiler.libcxx != "libstdc++11":
             raise ConanException("When using the gcc compiler, small3d requires libstdc++11 as compiler.libcxx, in the conan.conf file or via the -s parameter.")
 
+        if self.scope.dev:
+            self.requires("gtest/1.8.0@lasote/stable")
+
     def build(self):
         
         cmake = CMake(self)
-        self.run("cmake %s %s" % (self.conanfile_directory, cmake.command_line))
+        flag_build_tests = "-DBUILD_DESTS=ON" if self.scope.dev else "-DBUILD_TESTS=OFF"
+        self.run("cmake %s %s %s" % (self.conanfile_directory, flag_build_tests, cmake.command_line))
         self.run("cmake --build . %s" % cmake.build_config)
 
     def package(self):
