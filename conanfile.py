@@ -27,7 +27,7 @@ class Small3dConan(ConanFile):
     def build(self):
         
         cmake = CMake(self)
-        flag_build_tests = "-DBUILD_DESTS=ON" if self.scope.dev else "-DBUILD_TESTS=OFF"
+        flag_build_tests = "-DBUILD_TESTS=ON" if self.scope.dev else "-DBUILD_TESTS=OFF"
         self.run("cmake %s %s %s" % (self.conanfile_directory, flag_build_tests, cmake.command_line))
         self.run("cmake --build . %s" % cmake.build_config)
 
@@ -43,6 +43,11 @@ class Small3dConan(ConanFile):
             self.copy(pattern="*.lib", dst="lib", keep_path=False)
         else:
             self.copy(pattern="*.a", dst="lib", keep_path=False)
+
+    def imports(self):
+        if self.scope.dev and self.settings.os == "Windows":
+            self.copy(pattern="*.dll", dst="bin", src="bin")
+            self.copy(pattern="*.pdb", dst="bin", src="bin")
             
     def package_info(self):
         self.cpp_info.libs = ['small3d']
