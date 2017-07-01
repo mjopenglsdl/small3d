@@ -8,25 +8,13 @@ add_library(small3d BoundingBoxSet.cpp GetTokens.cpp Image.cpp Logger.cpp MathFu
 target_include_directories(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d")
 
 if(DEFINED BUILD_TESTS AND BUILD_TESTS)
-  
   add_executable(unittests main.cpp)
   file(COPY "${small3d_SOURCE_DIR}/small3d/resources" DESTINATION "${small3d_BINARY_DIR}/bin")
   target_include_directories(unittests PUBLIC "${small3d_SOURCE_DIR}/small3d/include")
   target_link_libraries(unittests PUBLIC small3d "${CONAN_LIBS}")
   set_target_properties(unittests PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}")
-
   if(MSVC)
     set_target_properties(unittests PROPERTIES LINK_FLAGS_RELEASE "-NODEFAULTLIB:MSVCRTD")
     set_target_properties(unittests PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${small3d_BINARY_DIR}/bin")
-  endif()
-  
+  endif(MSVC)
 endif(DEFINED BUILD_TESTS AND BUILD_TESTS)
-
-if(MSVC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
-elseif(APPLE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
-elseif(UNIX AND NOT APPLE)
-  target_compile_options(small3d PUBLIC "-std=c++11")
-  target_compile_options(unittests PUBLIC "-std=c++11")
-endif(MSVC)
