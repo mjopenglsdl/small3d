@@ -14,7 +14,6 @@
 
 using namespace std;
 
-
 namespace small3d {
 
   void error_callback(int error, const char* description)
