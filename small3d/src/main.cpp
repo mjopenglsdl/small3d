@@ -18,6 +18,9 @@
 #include <small3d/GetTokens.hpp>
 #include <small3d/Sound.hpp>
 
+#include <thread>
+#include <chrono>
+
 using namespace small3d;
 using namespace std;
 
@@ -156,8 +159,15 @@ TEST(RendererTest, StartAndUse) {
   
 }
 
-TEST(SoundTest, Initialisation) {
+TEST(SoundTest, LoadAndPlay) {
   Sound snd("resources/sounds/bah.ogg");
+  snd.play();
+  std::chrono::milliseconds timespan(500);
+  std::this_thread::sleep_for(timespan);
+  snd.stop();
+  // Make sure the sound is stopped by the stop function and not the destructor.
+  std::chrono::milliseconds timespan2(2000);
+  std::this_thread::sleep_for(timespan2);
 }
 
 ///////// FUNCTIONS ////////////////

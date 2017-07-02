@@ -36,7 +36,7 @@ namespace small3d {
     };
 
     SoundData soundData;
-
+    PaStream *stream;
     bool noOutputDevice;
     PaDeviceIndex defaultOutput;
 

@@ -67,6 +67,7 @@ namespace small3d {
   }
   
   Sound::Sound(std::string soundFilePath) {
+    this->stream = nullptr;
     if (numInstances == 0) {
       LOGDEBUG("No Sound instances exist. Initialising PortAudio");
 
@@ -92,6 +93,11 @@ namespace small3d {
   }
 
   Sound::~Sound() {
+    if (stream != nullptr) {
+      Pa_AbortStream(stream);
+      Pa_CloseStream(stream);
+    }
+    
     --numInstances;
     if(numInstances == 0) {
       LOGDEBUG("Last Sound instance destroyed. Terminating PortAudio.");
@@ -166,9 +172,60 @@ namespace small3d {
   }
 
   void Sound::play(bool repeat) {
+    if (!noOutputDevice) {
+      
+      PaStreamParameters outputParams;
+      
+      memset(&outputParams, 0, sizeof(PaStreamParameters));
+      outputParams.device = defaultOutput;
+      outputParams.channelCount = this->soundData.channels;
+      outputParams.hostApiSpecificStreamInfo = NULL;
+      
+      // Avoid sound corruption on Linux systems
+#ifdef __linux__
+      outputParams.suggestedLatency = 0.8f;
+#endif
+      
+      outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
+      
+      this->soundData.currentFrame = 0;
+      this->soundData.startTime = 0;
+      this->soundData.repeat = repeat;
+      
+      PaError error;
+      
+      if (this->stream != nullptr) {
+        
+        Pa_AbortStream(stream);
+        
+        error = Pa_StartStream(stream);
+        if (error != paNoError) {
+          throw std::runtime_error("Failed to start stream: " + std::string(Pa_GetErrorText(error)));
+        }
+        
+      } else {
+        
+        error = Pa_OpenStream(&stream, NULL, &outputParams, this->soundData.rate,
+                              1024, paNoFlag,
+                              Sound::audioCallback, &this->soundData);
+        if (error != paNoError) {
+          throw std::runtime_error("Failed to open PortAudio stream: " + std::string(Pa_GetErrorText(error)));
+        }
+        
+        error = Pa_StartStream(stream);
+        if (error != paNoError) {
+          throw std::runtime_error("Failed to start stream: " + std::string(Pa_GetErrorText(error)));
+        }
+        
+      }
+      
+    }
   }
 
   void Sound::stop() {
+    if (this->stream != nullptr) {
+        Pa_AbortStream(stream);
+    }
   }
   
 }
