@@ -22,7 +22,11 @@
 
 namespace small3d {
 
+  bool Sound::noOutputDevice;
+  PaDeviceIndex Sound::defaultOutput;
   unsigned int Sound::numInstances = 0;
+
+ 
 
   int Sound::audioCallback(const void *inputBuffer, void *outputBuffer,
                            unsigned long framesPerBuffer,
@@ -65,8 +69,8 @@ namespace small3d {
     
     return result;
   }
-  
-  Sound::Sound(std::string soundFilePath) {
+
+  Sound::Sound() {
     this->stream = nullptr;
     if (numInstances == 0) {
       LOGDEBUG("No Sound instances exist. Initialising PortAudio");
@@ -89,6 +93,9 @@ namespace small3d {
       }
     }
     ++numInstances;
+  }
+  
+  Sound::Sound(std::string soundFilePath) : Sound() {
     this->load(soundFilePath);
   }
 
@@ -106,7 +113,7 @@ namespace small3d {
   }
 
   void Sound::load(std::string soundFilePath) {
-
+    
     if (!noOutputDevice) {
       
       OggVorbis_File vorbisFile;
@@ -172,7 +179,7 @@ namespace small3d {
   }
 
   void Sound::play(bool repeat) {
-    if (!noOutputDevice) {
+    if (!noOutputDevice && this->soundData.size > 0) {
       
       PaStreamParameters outputParams;
       
@@ -224,8 +231,34 @@ namespace small3d {
 
   void Sound::stop() {
     if (this->stream != nullptr) {
-        Pa_AbortStream(stream);
+      Pa_AbortStream(stream);
     }
   }
+
+  Sound::Sound(const Sound& other) : Sound() {
+    this->soundData = other.soundData;
+    this->stream = nullptr;
+    ++numInstances;
+  }
+
+  Sound::Sound(const Sound&& other) : Sound() {
+    this->soundData = other.soundData;
+    this->stream = nullptr;
+    ++numInstances;
+  }
+
+  Sound& Sound::operator=(const Sound& other) {
+    this->soundData = other.soundData;
+    this->stream = nullptr;
+    return *this;
+    
+  }
+
+  Sound& Sound::operator=(const Sound&& other) {
+    this->soundData = other.soundData;
+    this->stream = nullptr;
+    return *this;
+  }
+  
   
 }

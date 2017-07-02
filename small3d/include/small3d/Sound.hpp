@@ -16,9 +16,9 @@
 namespace small3d {
 
   /**
-   * @class SoundData
+   * @class Sound
    *
-   * @brief A sound
+   * @brief Class that loads and plays a sound from an ogg file.
    */
   class Sound {
   private:
@@ -37,9 +37,9 @@ namespace small3d {
 
     SoundData soundData;
     PaStream *stream;
-    bool noOutputDevice;
-    PaDeviceIndex defaultOutput;
 
+    static bool noOutputDevice;
+    static PaDeviceIndex defaultOutput;
     static unsigned int numInstances;
 
     static int audioCallback(const void *inputBuffer, void *outputBuffer,
@@ -50,10 +50,44 @@ namespace small3d {
     void load(std::string soundFilePath);
 
   public:
+    /**
+     * @brief Default constructor
+     */
+    Sound();
+
+    /**
+     * @brief Ogg file loading constructor
+     * @param soundFilePath The path to the ogg file from which to load the sound.
+     */
     Sound(std::string soundFilePath);
+
+    /**
+     * @brief Destructor
+     */
     ~Sound();
+
+    /**
+     * @brief Play the sound.
+     * @param repeat Repeat the sound after it is done playing?
+     */
     void play(bool repeat = false);
+
+    /**
+     * @brief Stop playing the sound.
+     */
     void stop();
+
+    // Copy constructor
+    Sound(const Sound& other);
+
+    // Move constructor
+    Sound(const Sound&& other);
+
+    // Copy assignment
+    Sound& operator=(const Sound& other);
+
+    // Move assignment
+    Sound& operator=(const Sound&& other);
     
   };
 

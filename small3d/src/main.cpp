@@ -170,6 +170,24 @@ TEST(SoundTest, LoadAndPlay) {
   std::this_thread::sleep_for(timespan2);
 }
 
+TEST(SoundTest, ThreeAtTheSameTime) {
+  Sound snd1("resources/sounds/bah.ogg");
+  Sound snd2(snd1);
+  Sound snd3 = snd2;
+
+  snd1.play();
+  std::this_thread::sleep_for(std::chrono::milliseconds(200));
+  snd2.play();
+  std::this_thread::sleep_for(std::chrono::milliseconds(200));
+  snd3.play();
+  std::this_thread::sleep_for(std::chrono::milliseconds(2000));			 }
+
+TEST(SoundTest, RepeatSound) {
+  Sound snd("resources/sounds/bah.ogg");
+  snd.play(true);
+  std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+}
+
 ///////// FUNCTIONS ////////////////
 TEST(TokenTest, GetFourTokens) {
   string strTest = "a-b-c-d";
