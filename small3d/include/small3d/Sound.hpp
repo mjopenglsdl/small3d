@@ -77,16 +77,24 @@ namespace small3d {
      */
     void stop();
 
-    // Copy constructor
+    /**
+     * @brief Copy constructor
+     */
     Sound(const Sound& other);
 
-    // Move constructor
+    /**
+     * @brief Move constructor
+     */
     Sound(const Sound&& other);
 
-    // Copy assignment
+    /**
+     * @brief Copy assignment
+     */
     Sound& operator=(const Sound& other);
 
-    // Move assignment
+    /** 
+     * @brief Move assignment
+     */
     Sound& operator=(const Sound&& other);
     
   };
