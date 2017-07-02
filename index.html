@@ -82,9 +82,10 @@ $(function() {
 <p>(still open)</p>
 <ul>
 <li>Various bug fixes and code improvements.</li>
-<li>[BREAKING] The Renderer and SoundPlayer classes are now singletons.</li>
+<li>[BREAKING] The Renderer class is now a singleton.</li>
 <li>[BREAKING] Conan packaging configuration re-introduced. I will no longer be maintaining builds that don't use conan. Conan saves time.</li>
 <li>[BREAKING] The Exception class has been removed. Now using std::runtime_error instead.</li>
+<li>[BREAKING] The SoundPlayer class has been removed. The new Sound class allows for very simple loading and playing of sounds.</li>
 </ul>
 <h2>v1.2.0 </h2>
 <ul>

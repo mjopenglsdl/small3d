@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['play',['play',['../classsmall3d_1_1_sound_player.html#a3ae8196f0364ee265180a682d8abd394',1,'small3d::SoundPlayer']]]
+  ['play',['play',['../classsmall3d_1_1_sound.html#a58c2951bc43809554f3f21b9713e405d',1,'small3d::Sound']]]
 ];
