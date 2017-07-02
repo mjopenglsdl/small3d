@@ -15,8 +15,8 @@
 #include <small3d/BoundingBoxSet.hpp>
 #include <small3d/WavefrontLoader.hpp>
 #include <small3d/SceneObject.hpp>
-#include <small3d/SoundPlayer.hpp>
 #include <small3d/GetTokens.hpp>
+#include <small3d/Sound.hpp>
 
 using namespace small3d;
 using namespace std;
@@ -156,10 +156,8 @@ TEST(RendererTest, StartAndUse) {
   
 }
 
-TEST(SoundPlayerTest, Singleton) {
-  
-  SoundPlayer *sp = &SoundPlayer::getInstance();
-  
+TEST(SoundTest, Initialisation) {
+  Sound snd("nofile");
 }
 
 ///////// FUNCTIONS ////////////////
