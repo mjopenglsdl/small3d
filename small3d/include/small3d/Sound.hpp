@@ -38,6 +38,7 @@ namespace small3d {
     SoundData soundData;
 
     bool noOutputDevice;
+    PaDeviceIndex defaultOutput;
 
     static unsigned int numInstances;
 
@@ -46,9 +47,11 @@ namespace small3d {
 			     const PaStreamCallbackTimeInfo *timeInfo,
 			     PaStreamCallbackFlags statusFlags,
 			     void *userData);
+    void load(std::string soundFilePath);
 
   public:
-    Sound(std::string filename);
+    Sound(std::string soundFilePath);
+    ~Sound();
     void play(bool repeat = false);
     void stop();
     

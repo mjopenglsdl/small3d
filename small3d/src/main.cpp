@@ -157,7 +157,7 @@ TEST(RendererTest, StartAndUse) {
 }
 
 TEST(SoundTest, Initialisation) {
-  Sound snd("nofile");
+  Sound snd("resources/sounds/bah.ogg");
 }
 
 ///////// FUNCTIONS ////////////////
