@@ -7,6 +7,7 @@ class Small3dConan(ConanFile):
     description = "A small, cross-platform 3D game engine (C++, OpenGL, GLFW) - runs on Win/MacOS/Linux"
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
+    default_options = "gtest:shared=False"
     url="http://github.com/dimi309/conan-packages"
     requires = "glfw/3.2.1@dimi309/stable", "freetype/2.6.3@lasote/stable","glew/2.0.0@dimi309/stable", \
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.8@g-truc/stable", \

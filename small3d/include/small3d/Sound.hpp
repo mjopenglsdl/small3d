@@ -37,6 +37,10 @@ namespace small3d {
 
     SoundData soundData;
 
+    bool noOutputDevice;
+
+    static unsigned int numInstances;
+
     static int audioCallback(const void *inputBuffer, void *outputBuffer,
 			     unsigned long framesPerBuffer,
 			     const PaStreamCallbackTimeInfo *timeInfo,
