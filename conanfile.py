@@ -22,6 +22,9 @@ class Small3dConan(ConanFile):
         if self.settings.compiler == "gcc" and self.settings.compiler.libcxx != "libstdc++11":
             raise ConanException("When using the gcc compiler, small3d requires libstdc++11 as compiler.libcxx, in the conan.conf file or via the -s parameter.")
 
+        if self.settings.os == "Linux" and self.settings.compiler == "clang" and self.settings.compiler.libcxx != "libstdc++11":
+            raise ConanException("When using the clang compiler on Linux, small3d requires libstdc++11 as compiler.libcxx, in the conan.conf file or via the -s parameter.")
+
         if self.scope.dev:
             self.requires("gtest/1.8.0@lasote/stable")
 
@@ -58,5 +61,5 @@ class Small3dConan(ConanFile):
             self.cpp_info.exelinkflags.append('-NODEFAULTLIB:LIBCMT')
         else:
             self.cpp_info.cppflags.append("-std=c++11")
-            if self.settings.os == "Macos":
+            if self.settings.compiler == "clang":
                 self.cpp_info.cppflags.append("-stdlib=libc++")
