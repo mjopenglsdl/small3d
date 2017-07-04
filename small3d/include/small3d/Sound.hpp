@@ -48,6 +48,7 @@ namespace small3d {
 			     PaStreamCallbackFlags statusFlags,
 			     void *userData);
     void load(std::string soundFilePath);
+    void openStream();
 
   public:
     /**
@@ -68,9 +69,9 @@ namespace small3d {
 
     /**
      * @brief Play the sound.
-     * @param repeat Repeat the sound after it is done playing?
+     * @brief repeat Repeat the sound after it ends?
      */
-    void play(bool repeat = false);
+    void play(bool repeat=false);
 
     /**
      * @brief Stop playing the sound.

@@ -175,90 +175,109 @@ namespace small3d {
 #endif
       LOGDEBUG(std::string(soundInfo));
     }
+
+    this->openStream();
     
   }
+
+  void Sound::openStream() {
+
+    PaStreamParameters outputParams;
+      
+    memset(&outputParams, 0, sizeof(PaStreamParameters));
+    outputParams.device = defaultOutput;
+    outputParams.channelCount = this->soundData.channels;
+    outputParams.hostApiSpecificStreamInfo = NULL;
+      
+    // Avoid sound corruption on Linux systems
+#ifdef __linux__
+    outputParams.suggestedLatency = 0.8f;
+#endif
+      
+    outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
+      
+    this->soundData.currentFrame = 0;
+    this->soundData.startTime = 0;
+      
+    PaError error;
+
+    error = Pa_OpenStream(&stream, NULL, &outputParams, this->soundData.rate,
+			  1024, paNoFlag,
+			  Sound::audioCallback, &this->soundData);
+    if (error != paNoError) {
+      throw std::runtime_error("Failed to open PortAudio stream: " + std::string(Pa_GetErrorText(error)));
+    }
+  }
+  
 
   void Sound::play(bool repeat) {
     if (!noOutputDevice && this->soundData.size > 0) {
       
-      PaStreamParameters outputParams;
-      
-      memset(&outputParams, 0, sizeof(PaStreamParameters));
-      outputParams.device = defaultOutput;
-      outputParams.channelCount = this->soundData.channels;
-      outputParams.hostApiSpecificStreamInfo = NULL;
-      
-      // Avoid sound corruption on Linux systems
-#ifdef __linux__
-      outputParams.suggestedLatency = 0.8f;
-#endif
-      
-      outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
-      
+      PaError error;
+
+      if (Pa_IsStreamStopped(stream) == 0) {
+	error = Pa_AbortStream(stream);
+	if (error != paNoError) {
+	  throw std::runtime_error("Failed to abort stream on play: " + std::string(Pa_GetErrorText(error)));
+	}
+      }
+
       this->soundData.currentFrame = 0;
       this->soundData.startTime = 0;
       this->soundData.repeat = repeat;
-      
-      PaError error;
-      
-      if (this->stream != nullptr) {
         
-        Pa_AbortStream(stream);
-        
-        error = Pa_StartStream(stream);
-        if (error != paNoError) {
-          throw std::runtime_error("Failed to start stream: " + std::string(Pa_GetErrorText(error)));
-        }
-        
-      } else {
-        
-        error = Pa_OpenStream(&stream, NULL, &outputParams, this->soundData.rate,
-                              1024, paNoFlag,
-                              Sound::audioCallback, &this->soundData);
-        if (error != paNoError) {
-          throw std::runtime_error("Failed to open PortAudio stream: " + std::string(Pa_GetErrorText(error)));
-        }
-        
-        error = Pa_StartStream(stream);
-        if (error != paNoError) {
-          throw std::runtime_error("Failed to start stream: " + std::string(Pa_GetErrorText(error)));
-        }
-        
+      error = Pa_StartStream(stream);
+      if (error != paNoError) {
+	throw std::runtime_error("Failed to start stream: " + std::string(Pa_GetErrorText(error)));
       }
-      
+        
     }
+      
   }
 
   void Sound::stop() {
     if (this->stream != nullptr) {
       Pa_AbortStream(stream);
+      this->soundData.currentFrame = 0;
+      this->soundData.startTime = 0;
     }
   }
 
   Sound::Sound(const Sound& other) : Sound() {
     this->soundData = other.soundData;
     this->stream = nullptr;
+    this->openStream();
     ++numInstances;
   }
 
   Sound::Sound(const Sound&& other) : Sound() {
     this->soundData = other.soundData;
     this->stream = nullptr;
+    this->openStream();
     ++numInstances;
   }
 
   Sound& Sound::operator=(const Sound& other) {
+    if (this->stream != nullptr) {
+      Pa_AbortStream(this->stream);
+      Pa_CloseStream(this->stream);
+    }
     this->soundData = other.soundData;
     this->stream = nullptr;
+    this->openStream();
     return *this;
     
   }
 
   Sound& Sound::operator=(const Sound&& other) {
+    if (this->stream != nullptr) {
+      Pa_AbortStream(this->stream);
+      Pa_CloseStream(this->stream);
+    }
     this->soundData = other.soundData;
     this->stream = nullptr;
+    this->openStream();
     return *this;
   }
-  
-  
+
 }

@@ -165,6 +165,8 @@ TEST(SoundTest, LoadAndPlay) {
   std::chrono::milliseconds timespan(500);
   std::this_thread::sleep_for(timespan);
   snd.stop();
+  std::this_thread::sleep_for(timespan);
+  snd.play();
   // Make sure the sound is stopped by the stop function and not the destructor.
   std::chrono::milliseconds timespan2(2000);
   std::this_thread::sleep_for(timespan2);
