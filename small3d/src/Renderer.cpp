@@ -404,7 +404,7 @@ namespace small3d {
     glUseProgram(0);
   }
   
-  GLuint Renderer::generateTexture(string name, const float* texture, unsigned long width, unsigned long height) {
+  GLuint Renderer::generateTexture(string name, const float* data, unsigned long width, unsigned long height) {
     
     GLuint textureHandle;
     
@@ -417,11 +417,15 @@ namespace small3d {
     GLint internalFormat = isOpenGL33Supported ? GL_RGBA32F : GL_RGBA;
     
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGBA,
-                 GL_FLOAT, texture);
+                 GL_FLOAT, data);
     
     textures->insert(make_pair(name, textureHandle));
     
     return textureHandle;
+  }
+
+  void Renderer::generateTexture(std::string name, const Image image) {
+    this->generateTexture(name, image.getData(), image.getWidth(), image.getHeight());
   }
   
   void Renderer::deleteTexture(string name) {

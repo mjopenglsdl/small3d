@@ -135,6 +135,8 @@ namespace small3d
      */
     GLuint getTextureHandle(std::string name);
 
+    GLuint generateTexture(std::string name, const float *data, unsigned long width, unsigned long height);
+
     /**
      * Render the bounding box set of an object. Useful for debugging collisions.
      * @param boundingBoxSet The bounding box set
@@ -220,14 +222,11 @@ namespace small3d
     ~Renderer();
 
     /**
-     * @brief Generate a texture in OpenGL, using the given data
+     * @brief Generate a texture on the GPU from the given image
      * @param name The name by which the texture will be known
-     * @param texture The texture data
-     * @param width The width of the texture, in pixels
-     * @param height The height of the texture, in pixels
-     * @return The texture handle
+     * @param image The image from which the texture will be generated
      */
-    GLuint generateTexture(std::string name, const float *texture, unsigned long width, unsigned long height);
+    void generateTexture(std::string name, const Image image);
 
     /**
      * @brief Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each
