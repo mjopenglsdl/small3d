@@ -12,6 +12,7 @@ v1.2.1
 - [BREAKING] Conan packaging configuration re-introduced. I will no longer be maintaining builds that don't use conan. Conan saves time.
 - [BREAKING] The Exception class has been removed. Now using std::runtime_error instead.
 - [BREAKING] The SoundPlayer class has been removed. The new Sound class allows for very simple loading and playing of sounds.
+- [BREAKING] The Renderer.generateTexture function now takes an Image as parameter in place of raw data and dimension details.
 
 v1.2.0
 ------
