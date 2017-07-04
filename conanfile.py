@@ -61,5 +61,3 @@ class Small3dConan(ConanFile):
             self.cpp_info.exelinkflags.append('-NODEFAULTLIB:LIBCMT')
         else:
             self.cpp_info.cppflags.append("-std=c++11")
-            if self.settings.compiler == "clang":
-                self.cpp_info.cppflags.append("-stdlib=libc++")
