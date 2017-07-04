@@ -113,9 +113,9 @@ GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><b>getWindow</b>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a32163440246ed8ea5016e15dfc781775">~Renderer</a> ()</td></tr>
 <tr class="memdesc:a32163440246ed8ea5016e15dfc781775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:a32163440246ed8ea5016e15dfc781775"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b28092685a8554c669dc2e1ecba073b"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a0b28092685a8554c669dc2e1ecba073b">generateTexture</a> (std::string name, const float *texture, unsigned long width, unsigned long height)</td></tr>
-<tr class="memdesc:a0b28092685a8554c669dc2e1ecba073b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a texture in OpenGL, using the given data.  <a href="#a0b28092685a8554c669dc2e1ecba073b">More...</a><br /></td></tr>
-<tr class="separator:a0b28092685a8554c669dc2e1ecba073b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a634fa949af9bd6caaa8002d46f6a0226"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a634fa949af9bd6caaa8002d46f6a0226">generateTexture</a> (std::string name, const <a class="el" href="classsmall3d_1_1_image.html">Image</a> image)</td></tr>
+<tr class="memdesc:a634fa949af9bd6caaa8002d46f6a0226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a texture on the GPU from the given image.  <a href="#a634fa949af9bd6caaa8002d46f6a0226">More...</a><br /></td></tr>
+<tr class="separator:a634fa949af9bd6caaa8002d46f6a0226"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cb954ca2eb3cb8181b1032e67448c45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a0cb954ca2eb3cb8181b1032e67448c45">renderTexture</a> (std::string name, const glm::vec3 &amp;bottomLeft, const glm::vec3 &amp;topRight, bool perspective=false)</td></tr>
 <tr class="memdesc:a0cb954ca2eb3cb8181b1032e67448c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each other. This function can be used for rendering the ground, the sky or a splash screen for example.  <a href="#a0cb954ca2eb3cb8181b1032e67448c45">More...</a><br /></td></tr>
 <tr class="separator:a0cb954ca2eb3cb8181b1032e67448c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -255,14 +255,14 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 
 </div>
 </div>
-<a id="a0b28092685a8554c669dc2e1ecba073b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b28092685a8554c669dc2e1ecba073b">&#9670;&nbsp;</a></span>generateTexture()</h2>
+<a id="a634fa949af9bd6caaa8002d46f6a0226"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a634fa949af9bd6caaa8002d46f6a0226">&#9670;&nbsp;</a></span>generateTexture()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">GLuint small3d::Renderer::generateTexture </td>
+          <td class="memname">void small3d::Renderer::generateTexture </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -270,20 +270,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float *&#160;</td>
-          <td class="paramname"><em>texture</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned long&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned long&#160;</td>
-          <td class="paramname"><em>height</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="classsmall3d_1_1_image.html">Image</a>&#160;</td>
+          <td class="paramname"><em>image</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -293,17 +281,14 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
       </table>
 </div><div class="memdoc">
 
-<p>Generate a texture in OpenGL, using the given data. </p>
+<p>Generate a texture on the GPU from the given image. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>The name by which the texture will be known </td></tr>
-    <tr><td class="paramname">texture</td><td>The texture data </td></tr>
-    <tr><td class="paramname">width</td><td>The width of the texture, in pixels </td></tr>
-    <tr><td class="paramname">height</td><td>The height of the texture, in pixels </td></tr>
+    <tr><td class="paramname">image</td><td>The image from which the texture will be generated </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The texture handle </dd></dl>
 
 </div>
 </div>
@@ -531,7 +516,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <p>Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each other. This function can be used for rendering the ground, the sky or a splash screen for example. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>The name of the texture to be used (must have been loaded with <a class="el" href="classsmall3d_1_1_renderer.html#a0b28092685a8554c669dc2e1ecba073b" title="Generate a texture in OpenGL, using the given data. ">generateTexture()</a>) </td></tr>
+    <tr><td class="paramname">name</td><td>The name of the texture to be used (must have been loaded with generateTexture()) </td></tr>
     <tr><td class="paramname">bottomLeft</td><td>The coordinates for the bottom left corner of the texture </td></tr>
     <tr><td class="paramname">topRight</td><td>The coordinates for the top right corner of the texture </td></tr>
     <tr><td class="paramname">perspective</td><td>If set to true, use perspective rendering, otherwise use simple (orthographic) rendering. </td></tr>
