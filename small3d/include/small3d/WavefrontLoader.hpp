@@ -22,8 +22,6 @@ namespace small3d {
   class WavefrontLoader {
   private:
 
-    std::string basePath;
-
     // Data read from .obj file
     std::vector<std::vector<float> > vertices;
     std::vector<std::vector<int> > facesVertexIndices;
@@ -52,12 +50,9 @@ namespace small3d {
     /**
      * @brief Default constructor
      *
-     * @param basePath   The path under which all accessed files and directories are
-     *                   to be found. If this is not set, it is assumed to be the directory
-     *                   from where the execution command is entered.
      */
 
-    WavefrontLoader(std::string basePath = "");
+    WavefrontLoader();
 
     /**
      * @brief Destructor.
