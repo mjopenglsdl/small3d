@@ -29,9 +29,9 @@ namespace small3d {
     // http://zarb.org/~gc/html/libpng.html
 #if defined(_WIN32) && !defined(__MINGW32__)
     FILE *fp;
-    fopen_s(&fp, (fileLocation).c_str(), "rb");
+    fopen_s(&fp, fileLocation.c_str(), "rb");
 #else
-    FILE *fp = fopen((fileLocation).c_str(), "rb");
+    FILE *fp = fopen(fileLocation.c_str(), "rb");
 #endif
     if (!fp) {
       throw runtime_error(

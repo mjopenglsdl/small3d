@@ -64,14 +64,9 @@ namespace small3d
      * 				  be the non-moving state.
      * @param boundingBoxSetPath  The path to the file containing the object's bounding box set. If no such
      * 				  path is given, the object cannot be checked for collision detection.
-     * @param basePath            The path under which all accessed files and directories are
-     *                            to be found. If this is not set, it is assumed to be the directory
-     *                            containing the application executable when using SDL, or the
-     *                            directory from where the execution command is entered when 
-     *                            using GLFW.
      */
     SceneObject(std::string name, std::string modelPath, int numFrames = 1, std::string texturePath = "",
-                std::string boundingBoxSetPath = "", std::string basePath = "");
+                std::string boundingBoxSetPath = "");
 
     /**
      * @brief Destructor

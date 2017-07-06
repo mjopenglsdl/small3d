@@ -29,7 +29,6 @@ namespace small3d {
   class BoundingBoxSet {
   private:
     int numBoxes;
-    std::string basePath;
     
   public:
     int getNumBoxes() const;
@@ -54,12 +53,9 @@ namespace small3d {
     /**
      * @brief Constructor
      *
-     * @param basePath  The path under which all accessed files and directories are
-     *                  to be found. If this is not set, it is assumed to be the directory
-     *                  from where the execution command is entered. 
      */
 
-    BoundingBoxSet(std::string basePath = "");
+    BoundingBoxSet();
 
     /**
      * @brief Destructor

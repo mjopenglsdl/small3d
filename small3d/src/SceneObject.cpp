@@ -19,10 +19,9 @@ using namespace std;
 namespace small3d {
 
   SceneObject::SceneObject(string name, string modelPath, int numFrames, string texturePath,
-                           string boundingBoxSetPath, string basePath) : texture(texturePath),
+                           string boundingBoxSetPath) : texture(texturePath),
 									colour(0,0,0,0), offset(0,0,0),
-									rotation(0,0,0),
-									boundingBoxSet(basePath) {
+									rotation(0,0,0) {
     initLogger();
     this->name = name;
     animating = false;
@@ -31,7 +30,7 @@ namespace small3d {
     currentFrame = 0;
     this->numFrames = numFrames;
 
-    WavefrontLoader loader(basePath);
+    WavefrontLoader loader;
 
     if (numFrames > 1) {
       LOGINFO("Loading " + name + " animated model (this may take a while):");

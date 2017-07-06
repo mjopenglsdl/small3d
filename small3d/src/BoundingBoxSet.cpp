@@ -20,13 +20,11 @@ namespace small3d {
    * Constructor
    */
   
-  BoundingBoxSet::BoundingBoxSet(string basePath) {
+  BoundingBoxSet::BoundingBoxSet() {
     initLogger();
     vertices.clear();
     facesVertexIndexes.clear();
     numBoxes = 0;
-    
-    this->basePath = basePath;
     
   }
   
@@ -35,7 +33,7 @@ namespace small3d {
       throw runtime_error(
                       "Illegal attempt to reload bounding boxes. Please use another object.");
     }
-    ifstream file((basePath + fileLocation).c_str());
+    ifstream file(fileLocation.c_str());
     string line;
     if (file.is_open()) {
       while (getline(file, line)) {
@@ -95,7 +93,7 @@ namespace small3d {
     }
     else
       throw runtime_error(
-                      "Could not open file " + basePath + fileLocation);
+                      "Could not open file " + fileLocation);
     
   }
   
