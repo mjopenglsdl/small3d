@@ -18,7 +18,7 @@ using namespace std;
 
 namespace small3d {
 
-  SceneObject::SceneObject(string name, string modelPath, int numFrames, string texturePath,
+  template<class LoaderType> SceneObject<LoaderType>::SceneObject(string name, string modelPath, int numFrames, string texturePath,
                            string boundingBoxSetPath) : texture(texturePath),
 									colour(0,0,0,0), offset(0,0,0),
 							rotation(0,0,0), boundingBoxSet(boundingBoxSetPath) {
@@ -30,7 +30,7 @@ namespace small3d {
     currentFrame = 0;
     this->numFrames = numFrames;
 
-    WavefrontLoader loader;
+    LoaderType loader;
 
     if (numFrames > 1) {
       LOGINFO("Loading " + name + " animated model (this may take a while):");
@@ -54,45 +54,45 @@ namespace small3d {
 
   }
 
-  Model& SceneObject::getModel() {
+  template<class LoaderType> Model& SceneObject<LoaderType>::getModel() {
     return model[currentFrame];
   }
 
-  const Image& SceneObject::getTexture() const {
+  template<class LoaderType> const Image& SceneObject<LoaderType>::getTexture() const {
     return texture;
   }
 
-  const string SceneObject::getName() {
+  template<class LoaderType> const string SceneObject<LoaderType>::getName() {
     return name;
   }
 
-  void SceneObject::adjustRotation(const glm::vec3 &adjustment) {
+  template<class LoaderType> void SceneObject<LoaderType>::adjustRotation(const glm::vec3 &adjustment) {
     rotationAdjustment = rotateZ(adjustment.z) * rotateX(adjustment.x) * rotateY(adjustment.y);
     if (boundingBoxSet.vertices.size() > 0)
       boundingBoxSet.setRotationAdjustment(rotationAdjustment);
   }
 
-  const glm::mat4x4 &SceneObject::getRotationAdjustment() {
+  template<class LoaderType> const glm::mat4x4 &SceneObject<LoaderType>::getRotationAdjustment() {
     return rotationAdjustment;
   }
 
-  void SceneObject::startAnimating() {
+  template<class LoaderType> void SceneObject<LoaderType>::startAnimating() {
     animating = true;
   }
 
-  void SceneObject::stopAnimating() {
+  template<class LoaderType> void SceneObject<LoaderType>::stopAnimating() {
     animating = false;
   }
 
-  void SceneObject::resetAnimation() {
+  template<class LoaderType> void SceneObject<LoaderType>::resetAnimation() {
     currentFrame = 0;
   }
 
-  void SceneObject::setFrameDelay(const int &delay) {
+  template<class LoaderType> void SceneObject<LoaderType>::setFrameDelay(const int &delay) {
     this->frameDelay = delay;
   }
 
-  void SceneObject::animate() {
+  template<class LoaderType> void SceneObject<LoaderType>::animate() {
     if (animating) {
       ++framesWaited;
       if (framesWaited == frameDelay) {
@@ -105,7 +105,7 @@ namespace small3d {
     }
   }
 
-  bool SceneObject::collidesWith(glm::vec3 point) {
+  template<class LoaderType> bool SceneObject<LoaderType>::collidesWith(glm::vec3 point) {
     if (boundingBoxSet.vertices.size() == 0) {
       throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
@@ -116,7 +116,7 @@ namespace small3d {
     return boundingBoxSet.collidesWith(point);
   }
 
-  bool SceneObject::collidesWith(SceneObject &otherObject) {
+  template<class LoaderType> bool SceneObject<LoaderType>::collidesWith(SceneObject &otherObject) {
     if (boundingBoxSet.vertices.size() == 0) {
       throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
@@ -137,7 +137,7 @@ namespace small3d {
         otherObject.boundingBoxSet.collidesWith(boundingBoxSet);
   }
 
-  bool SceneObject::isAnimated() {
+  template<class LoaderType> bool SceneObject<LoaderType>::isAnimated() {
     return numFrames > 1;
   }
 

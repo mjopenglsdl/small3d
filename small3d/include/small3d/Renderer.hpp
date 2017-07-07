@@ -14,8 +14,9 @@
 
 #include <GLFW/glfw3.h>
 
-#include "SceneObject.hpp"
 #include "Logger.hpp"
+#include "Image.hpp"
+#include "Model.hpp"
 #include <unordered_map>
 #include <vector>
 #include <glm/glm.hpp>
@@ -87,8 +88,8 @@ namespace small3d
     std::string getShaderInfoLog(const GLuint shader) const;
 
     /**
-    * @brief Initialise renderer (OpenGL, GLEW, etc)
-    */
+     * @brief Initialise renderer (OpenGL, GLEW, etc)
+     */
     void init(int width, int height, std::string windowTitle,
               float frustumScale , float zNear,
               float zFar, float zOffsetFromCamera,
@@ -113,14 +114,8 @@ namespace small3d
      */
     std::unordered_map<std::string, GLuint> *textures;
 
-    /**
-     * @brief Positions the next object to be rendered.
-     * @param offset The offset (location coordinates)
-     * @param rotation The rotation (around the x, y and z axes)
-     * @param rotationAdjustment The matrix potentially containing an adjustment to the object's rotation (see SceneObject.adjustRotation)
-     */
     void positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation,
-                            const glm::mat4x4 &rotationAdjustment);
+			   const glm::mat4x4 &rotationAdjustment);
 
     /**
      * @brief Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).
@@ -137,13 +132,6 @@ namespace small3d
 
     GLuint generateTexture(std::string name, const float *data, unsigned long width, unsigned long height);
 
-    /**
-     * Render the bounding box set of an object. Useful for debugging collisions.
-     * @param boundingBoxSet The bounding box set
-     */
-    void render(const BoundingBoxSet &boundingBoxSet, const glm::vec3 &offset,
-                const glm::vec3 &rotation, const glm::mat4x4 &rotationAdjustment);
-    
     /**
      * Hidden constructor, because Renderer is a singleton
      */
@@ -212,9 +200,9 @@ namespace small3d
      *         been deleted.
      */
     static Renderer& getInstance(std::string windowTitle = "", int width = 0, int height = 0,
-             float frustumScale = 1.0f, float zNear = 1.0f,
-             float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
-             std::string shadersPath = "resources/shaders/", std::string basePath = "");
+				 float frustumScale = 1.0f, float zNear = 1.0f,
+				 float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
+				 std::string shadersPath = "resources/shaders/", std::string basePath = "");
 
     /**
      * @brief Destructor
@@ -267,10 +255,15 @@ namespace small3d
     
     /**
      * @brief Render a scene object
-     * @param sceneObject The scene object
-     * @param showBoundingBoxes If true, also render the bounding boxes, otherwise don't (default)
+     * @param model The model
+     * @param offset The offset (position) where to draw the model
+     * @param rotation Rotation (x, y, z)
+     * @param rotationAdjustment Adjustment of the rotation
+     * @param colour The colour of the model
+     * @param textureName The name of the texture to place on the model (optional). The texture has to have been generated already.
+     *                    If this is set, the colour parameter will be ignored
      */
-    void render(SceneObject &sceneObject, bool showBoundingBoxes = false);
+    void render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::mat4x4 rotationAdjustment, glm::vec3 colour, std::string textureName="");
 
     /**
      * @brief Render some text on the screen. A texture will be generated, containing the given
@@ -283,13 +276,13 @@ namespace small3d
      * @param fontPath Path to the TrueType font (.ttf) which will be used
      */
     void write(std::string text, glm::vec3 colour, glm::vec2 bottomLeft, glm::vec2 topRight, int fontSize=48,
-                std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf");
+	       std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf");
 
     /**
      * @brief Clear a scene object from the GPU buffers (the object itself remains intact)
      * @param sceneObject The scene object
      */
-    void clearBuffers(SceneObject &sceneObject);
+    void clearBuffers(Model &model);
 
     /**
      * @brief Clears the screen.

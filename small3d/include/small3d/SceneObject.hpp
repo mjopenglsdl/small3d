@@ -15,7 +15,6 @@
 #include "Image.hpp"
 #include "BoundingBoxSet.hpp"
 #include <glm/glm.hpp>
-#include <GL/glew.h>
 
 namespace small3d
 {
@@ -27,7 +26,7 @@ namespace small3d
    *
    */
 
-  class SceneObject
+  template <class LoaderType> class SceneObject
   {
   private:
     std::vector<Model> model;
@@ -41,13 +40,6 @@ namespace small3d
     std::string name;
 
   public:
-
-    GLuint vaoId = 0;
-    GLuint positionBufferObjectId = 0;
-    GLuint indexBufferObjectId = 0;
-    GLuint normalsBufferObjectId = 0;
-    GLuint textureId = 0;
-    GLuint uvBufferObjectId = 0;
 
     /**
      * @brief Constructor

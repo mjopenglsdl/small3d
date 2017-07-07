@@ -3,7 +3,7 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
-v1.2.1
+v1.3.0
 ------
 (still open)
 
