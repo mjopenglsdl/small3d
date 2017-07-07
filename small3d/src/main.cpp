@@ -143,14 +143,14 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
 TEST(RendererTest, StartAndUse) {
   
-  SceneObject object("animal",
+  SceneObject<WavefrontLoader> object("animal",
                      "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj",
                      1,
                      "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png");
   
   Renderer *renderer = &Renderer::getInstance("test", 640, 480);
   
-  renderer->render(object);
+  renderer->render(object.getModel(), object.offset, object.rotation, object.getRotationAdjustment(), glm::vec3(1.0, 1.0, 1.0));
   
   renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f),
                          glm::vec3(1.0f, 1.0f, 1.0f), false);

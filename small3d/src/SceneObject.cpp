@@ -18,7 +18,7 @@ using namespace std;
 
 namespace small3d {
 
-  template<class LoaderType> SceneObject<LoaderType>::SceneObject(string name, string modelPath, int numFrames, string texturePath,
+  template<class LoaderType> SceneObject<LoaderType>::SceneObject<LoaderType>(string name, string modelPath, int numFrames, string texturePath,
                            string boundingBoxSetPath) : texture(texturePath),
 									colour(0,0,0,0), offset(0,0,0),
 							rotation(0,0,0), boundingBoxSet(boundingBoxSetPath) {
