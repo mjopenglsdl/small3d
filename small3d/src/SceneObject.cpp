@@ -21,7 +21,7 @@ namespace small3d {
   SceneObject::SceneObject(string name, string modelPath, int numFrames, string texturePath,
                            string boundingBoxSetPath) : texture(texturePath),
 									colour(0,0,0,0), offset(0,0,0),
-									rotation(0,0,0) {
+							rotation(0,0,0), boundingBoxSet(boundingBoxSetPath) {
     initLogger();
     this->name = name;
     animating = false;
@@ -50,10 +50,6 @@ namespace small3d {
       Model model1;
       loader.load(modelPath, model1);
       model.push_back(model1);
-    }
-
-    if (boundingBoxSetPath != "") {
-      boundingBoxSet.loadFromFile(boundingBoxSetPath);
     }
 
   }

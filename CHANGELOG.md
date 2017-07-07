@@ -13,6 +13,7 @@ v1.2.1
 - [BREAKING] The Exception class has been removed. Now using std::runtime_error instead.
 - [BREAKING] The SoundPlayer class has been removed. The new Sound class allows for very simple loading and playing of sounds.
 - [BREAKING] The Renderer.generateTexture function now takes an Image as parameter in place of raw data and dimension details.
+- [BREAKING] BoundingBoxSet now loads the bounding boxes in the constructor.
 
 v1.2.0
 ------

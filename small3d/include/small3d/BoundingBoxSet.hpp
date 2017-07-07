@@ -17,26 +17,23 @@ namespace small3d {
 
   /**
    * @class BoundingBoxSet
-   * @brief Bounding boxes for a model. Even though the loading logic is similar
-   * to that of the WavefrontLoader class, BoundingBoxSet has its own
-   * separate loading function, because it loads a Wavefront file
-   * exported with a different set of options (see README.md).
-   * Each BoundingBoxSet class may contain more than one bounding boxes. These are
-   * not separated into different structures because each has a fixed set of
-   * six faces, making them straightforward to separate at runtime.
+   * @brief Set of bounding boxes for a SceneObject, loaded from a Wavefront file,
+   * allowing for collision detection (see README.md).
    */
 
   class BoundingBoxSet {
   private:
     int numBoxes;
+    glm::mat4x4 rotationAdjustment;
+    void loadFromFile(std::string fileLocation);
     
   public:
+
+    /**
+     * @brief Get the number of boxes contained in the set.
+     */
+    
     int getNumBoxes() const;
-
-  private:
-    glm::mat4x4 rotationAdjustment;
-
-  public:
 
     /**
      * @brief The offset of the set of bounding boxes (their position on the scene).
@@ -52,10 +49,11 @@ namespace small3d {
 
     /**
      * @brief Constructor
+     * @param fileLocation Location of the Wavefront file containing the bounding boxes
      *
      */
 
-    BoundingBoxSet();
+    BoundingBoxSet(std::string fileLocation = "");
 
     /**
      * @brief Destructor
@@ -73,15 +71,6 @@ namespace small3d {
      */
 
     std::vector<std::vector<unsigned int> > facesVertexIndexes;
-
-    /**
-     * @brief Load the bounding boxes from a Wavefront file.
-     *
-     * @param	fileLocation	The file location, relative to the game's
-     * 							execution directory
-     */
-
-    void loadFromFile(std::string fileLocation);
 
     /**
      * @brief Set the rotation adjustment matrix (normally used so that a SceneObject's rotation adjustment

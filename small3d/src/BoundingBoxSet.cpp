@@ -20,11 +20,13 @@ namespace small3d {
    * Constructor
    */
   
-  BoundingBoxSet::BoundingBoxSet() {
+  BoundingBoxSet::BoundingBoxSet(string fileLocation) {
     initLogger();
     vertices.clear();
     facesVertexIndexes.clear();
     numBoxes = 0;
+    
+    if (fileLocation != "") this->loadFromFile(fileLocation);
     
   }
   

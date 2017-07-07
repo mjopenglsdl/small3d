@@ -109,9 +109,7 @@ TEST(ModelTest, LoadModel) {
 
 TEST(BoundingBoxesTest, LoadBoundingBoxes) {
   
-  unique_ptr<BoundingBoxSet> bboxes(new BoundingBoxSet());
-  
-  bboxes->loadFromFile("resources/models/GoatBB/GoatBB.obj");
+  unique_ptr<BoundingBoxSet> bboxes(new BoundingBoxSet("resources/models/GoatBB/GoatBB.obj"));
   
   EXPECT_EQ(16, bboxes->vertices.size());
   EXPECT_EQ(12, bboxes->facesVertexIndexes.size());
