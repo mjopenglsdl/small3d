@@ -9,18 +9,18 @@
 #pragma once
 
 #include <vector>
-#include "Model.hpp"
+#include <sstream>
+#include <iomanip>
+#include <stdexcept>
 #include <memory>
+
+#include "Model.hpp"
 #include "Logger.hpp"
 #include "Image.hpp"
 #include "BoundingBoxSet.hpp"
 #include "WavefrontLoader.hpp"
-#include <glm/glm.hpp>
-
-#include <sstream>
-#include <iomanip>
-#include <stdexcept>
 #include "MathFunctions.hpp"
+#include <glm/glm.hpp>
 
 using namespace std;
 
@@ -44,7 +44,6 @@ namespace small3d
     int framesWaited;
     int numFrames;
     glm::mat4x4 rotationAdjustment;
-    Image texture;
     std::string name;
 
   public:
@@ -54,19 +53,13 @@ namespace small3d
      *
      * @param name                The name of the object
      * @param modelPath           The path to the file containing the object's model
-     * @param texturePath         The path to the file containing the object's texture. If the object
-     * 				  is animated, it has to be the path up to the name part of the model.
-     * 				  The program will append an underscore, a 6-digit index number and the
-     * 				  .obj suffix for each frame. (e.g. goatAnim will become goatAnim_000001.obj,
-     * 				  goatAnim_000002.obj, etc.)
      * @param numFrames           The number of frames, if the object is animated. A single animation
      * 				  sequence is supported per object and the first frame is considered to
      * 				  be the non-moving state.
      * @param boundingBoxSetPath  The path to the file containing the object's bounding box set. If no such
      * 				  path is given, the object cannot be checked for collision detection.
      */
-    SceneObject<LoaderType>(std::string name, std::string modelPath, int numFrames = 1, std::string texturePath = "",
-                std::string boundingBoxSetPath = "");
+    SceneObject<LoaderType>(std::string name, std::string modelPath, int numFrames = 1, std::string boundingBoxSetPath = "");
 
     /**
      * @brief Destructor
@@ -84,12 +77,6 @@ namespace small3d
      * @return True if animated, False otherwise.
      */
     bool isAnimated() ;
-
-    /**
-     * @brief Get the object's texture
-     * @return The object's texture
-     */
-    const Image& getTexture() const;
 
     /**
      * @brief Get the name of the object
@@ -180,10 +167,9 @@ namespace small3d
 
   };
 
-  template<class LoaderType> SceneObject<LoaderType>::SceneObject(string name, string modelPath, int numFrames, string texturePath,
-                           string boundingBoxSetPath) : texture(texturePath),
-									colour(0,0,0,0), offset(0,0,0),
-							rotation(0,0,0), boundingBoxSet(boundingBoxSetPath) {
+  template<class LoaderType> SceneObject<LoaderType>::SceneObject(string name, string modelPath, int numFrames, string boundingBoxSetPath) :
+    colour(0,0,0,0), offset(0,0,0), rotation(0,0,0), boundingBoxSet(boundingBoxSetPath) {
+    
     initLogger();
     this->name = name;
     animating = false;
@@ -218,10 +204,6 @@ namespace small3d
 
   template<class LoaderType> Model& SceneObject<LoaderType>::getModel() {
     return model[currentFrame];
-  }
-
-  template<class LoaderType> const Image& SceneObject<LoaderType>::getTexture() const {
-    return texture;
   }
 
   template<class LoaderType> const string SceneObject<LoaderType>::getName() {

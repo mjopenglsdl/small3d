@@ -109,51 +109,51 @@ TEST(ModelTest, LoadModel) {
 
 TEST(BoundingBoxesTest, LoadBoundingBoxes) {
   
-  unique_ptr<BoundingBoxSet> bboxes(new BoundingBoxSet("resources/models/GoatBB/GoatBB.obj"));
+  BoundingBoxSet bboxes("resources/models/GoatBB/GoatBB.obj");
   
-  EXPECT_EQ(16, bboxes->vertices.size());
-  EXPECT_EQ(12, bboxes->facesVertexIndexes.size());
+  EXPECT_EQ(16, bboxes.vertices.size());
+  EXPECT_EQ(12, bboxes.facesVertexIndexes.size());
   
   cout << "Bounding boxes vertices: " << endl;
   for (unsigned long idx = 0; idx < 16; idx++) {
-    cout << bboxes->vertices[idx][0] << ", " <<
-    bboxes->vertices[idx][1] << ", " <<
-    bboxes->vertices[idx][2] << ", " << endl;
+    cout << bboxes.vertices[idx][0] << ", " <<
+    bboxes.vertices[idx][1] << ", " <<
+    bboxes.vertices[idx][2] << ", " << endl;
     
   }
   
   cout << "Bounding boxes faces vertex indexes: " << endl;
   for (unsigned long idx = 0; idx < 12; idx++) {
-    cout << bboxes->facesVertexIndexes[idx][0] << ", " <<
-    bboxes->facesVertexIndexes[idx][1] << ", " <<
-    bboxes->facesVertexIndexes[idx][2] << ", " <<
-    bboxes->facesVertexIndexes[idx][3] << ", " << endl;
+    cout << bboxes.facesVertexIndexes[idx][0] << ", " <<
+    bboxes.facesVertexIndexes[idx][1] << ", " <<
+    bboxes.facesVertexIndexes[idx][2] << ", " <<
+    bboxes.facesVertexIndexes[idx][3] << ", " << endl;
     
   }
   
-  bboxes->offset.x = 0.0f;
-  bboxes->offset.y = 0.1f;
-  bboxes->offset.z = 0.1f;
-  bboxes->rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+  bboxes.offset.x = 0.0f;
+  bboxes.offset.y = 0.1f;
+  bboxes.offset.z = 0.1f;
+  bboxes.rotation = glm::vec3(0.0f, 0.0f, 0.0f);
   
-  EXPECT_FALSE(bboxes->collidesWith(glm::vec3(0.1f, 0.1f, 0.1f)));
+  EXPECT_FALSE(bboxes.collidesWith(glm::vec3(0.1f, 0.1f, 0.1f)));
   
 }
 
 
 TEST(RendererTest, StartAndUse) {
   
-  SceneObject<WavefrontLoader> object("animal",
-                     "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTexture.obj",
-                     1,
-                     "resources/models/UnspecifiedAnimal/UnspecifiedAnimalWithTextureRedBlackNumbers.png");
+  SceneObject<WavefrontLoader> object("ball", "resources/models/Cube/CubeNoTexture.obj");
   
-  Renderer *renderer = &Renderer::getInstance("test", 640, 480);
+  Renderer *renderer = &Renderer::getInstance("test");
   
-  renderer->render(object.getModel(), object.offset, object.rotation, object.getRotationAdjustment(), glm::vec3(1.0, 1.0, 1.0));
+  renderer->clearScreen();
+  renderer->render(object.getModel(), glm::vec3(0.0f, -1.0f, -10.0f), object.rotation, object.getRotationAdjustment(), glm::vec3(1.0, 1.0, 1.0));
   
-  renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f),
-                         glm::vec3(1.0f, 1.0f, 1.0f), false);
+  //renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), false);
+  renderer->swapBuffers();
+  std::chrono::milliseconds timespan(500);
+  std::this_thread::sleep_for(timespan);
   
 }
 
