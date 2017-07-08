@@ -145,14 +145,13 @@ TEST(RendererTest, StartAndUse) {
   
   SceneObject<WavefrontLoader> object("ball", "resources/models/Cube/CubeNoTexture.obj");
   
-  Renderer *renderer = &Renderer::getInstance("test");
+  Renderer *renderer = &Renderer::getInstance("test", 640, 480);
   
   renderer->clearScreen();
-  renderer->render(object.getModel(), glm::vec3(0.0f, -1.0f, -10.0f), object.rotation, object.getRotationAdjustment(), glm::vec3(1.0, 1.0, 1.0));
-  
-  //renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), false);
+  renderer->render(object.getModel(), glm::vec3(0.0f, -1.0f, -8.0f), object.rotation, object.getRotationAdjustment(), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec3(-0.5f, -0.5f, 1.0f), false);
   renderer->swapBuffers();
-  std::chrono::milliseconds timespan(500);
+  std::chrono::milliseconds timespan(2000);
   std::this_thread::sleep_for(timespan);
   
 }
@@ -188,7 +187,6 @@ TEST(SoundTest, RepeatSound) {
   std::this_thread::sleep_for(std::chrono::milliseconds(4000));
 }
 
-///////// FUNCTIONS ////////////////
 TEST(TokenTest, GetFourTokens) {
   string strTest = "a-b-c-d";
   std::vector<std::string> tokens;

@@ -695,7 +695,7 @@ namespace small3d {
     
   }
   
-  void Renderer::render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::mat4x4 rotationAdjustment, glm::vec3 colour, string textureName) {
+  void Renderer::render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::mat4x4 rotationAdjustment, glm::vec4 colour, string textureName) {
     
     glUseProgram(perspectiveProgram);
     

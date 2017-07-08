@@ -263,7 +263,7 @@ namespace small3d
      * @param textureName The name of the texture to place on the model (optional). The texture has to have been generated already.
      *                    If this is set, the colour parameter will be ignored
      */
-    void render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::mat4x4 rotationAdjustment, glm::vec3 colour, std::string textureName="");
+    void render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::mat4x4 rotationAdjustment, glm::vec4 colour, std::string textureName="");
 
     /**
      * @brief Render some text on the screen. A texture will be generated, containing the given
