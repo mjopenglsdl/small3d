@@ -142,17 +142,28 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
 
 
 TEST(RendererTest, StartAndUse) {
-  
-  SceneObject<WavefrontLoader> object("ball", "resources/models/Cube/CubeNoTexture.obj");
-  
+
   Renderer *renderer = &Renderer::getInstance("test", 640, 480);
-  
   renderer->clearScreen();
-  renderer->render(object.getModel(), glm::vec3(0.0f, -1.0f, -8.0f), object.rotation, object.getRotationAdjustment(), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  
+  SceneObject<WavefrontLoader> object("cube", "resources/models/Cube/CubeNoTexture.obj");
+  object.offset = glm::vec3(0.0f, -1.0f, -8.0f);
+  renderer->render(object.getModel(), object.offset, object.rotation, object.getRotationAdjustment(), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
   renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec3(-0.5f, -0.5f, 1.0f), false);
+
+  SceneObject<WavefrontLoader> object2("texutredCube", "resources/models/Cube/Cube.obj");
+  object2.offset = glm::vec3(-2.0f, -1.0f, -7.0f);
+  object2.rotation = glm::vec3(0.3f, 1.3f, 0.0f);
+  
+  Image cubeTexture("resources/models/Cube/cubeTexture.png");
+  renderer->generateTexture("cubeTexture", cubeTexture);
+
+  renderer->render(object2.getModel(), object2.offset, object2.rotation, object2.getRotationAdjustment(), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), "cubeTexture");
+  
   renderer->swapBuffers();
   std::chrono::milliseconds timespan(2000);
   std::this_thread::sleep_for(timespan);
+  renderer->deleteTexture("cubeTexture");
   
 }
 
