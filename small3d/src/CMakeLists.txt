@@ -7,7 +7,7 @@ add_library(small3d BoundingBoxSet.cpp GetTokens.cpp Image.cpp Logger.cpp MathFu
 target_include_directories(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d")
 
 if(DEFINED BUILD_TESTS AND BUILD_TESTS)
-  add_executable(unittests main.cpp)
+  add_executable(unittests unit_tests.cpp)
   file(COPY "${small3d_SOURCE_DIR}/small3d/resources" DESTINATION "${small3d_BINARY_DIR}/bin")
   target_include_directories(unittests PUBLIC "${small3d_SOURCE_DIR}/small3d/include")
   target_link_libraries(unittests PUBLIC small3d "${CONAN_LIBS}")

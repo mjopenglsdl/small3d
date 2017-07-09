@@ -253,15 +253,24 @@ namespace small3d
     void renderSurface(glm::vec3 colour, const glm::vec3 bottomLeft, const glm::vec3 topRight, bool perspective = false);
     
     /**
-     * @brief Render a scene object
+     * @brief Render a Model
      * @param model The model
      * @param offset The offset (position) where to draw the model
      * @param rotation Rotation (x, y, z)
      * @param colour The colour of the model
-     * @param textureName The name of the texture to place on the model (optional). The texture has to have been generated already.
+     * @param textureName The name of the texture to attach to the model (optional). The texture has to have been generated already.
      *                    If this is set, the colour parameter will be ignored
      */
     void render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::vec4 colour, std::string textureName="");
+
+    /**
+     * @brief Render a Model
+     * @param model The model
+     * @param offset The offset (position) where to draw the model
+     * @param rotation Rotation (x, y, z)
+     * @param textureName The name of the texture to attach to the model. The texture has to have been generated already.
+     */
+    void render(Model &model, glm::vec3 offset, glm::vec3 rotation, std::string textureName);
 
     /**
      * @brief Render some text on the screen. A texture will be generated, containing the given
@@ -277,7 +286,7 @@ namespace small3d
 	       std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf");
 
     /**
-     * @brief Clear a scene object from the GPU buffers (the object itself remains intact)
+     * @brief Clear a Model from the GPU buffers (the object itself remains intact)
      * @param sceneObject The scene object
      */
     void clearBuffers(Model &model);

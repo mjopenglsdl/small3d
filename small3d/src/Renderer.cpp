@@ -827,6 +827,11 @@ namespace small3d {
     glUseProgram(0);
     
   }
+
+  void Renderer::render(Model &model, glm::vec3 offset, glm::vec3 rotation, string textureName) {
+
+    this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
+  }
   
   void Renderer::write(string text, glm::vec3 colour, glm::vec2 bottomLeft, glm::vec2 topRight,
                        int fontSize, string fontPath)

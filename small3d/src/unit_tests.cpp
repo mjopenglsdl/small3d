@@ -158,9 +158,9 @@ TEST(RendererTest, StartAndUse) {
   Image cubeTexture("resources/models/Cube/cubeTexture.png");
   renderer->generateTexture("cubeTexture", cubeTexture);
 
-  renderer->render(object2.getModel(), object2.offset, object2.rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), "cubeTexture");
+  renderer->render(object2.getModel(), object2.offset, object2.rotation, "cubeTexture");
 
-  renderer->write("small3d unit testing", glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(-0.3f, -1.0f, 1.0f), glm::vec3(2.0f, -0.5f, 1.0f));
+  renderer->write("small3d :)", glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(-0.3f, -1.0f, 1.0f), glm::vec3(1.0f, -0.5f, 1.0f));
   
   renderer->swapBuffers();
   std::chrono::milliseconds timespan(2000);
