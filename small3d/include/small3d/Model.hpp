@@ -13,22 +13,20 @@
 
 namespace small3d {
   /**
-   * @class	Model
+   * @struct	Model
    *
    * @brief	A 3D model
    */
 
-  class Model {
+  struct Model {
 
-  public:
-
-    // It's a bit hacky that we have these here for the time being. To be looked into...
     GLuint vaoId = 0;
     GLuint positionBufferObjectId = 0;
     GLuint indexBufferObjectId = 0;
     GLuint normalsBufferObjectId = 0;
     GLuint textureId = 0;
     GLuint uvBufferObjectId = 0;
+
 
     /**
      * @brief The vertex data. This is an array, which is to be treated as a 4 column table, holding
@@ -89,14 +87,5 @@ namespace small3d {
      * @brief Default constructor
      */
 
-    Model();
-
-
-    /**
-     * Destructor
-     */
-    ~Model(void) = default;
-
   };
-
 }
