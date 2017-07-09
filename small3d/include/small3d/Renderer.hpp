@@ -114,8 +114,7 @@ namespace small3d
      */
     std::unordered_map<std::string, GLuint> *textures;
 
-    void positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation,
-			   const glm::mat4x4 &rotationAdjustment);
+    void positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation);
 
     /**
      * @brief Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).
@@ -258,12 +257,11 @@ namespace small3d
      * @param model The model
      * @param offset The offset (position) where to draw the model
      * @param rotation Rotation (x, y, z)
-     * @param rotationAdjustment Adjustment of the rotation
      * @param colour The colour of the model
      * @param textureName The name of the texture to place on the model (optional). The texture has to have been generated already.
      *                    If this is set, the colour parameter will be ignored
      */
-    void render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::mat4x4 rotationAdjustment, glm::vec4 colour, std::string textureName="");
+    void render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::vec4 colour, std::string textureName="");
 
     /**
      * @brief Render some text on the screen. A texture will be generated, containing the given

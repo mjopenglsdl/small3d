@@ -16,8 +16,6 @@ uniform mat4 xCameraRotationMatrix;
 uniform mat4 yCameraRotationMatrix;
 uniform mat4 zCameraRotationMatrix;
 
-uniform mat4 rotationAdjustmentMatrix;
-
 uniform vec3 lightDirection;
 
 varying float cosAngIncidence;
@@ -25,7 +23,7 @@ varying vec2 textureCoords;
 
 void main()
 {
-   vec4 worldPos = position * rotationAdjustmentMatrix * zRotationMatrix * xRotationMatrix 
+   vec4 worldPos = position * zRotationMatrix * xRotationMatrix 
 			* yRotationMatrix
 			+ vec4(offset.x, offset.y, offset.z, 0.0);
 

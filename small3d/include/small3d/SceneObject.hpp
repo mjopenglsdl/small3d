@@ -43,7 +43,6 @@ namespace small3d
     int currentFrame;
     int framesWaited;
     int numFrames;
-    glm::mat4x4 rotationAdjustment;
     std::string name;
 
   public:
@@ -98,19 +97,6 @@ namespace small3d
      * Rotation of the object (on x, y, z axes respectively)
      */
     glm::vec3 rotation;
-
-    /**
-     * @brief Adjustment of the object's rotation, in case the way it was exported from an editor
-     * does not correspond to the way it is supposed to appear in a game.
-     * @param adjustment Vector containing the rotation adjustment around the x, y and z axes respectively
-     */
-    void adjustRotation(const glm::vec3 &adjustment);
-
-    /**
-     * @brief Get the matrix that can apply the rotation adjustment for the object (see adjustRotation)
-     * @return The rotation adjustment matrix
-     */
-    const glm::mat4x4& getRotationAdjustment();
 
     /**
      * @brief Start animating the object
@@ -208,16 +194,6 @@ namespace small3d
 
   template<class LoaderType> const string SceneObject<LoaderType>::getName() {
     return name;
-  }
-
-  template<class LoaderType> void SceneObject<LoaderType>::adjustRotation(const glm::vec3 &adjustment) {
-    rotationAdjustment = rotateZ(adjustment.z) * rotateX(adjustment.x) * rotateY(adjustment.y);
-    if (boundingBoxSet.vertices.size() > 0)
-      boundingBoxSet.setRotationAdjustment(rotationAdjustment);
-  }
-
-  template<class LoaderType> const glm::mat4x4 &SceneObject<LoaderType>::getRotationAdjustment() {
-    return rotationAdjustment;
   }
 
   template<class LoaderType> void SceneObject<LoaderType>::startAnimating() {

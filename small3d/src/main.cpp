@@ -148,7 +148,7 @@ TEST(RendererTest, StartAndUse) {
   
   SceneObject<WavefrontLoader> object("cube", "resources/models/Cube/CubeNoTexture.obj");
   object.offset = glm::vec3(0.0f, -1.0f, -8.0f);
-  renderer->render(object.getModel(), object.offset, object.rotation, object.getRotationAdjustment(), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+  renderer->render(object.getModel(), object.offset, object.rotation, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
   renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec3(-0.5f, -0.5f, 1.0f), false);
 
   SceneObject<WavefrontLoader> object2("texutredCube", "resources/models/Cube/Cube.obj");
@@ -158,7 +158,7 @@ TEST(RendererTest, StartAndUse) {
   Image cubeTexture("resources/models/Cube/cubeTexture.png");
   renderer->generateTexture("cubeTexture", cubeTexture);
 
-  renderer->render(object2.getModel(), object2.offset, object2.rotation, object2.getRotationAdjustment(), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), "cubeTexture");
+  renderer->render(object2.getModel(), object2.offset, object2.rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), "cubeTexture");
 
   renderer->write("small3d unit testing", glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(-0.3f, -1.0f, 1.0f), glm::vec3(2.0f, -0.5f, 1.0f));
   
