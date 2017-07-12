@@ -495,14 +495,14 @@ namespace small3d {
   }
   
   
-  void Renderer::renderTexture(string name, const glm::vec3 &bottomLeft, const glm::vec3 &topRight,
+  void Renderer::renderTexture(string name, const glm::vec3 topLeft, const glm::vec3 bottomRight,
                                bool perspective) {
     
     float vertices[16] = {
-      bottomLeft.x, bottomLeft.y, bottomLeft.z, 1.0f,
-      topRight.x, bottomLeft.y, bottomLeft.z, 1.0f,
-      topRight.x, topRight.y, topRight.z, 1.0f,
-      bottomLeft.x, topRight.y, topRight.z, 1.0f
+      bottomRight.x, bottomRight.y, bottomRight.z, 1.0f,
+      bottomRight.x, topLeft.y, topLeft.z, 1.0f,
+      topLeft.x, topLeft.y, topLeft.z, 1.0f,
+      topLeft.x, bottomRight.y, bottomRight.z, 1.0f
     };
     
     glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
@@ -529,8 +529,8 @@ namespace small3d {
     
     unsigned int vertexIndexes[6] =
       {
-	0, 1, 2,
-	2, 3, 0
+	2, 3, 0,
+	0, 1, 2
       };
     
     GLuint indexBufferObject = 0;
@@ -607,12 +607,12 @@ namespace small3d {
     checkForOpenGLErrors("rendering image", true);
   }
   
-  void Renderer::renderSurface(glm::vec3 colour, const glm::vec3 bottomLeft, const glm::vec3 topRight, bool perspective) {
+  void Renderer::renderSurface(glm::vec3 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective) {
     float vertices[16] = {
-      bottomLeft.x, bottomLeft.y, bottomLeft.z, 1.0f,
-      topRight.x, bottomLeft.y, bottomLeft.z, 1.0f,
-      topRight.x, topRight.y, topRight.z, 1.0f,
-      bottomLeft.x, topRight.y, topRight.z, 1.0f
+      bottomRight.x, bottomRight.y, bottomRight.z, 1.0f,
+      bottomRight.x, topLeft.y, topLeft.z, 1.0f,
+      topLeft.x, topLeft.y, topLeft.z, 1.0f,
+      topLeft.x, bottomRight.y, bottomRight.z, 1.0f
     };
     
     glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
@@ -833,7 +833,7 @@ namespace small3d {
     this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
   
-  void Renderer::write(string text, glm::vec3 colour, glm::vec2 bottomLeft, glm::vec2 topRight,
+  void Renderer::write(string text, glm::vec3 colour, glm::vec2 topLeft, glm::vec2 bottomRight,
                        int fontSize, string fontPath)
   {
     
@@ -928,11 +928,10 @@ namespace small3d {
     
     generateTexture(textureName, &textMemory[0], width, height);
     
-    renderTexture(textureName, glm::vec3(bottomLeft.x, bottomLeft.y, -0.5f),
-                  glm::vec3(topRight.x, topRight.y, -0.5f));
+    renderTexture(textureName, glm::vec3(topLeft.x, topLeft.y, -0.5f),
+                  glm::vec3(bottomRight.x, bottomRight.y, -0.5f));
     
     deleteTexture(textureName);
-    
   }
   
   void Renderer::clearBuffers(Model &model) {

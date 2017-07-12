@@ -219,11 +219,11 @@ namespace small3d
      * @brief Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each
      * other. This function can be used for rendering the ground, the sky or a splash screen for example.
      * @param name The name of the texture to be used (must have been loaded with generateTexture())
-     * @param bottomLeft The coordinates for the bottom left corner of the texture
-     * @param topRight The coordinates for the top right corner of the texture
-     * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
+     * @param topLeft Where to place the top left corner of the texture
+     * @param bottomRight Where to place the bottom right corner of the texture
+     * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
      */
-    void renderTexture(std::string name, const glm::vec3 &bottomLeft, const glm::vec3 &topRight, bool perspective = false);
+    void renderTexture(std::string name, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective = false);
 
     /**
      * @brief Deletes the texture indicated by the given name.
@@ -245,12 +245,12 @@ namespace small3d
      * @brief Render a single-coloured surface.
      *
      * @param colour The colour of the surface (vector of 3 components for r, g, b)
-     * @param bottomLeft The coordinates for the bottom left corner of the surface
-     * @param topRight The coordinates for the top right corner of the surface
-     * @param perspective If set to true, use perspective rendering, otherwise use simple (orthographic) rendering.
+     * @param topLeft Where to place the top left corner of the surface
+     * @param bottomRight Where to place the bottom right corner of the surface
+     * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
      */
     
-    void renderSurface(glm::vec3 colour, const glm::vec3 bottomLeft, const glm::vec3 topRight, bool perspective = false);
+    void renderSurface(glm::vec3 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective = false);
     
     /**
      * @brief Render a Model
@@ -276,12 +276,12 @@ namespace small3d
      * @brief Render some text on the screen.
      * @param text The text to be rendered
      * @param colour The colour in which the text will be rendered (r, g, b)
-     * @param bottomLeft The coordinates of the bottom left corner of the text rectangle (x, y)
-     * @param topRight The coordinates of the top right corner of the text rectangle (x, y)
+     * @param topLeft Where to place the top left corner of the text rectangle
+     * @param bottomRight Where to place the bottom right corner of the text rectangle
      * @param fontSize The size of the font which will be used
      * @param fontPath Path to the TrueType font (.ttf) which will be used
      */
-    void write(std::string text, glm::vec3 colour, glm::vec2 bottomLeft, glm::vec2 topRight, int fontSize=48,
+    void write(std::string text, glm::vec3 colour, glm::vec2 topLeft, glm::vec2 bottomRight, int fontSize=48,
 	       std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf");
 
     /**

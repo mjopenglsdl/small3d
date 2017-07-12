@@ -149,7 +149,7 @@ TEST(RendererTest, StartAndUse) {
   SceneObject<WavefrontLoader> object("cube", "resources/models/Cube/CubeNoTexture.obj");
   object.offset = glm::vec3(0.0f, -1.0f, -8.0f);
   renderer->render(object.getModel(), object.offset, object.rotation, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-  renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec3(-0.5f, -0.5f, 1.0f), false);
+  renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 1.0f), glm::vec3(-0.5f, -0.5f, 1.0f), false);
 
   SceneObject<WavefrontLoader> object2("texutredCube", "resources/models/Cube/Cube.obj");
   object2.offset = glm::vec3(-2.0f, -1.0f, -7.0f);
@@ -160,7 +160,7 @@ TEST(RendererTest, StartAndUse) {
 
   renderer->render(object2.getModel(), object2.offset, object2.rotation, "cubeTexture");
 
-  renderer->write("small3d :)", glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(-0.3f, -1.0f, 1.0f), glm::vec3(1.0f, -0.5f, 1.0f));
+  renderer->write("small3d :)", glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(-1.0f, 0.0f), glm::vec2(0.5f, -0.5f));
   
   renderer->swapBuffers();
   std::chrono::milliseconds timespan(2000);
