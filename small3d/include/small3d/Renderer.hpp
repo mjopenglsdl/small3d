@@ -273,8 +273,7 @@ namespace small3d
     void render(Model &model, glm::vec3 offset, glm::vec3 rotation, std::string textureName);
 
     /**
-     * @brief Render some text on the screen. A texture will be generated, containing the given
-     * text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space.
+     * @brief Render some text on the screen.
      * @param text The text to be rendered
      * @param colour The colour in which the text will be rendered (r, g, b)
      * @param bottomLeft The coordinates of the bottom left corner of the text rectangle (x, y)

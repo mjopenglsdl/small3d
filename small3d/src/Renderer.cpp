@@ -58,10 +58,10 @@ namespace small3d {
   }
   
   Renderer::~Renderer() {
-    LOGINFO("Renderer destructor running");
+    LOGDEBUG("Renderer destructor running");
     for (unordered_map<string, GLuint>::iterator it = textures->begin();
          it != textures->end(); ++it) {
-      LOGINFO("Deleting texture for " + it->first);
+      LOGDEBUG("Deleting texture " + it->first);
       glDeleteTextures(1, &it->second);
     }
     delete textures;
@@ -177,7 +177,7 @@ namespace small3d {
 			  + this->getShaderInfoLog(shader));
     }
     else {
-      LOGINFO("Shader " + shaderSourceFile + " compiled successfully.");
+      LOGDEBUG("Shader " + shaderSourceFile + " compiled successfully.");
     }
     
     return shader;
@@ -343,7 +343,7 @@ namespace small3d {
       throw runtime_error("Failed to link program:\n" + this->getProgramInfoLog(perspectiveProgram));
     }
     else {
-      LOGINFO("Linked main rendering program successfully");
+      LOGDEBUG("Linked main rendering program successfully");
       
       glUseProgram(perspectiveProgram);
       
@@ -395,7 +395,7 @@ namespace small3d {
       throw runtime_error("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
     }
     else {
-      LOGINFO("Linked orthographic rendering program successfully");
+      LOGDEBUG("Linked orthographic rendering program successfully");
     }
     glDetachShader(orthographicProgram, simpleVertexShader);
     glDetachShader(orthographicProgram, simpleFragmentShader);
