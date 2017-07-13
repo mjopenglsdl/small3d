@@ -17,6 +17,7 @@
 #include "Logger.hpp"
 #include "Image.hpp"
 #include "Model.hpp"
+#include "SceneObject.hpp"
 #include <unordered_map>
 #include <vector>
 #include <glm/glm.hpp>
@@ -271,6 +272,20 @@ namespace small3d
      * @param textureName The name of the texture to attach to the model. The texture has to have been generated already.
      */
     void render(Model &model, glm::vec3 offset, glm::vec3 rotation, std::string textureName);
+
+    /**
+     * @brief Render a SceneObject
+     * @param sceneObject The object
+     * @param colour The colour the object. 
+     */
+    void render(SceneObject &sceneObject, glm::vec4 colour);
+
+    /**
+     * @brief Render a SceneObject
+     * @param sceneObject The object
+     * @param textureName The name of the texture to attach to the object. The texture has to have been generated already. 
+     */
+    void render(SceneObject &sceneObject, std::string textureName);
 
     /**
      * @brief Render some text on the screen.

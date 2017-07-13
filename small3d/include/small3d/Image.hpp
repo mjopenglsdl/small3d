@@ -19,7 +19,7 @@ namespace small3d {
   /**
    * @class	Image
    *
-   * @brief	Image (PNG) loading class
+   * @brief	An image, loaded from a png file, which can be used for generating textures.
    *
    */
 

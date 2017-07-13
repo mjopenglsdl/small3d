@@ -15,7 +15,7 @@ namespace small3d {
   /**
    * @struct	Model
    *
-   * @brief	A 3D model
+   * @brief	A 3D model, loaded from a Wavefront file.
    */
 
   struct Model {
@@ -110,6 +110,7 @@ namespace small3d {
 
     /**
      * @brief constructor
+     * @param fileLocation Location of the Wavefront file from which to load the model.
      */
     Model(std::string fileLocation);
 

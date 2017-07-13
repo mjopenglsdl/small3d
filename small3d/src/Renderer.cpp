@@ -832,6 +832,14 @@ namespace small3d {
 
     this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
+
+  void Renderer::render(SceneObject &sceneObject, glm::vec4 colour) {
+    this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, colour, "");
+  }
+
+  void Renderer::render(SceneObject &sceneObject, std::string textureName) {
+    this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
+  }
   
   void Renderer::write(string text, glm::vec3 colour, glm::vec2 topLeft, glm::vec2 bottomRight,
                        int fontSize, string fontPath)
