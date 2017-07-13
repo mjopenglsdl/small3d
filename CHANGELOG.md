@@ -14,6 +14,11 @@ v1.3.0
 - [BREAKING] The SoundPlayer class has been removed. The new Sound class allows for very simple loading and playing of sounds.
 - [BREAKING] The Renderer.generateTexture function now takes an Image as parameter in place of raw data and dimension details.
 - [BREAKING] BoundingBoxSet now loads the bounding boxes in the constructor.
+- [BREAKING] WavefrontLoader has been removed. Model now loads its data in its constructor.
+- [BREAKING] Renderer functions that used to take a bottomLeft and topRight parameter, now take a topLeft and bottomRight parameter instead.
+- New rendering functions for scene objects and models added.
+- [BREAKING] Renderer functions that render a SceneObject now require the colour or the object texture name to be passed as parameters. The texture of the SceneObject has to have been generated beforehand.
+- [BREAKING] Rotation adjustment functionality removed from SceneObject. Models have to be created already oriented towards the correct direction (-z).
 
 v1.2.0
 ------
