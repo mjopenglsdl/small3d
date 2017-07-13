@@ -529,8 +529,8 @@ namespace small3d {
     
     unsigned int vertexIndexes[6] =
       {
-	2, 3, 0,
-	0, 1, 2
+	0, 1, 2,
+	2, 3, 0
       };
     
     GLuint indexBufferObject = 0;
@@ -550,10 +550,10 @@ namespace small3d {
     
     float textureCoords[8] =
       {
-	0.0f, 1.0f,
 	1.0f, 1.0f,
 	1.0f, 0.0f,
-	0.0f, 0.0f
+	0.0f, 0.0f,
+	0.0f, 1.0f
       };
     
     GLuint coordBuffer = 0;
