@@ -1,63 +1,63 @@
 /*
- *  WavefrontLoader.cpp
+ *  Model.cpp
  *
- *  Created on: 2014/11/12
+ *  Created on: 2017/07/13
  *      Author: Dimitri Kourkoulis
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
-#include "WavefrontLoader.hpp"
 #include <stdexcept>
 #include <fstream>
 #include <unordered_map>
 #include <memory>
 #include "GetTokens.hpp"
+#include "Model.hpp"
 
 using namespace std;
 
 namespace small3d {
 
-  void WavefrontLoader::loadVertexData(Model &model) {
+  void Model::loadVertexData() {
     // 4 components per vertex
-    model.vertexDataSize = static_cast<int>(4 * vertices.size() * sizeof(float));
+    this->vertexDataSize = static_cast<int>(4 * vertices.size() * sizeof(float));
 
-    model.vertexData.clear();
+    this->vertexData.clear();
 
     int idx = 0;
     for (vector<vector<float> >::iterator vertex = vertices.begin(); vertex != vertices.end(); ++vertex) {
       for (unsigned long coordIdx = 0; coordIdx != 3; ++coordIdx) {
-        model.vertexData.push_back(vertex->at(coordIdx));
+        this->vertexData.push_back(vertex->at(coordIdx));
         ++idx;
       }
-      model.vertexData.push_back(1.0f);
+      this->vertexData.push_back(1.0f);
       ++idx;
     }
   }
 
-  void WavefrontLoader::loadIndexData(Model &model) {
+  void Model::loadIndexData() {
     // 3 indices per face
     int numIndexes = (int) (facesVertexIndices.size() * 3);
-    model.indexDataSize = numIndexes * sizeof(int);
+    this->indexDataSize = numIndexes * sizeof(int);
 
-    model.indexData.clear();
+    this->indexData.clear();
 
     for (vector<vector<int> >::iterator face = facesVertexIndices.begin(); face != facesVertexIndices.end(); ++face) {
 
       for (int indexIdx = 0; indexIdx != 3; ++indexIdx) {
-        model.indexData.push_back(face->at((unsigned long) indexIdx) - 1); // -1 because Wavefront indexes
+        this->indexData.push_back(face->at((unsigned long) indexIdx) - 1); // -1 because Wavefront indexes
         // are not 0 based
 
       }
     }
   }
 
-  void WavefrontLoader::loadNormalsData(Model &model) {
+  void Model::loadNormalsData() {
 
     // Create an array of normal components which corresponds
     // by index to the array of vertex components
 
 
-    if (model.vertexData.size() == 0) {
+    if (this->vertexData.size() == 0) {
       throw runtime_error(
           "There are no vertices or vertex data has not yet been created.");
     }
@@ -66,9 +66,9 @@ namespace small3d {
     // is passed to OpenGL, so normals data will be aligned to vertex data according to the
     // vertex index)
 
-    model.normalsDataSize = static_cast<int>(3 * vertices.size() * sizeof(float));
+    this->normalsDataSize = static_cast<int>(3 * vertices.size() * sizeof(float));
 
-    model.normalsData = vector<float>(3 * vertices.size(), 0.0f);
+    this->normalsData = vector<float>(3 * vertices.size(), 0.0f);
 
     int faceVertexArrayIndex = 0;
     for (vector<vector<int> >::iterator faceVertexIndex = facesVertexIndices.begin();
@@ -77,7 +77,7 @@ namespace small3d {
 
         for (int normalsDataComponent = 0; normalsDataComponent != 3;
              ++normalsDataComponent) {
-          model.normalsData[3 * (faceVertexIndex->at(vertexIndex) - 1)
+          this->normalsData[3 * (faceVertexIndex->at(vertexIndex) - 1)
                              + normalsDataComponent] =
               normals.at(
                   (unsigned long) (facesNormalIndices.at((unsigned long) faceVertexArrayIndex)[vertexIndex]
@@ -88,12 +88,12 @@ namespace small3d {
     }
   }
 
-  void WavefrontLoader::loadTextureCoordsData(Model &model) {
+  void Model::loadTextureCoordsData() {
     if (!textureCoords.empty()) {
       // Create an array of texture coordinates components which corresponds
       // by index to the array of vertex components
 
-      if (model.vertexData.size() == 0) {
+      if (this->vertexData.size() == 0) {
         throw runtime_error(
             "There are no vertices or vertex data has not yet been created.");
       }
@@ -101,9 +101,9 @@ namespace small3d {
       // 2 components per vertex (a single index for vertices, normals and texture coordinates
       // is passed to OpenGL, so texture coordinates data will be aligned to vertex data according
       // to the vertex index)
-      model.textureCoordsDataSize = (int) (2 * vertices.size() * sizeof(float));
+      this->textureCoordsDataSize = (int) (2 * vertices.size() * sizeof(float));
 
-      model.textureCoordsData = vector<float>(2 * vertices.size());
+      this->textureCoordsData = vector<float>(2 * vertices.size());
 
       int faceVertexArrayIndex = 0;
 
@@ -114,7 +114,7 @@ namespace small3d {
 
           for (int textureCoordsComponent = 0;
                textureCoordsComponent != 2; ++textureCoordsComponent) {
-            model.textureCoordsData[2 * (faceVertexIndex->at(vertexIndex) - 1)
+            this->textureCoordsData[2 * (faceVertexIndex->at(vertexIndex) - 1)
                                      + textureCoordsComponent] =
                 textureCoords.at(
                     static_cast<unsigned long>(textureCoordsIndices.at(faceVertexArrayIndex)[vertexIndex]
@@ -126,7 +126,7 @@ namespace small3d {
     }
   }
 
-  void WavefrontLoader::correctDataVectors() {
+  void Model::correctDataVectors() {
 
     unique_ptr<unordered_map<int, int> > vertexUVPairs(new unordered_map<int, int>());
 
@@ -166,7 +166,7 @@ namespace small3d {
   }
 
 
-  void WavefrontLoader::clear() {
+  void Model::clear() {
     vertices.clear();
     facesVertexIndices.clear();
     normals.clear();
@@ -176,11 +176,7 @@ namespace small3d {
   }
 
 
-  WavefrontLoader::WavefrontLoader() {
-    clear();
-  }
-
-  void WavefrontLoader::load(string fileLocation, Model &model) {
+  Model::Model(string fileLocation) {
     ifstream file(fileLocation.c_str());
     string line;
     if (file.is_open()) {
@@ -310,10 +306,10 @@ namespace small3d {
       }
 
       // Generate the data and delete the initial buffers
-      this->loadVertexData(model);
-      this->loadIndexData(model);
-      this->loadNormalsData(model);
-      this->loadTextureCoordsData(model);
+      this->loadVertexData();
+      this->loadIndexData();
+      this->loadNormalsData();
+      this->loadTextureCoordsData();
       this->clear();
 
     }

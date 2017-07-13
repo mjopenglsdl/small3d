@@ -1,8 +1,8 @@
 add_library(small3d BoundingBoxSet.cpp GetTokens.cpp Image.cpp Logger.cpp MathFunctions.cpp
-  Renderer.cpp WavefrontLoader.cpp Sound.cpp ../include/small3d/BoundingBoxSet.hpp
+  Model.cpp Renderer.cpp Sound.cpp ../include/small3d/BoundingBoxSet.hpp
   ../include/small3d/GetTokens.hpp ../include/small3d/Image.hpp ../include/small3d/Logger.hpp
   ../include/small3d/MathFunctions.hpp ../include/small3d/Model.hpp ../include/small3d/Renderer.hpp
-  ../include/small3d/SceneObject.hpp ../include/small3d/WavefrontLoader.hpp ../include/small3d/Sound.hpp)
+  ../include/small3d/SceneObject.hpp ../include/small3d/Sound.hpp)
 
 target_include_directories(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d")
 

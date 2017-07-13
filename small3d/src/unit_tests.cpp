@@ -12,7 +12,6 @@
 #include <small3d/Logger.hpp>
 #include <small3d/Image.hpp>
 #include <small3d/Model.hpp>
-#include <small3d/WavefrontLoader.hpp>
 #include <small3d/SceneObject.hpp>
 #include <small3d/GetTokens.hpp>
 #include <small3d/Sound.hpp>
@@ -70,10 +69,7 @@ TEST(ImageTest, LoadImage) {
 
 TEST(ModelTest, LoadModel) {
   
-  Model model;
-  WavefrontLoader loader;
-  
-  loader.load("resources/models/Cube/Cube.obj", model);
+  Model model("resources/models/Cube/Cube.obj");
   
   EXPECT_NE(0, model.vertexData.size());
   EXPECT_NE(0, model.indexData.size());
@@ -88,9 +84,7 @@ TEST(ModelTest, LoadModel) {
   << "Texture coordinates count: "
   << model.textureCoordsData.size() << endl;
   
-  Model modelWithNoTexture;
-  
-  loader.load("resources/models/Cube/CubeNoTexture.obj", modelWithNoTexture);
+  Model modelWithNoTexture("resources/models/Cube/CubeNoTexture.obj");
   
   EXPECT_NE(0, modelWithNoTexture.vertexData.size());
   EXPECT_NE(0, modelWithNoTexture.indexData.size());
@@ -146,12 +140,12 @@ TEST(RendererTest, StartAndUse) {
   Renderer *renderer = &Renderer::getInstance("test", 640, 480);
   renderer->clearScreen();
   
-  SceneObject<WavefrontLoader> object("cube", "resources/models/Cube/CubeNoTexture.obj");
+  SceneObject object("cube", "resources/models/Cube/CubeNoTexture.obj");
   object.offset = glm::vec3(0.0f, -1.0f, -8.0f);
   renderer->render(object.getModel(), object.offset, object.rotation, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
   renderer->renderSurface(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 1.0f), glm::vec3(-0.5f, -0.5f, 1.0f), false);
 
-  SceneObject<WavefrontLoader> object2("texutredCube", "resources/models/Cube/Cube.obj");
+  SceneObject object2("texutredCube", "resources/models/Cube/Cube.obj");
   object2.offset = glm::vec3(-2.0f, -1.0f, -7.0f);
   object2.rotation = glm::vec3(0.3f, 1.3f, 0.0f);
   

@@ -20,6 +20,31 @@ namespace small3d {
 
   struct Model {
 
+  private:
+    // Data read from .obj file
+    std::vector<std::vector<float> > vertices;
+    std::vector<std::vector<int> > facesVertexIndices;
+    std::vector<std::vector<float> > normals;
+    std::vector<std::vector<int> > facesNormalIndices;
+    std::vector<std::vector<float> > textureCoords;
+    std::vector<std::vector<int> > textureCoordsIndices;
+
+    void loadVertexData();
+
+    void loadIndexData();
+
+    void loadNormalsData();
+
+    void loadTextureCoordsData();
+
+    // Make sure that no texture coordinate information is lost when the data buffers get created (vertexData,
+    // indexData, normalsData and textureCoordsData) by realigning the data vectors, in order to ensure unique
+    // vertex - texture coordinates pairs
+    void correctDataVectors();
+
+    void clear();
+  public:
+
     GLuint vaoId = 0;
     GLuint positionBufferObjectId = 0;
     GLuint indexBufferObjectId = 0;
@@ -84,8 +109,9 @@ namespace small3d {
     int textureCoordsDataSize;
 
     /**
-     * @brief Default constructor
+     * @brief constructor
      */
+    Model(std::string fileLocation);
 
   };
 }
