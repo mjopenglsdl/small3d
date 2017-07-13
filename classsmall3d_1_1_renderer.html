@@ -116,27 +116,36 @@ GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><b>getWindow</b>
 <tr class="memitem:a634fa949af9bd6caaa8002d46f6a0226"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a634fa949af9bd6caaa8002d46f6a0226">generateTexture</a> (std::string name, const <a class="el" href="classsmall3d_1_1_image.html">Image</a> image)</td></tr>
 <tr class="memdesc:a634fa949af9bd6caaa8002d46f6a0226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a texture on the GPU from the given image.  <a href="#a634fa949af9bd6caaa8002d46f6a0226">More...</a><br /></td></tr>
 <tr class="separator:a634fa949af9bd6caaa8002d46f6a0226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cb954ca2eb3cb8181b1032e67448c45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a0cb954ca2eb3cb8181b1032e67448c45">renderTexture</a> (std::string name, const glm::vec3 &amp;bottomLeft, const glm::vec3 &amp;topRight, bool perspective=false)</td></tr>
-<tr class="memdesc:a0cb954ca2eb3cb8181b1032e67448c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each other. This function can be used for rendering the ground, the sky or a splash screen for example.  <a href="#a0cb954ca2eb3cb8181b1032e67448c45">More...</a><br /></td></tr>
-<tr class="separator:a0cb954ca2eb3cb8181b1032e67448c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a623ff6845afc8c7c5e1a7e437771d07c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a623ff6845afc8c7c5e1a7e437771d07c">renderTexture</a> (std::string name, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective=false)</td></tr>
+<tr class="memdesc:a623ff6845afc8c7c5e1a7e437771d07c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each other. This function can be used for rendering the ground, the sky or a splash screen for example.  <a href="#a623ff6845afc8c7c5e1a7e437771d07c">More...</a><br /></td></tr>
+<tr class="separator:a623ff6845afc8c7c5e1a7e437771d07c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedf7bd98fb7575b3358eb66cf8a3a8be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#aedf7bd98fb7575b3358eb66cf8a3a8be">deleteTexture</a> (std::string name)</td></tr>
 <tr class="memdesc:aedf7bd98fb7575b3358eb66cf8a3a8be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the texture indicated by the given name.  <a href="#aedf7bd98fb7575b3358eb66cf8a3a8be">More...</a><br /></td></tr>
 <tr class="separator:aedf7bd98fb7575b3358eb66cf8a3a8be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1a3877a175a6e3eb97986a9605c857c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#ae1a3877a175a6e3eb97986a9605c857c">supportsOpenGL33</a> ()</td></tr>
 <tr class="memdesc:ae1a3877a175a6e3eb97986a9605c857c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is OpenGL 3.3 supported?  <a href="#ae1a3877a175a6e3eb97986a9605c857c">More...</a><br /></td></tr>
 <tr class="separator:ae1a3877a175a6e3eb97986a9605c857c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd2bcc7e6696b515d7569182c0606f1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#acd2bcc7e6696b515d7569182c0606f1f">renderSurface</a> (glm::vec3 colour, const glm::vec3 bottomLeft, const glm::vec3 topRight, bool perspective=false)</td></tr>
-<tr class="memdesc:acd2bcc7e6696b515d7569182c0606f1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a single-coloured surface.  <a href="#acd2bcc7e6696b515d7569182c0606f1f">More...</a><br /></td></tr>
-<tr class="separator:acd2bcc7e6696b515d7569182c0606f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae503fb2cab82111e42869bb9d18ed202"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#ae503fb2cab82111e42869bb9d18ed202">render</a> (<a class="el" href="classsmall3d_1_1_scene_object.html">SceneObject</a> &amp;sceneObject, bool showBoundingBoxes=false)</td></tr>
-<tr class="memdesc:ae503fb2cab82111e42869bb9d18ed202"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a scene object.  <a href="#ae503fb2cab82111e42869bb9d18ed202">More...</a><br /></td></tr>
-<tr class="separator:ae503fb2cab82111e42869bb9d18ed202"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7316118b664823a391316d98321029bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a7316118b664823a391316d98321029bc">write</a> (std::string text, glm::vec3 colour, glm::vec2 bottomLeft, glm::vec2 topRight, int fontSize=48, std::string fontPath=&quot;resources/fonts/CrusoeText/CrusoeText-Regular.ttf&quot;)</td></tr>
-<tr class="memdesc:a7316118b664823a391316d98321029bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render some text on the screen. A texture will be generated, containing the given text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space.  <a href="#a7316118b664823a391316d98321029bc">More...</a><br /></td></tr>
-<tr class="separator:a7316118b664823a391316d98321029bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e2f6135159d392f38175fc8a55c186d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a6e2f6135159d392f38175fc8a55c186d">clearBuffers</a> (<a class="el" href="classsmall3d_1_1_scene_object.html">SceneObject</a> &amp;sceneObject)</td></tr>
-<tr class="memdesc:a6e2f6135159d392f38175fc8a55c186d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear a scene object from the GPU buffers (the object itself remains intact)  <a href="#a6e2f6135159d392f38175fc8a55c186d">More...</a><br /></td></tr>
-<tr class="separator:a6e2f6135159d392f38175fc8a55c186d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7298561088227539aedce3cfc9807f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#aa7298561088227539aedce3cfc9807f5">renderSurface</a> (glm::vec3 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective=false)</td></tr>
+<tr class="memdesc:aa7298561088227539aedce3cfc9807f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a single-coloured surface.  <a href="#aa7298561088227539aedce3cfc9807f5">More...</a><br /></td></tr>
+<tr class="separator:aa7298561088227539aedce3cfc9807f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd8d427ace8c2c20b61157b05f766ad7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#acd8d427ace8c2c20b61157b05f766ad7">render</a> (<a class="el" href="structsmall3d_1_1_model.html">Model</a> &amp;model, glm::vec3 offset, glm::vec3 rotation, glm::vec4 colour, std::string textureName=&quot;&quot;)</td></tr>
+<tr class="memdesc:acd8d427ace8c2c20b61157b05f766ad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a <a class="el" href="structsmall3d_1_1_model.html" title="A 3D model, loaded from a Wavefront file. ">Model</a>.  <a href="#acd8d427ace8c2c20b61157b05f766ad7">More...</a><br /></td></tr>
+<tr class="separator:acd8d427ace8c2c20b61157b05f766ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b2af04b8d60f1bf0822f1d4b21c5628"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a5b2af04b8d60f1bf0822f1d4b21c5628">render</a> (<a class="el" href="structsmall3d_1_1_model.html">Model</a> &amp;model, glm::vec3 offset, glm::vec3 rotation, std::string textureName)</td></tr>
+<tr class="memdesc:a5b2af04b8d60f1bf0822f1d4b21c5628"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a <a class="el" href="structsmall3d_1_1_model.html" title="A 3D model, loaded from a Wavefront file. ">Model</a>.  <a href="#a5b2af04b8d60f1bf0822f1d4b21c5628">More...</a><br /></td></tr>
+<tr class="separator:a5b2af04b8d60f1bf0822f1d4b21c5628"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9c8ed82c9739a7546e8321f0262c0b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#ac9c8ed82c9739a7546e8321f0262c0b8">render</a> (<a class="el" href="classsmall3d_1_1_scene_object.html">SceneObject</a> &amp;sceneObject, glm::vec4 colour)</td></tr>
+<tr class="memdesc:ac9c8ed82c9739a7546e8321f0262c0b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a <a class="el" href="classsmall3d_1_1_scene_object.html" title="An object that appears on the 3D scene. It is made up of one or more models (the latter for animation...">SceneObject</a>.  <a href="#ac9c8ed82c9739a7546e8321f0262c0b8">More...</a><br /></td></tr>
+<tr class="separator:ac9c8ed82c9739a7546e8321f0262c0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af25e8d5d4850b774a436da52607254e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#af25e8d5d4850b774a436da52607254e7">render</a> (<a class="el" href="classsmall3d_1_1_scene_object.html">SceneObject</a> &amp;sceneObject, std::string textureName)</td></tr>
+<tr class="memdesc:af25e8d5d4850b774a436da52607254e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a <a class="el" href="classsmall3d_1_1_scene_object.html" title="An object that appears on the 3D scene. It is made up of one or more models (the latter for animation...">SceneObject</a>.  <a href="#af25e8d5d4850b774a436da52607254e7">More...</a><br /></td></tr>
+<tr class="separator:af25e8d5d4850b774a436da52607254e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97b54589024c8265e588867428497304"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a97b54589024c8265e588867428497304">write</a> (std::string text, glm::vec3 colour, glm::vec2 topLeft, glm::vec2 bottomRight, int fontSize=48, std::string fontPath=&quot;resources/fonts/CrusoeText/CrusoeText-Regular.ttf&quot;)</td></tr>
+<tr class="memdesc:a97b54589024c8265e588867428497304"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render some text on the screen.  <a href="#a97b54589024c8265e588867428497304">More...</a><br /></td></tr>
+<tr class="separator:a97b54589024c8265e588867428497304"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40ab3a6ebf64fe75c9121d06637d8ee8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a40ab3a6ebf64fe75c9121d06637d8ee8">clearBuffers</a> (<a class="el" href="structsmall3d_1_1_model.html">Model</a> &amp;model)</td></tr>
+<tr class="memdesc:a40ab3a6ebf64fe75c9121d06637d8ee8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear a <a class="el" href="structsmall3d_1_1_model.html" title="A 3D model, loaded from a Wavefront file. ">Model</a> from the GPU buffers (the object itself remains intact)  <a href="#a40ab3a6ebf64fe75c9121d06637d8ee8">More...</a><br /></td></tr>
+<tr class="separator:a40ab3a6ebf64fe75c9121d06637d8ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9523e78acf3e6d62ae301ca650c9087c"><td class="memItemLeft" align="right" valign="top"><a id="a9523e78acf3e6d62ae301ca650c9087c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a9523e78acf3e6d62ae301ca650c9087c">clearScreen</a> ()</td></tr>
 <tr class="memdesc:a9523e78acf3e6d62ae301ca650c9087c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the screen. <br /></td></tr>
@@ -177,8 +186,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classsmall3d_1_1_renderer.html" title="Renderer class, which can render using either OpenGL v3.3 or v2.1. ">Renderer</a> class, which can render using either OpenGL v3.3 or v2.1. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6e2f6135159d392f38175fc8a55c186d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e2f6135159d392f38175fc8a55c186d">&#9670;&nbsp;</a></span>clearBuffers()</h2>
+<a id="a40ab3a6ebf64fe75c9121d06637d8ee8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40ab3a6ebf64fe75c9121d06637d8ee8">&#9670;&nbsp;</a></span>clearBuffers()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,14 +195,14 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="memname">void small3d::Renderer::clearBuffers </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classsmall3d_1_1_scene_object.html">SceneObject</a> &amp;&#160;</td>
-          <td class="paramname"><em>sceneObject</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structsmall3d_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Clear a scene object from the GPU buffers (the object itself remains intact) </p>
+<p>Clear a <a class="el" href="structsmall3d_1_1_model.html" title="A 3D model, loaded from a Wavefront file. ">Model</a> from the GPU buffers (the object itself remains intact) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sceneObject</td><td>The scene object </td></tr>
@@ -387,8 +396,117 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 
 </div>
 </div>
-<a id="ae503fb2cab82111e42869bb9d18ed202"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae503fb2cab82111e42869bb9d18ed202">&#9670;&nbsp;</a></span>render()</h2>
+<a id="acd8d427ace8c2c20b61157b05f766ad7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd8d427ace8c2c20b61157b05f766ad7">&#9670;&nbsp;</a></span>render() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void small3d::Renderer::render </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structsmall3d_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::vec3&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::vec3&#160;</td>
+          <td class="paramname"><em>rotation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::vec4&#160;</td>
+          <td class="paramname"><em>colour</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>textureName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Render a <a class="el" href="structsmall3d_1_1_model.html" title="A 3D model, loaded from a Wavefront file. ">Model</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">model</td><td>The model </td></tr>
+    <tr><td class="paramname">offset</td><td>The offset (position) where to draw the model </td></tr>
+    <tr><td class="paramname">rotation</td><td>Rotation (x, y, z) </td></tr>
+    <tr><td class="paramname">colour</td><td>The colour of the model </td></tr>
+    <tr><td class="paramname">textureName</td><td>The name of the texture to attach to the model (optional). The texture has to have been generated already. If this is set, the colour parameter will be ignored </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5b2af04b8d60f1bf0822f1d4b21c5628"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b2af04b8d60f1bf0822f1d4b21c5628">&#9670;&nbsp;</a></span>render() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void small3d::Renderer::render </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structsmall3d_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::vec3&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::vec3&#160;</td>
+          <td class="paramname"><em>rotation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>textureName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Render a <a class="el" href="structsmall3d_1_1_model.html" title="A 3D model, loaded from a Wavefront file. ">Model</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">model</td><td>The model </td></tr>
+    <tr><td class="paramname">offset</td><td>The offset (position) where to draw the model </td></tr>
+    <tr><td class="paramname">rotation</td><td>Rotation (x, y, z) </td></tr>
+    <tr><td class="paramname">textureName</td><td>The name of the texture to attach to the model. The texture has to have been generated already. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac9c8ed82c9739a7546e8321f0262c0b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9c8ed82c9739a7546e8321f0262c0b8">&#9670;&nbsp;</a></span>render() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -402,8 +520,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>showBoundingBoxes</em> = <code>false</code>&#160;</td>
+          <td class="paramtype">glm::vec4&#160;</td>
+          <td class="paramname"><em>colour</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -413,19 +531,56 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
       </table>
 </div><div class="memdoc">
 
-<p>Render a scene object. </p>
+<p>Render a <a class="el" href="classsmall3d_1_1_scene_object.html" title="An object that appears on the 3D scene. It is made up of one or more models (the latter for animation...">SceneObject</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sceneObject</td><td>The scene object </td></tr>
-    <tr><td class="paramname">showBoundingBoxes</td><td>If true, also render the bounding boxes, otherwise don't (default) </td></tr>
+    <tr><td class="paramname">sceneObject</td><td>The object </td></tr>
+    <tr><td class="paramname">colour</td><td>The colour the object. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="acd2bcc7e6696b515d7569182c0606f1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd2bcc7e6696b515d7569182c0606f1f">&#9670;&nbsp;</a></span>renderSurface()</h2>
+<a id="af25e8d5d4850b774a436da52607254e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af25e8d5d4850b774a436da52607254e7">&#9670;&nbsp;</a></span>render() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void small3d::Renderer::render </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classsmall3d_1_1_scene_object.html">SceneObject</a> &amp;&#160;</td>
+          <td class="paramname"><em>sceneObject</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>textureName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Render a <a class="el" href="classsmall3d_1_1_scene_object.html" title="An object that appears on the 3D scene. It is made up of one or more models (the latter for animation...">SceneObject</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sceneObject</td><td>The object </td></tr>
+    <tr><td class="paramname">textureName</td><td>The name of the texture to attach to the object. The texture has to have been generated already. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa7298561088227539aedce3cfc9807f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7298561088227539aedce3cfc9807f5">&#9670;&nbsp;</a></span>renderSurface()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -440,13 +595,13 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const glm::vec3&#160;</td>
-          <td class="paramname"><em>bottomLeft</em>, </td>
+          <td class="paramname"><em>topLeft</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const glm::vec3&#160;</td>
-          <td class="paramname"><em>topRight</em>, </td>
+          <td class="paramname"><em>bottomRight</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -466,17 +621,17 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">colour</td><td>The colour of the surface (vector of 3 components for r, g, b) </td></tr>
-    <tr><td class="paramname">bottomLeft</td><td>The coordinates for the bottom left corner of the surface </td></tr>
-    <tr><td class="paramname">topRight</td><td>The coordinates for the top right corner of the surface </td></tr>
-    <tr><td class="paramname">perspective</td><td>If set to true, use perspective rendering, otherwise use simple (orthographic) rendering. </td></tr>
+    <tr><td class="paramname">topLeft</td><td>Where to place the top left corner of the surface </td></tr>
+    <tr><td class="paramname">bottomRight</td><td>Where to place the bottom right corner of the surface </td></tr>
+    <tr><td class="paramname">perspective</td><td>If set to true, use perspective rendering. Otherwise use orthographic rendering. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a0cb954ca2eb3cb8181b1032e67448c45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cb954ca2eb3cb8181b1032e67448c45">&#9670;&nbsp;</a></span>renderTexture()</h2>
+<a id="a623ff6845afc8c7c5e1a7e437771d07c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a623ff6845afc8c7c5e1a7e437771d07c">&#9670;&nbsp;</a></span>renderTexture()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -490,14 +645,14 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
-          <td class="paramname"><em>bottomLeft</em>, </td>
+          <td class="paramtype">const glm::vec3&#160;</td>
+          <td class="paramname"><em>topLeft</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const glm::vec3 &amp;&#160;</td>
-          <td class="paramname"><em>topRight</em>, </td>
+          <td class="paramtype">const glm::vec3&#160;</td>
+          <td class="paramname"><em>bottomRight</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -517,9 +672,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>The name of the texture to be used (must have been loaded with generateTexture()) </td></tr>
-    <tr><td class="paramname">bottomLeft</td><td>The coordinates for the bottom left corner of the texture </td></tr>
-    <tr><td class="paramname">topRight</td><td>The coordinates for the top right corner of the texture </td></tr>
-    <tr><td class="paramname">perspective</td><td>If set to true, use perspective rendering, otherwise use simple (orthographic) rendering. </td></tr>
+    <tr><td class="paramname">topLeft</td><td>Where to place the top left corner of the texture </td></tr>
+    <tr><td class="paramname">bottomRight</td><td>Where to place the bottom right corner of the texture </td></tr>
+    <tr><td class="paramname">perspective</td><td>If set to true, use perspective rendering. Otherwise use orthographic rendering. </td></tr>
   </table>
   </dd>
 </dl>
@@ -546,8 +701,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 
 </div>
 </div>
-<a id="a7316118b664823a391316d98321029bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7316118b664823a391316d98321029bc">&#9670;&nbsp;</a></span>write()</h2>
+<a id="a97b54589024c8265e588867428497304"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97b54589024c8265e588867428497304">&#9670;&nbsp;</a></span>write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -568,13 +723,13 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">glm::vec2&#160;</td>
-          <td class="paramname"><em>bottomLeft</em>, </td>
+          <td class="paramname"><em>topLeft</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">glm::vec2&#160;</td>
-          <td class="paramname"><em>topRight</em>, </td>
+          <td class="paramname"><em>bottomRight</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -596,13 +751,13 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
       </table>
 </div><div class="memdoc">
 
-<p>Render some text on the screen. A texture will be generated, containing the given text and it will be rendered at a depth z of 0.5 in an orthographic coordinate space. </p>
+<p>Render some text on the screen. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">text</td><td>The text to be rendered </td></tr>
     <tr><td class="paramname">colour</td><td>The colour in which the text will be rendered (r, g, b) </td></tr>
-    <tr><td class="paramname">bottomLeft</td><td>The coordinates of the bottom left corner of the text rectangle (x, y) </td></tr>
-    <tr><td class="paramname">topRight</td><td>The coordinates of the top right corner of the text rectangle (x, y) </td></tr>
+    <tr><td class="paramname">topLeft</td><td>Where to place the top left corner of the text rectangle </td></tr>
+    <tr><td class="paramname">bottomRight</td><td>Where to place the bottom right corner of the text rectangle </td></tr>
     <tr><td class="paramname">fontSize</td><td>The size of the font which will be used </td></tr>
     <tr><td class="paramname">fontPath</td><td>Path to the TrueType font (.ttf) which will be used </td></tr>
   </table>

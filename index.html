@@ -78,7 +78,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a href="https://github.com/dimi309/small3d">small3d</a>'s latest changes are listed below. The source code is always available on <a href="https://github.com/dimi309/small3d">GitHub</a>.</p>
-<h2>v1.2.1 </h2>
+<h2>v1.3.0 </h2>
 <p>(still open)</p>
 <ul>
 <li>Various bug fixes and code improvements.</li>
@@ -87,6 +87,12 @@ $(function() {
 <li>[BREAKING] The Exception class has been removed. Now using std::runtime_error instead.</li>
 <li>[BREAKING] The SoundPlayer class has been removed. The new Sound class allows for very simple loading and playing of sounds.</li>
 <li>[BREAKING] The Renderer.generateTexture function now takes an Image as parameter in place of raw data and dimension details.</li>
+<li>[BREAKING] BoundingBoxSet now loads the bounding boxes in the constructor.</li>
+<li>[BREAKING] WavefrontLoader has been removed. Model now loads its data in its constructor.</li>
+<li>[BREAKING] Renderer functions that used to take a bottomLeft and topRight parameter, now take a topLeft and bottomRight parameter instead.</li>
+<li>New rendering functions for scene objects and models added.</li>
+<li>[BREAKING] Renderer functions that render a SceneObject now require the colour or the object texture name to be passed as parameters. The texture of the SceneObject has to have been generated beforehand.</li>
+<li>[BREAKING] Rotation adjustment functionality removed from SceneObject. Models have to be created already oriented towards the correct direction (-z).</li>
 </ul>
 <h2>v1.2.0 </h2>
 <ul>
@@ -167,7 +173,7 @@ $(function() {
 <li>[BREAKING] SceneObjects passed to the new Renderer.render function are no longer enclosed in a shared_ptr, but simply passed by reference.</li>
 <li>[BREAKING] SceneObject.collidesWithSceneObject no longer takes a pointer, but a SceneObject, by reference, as parameter.</li>
 <li>[BREAKING] SceneObject.collidesWithSceneObject and SceneObject.collidesWithPoint have been renamed to two overloaded functions, called "collidesWith".</li>
-<li>Corrections to the documentation and introduction of automatic documentation generation, using <a href="https://codedocs.xyz/dimi309/small3d/annotated.html">codedocs</a></li>
+<li>Corrections to the documentation and introduction of automatic documentation generation, using codedocs.</li>
 <li>[BREAKING] Renamed BoundingBoxes class to BoundingBoxSet</li>
 <li>[BREAKING] Renamed BoundingBoxes (now BoungingBoxSet) functions boxesAreWithin and pointIsWithin to collidesWith (overloaded).</li>
 <li>[BREAKING] Replaced 3 parameters which represented a point's coordinates in SceneObject.collidesWith and BoundingBoxSet.collidesWith with a single glm::vec3 parameter.</li>

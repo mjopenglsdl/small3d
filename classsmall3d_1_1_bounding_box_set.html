@@ -86,7 +86,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Bounding boxes for a model. Even though the loading logic is similar to that of the <a class="el" href="classsmall3d_1_1_wavefront_loader.html" title="Class that loads a model from a wavefront .obj file, into a Model object. ">WavefrontLoader</a> class, <a class="el" href="classsmall3d_1_1_bounding_box_set.html" title="Bounding boxes for a model. Even though the loading logic is similar to that of the WavefrontLoader c...">BoundingBoxSet</a> has its own separate loading function, because it loads a Wavefront file exported with a different set of options (see README.md). Each <a class="el" href="classsmall3d_1_1_bounding_box_set.html" title="Bounding boxes for a model. Even though the loading logic is similar to that of the WavefrontLoader c...">BoundingBoxSet</a> class may contain more than one bounding boxes. These are not separated into different structures because each has a fixed set of six faces, making them straightforward to separate at runtime.  
+<p>Set of bounding boxes for a <a class="el" href="classsmall3d_1_1_scene_object.html" title="An object that appears on the 3D scene. It is made up of one or more models (the latter for animation...">SceneObject</a>, loaded from a Wavefront file, allowing for collision detection (see README.md).  
  <a href="classsmall3d_1_1_bounding_box_set.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_bounding_box_set_8hpp_source.html">BoundingBoxSet.hpp</a>&gt;</code></p>
@@ -94,21 +94,16 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a0d8a4eac5d06e723ae60aef2bc2b0a83"><td class="memItemLeft" align="right" valign="top"><a id="a0d8a4eac5d06e723ae60aef2bc2b0a83"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getNumBoxes</b> () const</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_bounding_box_set.html#a0d8a4eac5d06e723ae60aef2bc2b0a83">getNumBoxes</a> () const</td></tr>
+<tr class="memdesc:a0d8a4eac5d06e723ae60aef2bc2b0a83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of boxes contained in the set. <br /></td></tr>
 <tr class="separator:a0d8a4eac5d06e723ae60aef2bc2b0a83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9bcfc62a0003e54504ebec1f67fb567"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_bounding_box_set.html#ac9bcfc62a0003e54504ebec1f67fb567">BoundingBoxSet</a> (std::string basePath=&quot;&quot;)</td></tr>
-<tr class="memdesc:ac9bcfc62a0003e54504ebec1f67fb567"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac9bcfc62a0003e54504ebec1f67fb567">More...</a><br /></td></tr>
-<tr class="separator:ac9bcfc62a0003e54504ebec1f67fb567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cf669ea69d39dfd7154baf3e5618645"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_bounding_box_set.html#a6cf669ea69d39dfd7154baf3e5618645">BoundingBoxSet</a> (std::string fileLocation=&quot;&quot;)</td></tr>
+<tr class="memdesc:a6cf669ea69d39dfd7154baf3e5618645"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6cf669ea69d39dfd7154baf3e5618645">More...</a><br /></td></tr>
+<tr class="separator:a6cf669ea69d39dfd7154baf3e5618645"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60b57cda9c3d783c7d88f306ceda3060"><td class="memItemLeft" align="right" valign="top"><a id="a60b57cda9c3d783c7d88f306ceda3060"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_bounding_box_set.html#a60b57cda9c3d783c7d88f306ceda3060">~BoundingBoxSet</a> ()=default</td></tr>
 <tr class="memdesc:a60b57cda9c3d783c7d88f306ceda3060"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:a60b57cda9c3d783c7d88f306ceda3060"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87aa59e164c76b4be2c9c6abc19bd78a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_bounding_box_set.html#a87aa59e164c76b4be2c9c6abc19bd78a">loadFromFile</a> (std::string fileLocation)</td></tr>
-<tr class="memdesc:a87aa59e164c76b4be2c9c6abc19bd78a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the bounding boxes from a Wavefront file.  <a href="#a87aa59e164c76b4be2c9c6abc19bd78a">More...</a><br /></td></tr>
-<tr class="separator:a87aa59e164c76b4be2c9c6abc19bd78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c1146b8009d433211de5fc58649764e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_bounding_box_set.html#a2c1146b8009d433211de5fc58649764e">setRotationAdjustment</a> (const glm::mat4x4 &amp;ajdustmentMatrix)</td></tr>
-<tr class="memdesc:a2c1146b8009d433211de5fc58649764e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the rotation adjustment matrix (normally used so that a <a class="el" href="classsmall3d_1_1_scene_object.html" title="An object that appears on the 3D scene. It is made up of one or more models (the latter for animation...">SceneObject</a>'s rotation adjustment is also applied to its <a class="el" href="classsmall3d_1_1_bounding_box_set.html" title="Bounding boxes for a model. Even though the loading logic is similar to that of the WavefrontLoader c...">BoundingBoxSet</a>. See <a class="el" href="classsmall3d_1_1_scene_object.html#a3768c7617390745d22d40059df600ceb" title="Adjustment of the object&#39;s rotation, in case the way it was exported from an editor does not correspo...">SceneObject.adjustRotation</a>)  <a href="#a2c1146b8009d433211de5fc58649764e">More...</a><br /></td></tr>
-<tr class="separator:a2c1146b8009d433211de5fc58649764e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a16e0a7d672d44f9563efa31e50942b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_bounding_box_set.html#a8a16e0a7d672d44f9563efa31e50942b">collidesWith</a> (glm::vec3 point) const</td></tr>
 <tr class="memdesc:a8a16e0a7d672d44f9563efa31e50942b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a point collides (or is inside) any of the boxes assuming that they are in a given offset and have a certain rotation.  <a href="#a8a16e0a7d672d44f9563efa31e50942b">More...</a><br /></td></tr>
 <tr class="separator:a8a16e0a7d672d44f9563efa31e50942b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,10 +131,10 @@ std::vector&lt; std::vector&lt; unsigned int &gt; &gt;&#160;</td><td class="memI
 <tr class="separator:a4cc9b979ea109f835753ec2c245e34b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Bounding boxes for a model. Even though the loading logic is similar to that of the <a class="el" href="classsmall3d_1_1_wavefront_loader.html" title="Class that loads a model from a wavefront .obj file, into a Model object. ">WavefrontLoader</a> class, <a class="el" href="classsmall3d_1_1_bounding_box_set.html" title="Bounding boxes for a model. Even though the loading logic is similar to that of the WavefrontLoader c...">BoundingBoxSet</a> has its own separate loading function, because it loads a Wavefront file exported with a different set of options (see README.md). Each <a class="el" href="classsmall3d_1_1_bounding_box_set.html" title="Bounding boxes for a model. Even though the loading logic is similar to that of the WavefrontLoader c...">BoundingBoxSet</a> class may contain more than one bounding boxes. These are not separated into different structures because each has a fixed set of six faces, making them straightforward to separate at runtime. </p>
+<div class="textblock"><p>Set of bounding boxes for a <a class="el" href="classsmall3d_1_1_scene_object.html" title="An object that appears on the 3D scene. It is made up of one or more models (the latter for animation...">SceneObject</a>, loaded from a Wavefront file, allowing for collision detection (see README.md). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac9bcfc62a0003e54504ebec1f67fb567"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9bcfc62a0003e54504ebec1f67fb567">&#9670;&nbsp;</a></span>BoundingBoxSet()</h2>
+<a id="a6cf669ea69d39dfd7154baf3e5618645"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cf669ea69d39dfd7154baf3e5618645">&#9670;&nbsp;</a></span>BoundingBoxSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,7 +143,7 @@ std::vector&lt; std::vector&lt; unsigned int &gt; &gt;&#160;</td><td class="memI
           <td class="memname">small3d::BoundingBoxSet::BoundingBoxSet </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>basePath</em> = <code>&quot;&quot;</code></td><td>)</td>
+          <td class="paramname"><em>fileLocation</em> = <code>&quot;&quot;</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -157,7 +152,7 @@ std::vector&lt; std::vector&lt; unsigned int &gt; &gt;&#160;</td><td class="memI
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">basePath</td><td>The path under which all accessed files and directories are to be found. If this is not set, it is assumed to be the directory from where the execution command is entered.</td></tr>
+    <tr><td class="paramname">fileLocation</td><td>Location of the Wavefront file containing the bounding boxes</td></tr>
   </table>
   </dd>
 </dl>
@@ -217,58 +212,6 @@ std::vector&lt; std::vector&lt; unsigned int &gt; &gt;&#160;</td><td class="memI
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if there is a collision, false if not. </dd></dl>
-
-</div>
-</div>
-<a id="a87aa59e164c76b4be2c9c6abc19bd78a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87aa59e164c76b4be2c9c6abc19bd78a">&#9670;&nbsp;</a></span>loadFromFile()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void small3d::BoundingBoxSet::loadFromFile </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>fileLocation</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Load the bounding boxes from a Wavefront file. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">fileLocation</td><td>The file location, relative to the game's execution directory </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a2c1146b8009d433211de5fc58649764e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c1146b8009d433211de5fc58649764e">&#9670;&nbsp;</a></span>setRotationAdjustment()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void small3d::BoundingBoxSet::setRotationAdjustment </td>
-          <td>(</td>
-          <td class="paramtype">const glm::mat4x4 &amp;&#160;</td>
-          <td class="paramname"><em>ajdustmentMatrix</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set the rotation adjustment matrix (normally used so that a <a class="el" href="classsmall3d_1_1_scene_object.html" title="An object that appears on the 3D scene. It is made up of one or more models (the latter for animation...">SceneObject</a>'s rotation adjustment is also applied to its <a class="el" href="classsmall3d_1_1_bounding_box_set.html" title="Bounding boxes for a model. Even though the loading logic is similar to that of the WavefrontLoader c...">BoundingBoxSet</a>. See <a class="el" href="classsmall3d_1_1_scene_object.html#a3768c7617390745d22d40059df600ceb" title="Adjustment of the object&#39;s rotation, in case the way it was exported from an editor does not correspo...">SceneObject.adjustRotation</a>) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ajdustmentMatrix</td><td>The rotation adjustment matrix </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
