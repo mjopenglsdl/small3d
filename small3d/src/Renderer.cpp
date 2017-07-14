@@ -45,10 +45,9 @@ namespace small3d {
     
     FT_Error ftError = FT_Init_FreeType( &library );
     
-    if(ftError != 0)
-      {
-	throw runtime_error("Unable to initialise font system");
-      }
+    if(ftError != 0) {
+      throw runtime_error("Unable to initialise font system");
+    }
   }
   
   Renderer& Renderer::getInstance(std::string windowTitle, int width, int height, float frustumScale, float zNear,
@@ -302,17 +301,14 @@ namespace small3d {
     if (isOpenGL33Supported) {
       vertexShaderPath = shadersPath + "OpenGL33/perspectiveMatrixLightedShader.vert";
       fragmentShaderPath = shadersPath + "OpenGL33/textureShader.frag";
-      simpleVertexShaderPath =
-	shadersPath + "OpenGL33/simpleShader.vert";
+      simpleVertexShaderPath = shadersPath + "OpenGL33/simpleShader.vert";
       simpleFragmentShaderPath = shadersPath + "OpenGL33/simpleShader.frag";
       
     }
     else {
-      vertexShaderPath =
-	shadersPath + "OpenGL21/perspectiveMatrixLightedShader.vert";
+      vertexShaderPath = shadersPath + "OpenGL21/perspectiveMatrixLightedShader.vert";
       fragmentShaderPath = shadersPath + "OpenGL21/textureShader.frag";
-      simpleVertexShaderPath =
-	shadersPath + "OpenGL21/simpleShader.vert";
+      simpleVertexShaderPath = shadersPath + "OpenGL21/simpleShader.vert";
       simpleFragmentShaderPath = shadersPath + "OpenGL21/simpleShader.frag";
     }
     
@@ -326,10 +322,8 @@ namespace small3d {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    GLuint vertexShader = compileShader(vertexShaderPath,
-                                        GL_VERTEX_SHADER);
-    GLuint fragmentShader = compileShader(fragmentShaderPath,
-                                          GL_FRAGMENT_SHADER);
+    GLuint vertexShader = compileShader(vertexShaderPath, GL_VERTEX_SHADER);
+    GLuint fragmentShader = compileShader(fragmentShaderPath, GL_FRAGMENT_SHADER);
     
     perspectiveProgram = glCreateProgram();
     glAttachShader(perspectiveProgram, vertexShader);
@@ -527,18 +521,16 @@ namespace small3d {
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    unsigned int vertexIndexes[6] =
-      {
-	0, 1, 2,
-	2, 3, 0
-      };
+    unsigned int vertexIndexes[6] = {
+      0, 1, 2,
+      2, 3, 0
+    };
     
     GLuint indexBufferObject = 0;
     
     glGenBuffers(1, &indexBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
     
     GLuint textureHandle = getTextureHandle(name);
     
@@ -548,13 +540,12 @@ namespace small3d {
     
     glBindTexture(GL_TEXTURE_2D, textureHandle);
     
-    float textureCoords[8] =
-      {
-	1.0f, 1.0f,
-	1.0f, 0.0f,
-	0.0f, 0.0f,
-	0.0f, 1.0f
-      };
+    float textureCoords[8] = {
+      1.0f, 1.0f,
+      1.0f, 0.0f,
+      0.0f, 0.0f,
+      0.0f, 1.0f
+    };
     
     GLuint coordBuffer = 0;
     
