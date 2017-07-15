@@ -43,6 +43,7 @@ namespace small3d {
     void correctDataVectors();
 
     void clear();
+
   public:
 
     GLuint vaoId = 0;

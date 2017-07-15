@@ -489,8 +489,8 @@ namespace small3d {
   }
   
   
-  void Renderer::renderTexture(string name, const glm::vec3 topLeft, const glm::vec3 bottomRight,
-                               bool perspective) {
+  void Renderer::renderRectangle(string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+                               const bool perspective, const glm::vec4 colour) {
     
     float vertices[16] = {
       bottomRight.x, bottomRight.y, bottomRight.z, 1.0f,
@@ -532,38 +532,41 @@ namespace small3d {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
     
-    GLuint textureHandle = getTextureHandle(name);
+    GLuint coordBuffer = 0;
+
+    if (colour == glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) {
     
-    if (textureHandle == 0) {
-      throw runtime_error("Texture " + name + "has not been generated");
+      GLuint textureHandle = getTextureHandle(textureName);
+
+      if (textureHandle == 0) {
+        throw runtime_error("Texture " + textureName + "has not been generated");
+      }
+
+      glBindTexture(GL_TEXTURE_2D, textureHandle);
+
+      float textureCoords[8] = {
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f
+      };
+
+      glGenBuffers(1, &coordBuffer);
+      glBindBuffer(GL_ARRAY_BUFFER, coordBuffer);
+      glBufferData(GL_ARRAY_BUFFER,
+        sizeof(float) * 8,
+        textureCoords,
+        GL_STATIC_DRAW);
+    
     }
     
-    glBindTexture(GL_TEXTURE_2D, textureHandle);
-    
-    float textureCoords[8] = {
-      1.0f, 1.0f,
-      1.0f, 0.0f,
-      0.0f, 0.0f,
-      0.0f, 1.0f
-    };
-    
-    GLuint coordBuffer = 0;
-    
-    glGenBuffers(1, &coordBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, coordBuffer);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(float) * 8,
-                 textureCoords,
-                 GL_STATIC_DRAW);
     glEnableVertexAttribArray(perspective ? 2 : 1);
     glVertexAttribPointer(perspective ? 2 : 1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    
+
+    GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
+    glUniform4fv(colourUniform, 1, glm::value_ptr(colour));
+
     if (perspective) {
-      // Find the colour uniform
-      GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
-      
-      // "Disable" colour since there is a texture
-      glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
       
       // Lighting
       GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
@@ -583,9 +586,10 @@ namespace small3d {
     
     glDeleteBuffers(1, &indexBufferObject);
     glDeleteBuffers(1, &boxBuffer);
-    glDeleteBuffers(1, &coordBuffer);
-    
-    
+    if (colour == glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) {
+      glDeleteBuffers(1, &coordBuffer);
+    }
+        
     glDisableVertexAttribArray(perspective ? 2 : 1);
     glDisableVertexAttribArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -595,92 +599,12 @@ namespace small3d {
       glBindVertexArray(0);
     }
     
-    checkForOpenGLErrors("rendering image", true);
+    checkForOpenGLErrors("rendering rectangle", true);
   }
-  
-  void Renderer::renderSurface(glm::vec3 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective) {
-    float vertices[16] = {
-      bottomRight.x, bottomRight.y, bottomRight.z, 1.0f,
-      bottomRight.x, topLeft.y, topLeft.z, 1.0f,
-      topLeft.x, topLeft.y, topLeft.z, 1.0f,
-      topLeft.x, bottomRight.y, bottomRight.z, 1.0f
-    };
-    
-    glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
-    
-    GLuint vao = 0;
-    if (isOpenGL33Supported) {
-      // Generate VAO
-      glGenVertexArrays(1, &vao);
-      glBindVertexArray(vao);
-    }
-    
-    glEnableVertexAttribArray(0);
-    
-    GLuint boxBuffer = 0;
-    glGenBuffers(1, &boxBuffer);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, boxBuffer);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(float) * 16,
-                 &vertices[0],
-                 GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    unsigned int vertexIndexes[6] =
-      {
-	0, 1, 2,
-	2, 3, 0
-      };
-    
-    GLuint indexBufferObject = 0;
-    
-    glGenBuffers(1, &indexBufferObject);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
-    
-    // Find the colour uniform
-    GLint colourUniform = glGetUniformLocation(perspective ? perspectiveProgram : orthographicProgram, "colour");
-    
-    // Set the colour
-    glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(colour, 1.0f)));
-    
-    if (perspective) {
-      
-      // Lighting
-      GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
-                                                         "lightDirection");
-      glUniform3fv(lightDirectionUniform, 1,
-                   glm::value_ptr(lightDirection));
-      
-      GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
-      glUniform1f(lightIntensityUniform, lightIntensity);
-      
-      positionNextObject(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-      positionCamera();
-    }
-    
-    glDrawElements(GL_TRIANGLES,
-                   6, GL_UNSIGNED_INT, 0);
-    
-    // Clear the colour uniform
-    glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
-    
-    
-    glDeleteBuffers(1, &indexBufferObject);
-    glDeleteBuffers(1, &boxBuffer);
-    
-    glDisableVertexAttribArray(0);
-    
-    if (isOpenGL33Supported) {
-      glDeleteVertexArrays(1, &vao);
-      glBindVertexArray(0);
-    }
-    
-    checkForOpenGLErrors("rendering surface", true);
-    
+
+  void Renderer::renderRectangle(glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+    const bool perspective) {
+    this->renderRectangle("", topLeft, bottomRight, perspective);
   }
   
   void Renderer::render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::vec4 colour, string textureName) {
@@ -927,7 +851,7 @@ namespace small3d {
     
     generateTexture(textureName, &textMemory[0], width, height);
     
-    renderTexture(textureName, glm::vec3(topLeft.x, topLeft.y, -0.5f),
+    renderRectangle(textureName, glm::vec3(topLeft.x, topLeft.y, -0.5f),
                   glm::vec3(bottomRight.x, bottomRight.y, -0.5f));
     
     deleteTexture(textureName);

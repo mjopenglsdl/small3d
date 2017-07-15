@@ -217,16 +217,6 @@ namespace small3d
     void generateTexture(std::string name, const Image image);
 
     /**
-     * @brief Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each
-     * other. This function can be used for rendering the ground, the sky or a splash screen for example.
-     * @param name The name of the texture to be used (must have been loaded with generateTexture())
-     * @param topLeft Where to place the top left corner of the texture
-     * @param bottomRight Where to place the bottom right corner of the texture
-     * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
-     */
-    void renderTexture(std::string name, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective = false);
-
-    /**
      * @brief Deletes the texture indicated by the given name.
      *
      * @param	name	The name of the texture.
@@ -243,15 +233,28 @@ namespace small3d
     bool supportsOpenGL33();
 
     /**
-     * @brief Render a single-coloured surface.
-     *
-     * @param colour The colour of the surface (vector of 3 components for r, g, b)
-     * @param topLeft Where to place the top left corner of the surface
-     * @param bottomRight Where to place the bottom right corner of the surface
+    * @brief Render a rectangle, using two of its corners that are diagonally opposed to each
+    *        other to position it.
+    * @param textureName The name of the texture to be used (must have been generated with generateTexture())
+    * @param topLeft Where to place the top left corner
+    * @param bottomRight Where to place the bottom right
+    * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
+    * @param colour The colour of the rectangle (RGBA). If this is set, textureName will be ignored.
+    */
+    void renderRectangle(std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+      const bool perspective = false, const glm::vec4 colour = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
+
+    /**
+     * @brief Render a rectangle, using two of its corners that are diagonally opposed to each
+    *         other to position it.
+     * @param colour The colour of the rectangle (RGBA)
+     * @param topLeft Where to place the top left corner 
+     * @param bottomRight Where to place the bottom right corner 
      * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
      */
     
-    void renderSurface(glm::vec3 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective = false);
+    void renderRectangle(glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, 
+      const bool perspective = false);
     
     /**
      * @brief Render a Model
