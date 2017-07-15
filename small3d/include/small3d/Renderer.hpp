@@ -147,7 +147,9 @@ namespace small3d
     Renderer(Renderer &&) = delete;
     void operator=(Renderer &&) = delete;
     
-    // Get the GLFW window object, associated with the Renderer.
+    /**
+     * @brief Get the GLFW window object, associated with the Renderer.
+     */
     GLFWwindow* getWindow();
 
     /**
@@ -304,7 +306,7 @@ namespace small3d
 
     /**
      * @brief Clear a Model from the GPU buffers (the object itself remains intact)
-     * @param sceneObject The scene object
+     * @param model The model
      */
     void clearBuffers(Model &model);
 
