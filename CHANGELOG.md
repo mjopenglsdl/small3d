@@ -19,6 +19,7 @@ v1.3.0
 - New rendering functions for scene objects and models added.
 - [BREAKING] Renderer functions that render a SceneObject now require the colour or the object texture name to be passed as parameters. The texture of the SceneObject has to have been generated beforehand.
 - [BREAKING] Rotation adjustment functionality removed from SceneObject. Models have to be created already oriented towards the correct direction (-z).
+- [BREAKING] Renderer.renderSurface and Renderer.renderTexture united in polymorphic Renderer.renderRectangle function.
 
 v1.2.0
 ------

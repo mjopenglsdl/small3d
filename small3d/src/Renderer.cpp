@@ -557,17 +557,16 @@ namespace small3d {
         sizeof(float) * 8,
         textureCoords,
         GL_STATIC_DRAW);
+      glEnableVertexAttribArray(perspective ? 2 : 1);
+      glVertexAttribPointer(perspective ? 2 : 1, 2, GL_FLOAT, GL_FALSE, 0, 0);
     
     }
     
-    glEnableVertexAttribArray(perspective ? 2 : 1);
-    glVertexAttribPointer(perspective ? 2 : 1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
+    GLint colourUniform = glGetUniformLocation(perspective ? perspectiveProgram : orthographicProgram, "colour");
     glUniform4fv(colourUniform, 1, glm::value_ptr(colour));
 
     if (perspective) {
-      
+
       // Lighting
       GLint lightDirectionUniform = glGetUniformLocation(perspectiveProgram,
                                                          "lightDirection");
@@ -588,11 +587,11 @@ namespace small3d {
     glDeleteBuffers(1, &boxBuffer);
     if (colour == glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) {
       glDeleteBuffers(1, &coordBuffer);
+      glDisableVertexAttribArray(perspective ? 2 : 1);
+      glBindTexture(GL_TEXTURE_2D, 0);
     }
         
-    glDisableVertexAttribArray(perspective ? 2 : 1);
     glDisableVertexAttribArray(0);
-    glBindTexture(GL_TEXTURE_2D, 0);
     
     if (isOpenGL33Supported) {
       glDeleteVertexArrays(1, &vao);
@@ -604,7 +603,7 @@ namespace small3d {
 
   void Renderer::renderRectangle(glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight,
     const bool perspective) {
-    this->renderRectangle("", topLeft, bottomRight, perspective);
+    this->renderRectangle("", topLeft, bottomRight, perspective, colour);
   }
   
   void Renderer::render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::vec4 colour, string textureName) {
