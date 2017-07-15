@@ -7,5 +7,6 @@ var searchData=
   ['getmodel',['getModel',['../classsmall3d_1_1_scene_object.html#a990a1b6f6f3ab08fd71f5c4a220afc4c',1,'small3d::SceneObject']]],
   ['getname',['getName',['../classsmall3d_1_1_scene_object.html#a381ac60cb9fc491b2129591fa342adcc',1,'small3d::SceneObject']]],
   ['getnumboxes',['getNumBoxes',['../classsmall3d_1_1_bounding_box_set.html#a0d8a4eac5d06e723ae60aef2bc2b0a83',1,'small3d::BoundingBoxSet']]],
-  ['getwidth',['getWidth',['../classsmall3d_1_1_image.html#a335588f99053b1f55c15c60c76c26624',1,'small3d::Image']]]
+  ['getwidth',['getWidth',['../classsmall3d_1_1_image.html#a335588f99053b1f55c15c60c76c26624',1,'small3d::Image']]],
+  ['getwindow',['getWindow',['../classsmall3d_1_1_renderer.html#ae02cf582e8e87fe755c3c0e981632f7c',1,'small3d::Renderer']]]
 ];

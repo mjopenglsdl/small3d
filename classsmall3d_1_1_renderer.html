@@ -107,7 +107,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a cla
 void&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classsmall3d_1_1_renderer.html">Renderer</a> &amp;&amp;)=delete</td></tr>
 <tr class="separator:a683e7552dbed6c521f2936ed10976539"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae02cf582e8e87fe755c3c0e981632f7c"><td class="memItemLeft" align="right" valign="top"><a id="ae02cf582e8e87fe755c3c0e981632f7c"></a>
-GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><b>getWindow</b> ()</td></tr>
+GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#ae02cf582e8e87fe755c3c0e981632f7c">getWindow</a> ()</td></tr>
+<tr class="memdesc:ae02cf582e8e87fe755c3c0e981632f7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the GLFW window object, associated with the <a class="el" href="classsmall3d_1_1_renderer.html" title="Renderer class, which can render using either OpenGL v3.3 or v2.1. ">Renderer</a>. <br /></td></tr>
 <tr class="separator:ae02cf582e8e87fe755c3c0e981632f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32163440246ed8ea5016e15dfc781775"><td class="memItemLeft" align="right" valign="top"><a id="a32163440246ed8ea5016e15dfc781775"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a32163440246ed8ea5016e15dfc781775">~Renderer</a> ()</td></tr>
@@ -116,18 +117,18 @@ GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><b>getWindow</b>
 <tr class="memitem:a634fa949af9bd6caaa8002d46f6a0226"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a634fa949af9bd6caaa8002d46f6a0226">generateTexture</a> (std::string name, const <a class="el" href="classsmall3d_1_1_image.html">Image</a> image)</td></tr>
 <tr class="memdesc:a634fa949af9bd6caaa8002d46f6a0226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a texture on the GPU from the given image.  <a href="#a634fa949af9bd6caaa8002d46f6a0226">More...</a><br /></td></tr>
 <tr class="separator:a634fa949af9bd6caaa8002d46f6a0226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a623ff6845afc8c7c5e1a7e437771d07c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a623ff6845afc8c7c5e1a7e437771d07c">renderTexture</a> (std::string name, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective=false)</td></tr>
-<tr class="memdesc:a623ff6845afc8c7c5e1a7e437771d07c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each other. This function can be used for rendering the ground, the sky or a splash screen for example.  <a href="#a623ff6845afc8c7c5e1a7e437771d07c">More...</a><br /></td></tr>
-<tr class="separator:a623ff6845afc8c7c5e1a7e437771d07c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedf7bd98fb7575b3358eb66cf8a3a8be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#aedf7bd98fb7575b3358eb66cf8a3a8be">deleteTexture</a> (std::string name)</td></tr>
 <tr class="memdesc:aedf7bd98fb7575b3358eb66cf8a3a8be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the texture indicated by the given name.  <a href="#aedf7bd98fb7575b3358eb66cf8a3a8be">More...</a><br /></td></tr>
 <tr class="separator:aedf7bd98fb7575b3358eb66cf8a3a8be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1a3877a175a6e3eb97986a9605c857c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#ae1a3877a175a6e3eb97986a9605c857c">supportsOpenGL33</a> ()</td></tr>
 <tr class="memdesc:ae1a3877a175a6e3eb97986a9605c857c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is OpenGL 3.3 supported?  <a href="#ae1a3877a175a6e3eb97986a9605c857c">More...</a><br /></td></tr>
 <tr class="separator:ae1a3877a175a6e3eb97986a9605c857c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7298561088227539aedce3cfc9807f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#aa7298561088227539aedce3cfc9807f5">renderSurface</a> (glm::vec3 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, bool perspective=false)</td></tr>
-<tr class="memdesc:aa7298561088227539aedce3cfc9807f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a single-coloured surface.  <a href="#aa7298561088227539aedce3cfc9807f5">More...</a><br /></td></tr>
-<tr class="separator:aa7298561088227539aedce3cfc9807f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c1fae739bd9187e97a59ca3afec3b88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a5c1fae739bd9187e97a59ca3afec3b88">renderRectangle</a> (std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight, const bool perspective=false, const glm::vec4 colour=glm::vec4(0.0f, 0.0f, 0.0f, 0.0f))</td></tr>
+<tr class="memdesc:a5c1fae739bd9187e97a59ca3afec3b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a rectangle, using two of its corners that are diagonally opposed to each other to position it.  <a href="#a5c1fae739bd9187e97a59ca3afec3b88">More...</a><br /></td></tr>
+<tr class="separator:a5c1fae739bd9187e97a59ca3afec3b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab379b250b765db14444f43fd15a2977c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#ab379b250b765db14444f43fd15a2977c">renderRectangle</a> (glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, const bool perspective=false)</td></tr>
+<tr class="memdesc:ab379b250b765db14444f43fd15a2977c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a rectangle, using two of its corners that are diagonally opposed to each other to position it.  <a href="#ab379b250b765db14444f43fd15a2977c">More...</a><br /></td></tr>
+<tr class="separator:ab379b250b765db14444f43fd15a2977c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd8d427ace8c2c20b61157b05f766ad7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#acd8d427ace8c2c20b61157b05f766ad7">render</a> (<a class="el" href="structsmall3d_1_1_model.html">Model</a> &amp;model, glm::vec3 offset, glm::vec3 rotation, glm::vec4 colour, std::string textureName=&quot;&quot;)</td></tr>
 <tr class="memdesc:acd8d427ace8c2c20b61157b05f766ad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a <a class="el" href="structsmall3d_1_1_model.html" title="A 3D model, loaded from a Wavefront file. ">Model</a>.  <a href="#acd8d427ace8c2c20b61157b05f766ad7">More...</a><br /></td></tr>
 <tr class="separator:acd8d427ace8c2c20b61157b05f766ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,7 +206,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 <p>Clear a <a class="el" href="structsmall3d_1_1_model.html" title="A 3D model, loaded from a Wavefront file. ">Model</a> from the GPU buffers (the object itself remains intact) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sceneObject</td><td>The scene object </td></tr>
+    <tr><td class="paramname">model</td><td>The model </td></tr>
   </table>
   </dd>
 </dl>
@@ -579,16 +580,74 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
 
 </div>
 </div>
-<a id="aa7298561088227539aedce3cfc9807f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7298561088227539aedce3cfc9807f5">&#9670;&nbsp;</a></span>renderSurface()</h2>
+<a id="a5c1fae739bd9187e97a59ca3afec3b88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c1fae739bd9187e97a59ca3afec3b88">&#9670;&nbsp;</a></span>renderRectangle() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void small3d::Renderer::renderSurface </td>
+          <td class="memname">void small3d::Renderer::renderRectangle </td>
           <td>(</td>
-          <td class="paramtype">glm::vec3&#160;</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>textureName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec3&#160;</td>
+          <td class="paramname"><em>topLeft</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec3&#160;</td>
+          <td class="paramname"><em>bottomRight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>perspective</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const glm::vec4&#160;</td>
+          <td class="paramname"><em>colour</em> = <code>glm::vec4(0.0f,&#160;0.0f,&#160;0.0f,&#160;0.0f)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Render a rectangle, using two of its corners that are diagonally opposed to each other to position it. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">textureName</td><td>The name of the texture to be used (must have been generated with generateTexture()) </td></tr>
+    <tr><td class="paramname">topLeft</td><td>Where to place the top left corner </td></tr>
+    <tr><td class="paramname">bottomRight</td><td>Where to place the bottom right </td></tr>
+    <tr><td class="paramname">perspective</td><td>If set to true, use perspective rendering. Otherwise use orthographic rendering. </td></tr>
+    <tr><td class="paramname">colour</td><td>The colour of the rectangle (RGBA). If this is set, textureName will be ignored. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab379b250b765db14444f43fd15a2977c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab379b250b765db14444f43fd15a2977c">&#9670;&nbsp;</a></span>renderRectangle() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void small3d::Renderer::renderRectangle </td>
+          <td>(</td>
+          <td class="paramtype">glm::vec4&#160;</td>
           <td class="paramname"><em>colour</em>, </td>
         </tr>
         <tr>
@@ -606,7 +665,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
+          <td class="paramtype">const bool&#160;</td>
           <td class="paramname"><em>perspective</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
@@ -617,63 +676,12 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
       </table>
 </div><div class="memdoc">
 
-<p>Render a single-coloured surface. </p>
+<p>Render a rectangle, using two of its corners that are diagonally opposed to each other to position it. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">colour</td><td>The colour of the surface (vector of 3 components for r, g, b) </td></tr>
-    <tr><td class="paramname">topLeft</td><td>Where to place the top left corner of the surface </td></tr>
-    <tr><td class="paramname">bottomRight</td><td>Where to place the bottom right corner of the surface </td></tr>
-    <tr><td class="paramname">perspective</td><td>If set to true, use perspective rendering. Otherwise use orthographic rendering. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a623ff6845afc8c7c5e1a7e437771d07c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a623ff6845afc8c7c5e1a7e437771d07c">&#9670;&nbsp;</a></span>renderTexture()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void small3d::Renderer::renderTexture </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const glm::vec3&#160;</td>
-          <td class="paramname"><em>topLeft</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const glm::vec3&#160;</td>
-          <td class="paramname"><em>bottomRight</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>perspective</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Render a textured quad (rectangle), using two of its corners that are diagonally opposed to each other. This function can be used for rendering the ground, the sky or a splash screen for example. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The name of the texture to be used (must have been loaded with generateTexture()) </td></tr>
-    <tr><td class="paramname">topLeft</td><td>Where to place the top left corner of the texture </td></tr>
-    <tr><td class="paramname">bottomRight</td><td>Where to place the bottom right corner of the texture </td></tr>
+    <tr><td class="paramname">colour</td><td>The colour of the rectangle (RGBA) </td></tr>
+    <tr><td class="paramname">topLeft</td><td>Where to place the top left corner </td></tr>
+    <tr><td class="paramname">bottomRight</td><td>Where to place the bottom right corner </td></tr>
     <tr><td class="paramname">perspective</td><td>If set to true, use perspective rendering. Otherwise use orthographic rendering. </td></tr>
   </table>
   </dd>
