@@ -78,14 +78,14 @@ namespace small3d {
     }
   }
 
-  bool SceneObject::collidesWith(const glm::vec3 point) {
+  bool SceneObject::collidesWith(const glm::vec3 point) const {
     if (boundingBoxSet.vertices.size() == 0) {
       throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
     return boundingBoxSet.collidesWith(point, this->offset, this->rotation);
   }
 
-  bool SceneObject::collidesWith(SceneObject otherObject) {
+  bool SceneObject::collidesWith(SceneObject otherObject) const {
     if (boundingBoxSet.vertices.size() == 0) {
       throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }

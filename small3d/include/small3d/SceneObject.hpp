@@ -133,7 +133,7 @@ namespace small3d
      * @return	true if a collision is detected, false otherwise.
      */
 
-    bool collidesWith(const glm::vec3 point);
+    bool collidesWith(const glm::vec3 point) const;
 
     /**
      *
@@ -144,7 +144,7 @@ namespace small3d
      * @return	true if there is a collision, false if not.
      */
 
-    bool collidesWith(SceneObject otherObject);
+    bool collidesWith(SceneObject otherObject) const;
 
   };
   
