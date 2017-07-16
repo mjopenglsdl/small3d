@@ -68,15 +68,15 @@ namespace small3d
      * @param fileLocation The file's location, relative to the game path
      * @return String containing the shader's source code
      */
-    std::string loadShaderFromFile(std::string fileLocation);
+    std::string loadShaderFromFile(const std::string fileLocation) const;
 
     /**
      * @brief Compile a shader's source code
-     * @param shaderSource String containing the shader's source code
+     * @param shaderSourceFile String containing the shader's source code
      * @param shaderType Type of shader (GL_VERTEX_SHADER, GL_FRAGMENT_SHADER, GL_GEOMETRY_SHADER - the latter for OpenGL 3.3)
      * @return OpenGL shader reference
      */
-    GLuint compileShader(std::string shaderSource, const GLenum shaderType);
+    GLuint compileShader(const std::string shaderSourceFile, const GLenum shaderType) const;
 
     /**
      * @brief Retrieve the information of what went wrong when linking a shader program
@@ -91,15 +91,15 @@ namespace small3d
     /**
      * @brief Initialise renderer (OpenGL, GLEW, etc)
      */
-    void init(int width, int height, std::string windowTitle,
-              float frustumScale , float zNear,
-              float zFar, float zOffsetFromCamera,
-              std::string shadersPath);
+    void init(const int width, const int height, const std::string windowTitle,
+              const float frustumScale , const float zNear,
+              const float zFar, const float zOffsetFromCamera,
+              const std::string shadersPath);
 
     /**
      * @brief Initialise the application window
      */
-    void initWindow(int &width, int &height, const std::string &windowTitle = "");
+    void initWindow(int &width, int &height, const std::string windowTitle = "");
 
     /**
      * @brief Detect if OpenGL 3.3 is supported. If not, fall back to OpenGL 2.1.
@@ -107,7 +107,7 @@ namespace small3d
      */
     void detectOpenGLVersion();
 
-    void checkForOpenGLErrors(std::string when, bool abort);
+    void checkForOpenGLErrors(const std::string when, const bool abort) const;
 
     /**
      * @brief Textures used in the scene, each corresponding to the name of one of
@@ -115,28 +115,30 @@ namespace small3d
      */
     std::unordered_map<std::string, GLuint> *textures;
 
-    void positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation);
+    void positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const;
 
     /**
      * @brief Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).
      */
 
-    void positionCamera();
+    void positionCamera() const;
 
     /**
      * @brief Get the handle of a texture which has already been generated (see generateTexture)
      * @param name The name of the texture
      * @return The texture handle (0 if not found)
      */
-    GLuint getTextureHandle(std::string name);
+    GLuint getTextureHandle(const std::string name) const;
 
-    GLuint generateTexture(std::string name, const float *data, unsigned long width, unsigned long height);
+    GLuint generateTexture(const std::string name, const float *data, const unsigned long width, 
+      const unsigned long height);
 
     /**
      * Hidden constructor, because Renderer is a singleton
      */
-    Renderer(std::string windowTitle, int width, int height, float frustumScale, float zNear,
-             float zFar, float zOffsetFromCamera, std::string shadersPath, std::string basePath);
+    Renderer(const std::string windowTitle, const int width, const int height, const float frustumScale,
+      const float zNear, const float zFar, const float zOffsetFromCamera, 
+      const std::string shadersPath, const std::string basePath);
     
     Renderer() {};
     
@@ -150,7 +152,7 @@ namespace small3d
     /**
      * @brief Get the GLFW window object, associated with the Renderer.
      */
-    GLFWwindow* getWindow();
+    GLFWwindow* getWindow() const;
 
     /**
      * @brief Vector, indicating the direction of the light in the scene.
@@ -201,10 +203,10 @@ namespace small3d
      *         sicne declaring another Renderer variable and assigning to it would invoke the default constructor, which has 
      *         been deleted.
      */
-    static Renderer& getInstance(std::string windowTitle = "", int width = 0, int height = 0,
-				 float frustumScale = 1.0f, float zNear = 1.0f,
-				 float zFar = 24.0f, float zOffsetFromCamera = -1.0f,
-				 std::string shadersPath = "resources/shaders/", std::string basePath = "");
+    static Renderer& getInstance(const std::string windowTitle = "", const int width = 0, 
+      const int height = 0, const float frustumScale = 1.0f, const float zNear = 1.0f,
+      const float zFar = 24.0f, const float zOffsetFromCamera = -1.0f,
+			const std::string shadersPath = "resources/shaders/", const std::string basePath = "");
 
     /**
      * @brief Destructor
@@ -216,7 +218,7 @@ namespace small3d
      * @param name The name by which the texture will be known
      * @param image The image from which the texture will be generated
      */
-    void generateTexture(std::string name, const Image image);
+    void generateTexture(const std::string name, const Image image);
 
     /**
      * @brief Deletes the texture indicated by the given name.
@@ -224,7 +226,7 @@ namespace small3d
      * @param	name	The name of the texture.
      */
 
-    void deleteTexture(std::string name);
+    void deleteTexture(const std::string name);
 
     /**
      * @brief Is OpenGL 3.3 supported?
@@ -232,7 +234,7 @@ namespace small3d
      * @return True if OpenGL 3.3 is supported, false otherwise
      */
 
-    bool supportsOpenGL33();
+    bool supportsOpenGL33() const;
 
     /**
     * @brief Render a rectangle, using two of its corners that are diagonally opposed to each
@@ -243,8 +245,8 @@ namespace small3d
     * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
     * @param colour The colour of the rectangle (RGBA). If this is set, textureName will be ignored.
     */
-    void renderRectangle(std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
-      const bool perspective = false, const glm::vec4 colour = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
+    void renderRectangle(const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+      const bool perspective = false, const glm::vec4 colour = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) const;
 
     /**
      * @brief Render a rectangle, using two of its corners that are diagonally opposed to each
@@ -255,8 +257,8 @@ namespace small3d
      * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
      */
     
-    void renderRectangle(glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, 
-      const bool perspective = false);
+    void renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, 
+      const bool perspective = false) const;
     
     /**
      * @brief Render a Model
@@ -267,7 +269,8 @@ namespace small3d
      * @param textureName The name of the texture to attach to the model (optional). The texture has to have been generated already.
      *                    If this is set, the colour parameter will be ignored
      */
-    void render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::vec4 colour, std::string textureName="");
+    void render(Model &model, const glm::vec3 offset, const glm::vec3 rotation, 
+      const glm::vec4 colour, const std::string textureName="") const;
 
     /**
      * @brief Render a Model
@@ -276,21 +279,22 @@ namespace small3d
      * @param rotation Rotation (x, y, z)
      * @param textureName The name of the texture to attach to the model. The texture has to have been generated already.
      */
-    void render(Model &model, glm::vec3 offset, glm::vec3 rotation, std::string textureName);
+    void render(Model &model, const glm::vec3 offset, const glm::vec3 rotation, 
+      const std::string textureName) const;
 
     /**
      * @brief Render a SceneObject
      * @param sceneObject The object
      * @param colour The colour the object. 
      */
-    void render(SceneObject &sceneObject, glm::vec4 colour);
+    void render(SceneObject &sceneObject, const glm::vec4 colour) const;
 
     /**
      * @brief Render a SceneObject
      * @param sceneObject The object
      * @param textureName The name of the texture to attach to the object. The texture has to have been generated already. 
      */
-    void render(SceneObject &sceneObject, std::string textureName);
+    void render(SceneObject &sceneObject, const std::string textureName) const;
 
     /**
      * @brief Render some text on the screen.

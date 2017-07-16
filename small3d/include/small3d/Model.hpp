@@ -113,7 +113,7 @@ namespace small3d {
      * @brief constructor
      * @param fileLocation Location of the Wavefront file from which to load the model.
      */
-    Model(std::string fileLocation);
+    Model(const std::string fileLocation);
 
   };
 }

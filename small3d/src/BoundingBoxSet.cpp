@@ -20,7 +20,7 @@ namespace small3d {
    * Constructor
    */
   
-  BoundingBoxSet::BoundingBoxSet(string fileLocation) {
+  BoundingBoxSet::BoundingBoxSet(const std::string fileLocation) {
     initLogger();
     vertices.clear();
     facesVertexIndexes.clear();
@@ -99,7 +99,7 @@ namespace small3d {
     
   }
   
-  bool BoundingBoxSet::collidesWith(glm::vec3 point) const {
+  bool BoundingBoxSet::collidesWith(const glm::vec3 point) const {
     bool collides = false;
     glm::mat4 rotationMatrix = rotateY(-rotation.y) * rotateX(-rotation.x) * rotateZ(-rotation.z);
     
@@ -153,13 +153,13 @@ namespace small3d {
     return collides;
   }
   
-  bool BoundingBoxSet::collidesWith(BoundingBoxSet &otherBoxSet) const {
+  bool BoundingBoxSet::collidesWith(const BoundingBoxSet otherBoxSet) const {
     bool collides = false;
     
     glm::mat4 rotationMatrix =
     rotateZ(otherBoxSet.rotation.z) * rotateX(otherBoxSet.rotation.x) * rotateY(otherBoxSet.rotation.y);
     
-    for (vector<vector<float> >::iterator vertex = otherBoxSet.vertices.begin();
+    for (auto vertex = otherBoxSet.vertices.begin();
          vertex != otherBoxSet.vertices.end(); ++vertex) {
       
       glm::vec4 otherCoords(vertex->at(0), vertex->at(1), vertex->at(2), 1.0f);

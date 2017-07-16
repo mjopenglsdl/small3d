@@ -176,7 +176,7 @@ namespace small3d {
   }
 
 
-  Model::Model(string fileLocation) {
+  Model::Model(const string fileLocation) {
     ifstream file(fileLocation.c_str());
     string line;
     if (file.is_open()) {

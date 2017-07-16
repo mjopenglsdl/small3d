@@ -38,7 +38,7 @@ namespace small3d {
      *
      * @param fileLocation Location of the png image file
      */
-    Image(std::string fileLocation = "");
+    Image(const std::string fileLocation = "");
 
     /**
      * @brief Destructor

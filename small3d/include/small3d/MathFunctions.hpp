@@ -28,27 +28,27 @@ namespace small3d {
    * @param angle The angle to rotate by, in radians.
    * @return The X rotation matrix
    */
-  glm::mat4x4 rotateX(float angle);
+  glm::mat4x4 rotateX(const float angle);
 
   /**
    * @brief Rotation transformation for rotating around the Y axis
    * @param angle The angle to rotate by, in radians.
    * @return The Y rotation matrix
    */
-  glm::mat4x4 rotateY(float angle);
+  glm::mat4x4 rotateY(const float angle);
 
   /**
    * @brief Rotation transformation for rotating around the Z axis
    * @param angle The angle to rotate by, in radians.
    * @return The Z rotation matrix
    */
-  glm::mat4x4 rotateZ(float angle);
+  glm::mat4x4 rotateZ(const float angle);
 
   /**
    * Convert an integer to a string
    * @param number The integer
    * @return The integer, converted to a string
    */
-  std::string intToStr(int number);
+  std::string intToStr(const int number);
 
 }

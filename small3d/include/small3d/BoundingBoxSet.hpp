@@ -52,7 +52,7 @@ namespace small3d {
      *
      */
 
-    BoundingBoxSet(std::string fileLocation = "");
+    BoundingBoxSet(const std::string fileLocation = "");
 
     /**
      * @brief Destructor
@@ -80,7 +80,7 @@ namespace small3d {
      * @return	true if there is a collision, false if not.
      */
 
-    bool collidesWith(glm::vec3 point) const;
+    bool collidesWith(const glm::vec3 point) const;
 
     /**
      * @brief Check if another set of bounding boxes is located with this set (even partially), 
@@ -91,7 +91,7 @@ namespace small3d {
      * @return	true if there is a collision, false if not.
      */
 
-    bool collidesWith(BoundingBoxSet &otherBoxSet) const;
+    bool collidesWith(const BoundingBoxSet otherBoxSet) const;
 
   };
 }

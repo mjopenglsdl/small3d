@@ -23,10 +23,10 @@ namespace small3d {
   
   string openglErrorToString(GLenum error);
   
-  Renderer::Renderer(string windowTitle, int width, int height,
-                     float frustumScale , float zNear,
-                     float zFar, float zOffsetFromCamera,
-                     string shadersPath, string basePath) {
+  Renderer::Renderer(const string windowTitle, const int width, const int height,
+                     const float frustumScale , const float zNear,
+                     const float zFar, const float zOffsetFromCamera,
+                     const string shadersPath, const string basePath) {
     
     isOpenGL33Supported = false;
     window = 0;
@@ -50,8 +50,9 @@ namespace small3d {
     }
   }
   
-  Renderer& Renderer::getInstance(std::string windowTitle, int width, int height, float frustumScale, float zNear,
-                                  float zFar, float zOffsetFromCamera, std::string shadersPath, std::string basePath) {
+  Renderer& Renderer::getInstance(const std::string windowTitle, const int width, const int height,
+    const float frustumScale, const float zNear, const float zFar, const float zOffsetFromCamera, 
+    const std::string shadersPath, const std::string basePath) {
     static Renderer instance(windowTitle, width, height, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath, basePath);
     return instance;
   }
@@ -87,11 +88,11 @@ namespace small3d {
     
   }
   
-  GLFWwindow* Renderer::getWindow() {
+  GLFWwindow* Renderer::getWindow() const{
     return window;
   }
   
-  string Renderer::loadShaderFromFile(string fileLocation) {
+  string Renderer::loadShaderFromFile(const string fileLocation) const {
     initLogger();
     string shaderSource = "";
     ifstream file((basePath + fileLocation).c_str());
@@ -152,7 +153,7 @@ namespace small3d {
     
   }
   
-  GLuint Renderer::compileShader(string shaderSourceFile, const GLenum shaderType) {
+  GLuint Renderer::compileShader(const string shaderSourceFile, const GLenum shaderType) const {
     
     GLuint shader = glCreateShader(shaderType);
     
@@ -216,7 +217,7 @@ namespace small3d {
     }
   }
   
-  void Renderer::checkForOpenGLErrors(string when, bool abort) {
+  void Renderer::checkForOpenGLErrors(const string when, const bool abort) const {
     GLenum errorCode = glGetError();
     if (errorCode != GL_NO_ERROR) {
       LOGERROR("OpenGL error while " + when);
@@ -232,7 +233,7 @@ namespace small3d {
     }
   }
   
-  void Renderer::initWindow(int &width, int &height, const string &windowTitle) {
+  void Renderer::initWindow(int &width, int &height, const string windowTitle) {
     
     glfwSetErrorCallback(error_callback);
     
@@ -276,10 +277,10 @@ namespace small3d {
     
   }
   
-  void Renderer::init(int width, int height, string windowTitle,
-                      float frustumScale, float zNear,
-                      float zFar, float zOffsetFromCamera,
-                      string shadersPath) {
+  void Renderer::init(const int width, const int height, const string windowTitle,
+                      const float frustumScale, const float zNear,
+                      const float zFar, const float zOffsetFromCamera,
+                      const string shadersPath) {
     
     int screenWidth = width;
     int screenHeight = height;
@@ -398,7 +399,8 @@ namespace small3d {
     glUseProgram(0);
   }
   
-  GLuint Renderer::generateTexture(string name, const float* data, unsigned long width, unsigned long height) {
+  GLuint Renderer::generateTexture(const string name, const float* data, const unsigned long width,
+    const unsigned long height) {
     
     GLuint textureHandle;
     
@@ -418,11 +420,11 @@ namespace small3d {
     return textureHandle;
   }
 
-  void Renderer::generateTexture(std::string name, const Image image) {
+  void Renderer::generateTexture(const std::string name, const Image image) {
     this->generateTexture(name, image.getData(), image.getWidth(), image.getHeight());
   }
   
-  void Renderer::deleteTexture(string name) {
+  void Renderer::deleteTexture(const string name) {
     unordered_map<string, GLuint>::iterator nameTexturePair = textures->find(name);
     
     if (nameTexturePair != textures->end()) {
@@ -431,7 +433,7 @@ namespace small3d {
     }
   }
   
-  GLuint Renderer::getTextureHandle(string name) {
+  GLuint Renderer::getTextureHandle(const string name) const {
     GLuint handle = 0;
     
     unordered_map<string, GLuint>::iterator nameTexturePair = textures->find(name);
@@ -443,11 +445,11 @@ namespace small3d {
     return handle;
   }
   
-  bool Renderer::supportsOpenGL33() {
+  bool Renderer::supportsOpenGL33() const {
     return isOpenGL33Supported;
   }
   
-  void Renderer::positionNextObject(const glm::vec3 &offset, const glm::vec3 &rotation) {
+  void Renderer::positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const {
     // Rotation
     
     GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
@@ -467,7 +469,7 @@ namespace small3d {
   }
   
   
-  void Renderer::positionCamera() {
+  void Renderer::positionCamera() const {
     // Camera rotation
     
     GLint xCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
@@ -489,8 +491,8 @@ namespace small3d {
   }
   
   
-  void Renderer::renderRectangle(string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
-                               const bool perspective, const glm::vec4 colour) {
+  void Renderer::renderRectangle(const string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+                               const bool perspective, const glm::vec4 colour) const {
     
     float vertices[16] = {
       bottomRight.x, bottomRight.y, bottomRight.z, 1.0f,
@@ -601,12 +603,13 @@ namespace small3d {
     checkForOpenGLErrors("rendering rectangle", true);
   }
 
-  void Renderer::renderRectangle(glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight,
-    const bool perspective) {
+  void Renderer::renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+    const bool perspective) const {
     this->renderRectangle("", topLeft, bottomRight, perspective, colour);
   }
   
-  void Renderer::render(Model &model, glm::vec3 offset, glm::vec3 rotation, glm::vec4 colour, string textureName) {
+  void Renderer::render(Model &model, const glm::vec3 offset, const glm::vec3 rotation, 
+    const glm::vec4 colour, const string textureName) const {
     
     glUseProgram(perspectiveProgram);
     
@@ -742,16 +745,17 @@ namespace small3d {
     
   }
 
-  void Renderer::render(Model &model, glm::vec3 offset, glm::vec3 rotation, string textureName) {
+  void Renderer::render(Model &model, const glm::vec3 offset, const glm::vec3 rotation,
+    const string textureName) const {
 
     this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
 
-  void Renderer::render(SceneObject &sceneObject, glm::vec4 colour) {
+  void Renderer::render(SceneObject &sceneObject, const glm::vec4 colour) const {
     this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, colour, "");
   }
 
-  void Renderer::render(SceneObject &sceneObject, std::string textureName) {
+  void Renderer::render(SceneObject &sceneObject, const std::string textureName) const {
     this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
   

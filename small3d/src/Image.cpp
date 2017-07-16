@@ -14,7 +14,7 @@ using namespace std;
 
 namespace small3d {
 
-  Image::Image(string fileLocation) : imageData() {
+  Image::Image(const string fileLocation) : imageData() {
     initLogger();
     width = 0;
     height = 0;
