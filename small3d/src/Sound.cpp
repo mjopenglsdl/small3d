@@ -95,7 +95,7 @@ namespace small3d {
     ++numInstances;
   }
   
-  Sound::Sound(std::string soundFilePath) : Sound() {
+  Sound::Sound(const std::string soundFilePath) : Sound() {
     this->load(soundFilePath);
   }
 
@@ -112,7 +112,7 @@ namespace small3d {
     }
   }
 
-  void Sound::load(std::string soundFilePath) {
+  void Sound::load(const std::string soundFilePath) {
     
     if (!noOutputDevice) {
       
@@ -210,7 +210,7 @@ namespace small3d {
   }
   
 
-  void Sound::play(bool repeat) {
+  void Sound::play(const bool repeat) {
     if (!noOutputDevice && this->soundData.size > 0) {
       
       PaError error;

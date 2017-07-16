@@ -10,7 +10,8 @@
 
 namespace small3d {
 
-  SceneObject::SceneObject(string name, string modelPath, int numFrames, string boundingBoxSetPath) :
+  SceneObject::SceneObject(const string name, const string modelPath, const int numFrames, 
+    const string boundingBoxSetPath) :
     offset(0,0,0), rotation(0,0,0), boundingBoxSet(boundingBoxSetPath) {
     
     initLogger();
@@ -44,7 +45,7 @@ namespace small3d {
     return model[currentFrame];
   }
 
-  const string SceneObject::getName() {
+  const string SceneObject::getName() const {
     return name;
   }
 
@@ -60,7 +61,7 @@ namespace small3d {
     currentFrame = 0;
   }
 
-  void SceneObject::setFrameDelay(const int &delay) {
+  void SceneObject::setFrameDelay(const int delay) {
     this->frameDelay = delay;
   }
 
@@ -77,7 +78,7 @@ namespace small3d {
     }
   }
 
-  bool SceneObject::collidesWith(glm::vec3 point) {
+  bool SceneObject::collidesWith(const glm::vec3 point) {
     if (boundingBoxSet.vertices.size() == 0) {
       throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
@@ -88,7 +89,7 @@ namespace small3d {
     return boundingBoxSet.collidesWith(point);
   }
 
-  bool SceneObject::collidesWith(SceneObject &otherObject) {
+  bool SceneObject::collidesWith(SceneObject otherObject) {
     if (boundingBoxSet.vertices.size() == 0) {
       throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
@@ -109,7 +110,7 @@ namespace small3d {
       otherObject.boundingBoxSet.collidesWith(boundingBoxSet);
   }
 
-  bool SceneObject::isAnimated() {
+  bool SceneObject::isAnimated() const {
     return numFrames > 1;
   }
 

@@ -47,7 +47,7 @@ namespace small3d {
 			     const PaStreamCallbackTimeInfo *timeInfo,
 			     PaStreamCallbackFlags statusFlags,
 			     void *userData);
-    void load(std::string soundFilePath);
+    void load(const std::string soundFilePath);
     void openStream();
 
   public:
@@ -60,7 +60,7 @@ namespace small3d {
      * @brief Ogg file loading constructor
      * @param soundFilePath The path to the ogg file from which to load the sound.
      */
-    Sound(std::string soundFilePath);
+    Sound(const std::string soundFilePath);
 
     /**
      * @brief Destructor
@@ -71,7 +71,7 @@ namespace small3d {
      * @brief Play the sound.
      * @brief repeat Repeat the sound after it ends?
      */
-    void play(bool repeat=false);
+    void play(const bool repeat=false);
 
     /**
      * @brief Stop playing the sound.

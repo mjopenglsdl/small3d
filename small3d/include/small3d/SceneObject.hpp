@@ -57,7 +57,8 @@ namespace small3d
      * @param boundingBoxSetPath  The path to the file containing the object's bounding box set. If no such
      * 				  path is given, the object cannot be checked for collision detection.
      */
-    SceneObject(std::string name, std::string modelPath, int numFrames = 1, std::string boundingBoxSetPath = "");
+    SceneObject(const std::string name, const std::string modelPath, const int numFrames = 1, 
+      const std::string boundingBoxSetPath = "");
 
     /**
      * @brief Destructor
@@ -74,13 +75,13 @@ namespace small3d
      * Is this an animated or a static object (is it associated with more than one frames/models)?
      * @return True if animated, False otherwise.
      */
-    bool isAnimated() ;
+    bool isAnimated() const;
 
     /**
      * @brief Get the name of the object
      * @return The name of the object
      */
-    const std::string getName();
+    const std::string getName() const;
 
     /**
      * Offset (position) of the object
@@ -111,7 +112,7 @@ namespace small3d
      * @brief Set the animation speed
      * @param delay The delay between each animation frame, expressed in number of game frames
      */
-    void setFrameDelay(const int &delay);
+    void setFrameDelay(const int delay);
 
     /**
      * @brief Process animation (progress current frame if necessary)
@@ -132,7 +133,7 @@ namespace small3d
      * @return	true if a collision is detected, false otherwise.
      */
 
-    bool collidesWith(glm::vec3 point);
+    bool collidesWith(const glm::vec3 point);
 
     /**
      *
@@ -143,7 +144,7 @@ namespace small3d
      * @return	true if there is a collision, false if not.
      */
 
-    bool collidesWith(SceneObject &otherObject);
+    bool collidesWith(SceneObject otherObject);
 
   };
   

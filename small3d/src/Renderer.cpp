@@ -759,9 +759,8 @@ namespace small3d {
     this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
   
-  void Renderer::write(string text, glm::vec3 colour, glm::vec2 topLeft, glm::vec2 bottomRight,
-                       int fontSize, string fontPath)
-  {
+  void Renderer::write(const string text, const glm::vec3 colour, const glm::vec2 topLeft, 
+    const glm::vec2 bottomRight, const int fontSize, string fontPath) {
     
     string faceId = intToStr(fontSize) + fontPath;
     
@@ -799,7 +798,7 @@ namespace small3d {
     unsigned long width = 0, height =0;
     
     // Figure out bitmap dimensions
-    for(char &c: text) {
+    for(const char &c: text) {
       
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
       
@@ -821,7 +820,7 @@ namespace small3d {
     
     unsigned long totalAdvance = 0;
     
-    for(char &c: text) {
+    for(const char &c: text) {
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
       if (error != 0) {
         throw runtime_error("Failed to load character glyph.");
@@ -860,7 +859,7 @@ namespace small3d {
     deleteTexture(textureName);
   }
   
-  void Renderer::clearBuffers(Model &model) {
+  void Renderer::clearBuffers(Model &model) const {
     
     if (model.positionBufferObjectId != 0) {
       glDeleteBuffers(1, &model.positionBufferObjectId);
@@ -890,18 +889,18 @@ namespace small3d {
     
   }
   
-  void Renderer::clearScreen() {
+  void Renderer::clearScreen() const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
   
-  void Renderer::clearScreen(glm::vec4 colour) {
+  void Renderer::clearScreen(const glm::vec4 colour) const {
     
     glClearColor(colour.r, colour.g, colour.b, colour.a);
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
   
-  void Renderer::swapBuffers() {
+  void Renderer::swapBuffers() const {
     glfwSwapBuffers(window);
     
   }

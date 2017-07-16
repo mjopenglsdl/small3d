@@ -305,31 +305,32 @@ namespace small3d
      * @param fontSize The size of the font which will be used
      * @param fontPath Path to the TrueType font (.ttf) which will be used
      */
-    void write(std::string text, glm::vec3 colour, glm::vec2 topLeft, glm::vec2 bottomRight, int fontSize=48,
-	       std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf");
+    void write(const std::string text, const glm::vec3 colour, const glm::vec2 topLeft, 
+      const glm::vec2 bottomRight, const int fontSize=48,
+      const std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf");
 
     /**
      * @brief Clear a Model from the GPU buffers (the object itself remains intact)
      * @param model The model
      */
-    void clearBuffers(Model &model);
+    void clearBuffers(Model &model) const;
 
     /**
      * @brief Clears the screen.
      */
-    void clearScreen();
+    void clearScreen() const;
 
     /**
      * @brief Clears the screen.
      * @param colour The colour with which the screen is to be cleared
      */
-    void clearScreen(glm::vec4 colour);
+    void clearScreen(const glm::vec4 colour) const;
 
     /**
      * @brief This is a double buffered system and this command swaps
      * the buffers.
      */
-    void swapBuffers();
+    void swapBuffers() const;
 
   };
   
