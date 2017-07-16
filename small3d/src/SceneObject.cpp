@@ -82,11 +82,7 @@ namespace small3d {
     if (boundingBoxSet.vertices.size() == 0) {
       throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
-
-    boundingBoxSet.offset = this->offset;
-    boundingBoxSet.rotation = this->rotation;
-
-    return boundingBoxSet.collidesWith(point);
+    return boundingBoxSet.collidesWith(point, this->offset, this->rotation);
   }
 
   bool SceneObject::collidesWith(SceneObject otherObject) {
@@ -99,15 +95,11 @@ namespace small3d {
 			  "No bounding boxes have been provided for " + otherObject.name + ", so collision detection is not enabled.");
     }
 
-    boundingBoxSet.offset = offset;
-    boundingBoxSet.rotation = rotation;
-
-    otherObject.boundingBoxSet.offset = otherObject.offset;
-    otherObject.boundingBoxSet.rotation = otherObject.rotation;
-
     // Checking whether the boxes of this object are within the boxes of the other object or vice versa
-    return boundingBoxSet.collidesWith(otherObject.boundingBoxSet) ||
-      otherObject.boundingBoxSet.collidesWith(boundingBoxSet);
+    return boundingBoxSet.collidesWith(otherObject.boundingBoxSet, this->offset, this->rotation,
+      otherObject.offset, otherObject.rotation) ||
+      otherObject.boundingBoxSet.collidesWith(boundingBoxSet, otherObject.offset, otherObject.rotation,
+        this->offset, this->rotation);
   }
 
   bool SceneObject::isAnimated() const {

@@ -99,11 +99,13 @@ namespace small3d {
     
   }
   
-  bool BoundingBoxSet::collidesWith(const glm::vec3 point) const {
+  bool BoundingBoxSet::collidesWith(const glm::vec3 point, const glm::vec3 thisOffset,
+    const glm::vec3 thisRotation) const {
     bool collides = false;
-    glm::mat4 rotationMatrix = rotateY(-rotation.y) * rotateX(-rotation.x) * rotateZ(-rotation.z);
+    glm::mat4 rotationMatrix = rotateY(-thisRotation.y) * rotateX(-thisRotation.x) * 
+      rotateZ(-thisRotation.z);
     
-    glm::vec4 pointInBoxSpace = glm::vec4(point, 1.0f) - glm::vec4(offset, 0.0f);
+    glm::vec4 pointInBoxSpace = glm::vec4(point, 1.0f) - glm::vec4(thisOffset, 0.0f);
     pointInBoxSpace = rotationMatrix * pointInBoxSpace;
     
     for (int idx = 0; idx < numBoxes; ++idx) {
@@ -153,11 +155,12 @@ namespace small3d {
     return collides;
   }
   
-  bool BoundingBoxSet::collidesWith(const BoundingBoxSet otherBoxSet) const {
+  bool BoundingBoxSet::collidesWith(const BoundingBoxSet otherBoxSet, const glm::vec3 thisOffset,
+    const glm::vec3 thisRotation, const glm::vec3 otherOffset, const glm::vec3 otherRotation) const {
     bool collides = false;
     
     glm::mat4 rotationMatrix =
-    rotateZ(otherBoxSet.rotation.z) * rotateX(otherBoxSet.rotation.x) * rotateY(otherBoxSet.rotation.y);
+    rotateZ(otherRotation.z) * rotateX(otherRotation.x) * rotateY(otherRotation.y);
     
     for (auto vertex = otherBoxSet.vertices.begin();
          vertex != otherBoxSet.vertices.end(); ++vertex) {
@@ -167,11 +170,12 @@ namespace small3d {
       
       rotatedOtherCoords =  rotationMatrix * otherCoords;
       
-      rotatedOtherCoords.x += otherBoxSet.offset.x;
-      rotatedOtherCoords.y += otherBoxSet.offset.y;
-      rotatedOtherCoords.z += otherBoxSet.offset.z;
+      rotatedOtherCoords.x += otherOffset.x;
+      rotatedOtherCoords.y += otherOffset.y;
+      rotatedOtherCoords.z += otherOffset.z;
       
-      if (collidesWith(glm::vec3(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z))) {
+      if (collidesWith(glm::vec3(rotatedOtherCoords.x, rotatedOtherCoords.y, rotatedOtherCoords.z), 
+        thisOffset, thisRotation)) {
         
         collides = true;
         break;

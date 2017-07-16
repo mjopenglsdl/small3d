@@ -122,15 +122,10 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
     bboxes.facesVertexIndexes[idx][1] << ", " <<
     bboxes.facesVertexIndexes[idx][2] << ", " <<
     bboxes.facesVertexIndexes[idx][3] << ", " << endl;
-    
   }
   
-  bboxes.offset.x = 0.0f;
-  bboxes.offset.y = 0.1f;
-  bboxes.offset.z = 0.1f;
-  bboxes.rotation = glm::vec3(0.0f, 0.0f, 0.0f);
-  
-  EXPECT_FALSE(bboxes.collidesWith(glm::vec3(0.1f, 0.1f, 0.1f)));
+  EXPECT_FALSE(bboxes.collidesWith(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.1f, 0.1f), 
+    glm::vec3(0.0f, 0.0f, 0.0f)));
   
 }
 

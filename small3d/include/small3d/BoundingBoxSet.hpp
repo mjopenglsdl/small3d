@@ -35,18 +35,6 @@ namespace small3d {
     int getNumBoxes() const;
 
     /**
-     * @brief The offset of the set of bounding boxes (their position on the scene).
-     */
-
-    glm::vec3 offset;
-
-    /**
-     * @brief The roation (around the x, y and z axes) of the set of bounding boxes.
-     */
-
-    glm::vec3 rotation;
-
-    /**
      * @brief Constructor
      * @param fileLocation Location of the Wavefront file containing the bounding boxes
      *
@@ -72,26 +60,30 @@ namespace small3d {
     std::vector<std::vector<unsigned int> > facesVertexIndexes;
 
     /**
-     * @brief Check if a point collides (or is inside) any of the boxes
-     * assuming that they are in a given offset and have a certain rotation.
-     *
-     * @param	point		 	The point (as a vector)
-     *
-     * @return	true if there is a collision, false if not.
+     * @brief Check if a point collides (or is inside) any of the boxes of the box set,
+     *        assuming that they are in a given offset and have a certain rotation.
+     * @param	point The point (as a vector)
+     * @param thisOffset The offset (location) of the box set
+     * @param thisRotation The rotation of the box set
+     * @return true if there is a collision, false if not.
      */
 
-    bool collidesWith(const glm::vec3 point) const;
+    bool collidesWith(const glm::vec3 point, const glm::vec3 thisOffset,
+      const glm::vec3 thisRotation) const;
 
     /**
      * @brief Check if another set of bounding boxes is located with this set (even partially), 
-     * thus colliding with it.
-     *
+     *        thus colliding with it.
      * @param otherBoxSet The other box set
-     *
+     * @param thisOffset The offset (location) of this box set
+     * @param thisRotation The rotation of this box set
+     * @param otherOffset The offset (location) of the other box set
+     * @param otherRotation The rotation of the other box set
      * @return	true if there is a collision, false if not.
      */
 
-    bool collidesWith(const BoundingBoxSet otherBoxSet) const;
+    bool collidesWith(const BoundingBoxSet otherBoxSet, const glm::vec3 thisOffset, 
+      const glm::vec3 thisRotation, const glm::vec3 otherOffset, const glm::vec3 otherRotation) const;
 
   };
 }
