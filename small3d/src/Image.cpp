@@ -10,11 +10,9 @@
 #include <stdexcept>
 #include "MathFunctions.hpp"
 
-using namespace std;
-
 namespace small3d {
 
-  Image::Image(const string fileLocation) : imageData() {
+  Image::Image(const std::string fileLocation) : imageData() {
     initLogger();
     width = 0;
     height = 0;
@@ -24,7 +22,7 @@ namespace small3d {
       this->loadFromFile(fileLocation);
   }
 
-  void Image::loadFromFile(const string &fileLocation) {
+  void Image::loadFromFile(const std::string fileLocation) {
     // function developed based on example at
     // http://zarb.org/~gc/html/libpng.html
 #if defined(_WIN32) && !defined(__MINGW32__)
@@ -34,8 +32,7 @@ namespace small3d {
     FILE *fp = fopen(fileLocation.c_str(), "rb");
 #endif
     if (!fp) {
-      throw runtime_error(
-        "Could not open file " + fileLocation);
+      throw std::runtime_error("Could not open file " + fileLocation);
     }
 
     png_infop pngInformation = nullptr;
@@ -48,7 +45,7 @@ namespace small3d {
     fread(header, 1, 8, fp);
 
     if (png_sig_cmp(header, 0, 8)) {
-      throw runtime_error(
+      throw std::runtime_error(
         "File " + fileLocation
         + " is not recognised as a PNG file.");
     }
@@ -58,7 +55,7 @@ namespace small3d {
 
     if (!pngStructure) {
       fclose(fp);
-      throw runtime_error("Could not create PNG read structure.");
+      throw std::runtime_error("Could not create PNG read structure.");
     }
 
     pngInformation = png_create_info_struct(pngStructure);
@@ -66,7 +63,7 @@ namespace small3d {
     if (!pngInformation) {
       png_destroy_read_struct(&pngStructure, nullptr, nullptr);
       fclose(fp);
-      throw runtime_error("Could not create PNG information structure.");
+      throw std::runtime_error("Could not create PNG information structure.");
     }
 
     if (setjmp(png_jmpbuf(pngStructure))) {
@@ -74,7 +71,7 @@ namespace small3d {
       pngStructure = nullptr;
       pngInformation = nullptr;
       fclose(fp);
-      throw runtime_error("PNG read: Error calling setjmp. (1)");
+      throw std::runtime_error("PNG read: Error calling setjmp. (1)");
     }
 
     png_init_io(pngStructure, fp);
@@ -95,7 +92,7 @@ namespace small3d {
       pngStructure = nullptr;
       pngInformation = nullptr;
       fclose(fp);
-      throw runtime_error("PNG read: Error calling setjmp. (2)");
+      throw std::runtime_error("PNG read: Error calling setjmp. (2)");
     }
 
     rowPointers = new png_bytep[sizeof(png_bytep) * height];
@@ -108,7 +105,7 @@ namespace small3d {
     png_read_image(pngStructure, rowPointers);
 
     if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA) {
-      throw runtime_error(
+      throw std::runtime_error(
         "Image format not recognised. Only RGB / RGBA png images are supported.");
     }
 

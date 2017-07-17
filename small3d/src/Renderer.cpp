@@ -12,16 +12,14 @@
 #include "MathFunctions.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
-using namespace std;
-
 namespace small3d {
 
   void error_callback(int error, const char* description)
   {
-    LOGERROR(string(description));
+    LOGERROR(std::string(description));
   }
   
-  string openglErrorToString(GLenum error);
+  std::string openglErrorToString(GLenum error);
   
   Renderer::Renderer(const std::string windowTitle, const int width, const int height,
                      const float frustumScale , const float zNear,
@@ -32,7 +30,7 @@ namespace small3d {
     window = 0;
     perspectiveProgram = 0;
     orthographicProgram = 0;
-    textures = new unordered_map<string, GLuint>();
+    textures = new std::unordered_map<std::string, GLuint>();
     noShaders = false;
     lightDirection = glm::vec3(0.0f, 0.9f, 0.2f);
     cameraPosition = glm::vec3(0, 0, 0);
@@ -46,7 +44,7 @@ namespace small3d {
     FT_Error ftError = FT_Init_FreeType( &library );
     
     if(ftError != 0) {
-      throw runtime_error("Unable to initialise font system");
+      throw std::runtime_error("Unable to initialise font system");
     }
   }
   
@@ -59,7 +57,7 @@ namespace small3d {
   
   Renderer::~Renderer() {
     LOGDEBUG("Renderer destructor running");
-    for (unordered_map<string, GLuint>::iterator it = textures->begin();
+    for (auto it = textures->begin();
          it != textures->end(); ++it) {
       LOGDEBUG("Deleting texture " + it->first);
       glDeleteTextures(1, &it->second);
@@ -92,20 +90,20 @@ namespace small3d {
     return window;
   }
   
-  string Renderer::loadShaderFromFile(const string fileLocation) const {
+  std::string Renderer::loadShaderFromFile(const std::string fileLocation) const {
     initLogger();
-    string shaderSource = "";
-    ifstream file((basePath + fileLocation).c_str());
-    string line;
+    std::string shaderSource = "";
+    std::ifstream file((basePath + fileLocation).c_str());
+    std::string line;
     if (file.is_open()) {
-      while (getline(file, line)) {
+      while (std::getline(file, line)) {
         shaderSource += line + "\n";
       }
     }
     return shaderSource;
   }
   
-  string Renderer::getProgramInfoLog(const GLuint linkedProgram) const {
+  std::string Renderer::getProgramInfoLog(const GLuint linkedProgram) const {
     
     GLint infoLogLength;
     
@@ -117,7 +115,7 @@ namespace small3d {
     
     glGetProgramInfoLog(linkedProgram, infoLogLength, &lengthReturned, infoLog);
     
-    string infoLogStr(infoLog);
+    std::string infoLogStr(infoLog);
     
     if (lengthReturned == 0) {
       infoLogStr = "(No info)";
@@ -129,7 +127,7 @@ namespace small3d {
     
   }
   
-  string Renderer::getShaderInfoLog(const GLuint shader) const {
+  std::string Renderer::getShaderInfoLog(const GLuint shader) const {
     
     GLint infoLogLength;
     
@@ -141,7 +139,7 @@ namespace small3d {
     
     glGetShaderInfoLog(shader, infoLogLength, &lengthReturned, infoLog);
     
-    string infoLogStr(infoLog);
+    std::string infoLogStr(infoLog);
     
     if (lengthReturned == 0) {
       infoLogStr = "(No info)";
@@ -153,14 +151,14 @@ namespace small3d {
     
   }
   
-  GLuint Renderer::compileShader(const string shaderSourceFile, const GLenum shaderType) const {
+  GLuint Renderer::compileShader(const std::string shaderSourceFile, const GLenum shaderType) const {
     
     GLuint shader = glCreateShader(shaderType);
     
-    string shaderSource = this->loadShaderFromFile(shaderSourceFile);
+    std::string shaderSource = this->loadShaderFromFile(shaderSourceFile);
     
     if (shaderSource.length() == 0) {
-      throw runtime_error("Shader source file '" + shaderSourceFile + "' is empty or not found.");
+      throw std::runtime_error("Shader source file '" + shaderSourceFile + "' is empty or not found.");
     }
     
     const char *shaderSourceChars = shaderSource.c_str();
@@ -172,7 +170,7 @@ namespace small3d {
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
     if (status == GL_FALSE ) {
       
-      throw runtime_error(
+      throw std::runtime_error(
 			  "Failed to compile shader:\n" + shaderSource + "\n"
 			  + this->getShaderInfoLog(shader));
     }
@@ -190,16 +188,16 @@ namespace small3d {
     GLenum initResult = glewInit();
     
     if (initResult != GLEW_OK) {
-      throw runtime_error("Error initialising GLEW");
+      throw std::runtime_error("Error initialising GLEW");
     }
     else {
-      string glewVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glewGetString(GLEW_VERSION)));
+      std::string glewVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glewGetString(GLEW_VERSION)));
       LOGINFO("Using GLEW version " + glewVersion);
     }
     
     checkForOpenGLErrors("initialising GLEW", false);
     
-    string glVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)));
+    std::string glVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)));
     glVersion = "OpenGL version supported by machine: " + glVersion;
     LOGINFO(glVersion);
     
@@ -212,12 +210,12 @@ namespace small3d {
     }
     else {
       noShaders = true;
-      throw runtime_error(
+      throw std::runtime_error(
 			  "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
     }
   }
   
-  void Renderer::checkForOpenGLErrors(const string when, const bool abort) const {
+  void Renderer::checkForOpenGLErrors(const std::string when, const bool abort) const {
     GLenum errorCode = glGetError();
     if (errorCode != GL_NO_ERROR) {
       LOGERROR("OpenGL error while " + when);
@@ -229,16 +227,16 @@ namespace small3d {
       while (errorCode != GL_NO_ERROR);
       
       if (abort)
-        throw runtime_error("OpenGL error while " + when);
+        throw std::runtime_error("OpenGL error while " + when);
     }
   }
   
-  void Renderer::initWindow(int &width, int &height, const string windowTitle) {
+  void Renderer::initWindow(int &width, int &height, const std::string windowTitle) {
     
     glfwSetErrorCallback(error_callback);
     
     if (!glfwInit()){
-      throw runtime_error("Unable to initialise GLFW");
+      throw std::runtime_error("Unable to initialise GLFW");
     }
     
 #ifdef __APPLE__
@@ -253,7 +251,7 @@ namespace small3d {
     GLFWmonitor *monitor = nullptr; // If NOT null, a full-screen window will be created.
     
     if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
-      throw runtime_error("Screen width and height both have to be equal or not equal to zero at the same time.");
+      throw std::runtime_error("Screen width and height both have to be equal or not equal to zero at the same time.");
     }
     else if (width == 0) {
       
@@ -270,17 +268,17 @@ namespace small3d {
     
     window = glfwCreateWindow(width, height, windowTitle.c_str(), monitor, nullptr);
     if (!window){
-      throw runtime_error(string("Unable to create GLFW window"));
+      throw std::runtime_error("Unable to create GLFW window");
     }
     
     glfwMakeContextCurrent(window);
     
   }
   
-  void Renderer::init(const int width, const int height, const string windowTitle,
+  void Renderer::init(const int width, const int height, const std::string windowTitle,
                       const float frustumScale, const float zNear,
                       const float zFar, const float zOffsetFromCamera,
-                      const string shadersPath) {
+                      const std::string shadersPath) {
     
     int screenWidth = width;
     int screenHeight = height;
@@ -294,10 +292,10 @@ namespace small3d {
     
     this->detectOpenGLVersion();
     
-    string vertexShaderPath;
-    string fragmentShaderPath;
-    string simpleVertexShaderPath;
-    string simpleFragmentShaderPath;
+    std::string vertexShaderPath;
+    std::string fragmentShaderPath;
+    std::string simpleVertexShaderPath;
+    std::string simpleFragmentShaderPath;
     
     if (isOpenGL33Supported) {
       vertexShaderPath = shadersPath + "OpenGL33/perspectiveMatrixLightedShader.vert";
@@ -335,7 +333,7 @@ namespace small3d {
     GLint status;
     glGetProgramiv(perspectiveProgram, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-      throw runtime_error("Failed to link program:\n" + this->getProgramInfoLog(perspectiveProgram));
+      throw std::runtime_error("Failed to link program:\n" + this->getProgramInfoLog(perspectiveProgram));
     }
     else {
       LOGDEBUG("Linked main rendering program successfully");
@@ -387,7 +385,7 @@ namespace small3d {
     
     glGetProgramiv(orthographicProgram, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-      throw runtime_error("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
+      throw std::runtime_error("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
     }
     else {
       LOGDEBUG("Linked orthographic rendering program successfully");
@@ -424,8 +422,8 @@ namespace small3d {
     this->generateTexture(name, image.getData(), image.getWidth(), image.getHeight());
   }
   
-  void Renderer::deleteTexture(const string name) {
-    unordered_map<string, GLuint>::iterator nameTexturePair = textures->find(name);
+  void Renderer::deleteTexture(const std::string name) {
+    auto nameTexturePair = textures->find(name);
     
     if (nameTexturePair != textures->end()) {
       glDeleteTextures(1, &(nameTexturePair->second));
@@ -433,10 +431,10 @@ namespace small3d {
     }
   }
   
-  GLuint Renderer::getTextureHandle(const string name) const {
+  GLuint Renderer::getTextureHandle(const std::string name) const {
     GLuint handle = 0;
     
-    unordered_map<string, GLuint>::iterator nameTexturePair = textures->find(name);
+    auto nameTexturePair = textures->find(name);
     
     if (nameTexturePair != textures->end()) {
       handle = nameTexturePair->second;
@@ -541,7 +539,7 @@ namespace small3d {
       GLuint textureHandle = getTextureHandle(textureName);
 
       if (textureHandle == 0) {
-        throw runtime_error("Texture " + textureName + "has not been generated");
+        throw std::runtime_error("Texture " + textureName + "has not been generated");
       }
 
       glBindTexture(GL_TEXTURE_2D, textureHandle);
@@ -759,12 +757,12 @@ namespace small3d {
     this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
   
-  void Renderer::write(const string text, const glm::vec3 colour, const glm::vec2 topLeft, 
-    const glm::vec2 bottomRight, const int fontSize, string fontPath) {
+  void Renderer::write(const std::string text, const glm::vec3 colour, const glm::vec2 topLeft, 
+    const glm::vec2 bottomRight, const int fontSize, std::string fontPath) {
     
-    string faceId = intToStr(fontSize) + fontPath;
+    std::string faceId = intToStr(fontSize) + fontPath;
     
-    unordered_map<string, FT_Face>::iterator idFacePair = fontFaces.find(faceId);
+    auto idFacePair = fontFaces.find(faceId);
     
     FT_Face face;
     
@@ -772,13 +770,13 @@ namespace small3d {
     
     if (idFacePair == fontFaces.end()) {
       
-      string faceFullPath = basePath + fontPath;
+      std::string faceFullPath = basePath + fontPath;
       LOGDEBUG("Loading font from " + faceFullPath);
       
       error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);
       
       if (error != 0) {
-        throw runtime_error("Failed to load font from " + faceFullPath);
+        throw std::runtime_error("Failed to load font from " + faceFullPath);
       }
       else{
         LOGDEBUG("Font loaded successfully");
@@ -792,7 +790,7 @@ namespace small3d {
     error = FT_Set_Char_Size(face, 64 * fontSize, 0, 100, 0);
     
     if (error != 0) {
-      throw runtime_error("Failed to set font size.");
+      throw std::runtime_error("Failed to set font size.");
     }
     
     unsigned long width = 0, height =0;
@@ -803,7 +801,7 @@ namespace small3d {
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
       
       if (error != 0) {
-        throw runtime_error("Failed to load character glyph.");
+        throw std::runtime_error("Failed to load character glyph.");
       }
       
       FT_GlyphSlot slot = face->glyph;
@@ -823,7 +821,7 @@ namespace small3d {
     for(const char &c: text) {
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
       if (error != 0) {
-        throw runtime_error("Failed to load character glyph.");
+        throw std::runtime_error("Failed to load character glyph.");
       }
       
       FT_GlyphSlot slot = face->glyph;
@@ -849,7 +847,7 @@ namespace small3d {
       
     }
     
-    string textureName = intToStr(fontSize) + "text_" + text;
+    std::string textureName = intToStr(fontSize) + "text_" + text;
     
     generateTexture(textureName, &textMemory[0], width, height);
     
@@ -909,8 +907,9 @@ namespace small3d {
    * Convert error enum returned from OpenGL to a readable string error message.
    * @param error The error code returned from OpenGL
    */
-  string openglErrorToString(GLenum error) {
-    string errorString;
+  std::string openglErrorToString(GLenum error) {
+    
+    std::string errorString;
     
     switch (error) {
     case GL_NO_ERROR:

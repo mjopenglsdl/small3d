@@ -8,11 +8,9 @@
 
 #include "GetTokens.hpp"
 
-using namespace std;
-
 namespace small3d {
 
-  int getTokens(const string input, const char sep, std::vector<std::string> &tokens) {
+  int getTokens(const std::string input, const char sep, std::vector<std::string> &tokens) {
     size_t curPos = 0;
     int count = 0;
 

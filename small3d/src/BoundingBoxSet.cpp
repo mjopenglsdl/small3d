@@ -12,8 +12,6 @@
 #include "GetTokens.hpp"
 #include "MathFunctions.hpp"
 
-using namespace std;
-
 namespace small3d {
   
   /**
@@ -30,17 +28,17 @@ namespace small3d {
     
   }
   
-  void BoundingBoxSet::loadFromFile(string fileLocation) {
+  void BoundingBoxSet::loadFromFile(std::string fileLocation) {
     if (vertices.size() != 0) {
-      throw runtime_error(
+      throw std::runtime_error(
                       "Illegal attempt to reload bounding boxes. Please use another object.");
     }
-    ifstream file(fileLocation.c_str());
-    string line;
+    std::ifstream file(fileLocation.c_str());
+    std::string line;
     if (file.is_open()) {
       while (getline(file, line)) {
         if (line[0] == 'v' || line[0] == 'f') {
-          vector<string> tokens;
+          std::vector<std::string> tokens;
           
           // Wavefront file
           getTokens(line, ' ', tokens);
@@ -49,10 +47,10 @@ namespace small3d {
           
           if (line[0] == 'v') {
             // get vertex
-            vector<float> v;
+            std::vector<float> v;
             
             for (size_t tokenIdx = 0, tokenCount= tokens.size(); tokenIdx < tokenCount; ++tokenIdx) {
-              string t = tokens[tokenIdx];
+              std::string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is the vertex indicator
               {
                 v.push_back(static_cast<float>(atof(t.c_str())));
@@ -63,10 +61,10 @@ namespace small3d {
           }
           else {
             // get vertex index
-            vector<unsigned int> v;
+            std::vector<unsigned int> v;
             
             for (size_t tokenIdx = 0, tokenCount = tokens.size(); tokenIdx < tokenCount; ++tokenIdx) {
-              string t = tokens[tokenIdx];
+              std::string t = tokens[tokenIdx];
               if (idx > 0)   // The first token is face indicator
               {
                 v.push_back((unsigned int) atoi(t.c_str()));
@@ -94,7 +92,7 @@ namespace small3d {
       LOGINFO("Loaded " + intToStr(numBoxes) + " bounding boxes.");
     }
     else
-      throw runtime_error(
+      throw std::runtime_error(
                       "Could not open file " + fileLocation);
     
   }
@@ -151,7 +149,6 @@ namespace small3d {
         break;
       }
     }
-    
     return collides;
   }
   

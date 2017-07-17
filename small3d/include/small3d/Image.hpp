@@ -29,7 +29,7 @@ namespace small3d {
     unsigned long width, height;
     std::vector<float> imageData;
     unsigned long imageDataSize;
-    void loadFromFile(const std::string &fileLocation);
+    void loadFromFile(const std::string fileLocation);
 
   public:
 

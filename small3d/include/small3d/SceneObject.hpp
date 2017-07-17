@@ -21,8 +21,6 @@
 #include "MathFunctions.hpp"
 #include <glm/glm.hpp>
 
-using namespace std;
-
 namespace small3d
 {
   /**

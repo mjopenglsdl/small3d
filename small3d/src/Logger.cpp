@@ -11,13 +11,11 @@
 #include <ctime>
 #include <iostream>
 
-using namespace std;
-
-shared_ptr<small3d::Logger> logger;
+std::shared_ptr<small3d::Logger> logger;
 
 namespace small3d {
 
-  Logger::Logger(ostream &stream) {
+  Logger::Logger(std::ostream &stream) {
     logStream = &stream;
   }
 
@@ -27,9 +25,9 @@ namespace small3d {
 
   }
 
-  void Logger::append(const LogLevel level, const string message) const {
+  void Logger::append(const LogLevel level, const std::string message) const {
     if (!logger) return;
-    ostringstream dateTimeOstringstream;
+    std::ostringstream dateTimeOstringstream;
 
     time_t now;
 
@@ -57,7 +55,7 @@ namespace small3d {
 
     dateTimeOstringstream << buf;
 
-    string indicator;
+    std::string indicator;
     switch (level) {
     case loggerinfo:
       indicator = "INFO";
@@ -73,15 +71,15 @@ namespace small3d {
       break;
     }
 
-    *logStream << dateTimeOstringstream.str().c_str() << " - " << indicator << ": " << message.c_str() << endl;
+    *logStream << dateTimeOstringstream.str().c_str() << " - " << indicator << ": " << message.c_str() << std::endl;
   }
 
   void initLogger() {
-    if (!logger) logger = shared_ptr<Logger>(new Logger(cout));
+    if (!logger) logger = std::shared_ptr<Logger>(new Logger(std::cout));
   }
 
-  void initLogger(ostream &stream) {
-    if (!logger) logger = shared_ptr<Logger>(new Logger(stream));
+  void initLogger(std::ostream &stream) {
+    if (!logger) logger = std::shared_ptr<Logger>(new Logger(stream));
   }
 
   void deleteLogger() {

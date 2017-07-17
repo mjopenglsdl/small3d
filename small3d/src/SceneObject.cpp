@@ -10,8 +10,8 @@
 
 namespace small3d {
 
-  SceneObject::SceneObject(const string name, const string modelPath, const int numFrames, 
-    const string boundingBoxSetPath) :
+  SceneObject::SceneObject(const std::string name, const std::string modelPath, const int numFrames, 
+    const std::string boundingBoxSetPath) :
     offset(0,0,0), rotation(0,0,0), boundingBoxSet(boundingBoxSetPath) {
     
     initLogger();
@@ -25,12 +25,12 @@ namespace small3d {
     if (numFrames > 1) {
       LOGINFO("Loading " + name + " animated model (this may take a while):");
       for (int idx = 0; idx < numFrames; ++idx) {
-        stringstream lss;
+        std::stringstream lss;
         lss << "Frame " << idx + 1 << " of " << numFrames << "...";
         LOGINFO(lss.str());
-        stringstream ss;
-        ss << setfill('0') << setw(6) << idx + 1;
-        string frameNum = ss.str();
+        std::stringstream ss;
+        ss << std::setfill('0') << std::setw(6) << idx + 1;
+        std::string frameNum = ss.str();
         Model model1(modelPath + "_" + frameNum + ".obj");
         model.push_back(model1);
       }
@@ -45,7 +45,7 @@ namespace small3d {
     return model[currentFrame];
   }
 
-  const string SceneObject::getName() const {
+  const std::string SceneObject::getName() const {
     return name;
   }
 
@@ -80,19 +80,19 @@ namespace small3d {
 
   bool SceneObject::collidesWith(const glm::vec3 point) const {
     if (boundingBoxSet.vertices.size() == 0) {
-      throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
+      throw std::runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
     return boundingBoxSet.collidesWith(point, this->offset, this->rotation);
   }
 
   bool SceneObject::collidesWith(SceneObject otherObject) const {
     if (boundingBoxSet.vertices.size() == 0) {
-      throw runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
+      throw std::runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
     }
 
     if (otherObject.boundingBoxSet.vertices.size() == 0) {
-      throw runtime_error(
-			  "No bounding boxes have been provided for " + otherObject.name + ", so collision detection is not enabled.");
+      throw std::runtime_error("No bounding boxes have been provided for " + otherObject.name + 
+        ", so collision detection is not enabled.");
     }
 
     // Checking whether the boxes of this object are within the boxes of the other object or vice versa
