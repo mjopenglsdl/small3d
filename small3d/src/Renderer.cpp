@@ -194,16 +194,15 @@ namespace small3d {
     
     checkForOpenGLErrors("initialising GLEW", false);
     
-    std::string glVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)));
-    glVersion = "OpenGL version supported by machine: " + glVersion;
-    LOGINFO(glVersion);
+    LOGDEBUG("OpenGL version supported by machine: " +
+      std::string(reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)))));
     
     if (glewIsSupported("GL_VERSION_3_3")) {
-      LOGINFO("Ready for OpenGL 3.3");
+      LOGINFO("Using OpenGL 3.3");
       isOpenGL33Supported = true;
     }
     else if (glewIsSupported("GL_VERSION_2_1")) {
-      LOGINFO("Ready for OpenGL 2.1");
+      LOGINFO("Using OpenGL 2.1");
     }
     else {
       noShaders = true;

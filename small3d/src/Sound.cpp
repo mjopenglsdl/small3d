@@ -26,8 +26,6 @@ namespace small3d {
   PaDeviceIndex Sound::defaultOutput;
   unsigned int Sound::numInstances = 0;
 
- 
-
   int Sound::audioCallback(const void *inputBuffer, void *outputBuffer,
                            unsigned long framesPerBuffer,
                            const PaStreamCallbackTimeInfo *timeInfo,
@@ -44,10 +42,9 @@ namespace small3d {
         soundData->startTime = timeInfo->currentTime - 0.1;
         soundData->currentFrame = 0;
       }
-      else
-	{
-	  return paAbort;
-	}
+      else {
+        return paAbort;
+      }
     }
     
     SAMPLE_DATATYPE *out = static_cast<SAMPLE_DATATYPE *>(outputBuffer);
@@ -80,16 +77,15 @@ namespace small3d {
       PaError initError = Pa_Initialize();
     
       if (initError != paNoError) {
-	throw std::runtime_error("PortAudio failed to initialise: " + std::string(Pa_GetErrorText(initError)));
+        throw std::runtime_error("PortAudio failed to initialise: " + 
+          std::string(Pa_GetErrorText(initError)));
       }
     
       defaultOutput = Pa_GetDefaultOutputDevice();
     
       if (defaultOutput == paNoDevice) {
-      
-	LOGERROR("No default sound output device.");
-      
-	noOutputDevice = true;
+        LOGERROR("No default sound output device.");
+        noOutputDevice = true;
       }
     }
     ++numInstances;

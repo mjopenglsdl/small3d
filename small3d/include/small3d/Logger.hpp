@@ -17,7 +17,7 @@
 
 #define LOGINFO(MESSAGE) logger->append(loggerinfo, MESSAGE)
 
-#if defined(DEBUG) || defined(_DEBUG)
+#if defined(DEBUG) || defined(_DEBUG) || !defined (NODEBUG)
 #define LOGDEBUG(MESSAGE) logger->append(loggerdebug, MESSAGE)
 #else
 #define LOGDEBUG(MESSAGE)
