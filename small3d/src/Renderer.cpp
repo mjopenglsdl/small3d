@@ -505,8 +505,6 @@ namespace small3d {
       glBindVertexArray(vao);
     }
     
-    glEnableVertexAttribArray(0);
-    
     GLuint boxBuffer = 0;
     glGenBuffers(1, &boxBuffer);
     
@@ -515,6 +513,7 @@ namespace small3d {
                  sizeof(float) * 16,
                  &vertices[0],
                  GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
