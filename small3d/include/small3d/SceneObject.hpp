@@ -49,13 +49,13 @@ namespace small3d
     /**
      * @brief Constructor
      *
-     * @param name                The name of the object
-     * @param modelPath           The path to the file containing the object's model
-     * @param numFrames           The number of frames, if the object is animated. A single animation
-     * 				  sequence is supported per object and the first frame is considered to
-     * 				  be the non-moving state.
-     * @param boundingBoxSetPath  The path to the file containing the object's bounding box set. If no such
-     * 				  path is given, the object cannot be checked for collision detection.
+     * @param name      The name of the object
+     * @param modelPath The path to the file containing the object's model
+     * @param numFrames The number of frames, if the object is animated. A single animation
+     * 				          sequence is supported per object and the first frame is considered to
+     * 				          be the non-moving state.
+     * @param boundingBoxSetPath The path to the file containing the object's bounding box set. If no such
+     * 				                   path is given, the object cannot be checked for collision detection.
      */
     SceneObject(const std::string name, const std::string modelPath, const int numFrames = 1, 
       const std::string boundingBoxSetPath = "");

@@ -50,9 +50,7 @@ namespace small3d {
     GLuint positionBufferObjectId = 0;
     GLuint indexBufferObjectId = 0;
     GLuint normalsBufferObjectId = 0;
-    GLuint textureId = 0;
     GLuint uvBufferObjectId = 0;
-
 
     /**
      * @brief The vertex data. This is an array, which is to be treated as a 4 column table, holding

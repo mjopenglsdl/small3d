@@ -23,10 +23,10 @@ namespace small3d {
   
   string openglErrorToString(GLenum error);
   
-  Renderer::Renderer(const string windowTitle, const int width, const int height,
+  Renderer::Renderer(const std::string windowTitle, const int width, const int height,
                      const float frustumScale , const float zNear,
                      const float zFar, const float zOffsetFromCamera,
-                     const string shadersPath, const string basePath) {
+                     const std::string shadersPath, const std::string basePath) {
     
     isOpenGL33Supported = false;
     window = 0;
@@ -399,7 +399,7 @@ namespace small3d {
     glUseProgram(0);
   }
   
-  GLuint Renderer::generateTexture(const string name, const float* data, const unsigned long width,
+  GLuint Renderer::generateTexture(const std::string name, const float* data, const unsigned long width,
     const unsigned long height) {
     
     GLuint textureHandle;
@@ -491,7 +491,7 @@ namespace small3d {
   }
   
   
-  void Renderer::renderRectangle(const string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+  void Renderer::renderRectangle(const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
                                const bool perspective, const glm::vec4 colour) const {
     
     float vertices[16] = {
@@ -609,7 +609,7 @@ namespace small3d {
   }
   
   void Renderer::render(Model &model, const glm::vec3 offset, const glm::vec3 rotation, 
-    const glm::vec4 colour, const string textureName) const {
+			const glm::vec4 colour, const std::string textureName) const {
     
     glUseProgram(perspectiveProgram);
     
@@ -746,7 +746,7 @@ namespace small3d {
   }
 
   void Renderer::render(Model &model, const glm::vec3 offset, const glm::vec3 rotation,
-    const string textureName) const {
+			const std::string textureName) const {
 
     this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
