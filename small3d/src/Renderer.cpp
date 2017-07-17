@@ -581,6 +581,9 @@ namespace small3d {
     }
         
     glDisableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
     checkForOpenGLErrors("rendering rectangle", true);
   }
@@ -595,67 +598,50 @@ namespace small3d {
     
     glUseProgram(perspectiveProgram);
     
-    bool alreadyInGPU = true;
-    bool copyData = false;
-    
-    if (model.positionBufferObjectId == 0) {
-      alreadyInGPU = false;
-      copyData = true;
-    }
-    
-    // Either GPU data gets corrupted between frames on some older chipsets, or I am doing
-    // something wrong for OpenGL 2.1 and I have not figured out what it
-    // is. But re-copying data to the buffers, even for non-animated objects
-    // resolves the issue. (or maybe not)
-    // if (!isOpenGL33Supported) copyData = true;
+    bool alreadyInGPU = model.positionBufferObjectId != 0;
     
     if (!alreadyInGPU) {
       glGenBuffers(1, &model.indexBufferObjectId);
       glGenBuffers(1, &model.positionBufferObjectId);
       glGenBuffers(1, &model.normalsBufferObjectId);
       glGenBuffers(1, &model.uvBufferObjectId);
-    }
-    
-    if (copyData) {
-      
-      // Vertices
-      glBindBuffer(GL_ARRAY_BUFFER, model.positionBufferObjectId);
-      glBufferData(GL_ARRAY_BUFFER,
-                   model.vertexDataByteSize,
-                   model.vertexData.data(),
-                   GL_STATIC_DRAW);
-      
-      // Vertex indexes
-      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model.indexBufferObjectId);
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                   model.indexDataByteSize,
-                   model.indexData.data(),
-                   GL_STATIC_DRAW);
-      
-      // Normals
-      glBindBuffer(GL_ARRAY_BUFFER, model.normalsBufferObjectId);
-      if (copyData) {
-        glBufferData(GL_ARRAY_BUFFER,
-                     model.normalsDataByteSize,
-                     model.normalsData.data(),
-                     GL_STATIC_DRAW);
-      }
-    }
-    
-    // Attribute - vertex
+    }     
+
+    // Vertex
     glBindBuffer(GL_ARRAY_BUFFER, model.positionBufferObjectId);
+    if (!alreadyInGPU) {
+      glBufferData(GL_ARRAY_BUFFER,
+        model.vertexDataByteSize,
+        model.vertexData.data(),
+        GL_STATIC_DRAW);
+    }
+
+    // Vertex indices
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model.indexBufferObjectId);
+    if (!alreadyInGPU) {
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+        model.indexDataByteSize,
+        model.indexData.data(),
+        GL_STATIC_DRAW);
+    }
+
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
     
-    // Attribute - normals
+    // Normals
     glBindBuffer(GL_ARRAY_BUFFER, model.normalsBufferObjectId);
+    if (!alreadyInGPU) {
+      glBufferData(GL_ARRAY_BUFFER,
+        model.normalsDataByteSize,
+        model.normalsData.data(),
+        GL_STATIC_DRAW);
+    }
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
     
     
     // Find the colour uniform
     GLint colourUniform = glGetUniformLocation(perspectiveProgram, "colour");
-    
     
     if (textureName != "") {
       
@@ -670,7 +656,7 @@ namespace small3d {
       
       glBindBuffer(GL_ARRAY_BUFFER, model.uvBufferObjectId);
       
-      if (copyData) {
+      if (!alreadyInGPU) {
         glBufferData(GL_ARRAY_BUFFER,
                      model.textureCoordsDataByteSize,
                      model.textureCoordsData.data(),
@@ -701,7 +687,7 @@ namespace small3d {
     
     // Throw an exception if there was an error in OpenGL, during
     // any of the above.
-    checkForOpenGLErrors("rendering scene", true);
+    checkForOpenGLErrors("rendering model", true);
     
     // Draw
     glDrawElements(GL_TRIANGLES,
@@ -715,6 +701,9 @@ namespace small3d {
     
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
     glUseProgram(0);
     
@@ -854,7 +843,6 @@ namespace small3d {
       glDeleteBuffers(1, &model.uvBufferObjectId);
       model.uvBufferObjectId = 0;
     }
-    
   }
   
   void Renderer::clearScreen() const {
