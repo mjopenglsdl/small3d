@@ -30,7 +30,6 @@ namespace small3d {
     window = 0;
     perspectiveProgram = 0;
     orthographicProgram = 0;
-    textures = new std::unordered_map<std::string, GLuint>();
     noShaders = false;
     lightDirection = glm::vec3(0.0f, 0.9f, 0.2f);
     cameraPosition = glm::vec3(0, 0, 0);
@@ -57,12 +56,11 @@ namespace small3d {
   
   Renderer::~Renderer() {
     LOGDEBUG("Renderer destructor running");
-    for (auto it = textures->begin();
-         it != textures->end(); ++it) {
+    for (auto it = textures.begin();
+         it != textures.end(); ++it) {
       LOGDEBUG("Deleting texture " + it->first);
       glDeleteTextures(1, &it->second);
     }
-    delete textures;
     
     for(auto idFacePair : fontFaces) {
       FT_Done_Face(idFacePair.second);
@@ -83,7 +81,6 @@ namespace small3d {
     }
     
     glfwTerminate();
-    
   }
   
   GLFWwindow* Renderer::getWindow() const{
@@ -413,7 +410,7 @@ namespace small3d {
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGBA,
                  GL_FLOAT, data);
     
-    textures->insert(make_pair(name, textureHandle));
+    textures.insert(make_pair(name, textureHandle));
     
     return textureHandle;
   }
@@ -423,20 +420,20 @@ namespace small3d {
   }
   
   void Renderer::deleteTexture(const std::string name) {
-    auto nameTexturePair = textures->find(name);
+    auto nameTexturePair = textures.find(name);
     
-    if (nameTexturePair != textures->end()) {
+    if (nameTexturePair != textures.end()) {
       glDeleteTextures(1, &(nameTexturePair->second));
-      textures->erase(name);
+      textures.erase(name);
     }
   }
   
   GLuint Renderer::getTextureHandle(const std::string name) const {
     GLuint handle = 0;
     
-    auto nameTexturePair = textures->find(name);
+    auto nameTexturePair = textures.find(name);
     
-    if (nameTexturePair != textures->end()) {
+    if (nameTexturePair != textures.end()) {
       handle = nameTexturePair->second;
     }
     

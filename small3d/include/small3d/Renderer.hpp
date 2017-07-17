@@ -113,7 +113,7 @@ namespace small3d
      * @brief Textures used in the scene, each corresponding to the name of one of
      * the rendered models
      */
-    std::unordered_map<std::string, GLuint> *textures;
+    std::unordered_map<std::string, GLuint> textures;
 
     void positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const;
 
