@@ -47,11 +47,6 @@ namespace small3d {
   public:
 
     /**
-     * @brief OpenGL vertex array object id. It is suggested not to manipulate this directly.
-     */
-    GLuint vaoId = 0;
-
-    /**
      * @brief OpenGL position buffer object id. It is suggested not to manipulate this directly.
      */
     GLuint positionBufferObjectId = 0;

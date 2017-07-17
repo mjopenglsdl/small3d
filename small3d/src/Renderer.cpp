@@ -498,13 +498,6 @@ namespace small3d {
     
     glUseProgram(perspective ? perspectiveProgram : orthographicProgram);
     
-    GLuint vao = 0;
-    if (isOpenGL33Supported) {
-      // Generate VAO
-      glGenVertexArrays(1, &vao);
-      glBindVertexArray(vao);
-    }
-    
     GLuint boxBuffer = 0;
     glGenBuffers(1, &boxBuffer);
     
@@ -589,11 +582,6 @@ namespace small3d {
         
     glDisableVertexAttribArray(0);
     
-    if (isOpenGL33Supported) {
-      glDeleteVertexArrays(1, &vao);
-      glBindVertexArray(0);
-    }
-    
     checkForOpenGLErrors("rendering rectangle", true);
   }
 
@@ -622,17 +610,10 @@ namespace small3d {
     // if (!isOpenGL33Supported) copyData = true;
     
     if (!alreadyInGPU) {
-      if (isOpenGL33Supported) {
-        glGenVertexArrays(1, &model.vaoId);
-      }
       glGenBuffers(1, &model.indexBufferObjectId);
       glGenBuffers(1, &model.positionBufferObjectId);
       glGenBuffers(1, &model.normalsBufferObjectId);
       glGenBuffers(1, &model.uvBufferObjectId);
-    }
-    
-    if (isOpenGL33Supported) {
-      glBindVertexArray(model.vaoId);
     }
     
     if (copyData) {
@@ -872,13 +853,6 @@ namespace small3d {
     if (model.uvBufferObjectId != 0) {
       glDeleteBuffers(1, &model.uvBufferObjectId);
       model.uvBufferObjectId = 0;
-    }
-    
-    if (isOpenGL33Supported) {
-      if (model.vaoId != 0) {
-        glDeleteVertexArrays(1, &model.vaoId);
-        model.vaoId = 0;
-      }
     }
     
   }
