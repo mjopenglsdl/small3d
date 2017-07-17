@@ -77,12 +77,12 @@ TEST(ModelTest, LoadModel) {
   EXPECT_NE(0, model.textureCoordsData.size());
   
   cout << "Vertex data component count: "
-  << model.vertexData.size() << endl << "Index count: "
-  << model.indexData.size() << endl
-  << "Normals data component count: "
-  << model.normalsData.size() << endl
-  << "Texture coordinates count: "
-  << model.textureCoordsData.size() << endl;
+       << model.vertexData.size() << endl << "Index count: "
+       << model.indexData.size() << endl
+       << "Normals data component count: "
+       << model.normalsData.size() << endl
+       << "Texture coordinates count: "
+       << model.textureCoordsData.size() << endl;
   
   Model modelWithNoTexture("resources/models/Cube/CubeNoTexture.obj");
   
@@ -92,12 +92,12 @@ TEST(ModelTest, LoadModel) {
   EXPECT_EQ(0, modelWithNoTexture.textureCoordsData.size());
   
   cout << "Vertex data component count: "
-  << modelWithNoTexture.vertexData.size() << endl << "Index count: "
-  << modelWithNoTexture.indexData.size() << endl
-  << "Normals data component count: "
-  << modelWithNoTexture.normalsData.size() << endl
-  << "Texture coordinates count: "
-  << modelWithNoTexture.textureCoordsData.size() << endl;
+       << modelWithNoTexture.vertexData.size() << endl << "Index count: "
+       << modelWithNoTexture.indexData.size() << endl
+       << "Normals data component count: "
+       << modelWithNoTexture.normalsData.size() << endl
+       << "Texture coordinates count: "
+       << modelWithNoTexture.textureCoordsData.size() << endl;
   
 }
 
@@ -111,21 +111,21 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
   cout << "Bounding boxes vertices: " << endl;
   for (unsigned long idx = 0; idx < 16; idx++) {
     cout << bboxes.vertices[idx][0] << ", " <<
-    bboxes.vertices[idx][1] << ", " <<
-    bboxes.vertices[idx][2] << ", " << endl;
+      bboxes.vertices[idx][1] << ", " <<
+      bboxes.vertices[idx][2] << ", " << endl;
     
   }
   
   cout << "Bounding boxes faces vertex indexes: " << endl;
   for (unsigned long idx = 0; idx < 12; idx++) {
     cout << bboxes.facesVertexIndexes[idx][0] << ", " <<
-    bboxes.facesVertexIndexes[idx][1] << ", " <<
-    bboxes.facesVertexIndexes[idx][2] << ", " <<
-    bboxes.facesVertexIndexes[idx][3] << ", " << endl;
+      bboxes.facesVertexIndexes[idx][1] << ", " <<
+      bboxes.facesVertexIndexes[idx][2] << ", " <<
+      bboxes.facesVertexIndexes[idx][3] << ", " << endl;
   }
   
   EXPECT_FALSE(bboxes.collidesWith(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.1f, 0.1f), 
-    glm::vec3(0.0f, 0.0f, 0.0f)));
+				   glm::vec3(0.0f, 0.0f, 0.0f)));
   
 }
 
@@ -175,13 +175,14 @@ TEST(SoundTest, ThreeAtTheSameTime) {
   Sound snd1("resources/sounds/bah.ogg");
   Sound snd2(snd1);
   Sound snd3 = snd2;
-
   snd1.play();
   std::this_thread::sleep_for(std::chrono::milliseconds(200));
   snd2.play();
   std::this_thread::sleep_for(std::chrono::milliseconds(200));
   snd3.play();
-  std::this_thread::sleep_for(std::chrono::milliseconds(2000));			 }
+  std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+}
+
 
 TEST(SoundTest, RepeatSound) {
   Sound snd("resources/sounds/bah.ogg");
