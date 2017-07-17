@@ -646,14 +646,14 @@ namespace small3d {
       // Vertices
       glBindBuffer(GL_ARRAY_BUFFER, model.positionBufferObjectId);
       glBufferData(GL_ARRAY_BUFFER,
-                   model.vertexDataSize,
+                   model.vertexDataByteSize,
                    model.vertexData.data(),
                    GL_STATIC_DRAW);
       
       // Vertex indexes
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model.indexBufferObjectId);
       glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                   model.indexDataSize,
+                   model.indexDataByteSize,
                    model.indexData.data(),
                    GL_STATIC_DRAW);
       
@@ -661,7 +661,7 @@ namespace small3d {
       glBindBuffer(GL_ARRAY_BUFFER, model.normalsBufferObjectId);
       if (copyData) {
         glBufferData(GL_ARRAY_BUFFER,
-                     model.normalsDataSize,
+                     model.normalsDataByteSize,
                      model.normalsData.data(),
                      GL_STATIC_DRAW);
       }
@@ -697,7 +697,7 @@ namespace small3d {
       
       if (copyData) {
         glBufferData(GL_ARRAY_BUFFER,
-                     model.textureCoordsDataSize,
+                     model.textureCoordsDataByteSize,
                      model.textureCoordsData.data(),
                      GL_STATIC_DRAW);
       }

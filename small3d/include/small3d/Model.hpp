@@ -46,10 +46,29 @@ namespace small3d {
 
   public:
 
+    /**
+     * @brief OpenGL vertex array object id. It is suggested not to manipulate this directly.
+     */
     GLuint vaoId = 0;
+
+    /**
+     * @brief OpenGL position buffer object id. It is suggested not to manipulate this directly.
+     */
     GLuint positionBufferObjectId = 0;
+
+    /**
+     * @brief OpenGL index buffer object id. It is suggested not to manipulate this directly.
+     */
     GLuint indexBufferObjectId = 0;
+
+    /**
+     * @brief OpenGL normals buffer object id. It is suggested not to manipulate this directly.
+     */
     GLuint normalsBufferObjectId = 0;
+
+    /**
+     * @brief OpenGL UV buffer object id. It is suggested not to manipulate this directly.
+     */
     GLuint uvBufferObjectId = 0;
 
     /**
@@ -63,7 +82,7 @@ namespace small3d {
      * @brief Size of the vertex data, in bytes.
      */
 
-    int vertexDataSize;
+    int vertexDataByteSize;
 
     /**
      * @brief 3 column table. Each element refers to a "row" in the vertex data table. Each "row"
@@ -77,7 +96,7 @@ namespace small3d {
      * @brief Size of the index data, in bytes
      */
 
-    int indexDataSize;
+    int indexDataByteSize;
 
     /**
      * @brief Array, to be treated as a 3 column table. Each "row" contains the x, y and z components
@@ -91,7 +110,7 @@ namespace small3d {
      * @brief Size of the normals data, in bytes.
      */
 
-    int normalsDataSize;
+    int normalsDataByteSize;
 
     /**
      * @brief Array, to be treated as a 2 column table. Each "row" contains the x and y components
@@ -105,7 +124,7 @@ namespace small3d {
      * @brief Size of the texture coordinates data, in bytes.
      */
 
-    int textureCoordsDataSize;
+    int textureCoordsDataByteSize;
 
     /**
      * @brief constructor

@@ -19,7 +19,7 @@ namespace small3d {
 
   void Model::loadVertexData() {
     // 4 components per vertex
-    this->vertexDataSize = static_cast<int>(4 * vertices.size() * sizeof(float));
+    this->vertexDataByteSize = static_cast<int>(4 * vertices.size() * sizeof(float));
 
     this->vertexData.clear();
 
@@ -37,7 +37,7 @@ namespace small3d {
   void Model::loadIndexData() {
     // 3 indices per face
     int numIndexes = (int) (facesVertexIndices.size() * 3);
-    this->indexDataSize = numIndexes * sizeof(int);
+    this->indexDataByteSize = numIndexes * sizeof(int);
 
     this->indexData.clear();
 
@@ -66,7 +66,7 @@ namespace small3d {
     // is passed to OpenGL, so normals data will be aligned to vertex data according to the
     // vertex index)
 
-    this->normalsDataSize = static_cast<int>(3 * vertices.size() * sizeof(float));
+    this->normalsDataByteSize = static_cast<int>(3 * vertices.size() * sizeof(float));
 
     this->normalsData = vector<float>(3 * vertices.size(), 0.0f);
 
@@ -101,7 +101,7 @@ namespace small3d {
       // 2 components per vertex (a single index for vertices, normals and texture coordinates
       // is passed to OpenGL, so texture coordinates data will be aligned to vertex data according
       // to the vertex index)
-      this->textureCoordsDataSize = (int) (2 * vertices.size() * sizeof(float));
+      this->textureCoordsDataByteSize = (int) (2 * vertices.size() * sizeof(float));
 
       this->textureCoordsData = vector<float>(2 * vertices.size());
 
