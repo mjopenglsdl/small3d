@@ -553,8 +553,8 @@ namespace small3d {
         sizeof(float) * 8,
         textureCoords,
         GL_STATIC_DRAW);
-      glEnableVertexAttribArray(perspective ? 2 : 1);
-      glVertexAttribPointer(perspective ? 2 : 1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+      glEnableVertexAttribArray(1);
+      glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
     
     }
     
@@ -583,7 +583,7 @@ namespace small3d {
     glDeleteBuffers(1, &boxBuffer);
     if (colour == glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) {
       glDeleteBuffers(1, &coordBuffer);
-      glDisableVertexAttribArray(perspective ? 2 : 1);
+      glDisableVertexAttribArray(1);
       glBindTexture(GL_TEXTURE_2D, 0);
     }
         
