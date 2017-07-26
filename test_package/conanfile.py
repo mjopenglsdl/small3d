@@ -1,12 +1,8 @@
 from conans import ConanFile, CMake
 import os
 
-channel = os.getenv("CONAN_CHANNEL", "testing")
-username = os.getenv("CONAN_USERNAME", "dimi309")
-
 class TestSmall3d(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "small3d/master@%s/%s" % (username, channel)
     generators = "cmake"
 
     def build(self):

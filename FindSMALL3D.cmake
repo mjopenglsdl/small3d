@@ -1,11 +1,11 @@
-FIND_PATH(
+find_path(
   SMALL3D_INCLUDE_DIR
   NAMES
   small3d
   PATHS
   include)
 
-FIND_LIBRARY(
+find_library(
   SMALL3D_LIBRARY
   NAMES
   small3d
@@ -13,6 +13,6 @@ FIND_LIBRARY(
   PATHS
   lib)
 
-INCLUDE(FindPackageHandleStandardArgs)
+include(FindPackageHandleStandardArgs)
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(SMALL3D REQUIRED_VARS SMALL3D_LIBRARY SMALL3D_INCLUDE_DIR)
+find_package_handle_standard_args(SMALL3D REQUIRED_VARS SMALL3D_LIBRARY SMALL3D_INCLUDE_DIR)
