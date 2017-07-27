@@ -24,7 +24,7 @@ namespace small3d {
   Renderer::Renderer(const std::string windowTitle, const int width, const int height,
                      const float frustumScale , const float zNear,
                      const float zFar, const float zOffsetFromCamera,
-                     const std::string shadersPath, const std::string basePath) {
+                     const std::string shadersPath) {
     
     isOpenGL33Supported = false;
     window = 0;
@@ -36,8 +36,6 @@ namespace small3d {
     cameraRotation = glm::vec3(0, 0, 0);
     lightIntensity = 1.0f;
     
-    this->basePath = basePath;
-    
     init(width, height, windowTitle, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
     
     FT_Error ftError = FT_Init_FreeType( &library );
@@ -45,12 +43,21 @@ namespace small3d {
     if(ftError != 0) {
       throw std::runtime_error("Unable to initialise font system");
     }
+
+#ifdef __APPLE__
+    if (isOpenGL33Supported) {
+      // Generate VAO
+      glGenVertexArrays(1, &vao);
+      glBindVertexArray(vao);
+    }
+#endif
+    
   }
   
   Renderer& Renderer::getInstance(const std::string windowTitle, const int width, const int height,
-    const float frustumScale, const float zNear, const float zFar, const float zOffsetFromCamera, 
-    const std::string shadersPath, const std::string basePath) {
-    static Renderer instance(windowTitle, width, height, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath, basePath);
+				  const float frustumScale, const float zNear, const float zFar, const float zOffsetFromCamera, 
+				  const std::string shadersPath) {
+    static Renderer instance(windowTitle, width, height, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
     return instance;
   }
   
@@ -70,6 +77,12 @@ namespace small3d {
     
     if (!noShaders) {
       glUseProgram(0);
+#ifdef __APPLE__
+      if (isOpenGL33Supported) {
+	glDeleteVertexArrays(1, &vao);
+	glBindVertexArray(0);
+      }
+#endif
     }
     
     if (orthographicProgram != 0) {
@@ -90,7 +103,7 @@ namespace small3d {
   std::string Renderer::loadShaderFromFile(const std::string fileLocation) const {
     initLogger();
     std::string shaderSource = "";
-    std::ifstream file((basePath + fileLocation).c_str());
+    std::ifstream file(fileLocation.c_str());
     std::string line;
     if (file.is_open()) {
       while (std::getline(file, line)) {
@@ -168,8 +181,8 @@ namespace small3d {
     if (status == GL_FALSE ) {
       
       throw std::runtime_error(
-			  "Failed to compile shader:\n" + shaderSource + "\n"
-			  + this->getShaderInfoLog(shader));
+			       "Failed to compile shader:\n" + shaderSource + "\n"
+			       + this->getShaderInfoLog(shader));
     }
     else {
       LOGDEBUG("Shader " + shaderSourceFile + " compiled successfully.");
@@ -195,7 +208,7 @@ namespace small3d {
     checkForOpenGLErrors("initialising GLEW", false);
     
     LOGDEBUG("OpenGL version supported by machine: " +
-      std::string(reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)))));
+	     std::string(reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)))));
     
     if (glewIsSupported("GL_VERSION_3_3")) {
       LOGINFO("Using OpenGL 3.3");
@@ -207,7 +220,7 @@ namespace small3d {
     else {
       noShaders = true;
       throw std::runtime_error(
-			  "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
+			       "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
     }
   }
   
@@ -394,7 +407,7 @@ namespace small3d {
   }
   
   GLuint Renderer::generateTexture(const std::string name, const float* data, const unsigned long width,
-    const unsigned long height) {
+				   const unsigned long height) {
     
     GLuint textureHandle;
     
@@ -486,7 +499,7 @@ namespace small3d {
   
   
   void Renderer::renderRectangle(const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
-                               const bool perspective, const glm::vec4 colour) const {
+				 const bool perspective, const glm::vec4 colour) const {
     
     float vertices[16] = {
       bottomRight.x, bottomRight.y, bottomRight.z, 1.0f,
@@ -542,9 +555,9 @@ namespace small3d {
       glGenBuffers(1, &coordBuffer);
       glBindBuffer(GL_ARRAY_BUFFER, coordBuffer);
       glBufferData(GL_ARRAY_BUFFER,
-        sizeof(float) * 8,
-        textureCoords,
-        GL_STATIC_DRAW);
+		   sizeof(float) * 8,
+		   textureCoords,
+		   GL_STATIC_DRAW);
       glEnableVertexAttribArray(1);
       glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
     
@@ -588,7 +601,7 @@ namespace small3d {
   }
 
   void Renderer::renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight,
-    const bool perspective) const {
+				 const bool perspective) const {
     this->renderRectangle("", topLeft, bottomRight, perspective, colour);
   }
   
@@ -610,18 +623,18 @@ namespace small3d {
     glBindBuffer(GL_ARRAY_BUFFER, model.positionBufferObjectId);
     if (!alreadyInGPU) {
       glBufferData(GL_ARRAY_BUFFER,
-        model.vertexDataByteSize,
-        model.vertexData.data(),
-        GL_STATIC_DRAW);
+		   model.vertexDataByteSize,
+		   model.vertexData.data(),
+		   GL_STATIC_DRAW);
     }
 
     // Vertex indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model.indexBufferObjectId);
     if (!alreadyInGPU) {
       glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-        model.indexDataByteSize,
-        model.indexData.data(),
-        GL_STATIC_DRAW);
+		   model.indexDataByteSize,
+		   model.indexData.data(),
+		   GL_STATIC_DRAW);
     }
 
     glEnableVertexAttribArray(0);
@@ -631,9 +644,9 @@ namespace small3d {
     glBindBuffer(GL_ARRAY_BUFFER, model.normalsBufferObjectId);
     if (!alreadyInGPU) {
       glBufferData(GL_ARRAY_BUFFER,
-        model.normalsDataByteSize,
-        model.normalsData.data(),
-        GL_STATIC_DRAW);
+		   model.normalsDataByteSize,
+		   model.normalsData.data(),
+		   GL_STATIC_DRAW);
     }
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0);
@@ -723,7 +736,7 @@ namespace small3d {
   }
   
   void Renderer::write(const std::string text, const glm::vec3 colour, const glm::vec2 topLeft, 
-    const glm::vec2 bottomRight, const int fontSize, std::string fontPath) {
+		       const glm::vec2 bottomRight, const int fontSize, std::string fontPath) {
     
     std::string faceId = intToStr(fontSize) + fontPath;
     
@@ -735,7 +748,7 @@ namespace small3d {
     
     if (idFacePair == fontFaces.end()) {
       
-      std::string faceFullPath = basePath + fontPath;
+      std::string faceFullPath = fontPath;
       LOGDEBUG("Loading font from " + faceFullPath);
       
       error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);
@@ -817,7 +830,7 @@ namespace small3d {
     generateTexture(textureName, &textMemory[0], width, height);
     
     renderRectangle(textureName, glm::vec3(topLeft.x, topLeft.y, -0.5f),
-                  glm::vec3(bottomRight.x, bottomRight.y, -0.5f));
+		    glm::vec3(bottomRight.x, bottomRight.y, -0.5f));
     
     deleteTexture(textureName);
   }

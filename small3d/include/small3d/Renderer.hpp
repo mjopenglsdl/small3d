@@ -37,8 +37,6 @@ namespace small3d
 
   private:
 
-    std::string basePath;
-    
     GLFWwindow* window;
 
     GLuint perspectiveProgram;
@@ -56,6 +54,8 @@ namespace small3d
     float zFar;
 
     float zOffsetFromCamera;
+
+    GLuint vao;
 
     FT_Library library;
 
@@ -138,7 +138,7 @@ namespace small3d
      */
     Renderer(const std::string windowTitle, const int width, const int height, const float frustumScale,
       const float zNear, const float zFar, const float zOffsetFromCamera, 
-      const std::string shadersPath, const std::string basePath);
+      const std::string shadersPath);
     
     Renderer() {};
     
@@ -196,9 +196,6 @@ namespace small3d
      * 				it and the names of the shaders must remain as provided.
      * 				The shader code can be changed, provided that their inputs
      * 				and outputs are maintained the same.
-     * @param basePath          The path under which all accessed files and directories are
-     *                          to be found. If this is not set, it is assumed to be the directory
-     *                          from where the execution command is entered.
      * @return The Renderer object. It can only be assigned to a pointer by its address (Renderer *r = &Renderer::getInstance(...), 
      *         sicne declaring another Renderer variable and assigning to it would invoke the default constructor, which has 
      *         been deleted.
@@ -206,7 +203,7 @@ namespace small3d
     static Renderer& getInstance(const std::string windowTitle = "", const int width = 0, 
       const int height = 0, const float frustumScale = 1.0f, const float zNear = 1.0f,
       const float zFar = 24.0f, const float zOffsetFromCamera = -1.0f,
-			const std::string shadersPath = "resources/shaders/", const std::string basePath = "");
+			const std::string shadersPath = "resources/shaders/");
 
     /**
      * @brief Destructor
