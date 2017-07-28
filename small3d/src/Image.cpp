@@ -158,7 +158,7 @@ namespace small3d {
     return height;
   }
 
-  unsigned long Image::size() const {
+  unsigned long Image::getByteSize() const {
     return imageDataSize;
   }
 

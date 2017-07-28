@@ -61,7 +61,7 @@ namespace small3d {
      * @brief Get the size of the image, in bytes
      * @return Size of the image, in bytes
      */
-    unsigned long size() const;
+    unsigned long getByteSize() const;
 
     /**
      * @brief Get the image data
