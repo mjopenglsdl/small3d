@@ -1,6 +1,7 @@
 var searchData=
 [
   ['generatetexture',['generateTexture',['../classsmall3d_1_1_renderer.html#a42e2f3bc3d74c1efdf69609f81ec3b4c',1,'small3d::Renderer']]],
+  ['getbytesize',['getByteSize',['../classsmall3d_1_1_image.html#a2ca91e211b1f2eb978def755cb1821f3',1,'small3d::Image']]],
   ['getdata',['getData',['../classsmall3d_1_1_image.html#ab26bc22464edb7aefbcd4a2b95d788a2',1,'small3d::Image']]],
   ['getheight',['getHeight',['../classsmall3d_1_1_image.html#adf097899bb8212b43a6e620ff0d15007',1,'small3d::Image']]],
   ['getinstance',['getInstance',['../classsmall3d_1_1_renderer.html#a6fed933b938849667debfa58013e720b',1,'small3d::Renderer']]],
