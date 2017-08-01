@@ -8,14 +8,17 @@ Introduction
 
 ![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
 
-This is a free, open-source, minimalistic 3D game engine, developed in C++ and based on modern OpenGL. I developed it while learning how to program games and I am still using it for my projects and experiments. In order to learn how to use it, have a look at the [tutorial](https://github.com/dimi309/small3d-tutorial) and the [API documentation](http://dimi309.github.io/small3d/).
+This is a free, open-source, minimalistic 3D game engine, developed in C++ and using OpenGL with shaders. I developed it while learning how to program games and I am still using it for my projects and experiments.
+
+- [tutorial](https://github.com/dimi309/small3d-tutorial): Start here to learn the basics. The repository also includes two sample games that use all of small3d's features.
+- [API documentation](http://dimi309.github.io/small3d/): Use this as a reference while developing with the engine.
 
 Features
 --------
 
-- Runs on Windows, Mac, Linux (I have tested it on Debian and Fedora and somebody has told me that it works on Ubuntu, too).
+- Runs on Windows, Mac, Linux. It is regularly tested on Debian, Fedora and Ubuntu.
 - It works with GLFW.
-- Uses OpenGL 3.3 and defaults to 2.1 if the former is not available. So, it comes with two sets of shaders.
+- Uses OpenGL 3.3 and defaults to 2.1 if the former is not available.
 - Uses C++11.
 - You can tweak the engine's shaders, as long as you keep the same incoming variables and uniforms.
 - Plays sounds from .ogg files.
@@ -33,6 +36,8 @@ Features
 Building locally
 ----------------
 
+Appart from deploying the engine for your projects, you might like to explore the source code and run the unit tests, in order to better understand it or make modifications. In that case, you can build it locally on its own. This is how I work while maintaining it and adding features.
+
 Prerequisites:
 
 - A compiler. You can use gcc, Xcode, llvm or Visual Studio, depending on your system. Sadly, MinGW builds are not supported yet.
@@ -40,11 +45,11 @@ Prerequisites:
 - [CMake](https://cmake.org/)
 - [Git](https://git-scm.com/)
 
-To build the project without packaging it, first add my bintray repository as a remote to your conan configuration:
+Add my bintray repository as a remote to your conan configuration. You only need to execute this once. Conan will remember it afterwards:
 
 	conan remote add bintraydimi309 https://api.bintray.com/conan/dimi309/conan-packages
 
-You only need to execute this once. Conan will remember it afterwards. Then, run the following:
+Run the following:
 
 	git clone https://github.com/dimi309/small3d
 	cd small3d
@@ -76,7 +81,7 @@ In your home directory, make sure that the .conan/conan.conf file contains these
 Note on 3D models and textures
 ------------------------------
 
-The Wavefront .obj files used for the engine's models have to have a certain structure. Exporting them from Blender for example,  we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
+The Wavefront .obj files used for the engine's models have to have a certain structure. Exporting them from Blender for example,  we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". When exporting animations, also set "Apply modifiers". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
 
 If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program.
 
