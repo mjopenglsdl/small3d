@@ -67,10 +67,9 @@ If you are using Visual Studio 2017, conan may not be able to detect it. In that
 	
 	set vs150comntools=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\
 
-In your home directory, make sure that the .conan/conan.conf file contains these lines or something similar that you prefer under settings_defaults:
+In your home directory, make sure that the .conan/profiles/default file contains this:
 
-	[settings_defaults]
-
+	[settings]
 	arch=x86
 	build_type=Debug
 	os=Windows
