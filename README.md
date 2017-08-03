@@ -1,12 +1,7 @@
 small3d
 =======
 
-![beaver](https://cloud.githubusercontent.com/assets/875167/20235630/4f653bc4-a897-11e6-97cc-d6d009fe527c.png)
-
-Introduction
-------------
-
-![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
+![beaver](https://cloud.githubusercontent.com/assets/875167/20235630/4f653bc4-a897-11e6-97cc-d6d009fe527c.png) ![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
 
 This is a free, open-source, minimalistic 3D game engine, developed in C++ and using OpenGL with shaders. I developed it while learning how to program games and I am still using it for my projects and experiments.
 
@@ -18,12 +13,12 @@ Features
 
 - Runs on Windows, Mac, Linux. It is regularly tested on Debian, Fedora and Ubuntu.
 - It works with GLFW.
-- Uses OpenGL 3.3 and defaults to 2.1 if the former is not available.
+- Uses OpenGL 3.3 and defaults to 2.1 if the former is not available. I am in the process of also adding support for Vulkan, but that is not ready yet.
 - Uses C++11.
 - You can tweak the engine's shaders, as long as you keep the same incoming variables and uniforms.
 - Plays sounds from .ogg files.
 - Doesn't hide GLFW or OpenGL from you. You can set up your main game loop, inputs, etc, however you want, use its functionality, but also code around it making your own OpenGL calls for example.
-- It can read and render Wavefront files, including animations. Personally, I use Blender to create the models and export these files.
+- It can read and render models from Wavefront files, including animations. Personally, I use Blender to create the models.
 - Texture mapping.
 - It can render any image in any position (for example to be used as the ground, or the sky).
 - Gouraud shading. You can set the light direction and intensity.
