@@ -5,7 +5,6 @@ small3d changelog
 
 v1.3.0
 ------
-(still open)
 
 - Various bug fixes and code improvements.
 - [BREAKING] The Renderer class is now a singleton.
