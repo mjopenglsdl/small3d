@@ -3,9 +3,9 @@ environment:
     PYTHON: "C:\\Python27"
     PYTHON_VERSION: "2.7.8"
     PYTHON_ARCH: "32"
-    CONAN_REFERENCE: "small3d/master"
+    CONAN_REFERENCE: "small3d/1.3.0"
     CONAN_USERNAME: "dimi309"
-    CONAN_CHANNEL: "testing"
+    CONAN_CHANNEL: "stable"
     CONAN_TOTAL_PAGES: 2
     CONAN_REMOTES: "https://api.bintray.com/conan/dimi309/conan-packages"
     CONAN_UPLOAD: "https://api.bintray.com/conan/dimi309/conan-packages"
