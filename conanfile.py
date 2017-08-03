@@ -3,7 +3,7 @@ from conans.tools import ConanException
 
 class Small3dConan(ConanFile):
     name = "small3d"
-    version = "master"
+    version = "1.3.0"
     description = "A small, cross-platform 3D game engine (C++, OpenGL, GLFW) - runs on Win/MacOS/Linux"
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
