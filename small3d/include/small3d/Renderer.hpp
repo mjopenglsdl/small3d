@@ -8,18 +8,18 @@
 
 #pragma once
 
-#define GLM_FORCE_RADIANS
-
 #include <GL/glew.h>
-
 #include <GLFW/glfw3.h>
 
 #include "Logger.hpp"
 #include "Image.hpp"
 #include "Model.hpp"
 #include "SceneObject.hpp"
+
 #include <unordered_map>
 #include <vector>
+
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -31,7 +31,6 @@ namespace small3d
    * @class Renderer
    * @brief Renderer class, which can render using either OpenGL v3.3 or v2.1
    */
-
   class Renderer
   {
 
@@ -40,102 +39,42 @@ namespace small3d
     GLFWwindow* window;
 
     GLuint perspectiveProgram;
-
     GLuint orthographicProgram;
+    GLuint vao;
 
     bool isOpenGL33Supported;
-
     bool noShaders;
 
     float frustumScale;
-
     float zNear;
-
     float zFar;
-
     float zOffsetFromCamera;
 
-    GLuint vao;
+    std::unordered_map<std::string, GLuint> textures;
 
     FT_Library library;
-
     std::vector<float> textMemory;
-    
     std::unordered_map<std::string, FT_Face> fontFaces;
 
-    /**
-     * @brief Load a shader's source code from a file into a string
-     * @param fileLocation The file's location, relative to the game path
-     * @return String containing the shader's source code
-     */
     std::string loadShaderFromFile(const std::string fileLocation) const;
-
-    /**
-     * @brief Compile a shader's source code
-     * @param shaderSourceFile String containing the shader's source code
-     * @param shaderType Type of shader (GL_VERTEX_SHADER, GL_FRAGMENT_SHADER, GL_GEOMETRY_SHADER - the latter for OpenGL 3.3)
-     * @return OpenGL shader reference
-     */
     GLuint compileShader(const std::string shaderSourceFile, const GLenum shaderType) const;
-
-    /**
-     * @brief Retrieve the information of what went wrong when linking a shader program
-     */
     std::string getProgramInfoLog(const GLuint linkedProgram) const;
-
-    /**
-     * @brief Retrieve the information of what went wrong when compiling a shader
-     */
     std::string getShaderInfoLog(const GLuint shader) const;
+    void detectOpenGLVersion();
+    void checkForOpenGLErrors(const std::string when, const bool abort) const;
 
-    /**
-     * @brief Initialise renderer (OpenGL, GLEW, etc)
-     */
+    void positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const;
+    void positionCamera() const;
+    GLuint getTextureHandle(const std::string name) const;
+    GLuint generateTexture(const std::string name, const float *data, const unsigned long width,
+      const unsigned long height);
+
     void init(const int width, const int height, const std::string windowTitle,
               const float frustumScale , const float zNear,
               const float zFar, const float zOffsetFromCamera,
               const std::string shadersPath);
-
-    /**
-     * @brief Initialise the application window
-     */
     void initWindow(int &width, int &height, const std::string windowTitle = "");
 
-    /**
-     * @brief Detect if OpenGL 3.3 is supported. If not, fall back to OpenGL 2.1.
-     * If neither of the two is supported, an exception is raised.
-     */
-    void detectOpenGLVersion();
-
-    void checkForOpenGLErrors(const std::string when, const bool abort) const;
-
-    /**
-     * @brief Textures used in the scene, each corresponding to the name of one of
-     * the rendered models
-     */
-    std::unordered_map<std::string, GLuint> textures;
-
-    void positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const;
-
-    /**
-     * @brief Position the camera (Calculates offset and rotation matrices and sends them to OpenGL).
-     */
-
-    void positionCamera() const;
-
-    /**
-     * @brief Get the handle of a texture which has already been generated (see generateTexture)
-     * @param name The name of the texture
-     * @return The texture handle (0 if not found)
-     */
-    GLuint getTextureHandle(const std::string name) const;
-
-    GLuint generateTexture(const std::string name, const float *data, const unsigned long width, 
-      const unsigned long height);
-
-    /**
-     * Hidden constructor, because Renderer is a singleton
-     */
     Renderer(const std::string windowTitle, const int width, const int height, const float frustumScale,
       const float zNear, const float zFar, const float zOffsetFromCamera, 
       const std::string shadersPath);
@@ -143,39 +82,24 @@ namespace small3d
     Renderer() {};
     
   public:
-    
-    Renderer(Renderer const&) = delete;
-    void operator=(Renderer const&) = delete;
-    Renderer(Renderer &&) = delete;
-    void operator=(Renderer &&) = delete;
-    
     /**
-     * @brief Get the GLFW window object, associated with the Renderer.
-     */
-    GLFWwindow* getWindow() const;
-
-    /**
-     * @brief Vector, indicating the direction of the light in the scene.
-     */
-
+    * @brief Vector, indicating the direction of the light in the scene.
+    */
     glm::vec3 lightDirection;
 
     /**
-     * @brief The camera position in world space.
-     */
-
+    * @brief The camera position in world space.
+    */
     glm::vec3 cameraPosition;
 
     /**
-     * @brief The camera rotation (around the x, y and z axes)
-     */
-
+    * @brief The camera rotation (around the x, y and z axes)
+    */
     glm::vec3 cameraRotation;
 
     /**
-     * @brief The light intensity (set to -1.0f if no lighting is to be used).
-     */
-
+    * @brief The light intensity (set to -1.0f if no lighting is to be used).
+    */
     float lightIntensity;
 
     /**
@@ -211,6 +135,11 @@ namespace small3d
     ~Renderer();
 
     /**
+    * @brief Get the GLFW window object, associated with the Renderer.
+    */
+    GLFWwindow* getWindow() const;
+
+    /**
      * @brief Generate a texture on the GPU from the given image
      * @param name The name by which the texture will be known
      * @param image The image from which the texture will be generated
@@ -222,7 +151,6 @@ namespace small3d
      *
      * @param	name	The name of the texture.
      */
-
     void deleteTexture(const std::string name);
 
     /**
@@ -230,7 +158,6 @@ namespace small3d
      *
      * @return True if OpenGL 3.3 is supported, false otherwise
      */
-
     bool supportsOpenGL33() const;
 
     /**
@@ -253,7 +180,6 @@ namespace small3d
      * @param bottomRight Where to place the bottom right corner 
      * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
      */
-    
     void renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, 
       const bool perspective = false) const;
     
@@ -328,6 +254,11 @@ namespace small3d
      * the buffers.
      */
     void swapBuffers() const;
+
+    Renderer(Renderer const&) = delete;
+    void operator=(Renderer const&) = delete;
+    Renderer(Renderer &&) = delete;
+    void operator=(Renderer &&) = delete;
 
   };
   

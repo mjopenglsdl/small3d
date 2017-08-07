@@ -7,19 +7,390 @@
  */
 
 #include "Renderer.hpp"
+#include "MathFunctions.hpp"
+
 #include <stdexcept>
 #include <fstream>
-#include "MathFunctions.hpp"
+
 #include <glm/gtc/type_ptr.hpp>
 
 namespace small3d {
 
-  void error_callback(int error, const char* description)
+  static void error_callback(int error, const char* description)
   {
     LOGERROR(std::string(description));
   }
   
-  std::string openglErrorToString(GLenum error);
+  static std::string openglErrorToString(GLenum error);
+
+  std::string Renderer::loadShaderFromFile(const std::string fileLocation) const {
+    initLogger();
+    std::string shaderSource = "";
+    std::ifstream file(fileLocation.c_str());
+    std::string line;
+    if (file.is_open()) {
+      while (std::getline(file, line)) {
+        shaderSource += line + "\n";
+      }
+    }
+    return shaderSource;
+  }
+
+  GLuint Renderer::compileShader(const std::string shaderSourceFile, const GLenum shaderType) const {
+
+    GLuint shader = glCreateShader(shaderType);
+
+    std::string shaderSource = this->loadShaderFromFile(shaderSourceFile);
+
+    if (shaderSource.length() == 0) {
+      throw std::runtime_error("Shader source file '" + shaderSourceFile + "' is empty or not found.");
+    }
+
+    const char *shaderSourceChars = shaderSource.c_str();
+    glShaderSource(shader, 1, &shaderSourceChars, NULL);
+
+    glCompileShader(shader);
+
+    GLint status;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+    if (status == GL_FALSE) {
+
+      throw std::runtime_error(
+        "Failed to compile shader:\n" + shaderSource + "\n"
+        + this->getShaderInfoLog(shader));
+    }
+    else {
+      LOGDEBUG("Shader " + shaderSourceFile + " compiled successfully.");
+    }
+
+    return shader;
+  }
+
+  std::string Renderer::getProgramInfoLog(const GLuint linkedProgram) const {
+
+    GLint infoLogLength;
+    glGetProgramiv(linkedProgram, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+    GLchar *infoLog = new GLchar[infoLogLength + 1];
+    GLsizei lengthReturned = 0;
+    glGetProgramInfoLog(linkedProgram, infoLogLength, &lengthReturned, infoLog);
+
+    std::string infoLogStr(infoLog);
+
+    if (lengthReturned == 0) {
+      infoLogStr = "(No info)";
+    }
+
+    delete[] infoLog;
+
+    return infoLogStr;
+  }
+
+  std::string Renderer::getShaderInfoLog(const GLuint shader) const {
+
+    GLint infoLogLength;
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+    GLchar *infoLog = new GLchar[infoLogLength + 1];
+    GLsizei lengthReturned = 0;
+    glGetShaderInfoLog(shader, infoLogLength, &lengthReturned, infoLog);
+
+    std::string infoLogStr(infoLog);
+    if (lengthReturned == 0) {
+      infoLogStr = "(No info)";
+    }
+
+    delete[] infoLog;
+
+    return infoLogStr;
+  }
+
+  void Renderer::detectOpenGLVersion() {
+#ifdef __APPLE__
+    glewExperimental = GL_TRUE;
+#endif
+    GLenum initResult = glewInit();
+
+    if (initResult != GLEW_OK) {
+      throw std::runtime_error("Error initialising GLEW");
+    }
+    else {
+      std::string glewVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glewGetString(GLEW_VERSION)));
+      LOGINFO("Using GLEW version " + glewVersion);
+    }
+
+    checkForOpenGLErrors("initialising GLEW", false);
+
+    LOGDEBUG("OpenGL version supported by machine: " +
+      std::string(reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)))));
+
+    if (glewIsSupported("GL_VERSION_3_3")) {
+      LOGINFO("Using OpenGL 3.3");
+      isOpenGL33Supported = true;
+    }
+    else if (glewIsSupported("GL_VERSION_2_1")) {
+      LOGINFO("Using OpenGL 2.1");
+    }
+    else {
+      noShaders = true;
+      throw std::runtime_error(
+        "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
+    }
+  }
+
+  void Renderer::checkForOpenGLErrors(const std::string when, const bool abort) const {
+    GLenum errorCode = glGetError();
+    if (errorCode != GL_NO_ERROR) {
+      LOGERROR("OpenGL error while " + when);
+
+      do {
+        LOGERROR(openglErrorToString(errorCode));
+        errorCode = glGetError();
+      } while (errorCode != GL_NO_ERROR);
+
+      if (abort)
+        throw std::runtime_error("OpenGL error while " + when);
+    }
+  }
+
+  void Renderer::positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const {
+    // Rotation
+
+    GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+      "xRotationMatrix");
+    glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(rotation.x)));
+
+    GLint yRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+      "yRotationMatrix");
+    glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(rotation.y)));
+
+    GLint zRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+      "zRotationMatrix");
+    glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(rotation.z)));
+
+    GLint offsetUniform = glGetUniformLocation(perspectiveProgram, "offset");
+    glUniform3fv(offsetUniform, 1, glm::value_ptr(offset));
+  }
+
+
+  void Renderer::positionCamera() const {
+    // Camera rotation
+
+    GLint xCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+      "xCameraRotationMatrix");
+    GLint yCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+      "yCameraRotationMatrix");
+    GLint zCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
+      "zCameraRotationMatrix");
+
+
+    glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(-cameraRotation.x)));
+    glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(-cameraRotation.y)));
+    glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(-cameraRotation.z)));
+
+    // Camera position
+    GLint cameraPositionUniform = glGetUniformLocation(perspectiveProgram, "cameraPosition");
+    glUniform3fv(cameraPositionUniform, 1, glm::value_ptr(cameraPosition));
+  }
+
+  GLuint Renderer::getTextureHandle(const std::string name) const {
+    GLuint handle = 0;
+
+    auto nameTexturePair = textures.find(name);
+
+    if (nameTexturePair != textures.end()) {
+      handle = nameTexturePair->second;
+    }
+
+    return handle;
+  }
+
+  GLuint Renderer::generateTexture(const std::string name, const float* data, const unsigned long width,
+    const unsigned long height) {
+
+    GLuint textureHandle;
+
+    glGenTextures(1, &textureHandle);
+
+    glBindTexture(GL_TEXTURE_2D, textureHandle);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+
+    GLint internalFormat = isOpenGL33Supported ? GL_RGBA32F : GL_RGBA;
+
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGBA,
+      GL_FLOAT, data);
+
+    textures.insert(make_pair(name, textureHandle));
+
+    return textureHandle;
+  }
+
+  void Renderer::init(const int width, const int height, const std::string windowTitle,
+    const float frustumScale, const float zNear,
+    const float zFar, const float zOffsetFromCamera,
+    const std::string shadersPath) {
+
+    int screenWidth = width;
+    int screenHeight = height;
+
+    this->initWindow(screenWidth, screenHeight, windowTitle);
+
+    this->frustumScale = frustumScale;
+    this->zNear = zNear;
+    this->zFar = zFar;
+    this->zOffsetFromCamera = zOffsetFromCamera;
+
+    this->detectOpenGLVersion();
+
+    std::string vertexShaderPath;
+    std::string fragmentShaderPath;
+    std::string simpleVertexShaderPath;
+    std::string simpleFragmentShaderPath;
+
+    if (isOpenGL33Supported) {
+      vertexShaderPath = shadersPath + "OpenGL33/perspectiveMatrixLightedShader.vert";
+      fragmentShaderPath = shadersPath + "OpenGL33/textureShader.frag";
+      simpleVertexShaderPath = shadersPath + "OpenGL33/simpleShader.vert";
+      simpleFragmentShaderPath = shadersPath + "OpenGL33/simpleShader.frag";
+
+    }
+    else {
+      vertexShaderPath = shadersPath + "OpenGL21/perspectiveMatrixLightedShader.vert";
+      fragmentShaderPath = shadersPath + "OpenGL21/textureShader.frag";
+      simpleVertexShaderPath = shadersPath + "OpenGL21/simpleShader.vert";
+      simpleFragmentShaderPath = shadersPath + "OpenGL21/simpleShader.frag";
+    }
+
+    glViewport(0, 0, static_cast<GLsizei>(screenWidth), static_cast<GLsizei>(screenHeight));
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LEQUAL);
+    glDepthRange(0.0f, 10.0f);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    GLuint vertexShader = compileShader(vertexShaderPath, GL_VERTEX_SHADER);
+    GLuint fragmentShader = compileShader(fragmentShaderPath, GL_FRAGMENT_SHADER);
+
+    perspectiveProgram = glCreateProgram();
+    glAttachShader(perspectiveProgram, vertexShader);
+    glAttachShader(perspectiveProgram, fragmentShader);
+
+    glLinkProgram(perspectiveProgram);
+
+    GLint status;
+    glGetProgramiv(perspectiveProgram, GL_LINK_STATUS, &status);
+    if (status == GL_FALSE) {
+      throw std::runtime_error("Failed to link program:\n" + this->getProgramInfoLog(perspectiveProgram));
+    }
+    else {
+      LOGDEBUG("Linked main rendering program successfully");
+
+      glUseProgram(perspectiveProgram);
+
+      // Perspective
+
+      GLint perspectiveMatrixUniform = glGetUniformLocation(perspectiveProgram,
+        "perspectiveMatrix");
+
+      float perspectiveMatrix[16];
+      memset(perspectiveMatrix, 0, sizeof(float) * 16);
+      perspectiveMatrix[0] = frustumScale;
+      perspectiveMatrix[5] = frustumScale * ROUND_2_DECIMAL(screenWidth / screenHeight);
+      perspectiveMatrix[10] = (zNear + zFar) / (zNear - zFar);
+      perspectiveMatrix[14] = 2.0f * zNear * zFar / (zNear - zFar);
+      perspectiveMatrix[11] = zOffsetFromCamera;
+
+      glUniformMatrix4fv(perspectiveMatrixUniform, 1, GL_FALSE,
+        perspectiveMatrix);
+
+      glUseProgram(0);
+    }
+    glDetachShader(perspectiveProgram, vertexShader);
+    glDetachShader(perspectiveProgram, fragmentShader);
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
+
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearDepth(1.0f);
+
+    // Program (with shaders) for orthographic rendering for text
+
+    GLuint simpleVertexShader = compileShader(simpleVertexShaderPath,
+      GL_VERTEX_SHADER);
+    GLuint simpleFragmentShader = compileShader(simpleFragmentShaderPath,
+      GL_FRAGMENT_SHADER);
+
+    orthographicProgram = glCreateProgram();
+    glAttachShader(orthographicProgram, simpleVertexShader);
+    glAttachShader(orthographicProgram, simpleFragmentShader);
+
+    glLinkProgram(orthographicProgram);
+
+    glGetProgramiv(orthographicProgram, GL_LINK_STATUS, &status);
+    if (status == GL_FALSE) {
+      throw std::runtime_error("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
+    }
+    else {
+      LOGDEBUG("Linked orthographic rendering program successfully");
+    }
+    glDetachShader(orthographicProgram, simpleVertexShader);
+    glDetachShader(orthographicProgram, simpleFragmentShader);
+    glDeleteShader(simpleVertexShader);
+    glDeleteShader(simpleFragmentShader);
+    glUseProgram(0);
+  }
+
+  void Renderer::initWindow(int &width, int &height, const std::string windowTitle) {
+
+    glfwSetErrorCallback(error_callback);
+
+    if (!glfwInit()) {
+      throw std::runtime_error("Unable to initialise GLFW");
+    }
+
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif
+
+    bool fullScreen = false;
+
+    GLFWmonitor *monitor = nullptr; // If NOT null, a full-screen window will be created.
+
+    if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
+      throw std::runtime_error("Screen width and height both have to be equal or not equal to zero at the same time.");
+    }
+    else if (width == 0) {
+
+      fullScreen = true;
+
+      monitor = glfwGetPrimaryMonitor();
+
+      const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+      width = mode->width;
+      height = mode->height;
+
+      LOGINFO("Detected screen width " + intToStr(width) + " and height " + intToStr(height));
+    }
+
+    window = glfwCreateWindow(width, height, windowTitle.c_str(), monitor, nullptr);
+    if (!window) {
+      throw std::runtime_error("Unable to create GLFW window");
+    }
+
+    glfwMakeContextCurrent(window);
+
+  }
   
   Renderer::Renderer(const std::string windowTitle, const int width, const int height,
                      const float frustumScale , const float zNear,
@@ -51,7 +422,7 @@ namespace small3d {
       glBindVertexArray(vao);
     }
 #endif
-    
+
   }
   
   Renderer& Renderer::getInstance(const std::string windowTitle, const int width, const int height,
@@ -99,334 +470,7 @@ namespace small3d {
   GLFWwindow* Renderer::getWindow() const{
     return window;
   }
-  
-  std::string Renderer::loadShaderFromFile(const std::string fileLocation) const {
-    initLogger();
-    std::string shaderSource = "";
-    std::ifstream file(fileLocation.c_str());
-    std::string line;
-    if (file.is_open()) {
-      while (std::getline(file, line)) {
-        shaderSource += line + "\n";
-      }
-    }
-    return shaderSource;
-  }
-  
-  std::string Renderer::getProgramInfoLog(const GLuint linkedProgram) const {
-    
-    GLint infoLogLength;
-    
-    glGetProgramiv(linkedProgram, GL_INFO_LOG_LENGTH, &infoLogLength);
-    
-    GLchar *infoLog = new GLchar[infoLogLength + 1];
-    
-    GLsizei lengthReturned = 0;
-    
-    glGetProgramInfoLog(linkedProgram, infoLogLength, &lengthReturned, infoLog);
-    
-    std::string infoLogStr(infoLog);
-    
-    if (lengthReturned == 0) {
-      infoLogStr = "(No info)";
-    }
-    
-    delete[] infoLog;
-    
-    return infoLogStr;
-    
-  }
-  
-  std::string Renderer::getShaderInfoLog(const GLuint shader) const {
-    
-    GLint infoLogLength;
-    
-    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
-    
-    GLchar *infoLog = new GLchar[infoLogLength + 1];
-    
-    GLsizei lengthReturned = 0;
-    
-    glGetShaderInfoLog(shader, infoLogLength, &lengthReturned, infoLog);
-    
-    std::string infoLogStr(infoLog);
-    
-    if (lengthReturned == 0) {
-      infoLogStr = "(No info)";
-    }
-    
-    delete[] infoLog;
-    
-    return infoLogStr;
-    
-  }
-  
-  GLuint Renderer::compileShader(const std::string shaderSourceFile, const GLenum shaderType) const {
-    
-    GLuint shader = glCreateShader(shaderType);
-    
-    std::string shaderSource = this->loadShaderFromFile(shaderSourceFile);
-    
-    if (shaderSource.length() == 0) {
-      throw std::runtime_error("Shader source file '" + shaderSourceFile + "' is empty or not found.");
-    }
-    
-    const char *shaderSourceChars = shaderSource.c_str();
-    glShaderSource(shader, 1, &shaderSourceChars, NULL);
-    
-    glCompileShader(shader);
-    
-    GLint status;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    if (status == GL_FALSE ) {
-      
-      throw std::runtime_error(
-			       "Failed to compile shader:\n" + shaderSource + "\n"
-			       + this->getShaderInfoLog(shader));
-    }
-    else {
-      LOGDEBUG("Shader " + shaderSourceFile + " compiled successfully.");
-    }
-    
-    return shader;
-  }
-  
-  void Renderer::detectOpenGLVersion() {
-#ifdef __APPLE__
-    glewExperimental = GL_TRUE;
-#endif
-    GLenum initResult = glewInit();
-    
-    if (initResult != GLEW_OK) {
-      throw std::runtime_error("Error initialising GLEW");
-    }
-    else {
-      std::string glewVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glewGetString(GLEW_VERSION)));
-      LOGINFO("Using GLEW version " + glewVersion);
-    }
-    
-    checkForOpenGLErrors("initialising GLEW", false);
-    
-    LOGDEBUG("OpenGL version supported by machine: " +
-	     std::string(reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)))));
-    
-    if (glewIsSupported("GL_VERSION_3_3")) {
-      LOGINFO("Using OpenGL 3.3");
-      isOpenGL33Supported = true;
-    }
-    else if (glewIsSupported("GL_VERSION_2_1")) {
-      LOGINFO("Using OpenGL 2.1");
-    }
-    else {
-      noShaders = true;
-      throw std::runtime_error(
-			       "None of the supported OpenGL versions (3.3 nor 2.1) are available.");
-    }
-  }
-  
-  void Renderer::checkForOpenGLErrors(const std::string when, const bool abort) const {
-    GLenum errorCode = glGetError();
-    if (errorCode != GL_NO_ERROR) {
-      LOGERROR("OpenGL error while " + when);
-      
-      do {
-        LOGERROR(openglErrorToString(errorCode));
-        errorCode = glGetError();
-      }
-      while (errorCode != GL_NO_ERROR);
-      
-      if (abort)
-        throw std::runtime_error("OpenGL error while " + when);
-    }
-  }
-  
-  void Renderer::initWindow(int &width, int &height, const std::string windowTitle) {
-    
-    glfwSetErrorCallback(error_callback);
-    
-    if (!glfwInit()){
-      throw std::runtime_error("Unable to initialise GLFW");
-    }
-    
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#endif
-    
-    bool fullScreen = false;
-    
-    GLFWmonitor *monitor = nullptr; // If NOT null, a full-screen window will be created.
-    
-    if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
-      throw std::runtime_error("Screen width and height both have to be equal or not equal to zero at the same time.");
-    }
-    else if (width == 0) {
-      
-      fullScreen = true;
-      
-      monitor = glfwGetPrimaryMonitor();
-      
-      const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-      width = mode->width;
-      height = mode->height;
-      
-      LOGINFO("Detected screen width " + intToStr(width) + " and height " + intToStr(height));
-    }
-    
-    window = glfwCreateWindow(width, height, windowTitle.c_str(), monitor, nullptr);
-    if (!window){
-      throw std::runtime_error("Unable to create GLFW window");
-    }
-    
-    glfwMakeContextCurrent(window);
-    
-  }
-  
-  void Renderer::init(const int width, const int height, const std::string windowTitle,
-                      const float frustumScale, const float zNear,
-                      const float zFar, const float zOffsetFromCamera,
-                      const std::string shadersPath) {
-    
-    int screenWidth = width;
-    int screenHeight = height;
-    
-    this->initWindow(screenWidth, screenHeight, windowTitle);
-    
-    this->frustumScale = frustumScale;
-    this->zNear = zNear;
-    this->zFar = zFar;
-    this->zOffsetFromCamera = zOffsetFromCamera;
-    
-    this->detectOpenGLVersion();
-    
-    std::string vertexShaderPath;
-    std::string fragmentShaderPath;
-    std::string simpleVertexShaderPath;
-    std::string simpleFragmentShaderPath;
-    
-    if (isOpenGL33Supported) {
-      vertexShaderPath = shadersPath + "OpenGL33/perspectiveMatrixLightedShader.vert";
-      fragmentShaderPath = shadersPath + "OpenGL33/textureShader.frag";
-      simpleVertexShaderPath = shadersPath + "OpenGL33/simpleShader.vert";
-      simpleFragmentShaderPath = shadersPath + "OpenGL33/simpleShader.frag";
-      
-    }
-    else {
-      vertexShaderPath = shadersPath + "OpenGL21/perspectiveMatrixLightedShader.vert";
-      fragmentShaderPath = shadersPath + "OpenGL21/textureShader.frag";
-      simpleVertexShaderPath = shadersPath + "OpenGL21/simpleShader.vert";
-      simpleFragmentShaderPath = shadersPath + "OpenGL21/simpleShader.frag";
-    }
-    
-    glViewport(0, 0, static_cast<GLsizei>(screenWidth), static_cast<GLsizei>(screenHeight));
-    
-    glEnable(GL_DEPTH_TEST);
-    glDepthMask(GL_TRUE);
-    glDepthFunc(GL_LEQUAL);
-    glDepthRange(0.0f, 10.0f);
-    
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    GLuint vertexShader = compileShader(vertexShaderPath, GL_VERTEX_SHADER);
-    GLuint fragmentShader = compileShader(fragmentShaderPath, GL_FRAGMENT_SHADER);
-    
-    perspectiveProgram = glCreateProgram();
-    glAttachShader(perspectiveProgram, vertexShader);
-    glAttachShader(perspectiveProgram, fragmentShader);
-    
-    glLinkProgram(perspectiveProgram);
-    
-    GLint status;
-    glGetProgramiv(perspectiveProgram, GL_LINK_STATUS, &status);
-    if (status == GL_FALSE) {
-      throw std::runtime_error("Failed to link program:\n" + this->getProgramInfoLog(perspectiveProgram));
-    }
-    else {
-      LOGDEBUG("Linked main rendering program successfully");
-      
-      glUseProgram(perspectiveProgram);
-      
-      // Perspective
-      
-      GLint perspectiveMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                            "perspectiveMatrix");
-      
-      float perspectiveMatrix[16];
-      memset(perspectiveMatrix, 0, sizeof(float) * 16);
-      perspectiveMatrix[0] = frustumScale;
-      perspectiveMatrix[5] = frustumScale * ROUND_2_DECIMAL(screenWidth / screenHeight);
-      perspectiveMatrix[10] = (zNear + zFar) / (zNear - zFar);
-      perspectiveMatrix[14] = 2.0f * zNear * zFar / (zNear - zFar);
-      perspectiveMatrix[11] = zOffsetFromCamera;
-      
-      glUniformMatrix4fv(perspectiveMatrixUniform, 1, GL_FALSE,
-                         perspectiveMatrix);
-      
-      glUseProgram(0);
-    }
-    glDetachShader(perspectiveProgram, vertexShader);
-    glDetachShader(perspectiveProgram, fragmentShader);
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-    
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glFrontFace(GL_CCW);
-    
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClearDepth(1.0f);
-    
-    // Program (with shaders) for orthographic rendering for text
-    
-    GLuint simpleVertexShader = compileShader(simpleVertexShaderPath,
-                                              GL_VERTEX_SHADER);
-    GLuint simpleFragmentShader = compileShader(simpleFragmentShaderPath,
-                                                GL_FRAGMENT_SHADER);
-    
-    orthographicProgram = glCreateProgram();
-    glAttachShader(orthographicProgram, simpleVertexShader);
-    glAttachShader(orthographicProgram, simpleFragmentShader);
-    
-    glLinkProgram(orthographicProgram);
-    
-    glGetProgramiv(orthographicProgram, GL_LINK_STATUS, &status);
-    if (status == GL_FALSE) {
-      throw std::runtime_error("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
-    }
-    else {
-      LOGDEBUG("Linked orthographic rendering program successfully");
-    }
-    glDetachShader(orthographicProgram, simpleVertexShader);
-    glDetachShader(orthographicProgram, simpleFragmentShader);
-    glDeleteShader(simpleVertexShader);
-    glDeleteShader(simpleFragmentShader);
-    glUseProgram(0);
-  }
-  
-  GLuint Renderer::generateTexture(const std::string name, const float* data, const unsigned long width,
-				   const unsigned long height) {
-    
-    GLuint textureHandle;
-    
-    glGenTextures(1, &textureHandle);
-    
-    glBindTexture(GL_TEXTURE_2D, textureHandle);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
-    
-    GLint internalFormat = isOpenGL33Supported ? GL_RGBA32F : GL_RGBA;
-    
-    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGBA,
-                 GL_FLOAT, data);
-    
-    textures.insert(make_pair(name, textureHandle));
-    
-    return textureHandle;
-  }
-
+ 
   void Renderer::generateTexture(const std::string name, const Image image) {
     this->generateTexture(name, image.getData(), image.getWidth(), image.getHeight());
   }
@@ -440,63 +484,9 @@ namespace small3d {
     }
   }
   
-  GLuint Renderer::getTextureHandle(const std::string name) const {
-    GLuint handle = 0;
-    
-    auto nameTexturePair = textures.find(name);
-    
-    if (nameTexturePair != textures.end()) {
-      handle = nameTexturePair->second;
-    }
-    
-    return handle;
-  }
-  
   bool Renderer::supportsOpenGL33() const {
     return isOpenGL33Supported;
   }
-  
-  void Renderer::positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const {
-    // Rotation
-    
-    GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                        "xRotationMatrix");
-    glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(rotation.x)));
-    
-    GLint yRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                        "yRotationMatrix");
-    glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(rotation.y)));
-    
-    GLint zRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                        "zRotationMatrix");
-    glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(rotation.z)));
-    
-    GLint offsetUniform = glGetUniformLocation(perspectiveProgram, "offset");
-    glUniform3fv(offsetUniform, 1, glm::value_ptr(offset));
-  }
-  
-  
-  void Renderer::positionCamera() const {
-    // Camera rotation
-    
-    GLint xCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                              "xCameraRotationMatrix");
-    GLint yCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                              "yCameraRotationMatrix");
-    GLint zCameraRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
-                                                              "zCameraRotationMatrix");
-    
-    
-    glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateX(-cameraRotation.x)));
-    glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateY(-cameraRotation.y)));
-    glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(rotateZ(-cameraRotation.z)));
-    
-    // Camera position
-    
-    GLint cameraPositionUniform = glGetUniformLocation(perspectiveProgram, "cameraPosition");
-    glUniform3fv(cameraPositionUniform, 1, glm::value_ptr(cameraPosition));
-  }
-  
   
   void Renderer::renderRectangle(const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
 				 const bool perspective, const glm::vec4 colour) const {
@@ -723,7 +713,6 @@ namespace small3d {
 
   void Renderer::render(Model &model, const glm::vec3 offset, const glm::vec3 rotation,
 			const std::string textureName) const {
-
     this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
 
@@ -741,18 +730,13 @@ namespace small3d {
     std::string faceId = intToStr(fontSize) + fontPath;
     
     auto idFacePair = fontFaces.find(faceId);
-    
     FT_Face face;
-    
     FT_Error error;
     
     if (idFacePair == fontFaces.end()) {
-      
       std::string faceFullPath = fontPath;
       LOGDEBUG("Loading font from " + faceFullPath);
-      
       error = FT_New_Face(library, faceFullPath.c_str(), 0, &face);
-      
       if (error != 0) {
         throw std::runtime_error("Failed to load font from " + faceFullPath);
       }
@@ -775,23 +759,17 @@ namespace small3d {
     
     // Figure out bitmap dimensions
     for(const char &c: text) {
-      
       error = FT_Load_Char(face, (FT_ULong) c, FT_LOAD_RENDER);
-      
       if (error != 0) {
         throw std::runtime_error("Failed to load character glyph.");
       }
-      
       FT_GlyphSlot slot = face->glyph;
-      
       width += slot->advance.x / 64;
-      
       if (height < static_cast<unsigned long>(slot->bitmap.rows))
         height = slot->bitmap.rows;
     }
     
     textMemory.resize(4 * width * height * sizeof(float));
-    
     memset(&textMemory[0], 0, 4 * width * height * sizeof(float));
     
     unsigned long totalAdvance = 0;
@@ -826,9 +804,7 @@ namespace small3d {
     }
     
     std::string textureName = intToStr(fontSize) + "text_" + text;
-    
     generateTexture(textureName, &textMemory[0], width, height);
-    
     renderRectangle(textureName, glm::vec3(topLeft.x, topLeft.y, -0.5f),
 		    glm::vec3(bottomRight.x, bottomRight.y, -0.5f));
     
@@ -836,7 +812,6 @@ namespace small3d {
   }
   
   void Renderer::clearBuffers(Model &model) const {
-    
     if (model.positionBufferObjectId != 0) {
       glDeleteBuffers(1, &model.positionBufferObjectId);
       model.positionBufferObjectId = 0;
@@ -862,15 +837,12 @@ namespace small3d {
   }
   
   void Renderer::clearScreen(const glm::vec4 colour) const {
-    
     glClearColor(colour.r, colour.g, colour.b, colour.a);
-    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
   
   void Renderer::swapBuffers() const {
     glfwSwapBuffers(window);
-    
   }
   
   /**
