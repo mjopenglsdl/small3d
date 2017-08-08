@@ -37,24 +37,19 @@ namespace small3d {
   }
 
   GLuint Renderer::compileShader(const std::string shaderSourceFile, const GLenum shaderType) const {
-
     GLuint shader = glCreateShader(shaderType);
-
     std::string shaderSource = this->loadShaderFromFile(shaderSourceFile);
-
     if (shaderSource.length() == 0) {
       throw std::runtime_error("Shader source file '" + shaderSourceFile + "' is empty or not found.");
     }
-
     const char *shaderSourceChars = shaderSource.c_str();
     glShaderSource(shader, 1, &shaderSourceChars, NULL);
-
     glCompileShader(shader);
 
     GLint status;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    if (status == GL_FALSE) {
 
+    if (status == GL_FALSE) {
       throw std::runtime_error(
         "Failed to compile shader:\n" + shaderSource + "\n"
         + this->getShaderInfoLog(shader));
@@ -62,7 +57,6 @@ namespace small3d {
     else {
       LOGDEBUG("Shader " + shaderSourceFile + " compiled successfully.");
     }
-
     return shader;
   }
 
@@ -80,9 +74,7 @@ namespace small3d {
     if (lengthReturned == 0) {
       infoLogStr = "(No info)";
     }
-
     delete[] infoLog;
-
     return infoLogStr;
   }
 
@@ -105,9 +97,9 @@ namespace small3d {
     return infoLogStr;
   }
 
-  void Renderer::detectOpenGLVersion() {
+  void Renderer::initOpenGL() {
 #ifdef __APPLE__
-    //glewExperimental = GL_TRUE;
+    glewExperimental = GL_TRUE;
 #endif
     GLenum initResult = glewInit();
 
@@ -195,13 +187,10 @@ namespace small3d {
 
   GLuint Renderer::getTextureHandle(const std::string name) const {
     GLuint handle = 0;
-
     auto nameTexturePair = textures.find(name);
-
     if (nameTexturePair != textures.end()) {
       handle = nameTexturePair->second;
     }
-
     return handle;
   }
 
@@ -209,9 +198,7 @@ namespace small3d {
     const unsigned long height) {
 
     GLuint textureHandle;
-
     glGenTextures(1, &textureHandle);
-
     glBindTexture(GL_TEXTURE_2D, textureHandle);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
@@ -241,7 +228,7 @@ namespace small3d {
     this->zFar = zFar;
     this->zOffsetFromCamera = zOffsetFromCamera;
 
-    this->detectOpenGLVersion();
+    this->initOpenGL();
 
     std::string vertexShaderPath;
     std::string fragmentShaderPath;

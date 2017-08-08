@@ -60,7 +60,7 @@ namespace small3d
     GLuint compileShader(const std::string shaderSourceFile, const GLenum shaderType) const;
     std::string getProgramInfoLog(const GLuint linkedProgram) const;
     std::string getShaderInfoLog(const GLuint shader) const;
-    void detectOpenGLVersion();
+    void initOpenGL();
     void checkForOpenGLErrors(const std::string when, const bool abort) const;
 
     void positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const;
