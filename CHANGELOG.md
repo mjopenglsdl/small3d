@@ -3,6 +3,16 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.3.1
+------
+
+(still open)
+
+Note: I have gone through the Vulkan tutorial and I am seriously considering adding support for Vulkan at some point. I even thought about replacing OpenGL completely, but I finally decided that that wouldn't be a good idea. There is hardware that will be around for a long time and that will never be supported by the new API, not to mention that OpenGL is also available in VirtualBox, allowing me to quickly test small3d in a virtual environment without booting into different operating systems. So OpenGL will always be used by small3d. The immediate practical benefit of adding Vulkan support for now would be allowing small3d to also run on Android, since I have never implemented an OpenGL ES graphics pipeline. But that would take a considerable amount of time, so I am not sure when I will move ahead with it. If you would like to see small3d support Vulkan soon, or if you have any comments on the issue, please [let me know](https://github.com/dimi309/small3d/issues).
+
+- Various bug fixes and code improvements.
+- Using GLEW 2.1.0.
+
 v1.3.0
 ------
 
