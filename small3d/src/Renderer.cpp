@@ -107,7 +107,7 @@ namespace small3d {
 
   void Renderer::detectOpenGLVersion() {
 #ifdef __APPLE__
-    glewExperimental = GL_TRUE;
+    //glewExperimental = GL_TRUE;
 #endif
     GLenum initResult = glewInit();
 
@@ -267,7 +267,7 @@ namespace small3d {
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glDepthFunc(GL_LEQUAL);
-    glDepthRange(0.0f, 10.0f);
+    glDepthRange(zNear + zOffsetFromCamera, zFar);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
