@@ -30,11 +30,8 @@ namespace small3d {
     std::vector<std::vector<int> > textureCoordsIndices;
 
     void loadVertexData();
-
     void loadIndexData();
-
     void loadNormalsData();
-
     void loadTextureCoordsData();
 
     // Make sure that no texture coordinate information is lost when the data buffers get created (vertexData,
@@ -70,13 +67,11 @@ namespace small3d {
      * @brief The vertex data. This is an array, which is to be treated as a 4 column table, holding
      * the x, y, z values in each column. The fourth column is there to assist in matrix operations.
      */
-
     std::vector<float> vertexData;
 
     /**
      * @brief Size of the vertex data, in bytes.
      */
-
     int vertexDataByteSize;
 
     /**
@@ -84,13 +79,11 @@ namespace small3d {
      * in the index data table forms a triangle.
      *
      */
-
     std::vector<unsigned int> indexData;
 
     /**
      * @brief Size of the index data, in bytes
      */
-
     int indexDataByteSize;
 
     /**
@@ -98,13 +91,11 @@ namespace small3d {
      * of the vector representing the normal of a vertex. The position of the "row" in the array
      * is the same as the position of the corresponding vertex "row" in the vertexData array.
      */
-
     std::vector<float> normalsData;
 
     /**
      * @brief Size of the normals data, in bytes.
      */
-
     int normalsDataByteSize;
 
     /**
@@ -112,13 +103,11 @@ namespace small3d {
      * of the pixel coordinates on the model's texture image for the vertex in the corresponding
      * "row" of the vertex data "table"
      */
-
     std::vector<float> textureCoordsData;
 
     /**
      * @brief Size of the texture coordinates data, in bytes.
      */
-
     int textureCoordsDataByteSize;
 
     /**
