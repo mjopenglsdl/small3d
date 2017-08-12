@@ -75,9 +75,9 @@ In your home directory, make sure that the .conan/profiles/default file contains
 Note on 3D models and textures
 ------------------------------
 
-The Wavefront .obj files used for the engine's models have to have a certain structure. Exporting them from Blender for example,  we need to make sure we set the options "Write Normals", "Triangulate Faces", and "Keep Vertex Order". When exporting animations, also set "Apply modifiers". Only one object should be exported to each Wavefront file, because the engine cannot read more than one. The model has to have been set to have smooth shading in Blender and double vertices have to have been deleted before the export. Otherwise, when rendering with shaders, lighting will not work, since there will be multiple normals for each vertex and, with indexed drawing, the normals listed later in the exported file for some vertices will overwrite the previous ones.
+The Wavefront .obj files used for the engine's models have to have a certain structure. Exporting them from Blender for example,  we need to make sure we set the options **"Write Normals"**, **"Triangulate Faces"**, and **"Keep Vertex Order"**. When exporting animations, also set **"Apply modifiers"**. Only one object should be exported to each Wavefront file (the engine cannot read more than one).
 
-If a texture has been created, the option "Include UVs" must also be set. The texture should be saved as a PNG file, since this is the format that can be read by the program.
+If a texture has been created, the option **"Include UVs"** must also be set. The texture should be saved as a PNG file.
 
 Collision Detection
 -------------------
