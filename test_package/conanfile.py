@@ -16,5 +16,6 @@ class TestSmall3d(ConanFile):
     def imports(self):
         if self.settings.os == "Windows":
             self.copy(pattern="*.dll", dst="bin", src="bin")
+            self.copy(pattern="*.pdb", dst="bin", src="bin")
         if self.settings.os == "Macos":
             self.copy(pattern="*.dylib", dst="bin", src="lib")

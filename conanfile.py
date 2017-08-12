@@ -11,14 +11,11 @@ class Small3dConan(ConanFile):
     url="http://github.com/dimi309/conan-packages"
     requires = "glfw/master@dimi309/stable", "freetype/2.6.3@lasote/stable","glew/2.1.0@dimi309/stable", \
         "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.8@g-truc/stable", \
-        "vorbis/master@dimi309/stable", "portaudio/rc.v190600.20161001@jgsogo/stable"
+        "vorbis/master@dimi309/stable", "portaudio/master@dimi309/temp"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
 
     def configure(self):
-        if self.settings.os == "Windows" and self.settings.compiler != "Visual Studio":
-            raise ConanException("On Windows, only Visual Studio compilation is supported for the time being.")
-
         if self.settings.compiler == "gcc" and self.settings.compiler.libcxx != "libstdc++11":
             raise ConanException("When using the gcc compiler, small3d requires libstdc++11 as compiler.libcxx, in the conan.conf file or via the -s parameter.")
 
@@ -42,7 +39,7 @@ class Small3dConan(ConanFile):
         self.copy(pattern="*.hpp", dst="include", src="%s/small3d/include" % self.conanfile_directory, keep_path=True)
         self.copy("LICENSE*", dst="licenses",  ignore_case=True, keep_path=False)
 
-        if self.settings.os == "Windows":
+        if self.settings.compiler == "Visual Studio":
             self.copy(pattern="*.pdb", dst="bin", keep_path=False)
             self.copy(pattern="*.lib", dst="lib", keep_path=False)
         else:
@@ -56,8 +53,9 @@ class Small3dConan(ConanFile):
     def package_info(self):
         self.cpp_info.libs = ['small3d']
         if self.settings.os == "Windows":
-            self.cpp_info.cppflags.append("/EHsc")
-            self.cpp_info.exelinkflags.append('-NODEFAULTLIB:LIBCMTD')
-            self.cpp_info.exelinkflags.append('-NODEFAULTLIB:LIBCMT')
+            if self.settings.compiler == "Visual Studio":
+                self.cpp_info.cppflags.append("/EHsc")
+                self.cpp_info.exelinkflags.append('-NODEFAULTLIB:LIBCMTD')
+                self.cpp_info.exelinkflags.append('-NODEFAULTLIB:LIBCMT')
         else:
             self.cpp_info.cppflags.append("-std=c++11")

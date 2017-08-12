@@ -6,6 +6,12 @@ add_library(small3d BoundingBoxSet.cpp GetTokens.cpp Image.cpp Logger.cpp MathFu
 
 target_include_directories(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d")
 
+if(MINGW)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+endif(MINGW)
+
+message(STATUS "cpp flags: ${CMAKE_CXX_FLAGS}")
+
 if(DEFINED BUILD_TESTS AND BUILD_TESTS)
   add_executable(unittests unit_tests.cpp)
   file(COPY "${small3d_SOURCE_DIR}/small3d/resources" DESTINATION "${small3d_BINARY_DIR}/bin")
