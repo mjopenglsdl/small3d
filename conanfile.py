@@ -23,7 +23,7 @@ class Small3dConan(ConanFile):
             raise ConanException("When using the clang compiler on Linux, small3d requires libstdc++11 as compiler.libcxx, in the conan.conf file or via the -s parameter.")
 
         if self.scope.dev:
-            self.requires("gtest/1.8.0@lasote/stable")
+            self.requires("gtest/1.7.0@lasote/stable")
 
     def build(self):
         

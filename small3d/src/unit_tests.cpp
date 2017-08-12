@@ -16,9 +16,8 @@
 #include <small3d/GetTokens.hpp>
 #include <small3d/Sound.hpp>
 #include <small3d/BoundingBoxSet.hpp>
+#include <GLFW/glfw3.h>
 
-#include <thread>
-#include <chrono>
 
 using namespace small3d;
 using namespace std;
@@ -152,8 +151,7 @@ TEST(RendererTest, StartAndUse) {
   renderer->write("small3d :)", glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(-1.0f, 0.0f), glm::vec2(0.5f, -0.5f));
   
   renderer->swapBuffers();
-  std::chrono::milliseconds timespan(2000);
-  std::this_thread::sleep_for(timespan);
+  
   renderer->deleteTexture("cubeTexture");
   
 }
@@ -161,14 +159,15 @@ TEST(RendererTest, StartAndUse) {
 TEST(SoundTest, LoadAndPlay) {
   Sound snd("resources/sounds/bah.ogg");
   snd.play();
-  std::chrono::milliseconds timespan(500);
-  std::this_thread::sleep_for(timespan);
+  double startSeconds = glfwGetTime();
+  while(glfwGetTime() - startSeconds < 0.5);
   snd.stop();
-  std::this_thread::sleep_for(timespan);
+  startSeconds = glfwGetTime();
+  while(glfwGetTime() - startSeconds < 0.5);
   snd.play();
   // Make sure the sound is stopped by the stop function and not the destructor.
-  std::chrono::milliseconds timespan2(2000);
-  std::this_thread::sleep_for(timespan2);
+  startSeconds = glfwGetTime();
+  while(glfwGetTime() - startSeconds < 2.0);
 }
 
 TEST(SoundTest, ThreeAtTheSameTime) {
@@ -176,18 +175,22 @@ TEST(SoundTest, ThreeAtTheSameTime) {
   Sound snd2(snd1);
   Sound snd3 = snd2;
   snd1.play();
-  std::this_thread::sleep_for(std::chrono::milliseconds(200));
+  double startSeconds = glfwGetTime();
+  while(glfwGetTime() - startSeconds < 0.3);
   snd2.play();
-  std::this_thread::sleep_for(std::chrono::milliseconds(200));
+  startSeconds = glfwGetTime();
+  while(glfwGetTime() - startSeconds < 0.3);
   snd3.play();
-  std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+  startSeconds = glfwGetTime();
+  while(glfwGetTime() - startSeconds < 0.3);
 }
 
 
 TEST(SoundTest, RepeatSound) {
   Sound snd("resources/sounds/bah.ogg");
   snd.play(true);
-  std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+  double startSeconds = glfwGetTime();
+  while(glfwGetTime() - startSeconds < 4.0);
 }
 
 TEST(TokenTest, GetFourTokens) {
