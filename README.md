@@ -86,6 +86,6 @@ The engine supports collision detection via manually created bounding boxes. In 
 
 ![boundingboxes](https://cloud.githubusercontent.com/assets/875167/19620357/2e03f446-987c-11e6-8517-dfed5ebd885e.png)
 
-Export the bounding boxes to a Wavefront file separately from the model. You can do this if you "save as" a new file after placing the boxes and deleting the original model. During export, only set the options "Apply Modifiers", "Include Edges", "Objects as OBJ Objects" and "Keep Vertex Order". On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
+Export the bounding boxes to a Wavefront file separately from the model. You can do this if you "save as" a new file after placing the boxes and deleting the original model. During export, only set the options **"Apply Modifiers"**, **"Include Edges"**, **"Objects as OBJ Objects"** and **"Keep Vertex Order"**. On the contrary to what is the case when exporting the model itself, more than one bounding box objects can be exported to the same Wavefront file.
 
 ![Demo 2](https://cloud.githubusercontent.com/assets/875167/18656844/0dc828a0-7ef5-11e6-884b-706369d682f6.gif)
