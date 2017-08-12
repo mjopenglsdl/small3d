@@ -35,25 +35,21 @@ namespace small3d {
     int result = paContinue;
     SoundData *soundData = static_cast<SoundData *>(userData);
     
-    if (soundData->startTime == 0) {
-      soundData->startTime = timeInfo->currentTime - 0.1;
-    } else if (timeInfo->currentTime - soundData->startTime > soundData->duration) {
-      if (soundData->repeat) {
-        soundData->startTime = timeInfo->currentTime - 0.1;
-        soundData->currentFrame = 0;
-      }
-      else {
-        return paAbort;
-      }
-    }
-    
+
+    bool willRepeat = false;
+
     SAMPLE_DATATYPE *out = static_cast<SAMPLE_DATATYPE *>(outputBuffer);
     unsigned long startPos = soundData->currentFrame * static_cast<unsigned long>(soundData->channels);
     unsigned long endPos = startPos + framesPerBuffer * static_cast<unsigned long>(soundData->channels);
     
     if (endPos > static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels) {
       endPos = static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels;
-      result = paAbort;
+      if (!soundData->repeat) {
+	result = paAbort;
+      }
+      else {
+	willRepeat = true;
+      }
     }
     
     for (unsigned long i = startPos; i < endPos; i += static_cast<unsigned long>(soundData->channels)) {
@@ -62,8 +58,12 @@ namespace small3d {
       }
     }
     
-    soundData->currentFrame += framesPerBuffer;
-    
+    if (!willRepeat) {
+      soundData->currentFrame += framesPerBuffer;
+    }
+    else {
+      soundData->currentFrame = 0;
+    }
     return result;
   }
 
@@ -135,7 +135,6 @@ namespace small3d {
       this->soundData.rate = (int) vi->rate;
       this->soundData.samples = static_cast<long>(ov_pcm_total(&vorbisFile, -1));
       this->soundData.size = soundData.channels * soundData.samples * WORD_SIZE;
-      this->soundData.duration = static_cast<double>(soundData.samples) / static_cast<double>(soundData.rate);
       
       char pcmout[4096];
       int current_section;
@@ -193,7 +192,6 @@ namespace small3d {
     outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
       
     this->soundData.currentFrame = 0;
-    this->soundData.startTime = 0;
       
     PaError error;
 
@@ -219,7 +217,6 @@ namespace small3d {
       }
 
       this->soundData.currentFrame = 0;
-      this->soundData.startTime = 0;
       this->soundData.repeat = repeat;
         
       error = Pa_StartStream(stream);
@@ -235,7 +232,7 @@ namespace small3d {
     if (this->stream != nullptr) {
       Pa_AbortStream(stream);
       this->soundData.currentFrame = 0;
-      this->soundData.startTime = 0;
+
     }
   }
 

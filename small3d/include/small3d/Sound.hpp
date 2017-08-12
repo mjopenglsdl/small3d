@@ -28,8 +28,6 @@ namespace small3d {
       int rate;
       long samples;
       long size;
-      double duration;
-      double startTime;
       bool repeat;
       unsigned long currentFrame;
       std::vector<char> data;
