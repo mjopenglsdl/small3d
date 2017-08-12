@@ -13,6 +13,7 @@
 #include <stdexcept>
 #include <cstring>
 #include <vorbis/vorbisfile.h>
+#include <GLFW/glfw3.h>
 
 #define WORD_SIZE 2
 #define PORTAUDIO_SAMPLE_FORMAT paInt16
@@ -36,10 +37,11 @@ namespace small3d {
     SoundData *soundData = static_cast<SoundData *>(userData);
     
     if (soundData->startTime == 0) {
-      soundData->startTime = timeInfo->currentTime - 0.1;
-    } else if (timeInfo->currentTime - soundData->startTime > soundData->duration) {
+      soundData->startTime = glfwGetTime() - 0.1;
+
+    } else if (glfwGetTime() - soundData->startTime > soundData->duration) {
       if (soundData->repeat) {
-        soundData->startTime = timeInfo->currentTime - 0.1;
+        soundData->startTime = glfwGetTime() - 0.1;
         soundData->currentFrame = 0;
       }
       else {
