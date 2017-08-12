@@ -11,7 +11,7 @@ This is a free, open-source, minimalistic 3D game engine, developed in C++ and u
 Features
 --------
 
-- Runs on Windows, Mac, Linux. It is regularly tested on Debian, Fedora and Ubuntu.
+- Runs on Windows, Mac, Linux(regularly tested on Debian, Fedora and Ubuntu). On Windows it works with Visual Studio, as well as MinGW.
 - It works with GLFW.
 - Uses OpenGL 3.3 and defaults to 2.1 if the former is not available.
 - Uses C++11.
@@ -71,6 +71,8 @@ In your home directory, make sure that the .conan/profiles/default file contains
 	compiler=Visual Studio
 	compiler.version=15
 	compiler.runtime=MDd
+
+If you are using MinGW, you have to link dynamically to portaudio and gtest (run conan install with -o gtest:shared=True and -o portaudio:shared=True) and MinGW has to have pthreads installed.
 	
 Note on 3D models and textures
 ------------------------------

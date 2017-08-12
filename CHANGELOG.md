@@ -10,6 +10,7 @@ v1.3.1
 
 - Various bug fixes and code improvements.
 - Using GLEW 2.1.0.
+- Added support for MinGW. The only limitation is that small3d and projects using it have to link dynamically to portaudio and gtest when running there (run conan install with -o gtest:shared=True and -o portaudio:shared=True). Also, pthreads have to have been installed in MinGW.
 
 v1.3.0
 ------
