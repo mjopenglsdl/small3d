@@ -13,7 +13,7 @@ Features
 
 - Runs on Windows, Mac, Linux. It is regularly tested on Debian, Fedora and Ubuntu.
 - It works with GLFW.
-- Uses OpenGL 3.3 and defaults to 2.1 if the former is not available. I am in the process of also adding support for Vulkan, but that is not ready yet.
+- Uses OpenGL 3.3 and defaults to 2.1 if the former is not available.
 - Uses C++11.
 - You can tweak the engine's shaders, as long as you keep the same incoming variables and uniforms.
 - Plays sounds from .ogg files.
