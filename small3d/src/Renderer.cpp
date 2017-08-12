@@ -437,8 +437,8 @@ namespace small3d {
       glUseProgram(0);
 #ifdef __APPLE__
       if (isOpenGL33Supported) {
-	glDeleteVertexArrays(1, &vao);
-	glBindVertexArray(0);
+        glDeleteVertexArrays(1, &vao);
+        glBindVertexArray(0);
       }
 #endif
     }
