@@ -72,7 +72,7 @@ In your home directory, make sure that the .conan/profiles/default file contains
 	compiler.version=15
 	compiler.runtime=MDd
 
-If you are using MinGW, you have to link dynamically to portaudio and gtest (run conan install with -o gtest:shared=True and -o portaudio:shared=True) and MinGW has to have pthreads installed.
+If you are using MinGW, you have to link dynamically to gtest (run conan install with -o gtest:shared=True) and MinGW has to have pthreads installed.
 	
 Note on 3D models and textures
 ------------------------------
