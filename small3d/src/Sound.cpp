@@ -35,16 +35,26 @@ namespace small3d {
     
     int result = paContinue;
     SoundData *soundData = static_cast<SoundData *>(userData);
-    
+
     if (soundData->startTime == 0) {
+#ifdef __linux__
+      soundData->startTime = glfwGetTime() - 0.2;
+#else
       soundData->startTime = glfwGetTime() - 0.1;
+#endif
 
     } else if (glfwGetTime() - soundData->startTime > soundData->duration) {
       if (soundData->repeat) {
-        soundData->startTime = glfwGetTime() - 0.1;
+#ifdef __linux__
+	soundData->startTime = glfwGetTime() - 0.2;
+#else
+	soundData->startTime = glfwGetTime() - 0.1;
+#endif
         soundData->currentFrame = 0;
+
       }
       else {
+
         return paAbort;
       }
     }
@@ -56,6 +66,7 @@ namespace small3d {
     if (endPos > static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels) {
       endPos = static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels;
       result = paAbort;
+      LOGINFO("pos based sound abort");
     }
     
     for (unsigned long i = startPos; i < endPos; i += static_cast<unsigned long>(soundData->channels)) {
@@ -80,7 +91,7 @@ namespace small3d {
     
       if (initError != paNoError) {
         throw std::runtime_error("PortAudio failed to initialise: " + 
-          std::string(Pa_GetErrorText(initError)));
+				 std::string(Pa_GetErrorText(initError)));
       }
     
       defaultOutput = Pa_GetDefaultOutputDevice();

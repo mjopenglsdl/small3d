@@ -182,7 +182,7 @@ TEST(SoundTest, ThreeAtTheSameTime) {
   while(glfwGetTime() - startSeconds < 0.3);
   snd3.play();
   startSeconds = glfwGetTime();
-  while(glfwGetTime() - startSeconds < 0.3);
+  while(glfwGetTime() - startSeconds < 1.0);
 }
 
 
@@ -190,7 +190,7 @@ TEST(SoundTest, RepeatSound) {
   Sound snd("resources/sounds/bah.ogg");
   snd.play(true);
   double startSeconds = glfwGetTime();
-  while(glfwGetTime() - startSeconds < 4.0);
+  while(glfwGetTime() - startSeconds < 6.0);
 }
 
 TEST(TokenTest, GetFourTokens) {
