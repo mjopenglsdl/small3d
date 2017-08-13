@@ -35,7 +35,7 @@ Apart from deploying the engine for your projects, you might like to explore the
 
 Prerequisites:
 
-- A compiler. You can use gcc, Xcode, clang or Visual Studio, depending on your system. Sadly, MinGW builds are not supported yet.
+- A compiler. You can use gcc, Xcode, clang or Visual Studio, depending on your system.
 - [conan](https://github.com/conan-io/conan) - If you are using the gcc compiler, please set compiler.libcxx to libstdc++11
 - [CMake](https://cmake.org/)
 - [Git](https://git-scm.com/)
