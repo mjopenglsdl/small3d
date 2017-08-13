@@ -66,7 +66,6 @@ namespace small3d {
     if (endPos > static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels) {
       endPos = static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels;
       result = paAbort;
-      LOGINFO("pos based sound abort");
     }
     
     for (unsigned long i = startPos; i < endPos; i += static_cast<unsigned long>(soundData->channels)) {
