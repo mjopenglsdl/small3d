@@ -3,7 +3,7 @@ small3d
 
 ![beaver](https://cloud.githubusercontent.com/assets/875167/20235630/4f653bc4-a897-11e6-97cc-d6d009fe527c.png) ![Demo 1](https://cloud.githubusercontent.com/assets/875167/18656425/4781b3d0-7ef1-11e6-83de-e412d5840fec.gif)
 
-This is a free, open-source, minimalistic 3D game engine, developed in C++ and using OpenGL with shaders. I developed it while learning how to program games and I am still using it for my projects and experiments.
+This is a free, open-source, minimalistic 3D game engine, developed in C++ and using OpenGL with shaders.
 
 - [Tutorial](https://github.com/dimi309/small3d-tutorial): Start here to learn the basics. The repository also includes two sample games that use all of small3d's features.
 - [API documentation](http://dimi309.github.io/small3d/): Use this as a reference while developing with the engine.
@@ -26,7 +26,7 @@ Features
 - Simple collision detection with bounding boxes.
 - It renders text.
 - Very permissive license (3-clause BSD). The libraries it uses have been chosen to have a permissive license also.
-- **It is deployed via a package manager (conan). This is a huge time saver and you can see in the abovementioned [tutorial](https://github.com/dimi309/small3d-tutorial) how to use it.**
+- It is deployed via a package manager (conan). This is a huge time saver and you can see in the abovementioned [tutorial](https://github.com/dimi309/small3d-tutorial) how to use it.
 
 Building locally
 ----------------
