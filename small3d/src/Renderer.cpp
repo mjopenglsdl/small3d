@@ -7,7 +7,6 @@
  */
 
 #include "Renderer.hpp"
-#include "MathFunctions.hpp"
 
 #include <stdexcept>
 #include <fstream>
@@ -290,7 +289,7 @@ namespace small3d {
       float perspectiveMatrix[16];
       memset(perspectiveMatrix, 0, sizeof(float) * 16);
       perspectiveMatrix[0] = frustumScale;
-      perspectiveMatrix[5] = frustumScale * ROUND_2_DECIMAL(screenWidth / screenHeight);
+      perspectiveMatrix[5] = frustumScale * screenWidth / screenHeight;
       perspectiveMatrix[10] = (zNear + zFar) / (zNear - zFar);
       perspectiveMatrix[14] = 2.0f * zNear * zFar / (zNear - zFar);
       perspectiveMatrix[11] = zOffsetFromCamera;

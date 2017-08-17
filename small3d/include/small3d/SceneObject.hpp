@@ -18,7 +18,6 @@
 #include "Logger.hpp"
 #include "Image.hpp"
 #include "BoundingBoxSet.hpp"
-#include "MathFunctions.hpp"
 #include <glm/glm.hpp>
 
 namespace small3d

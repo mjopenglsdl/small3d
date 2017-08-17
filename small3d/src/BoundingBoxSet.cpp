@@ -10,7 +10,6 @@
 #include <fstream>
 #include <stdexcept>
 #include "GetTokens.hpp"
-#include "MathFunctions.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace small3d {

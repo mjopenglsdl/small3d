@@ -28,6 +28,8 @@
 
 namespace small3d {
 
+  std::string intToStr(const int number);
+
   /**
    * @brief Possible logging levels.
    */

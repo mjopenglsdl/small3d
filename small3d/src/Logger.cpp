@@ -15,6 +15,17 @@ std::shared_ptr<small3d::Logger> logger;
 
 namespace small3d {
 
+  std::string intToStr(const int number)
+  {
+    char buffer[100];
+#if defined(_WIN32) && !defined(__MINGW32__)
+    sprintf_s(buffer, "%d", number);
+#else
+    sprintf(buffer, "%d", number);
+#endif
+    return std::string(buffer);
+  }
+
   Logger::Logger(std::ostream &stream) {
     logStream = &stream;
   }

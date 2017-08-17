@@ -8,7 +8,6 @@
 
 #include "Image.hpp"
 #include <stdexcept>
-#include "MathFunctions.hpp"
 
 namespace small3d {
 
@@ -130,10 +129,10 @@ namespace small3d {
         rgb[2] = static_cast<float>(ptr[2]);
         rgb[3] = numComponents == 3 ? 255.0f : static_cast<float>(ptr[3]);
 
-        imageData[y * width * 4 + x * 4] = ROUND_2_DECIMAL(rgb[0] / 255.0f);
-        imageData[y * width * 4 + x * 4 + 1] = ROUND_2_DECIMAL(rgb[1] / 255.0f);
-        imageData[y * width * 4 + x * 4 + 2] = ROUND_2_DECIMAL(rgb[2] / 255.0f);
-        imageData[y * width * 4 + x * 4 + 3] = ROUND_2_DECIMAL(rgb[3] / 255.0f);
+        imageData[y * width * 4 + x * 4] = rgb[0] / 255.0f;
+        imageData[y * width * 4 + x * 4 + 1] = rgb[1] / 255.0f;
+        imageData[y * width * 4 + x * 4 + 2] = rgb[2] / 255.0f;
+        imageData[y * width * 4 + x * 4 + 3] = rgb[3] / 255.0f;
 
       }
     }
