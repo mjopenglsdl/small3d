@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include "GetTokens.hpp"
 #include "MathFunctions.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace small3d {
   
@@ -100,8 +101,14 @@ namespace small3d {
   bool BoundingBoxSet::collidesWith(const glm::vec3 point, const glm::vec3 thisOffset,
     const glm::vec3 thisRotation) const {
     bool collides = false;
-    glm::mat4 rotationMatrix = rotateY(-thisRotation.y) * rotateX(-thisRotation.x) * 
-      rotateZ(-thisRotation.z);
+    glm::mat4 rotationMatrix = 
+      glm::rotate(
+        glm::rotate(
+          glm::rotate(glm::mat4(), -thisRotation.y, glm::vec3(0.0f, -1.0f, 0.0f)), 
+          -thisRotation.x, glm::vec3(-1.0f, 0.0f, 0.0f)
+        ), 
+        -thisRotation.z, glm::vec3(0.0f, 0.0f, -1.0f)
+      );
     
     glm::vec4 pointInBoxSpace = glm::vec4(point, 1.0f) - glm::vec4(thisOffset, 0.0f);
     pointInBoxSpace = rotationMatrix * pointInBoxSpace;
@@ -157,7 +164,11 @@ namespace small3d {
     bool collides = false;
     
     glm::mat4 rotationMatrix =
-    rotateZ(otherRotation.z) * rotateX(otherRotation.x) * rotateY(otherRotation.y);
+      glm::rotate(
+        glm::rotate(
+          glm::rotate(glm::mat4x4(), otherRotation.z, glm::vec3(0.0f, 0.0f, -1.0f)), 
+          otherRotation.x, glm::vec3(-1.0f, 0.0f, 0.0f)), 
+        otherRotation.y, glm::vec3(0.0f, -1.0f, 0.0f));
     
     for (auto vertex = otherBoxSet.vertices.begin();
          vertex != otherBoxSet.vertices.end(); ++vertex) {
