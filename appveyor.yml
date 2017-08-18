@@ -1,3 +1,7 @@
+branches:
+  only:
+    - master
+
 build: false
 environment:
     PYTHON: "C:\\Python27"

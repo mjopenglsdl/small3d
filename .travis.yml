@@ -1,4 +1,6 @@
-
+branches:
+  only:
+    - master
 env:
   global:
     - CONAN_USERNAME="dimi309"
