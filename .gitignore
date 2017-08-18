@@ -1,15 +1,10 @@
-#Documentation from doxygen
-/documentation
-
 #Backup files
 *\~
 *swp
 *blend[0-9]
 
-#Annoying thumbs file that appears everywhere :)
+#MacOS
 Thumbs.db
-
-#Mac DS_Store file
 .DS_Store
 
 #Emacs buffers
@@ -20,7 +15,6 @@ Thumbs.db
 /deps
 /build
 /_build
-/unit_testing/build
 conanbuildinfo.cmake
 conaninfo.txt
 *.pyc
