@@ -103,7 +103,7 @@ namespace small3d {
     glm::mat4 rotationMatrix = 
       glm::rotate(
         glm::rotate(
-          glm::rotate(glm::mat4(), -thisRotation.y, glm::vec3(0.0f, -1.0f, 0.0f)), 
+          glm::rotate(glm::mat4x4(1.0f), -thisRotation.y, glm::vec3(0.0f, -1.0f, 0.0f)), 
           -thisRotation.x, glm::vec3(-1.0f, 0.0f, 0.0f)
         ), 
         -thisRotation.z, glm::vec3(0.0f, 0.0f, -1.0f)
@@ -165,7 +165,7 @@ namespace small3d {
     glm::mat4 rotationMatrix =
       glm::rotate(
         glm::rotate(
-          glm::rotate(glm::mat4x4(), otherRotation.z, glm::vec3(0.0f, 0.0f, -1.0f)), 
+          glm::rotate(glm::mat4x4(1.0f), otherRotation.z, glm::vec3(0.0f, 0.0f, -1.0f)), 
           otherRotation.x, glm::vec3(-1.0f, 0.0f, 0.0f)), 
         otherRotation.y, glm::vec3(0.0f, -1.0f, 0.0f));
     
