@@ -37,24 +37,13 @@ namespace small3d {
     SoundData *soundData = static_cast<SoundData *>(userData);
 
     if (soundData->startTime == 0) {
-#ifdef __linux__
-      soundData->startTime = glfwGetTime() - 0.2;
-#else
-      soundData->startTime = glfwGetTime() - 0.1;
-#endif
-
+      soundData->startTime = glfwGetTime();
     } else if (glfwGetTime() - soundData->startTime > soundData->duration) {
       if (soundData->repeat) {
-#ifdef __linux__
-	soundData->startTime = glfwGetTime() - 0.2;
-#else
-	soundData->startTime = glfwGetTime() - 0.1;
-#endif
+	soundData->startTime = glfwGetTime();
         soundData->currentFrame = 0;
-
       }
       else {
-
         return paAbort;
       }
     }
@@ -196,11 +185,6 @@ namespace small3d {
     outputParams.device = defaultOutput;
     outputParams.channelCount = this->soundData.channels;
     outputParams.hostApiSpecificStreamInfo = NULL;
-      
-    // Avoid sound corruption on Linux systems
-#ifdef __linux__
-    outputParams.suggestedLatency = 0.8f;
-#endif
       
     outputParams.sampleFormat = PORTAUDIO_SAMPLE_FORMAT;
       
