@@ -37,10 +37,10 @@ namespace small3d {
     SoundData *soundData = static_cast<SoundData *>(userData);
 
     if (soundData->startTime == 0) {
-      soundData->startTime = glfwGetTime();
+      soundData->startTime = glfwGetTime() - 0.1;
     } else if (glfwGetTime() - soundData->startTime > soundData->duration) {
       if (soundData->repeat) {
-	soundData->startTime = glfwGetTime();
+	soundData->startTime = glfwGetTime() - 0.1;
         soundData->currentFrame = 0;
       }
       else {
