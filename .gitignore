@@ -16,6 +16,9 @@ Thumbs.db
 /build
 /_build
 conanbuildinfo.cmake
+conanbuildinfo.txt
 conaninfo.txt
 *.pyc
 /Win32
+/bin
+conan_imports_manifest.txt
