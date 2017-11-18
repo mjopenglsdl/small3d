@@ -6,7 +6,7 @@ env:
     - CONAN_USERNAME="dimi309"
     - CONAN_CHANNEL="stable"
     - CONAN_REMOTES="https://api.bintray.com/conan/dimi309/conan-packages, https://api.bintray.com/conan/jgsogo/conan-packages, https://api.bintray.com/conan/bincrafters/public-conan"
-#    - CONAN_UPLOAD="https://api.bintray.com/conan/dimi309/conan-packages"
+    - CONAN_UPLOAD="https://api.bintray.com/conan/dimi309/conan-packages"
     - CONAN_REFERENCE="small3d/master"
 
 linux: &linux
