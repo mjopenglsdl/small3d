@@ -1,5 +1,6 @@
-/*
- *  Renderer.hpp
+/**
+ * @file  Renderer.hpp
+ * @brief Header of the Renderer class
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis

@@ -1,5 +1,6 @@
-/*
- *  GetTokens.hpp
+/**
+ *  @file  GetTokens.hpp
+ *  @brief Declaration of the getTokens function
  *
  *  Created on: 2014/10/18
  *      Author: Dimitri Kourkoulis

@@ -1,8 +1,9 @@
-/*
- *  Image.hpp
+/**
+ * @file  Image.hpp
+ * @brief Header of the Image class
  *
- *  Created on: 2014/10/18
- *      Author: Dimitri Kourkoulis
+ * Created on: 2014/10/18
+ *     Author: Dimitri Kourkoulis
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 

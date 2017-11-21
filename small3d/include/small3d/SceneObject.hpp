@@ -1,5 +1,6 @@
-/*
- *  SceneObject.hpp
+/**
+ * @file  SceneObject.hpp
+ * @brief Header of the SceneObject class
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis

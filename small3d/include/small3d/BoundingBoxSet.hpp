@@ -1,9 +1,12 @@
-/*
- *  BoundingBoxSet.hpp
+/**
+ *  @file  BoundingBoxSet.hpp
+ *  @brief Header of the BoundingBoxSet class.
  *
  *  Created on: 2014/10/19
  *      Author: Dimitri Kourkoulis
  *     License: BSD 3-Clause License (see LICENSE file)
+ *
+ 
  */
 
 #pragma once
