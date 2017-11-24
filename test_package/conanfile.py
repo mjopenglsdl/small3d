@@ -6,9 +6,9 @@ class TestSmall3d(ConanFile):
     generators = "cmake"
 
     def build(self):
-        cmake = CMake(self.settings)
-        self.run('cmake "%s" %s' % (self.conanfile_directory, cmake.command_line))
-        self.run("cmake --build . %s" % cmake.build_config)
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
 
     def test(self):
         self.run(os.sep.join(["cd bin && .", "test_small3d"]))
