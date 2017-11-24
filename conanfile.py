@@ -9,9 +9,9 @@ class Small3dConan(ConanFile):
     settings = "os", "arch", "build_type", "compiler"
     default_options = "gtest:shared=False"
     url="http://github.com/dimi309/conan-packages"
-    requires = "glfw/3.2.1@bincrafters/stable", "freetype/2.6.3@lasote/stable","glew/2.1.0@dimi309/stable", \
-        "libpng/1.6.23@lasote/stable","zlib/1.2.8@lasote/stable","glm/0.9.8.5@g-truc/stable", \
-        "vorbis/master@dimi309/stable", "portaudio/master@dimi309/temp"
+    requires = "glfw/3.2.1@bincrafters/stable", "freetype/2.8.1@bincrafters/stable","glew/2.1.0@dimi309/stable", \
+        "libpng/1.6.34@bincrafters/stable", "glm/0.9.8.5@g-truc/stable", "vorbis/master@dimi309/stable", \
+        "portaudio/master@dimi309/temp"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
 
@@ -23,7 +23,7 @@ class Small3dConan(ConanFile):
             raise ConanException("When using the clang compiler on Linux, small3d requires libstdc++11 as compiler.libcxx, in the conan.conf file or via the -s parameter.")
 
         if self.scope.dev:
-            self.requires("gtest/1.7.0@lasote/stable")
+            self.requires("gtest/1.8.0@lasote/stable")
 
     def build(self):
         
