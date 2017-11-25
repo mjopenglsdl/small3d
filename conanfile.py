@@ -27,9 +27,9 @@ class Small3dConan(ConanFile):
     def build(self):
         
         cmake = CMake(self)
-        flag_build_tests = "-DBUILD_TESTS=ON" if self.scope.dev else "-DBUILD_TESTS=OFF"
-        self.run("cmake %s %s %s" % (self.conanfile_directory, flag_build_tests, cmake.command_line))
-        self.run("cmake --build . %s" % cmake.build_config)
+        cmake.definitions['BUILD_TESTS'] = self.scope.dev
+        cmake.configure()
+        cmake.build()
 
     def package(self):
 
