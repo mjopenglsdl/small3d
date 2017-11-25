@@ -10,8 +10,7 @@ class Small3dConan(ConanFile):
     default_options = "gtest:shared=False"
     url="http://github.com/dimi309/conan-packages"
     requires = "glfw/3.2.1@bincrafters/stable", "freetype/2.8.1@bincrafters/stable","glew/2.1.0@dimi309/stable", \
-        "libpng/1.6.34@bincrafters/stable", "glm/0.9.8.5@g-truc/stable", "vorbis/master@dimi309/stable", \
-        "portaudio/master@dimi309/temp"
+        "glm/0.9.8.5@g-truc/stable", "vorbis/master@dimi309/stable", "portaudio/master@dimi309/temp"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
 
