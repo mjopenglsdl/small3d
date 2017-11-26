@@ -48,20 +48,6 @@ Also, add my bintray repository as a remote to your conan configuration:
 
 	conan remote add bintraydimi309 https://api.bintray.com/conan/dimi309/conan-packages
 	
-**TEMPORARILY, YOU HAVE TO DO THE FOLLOWING BEFORE PROCEEDING. THIS IS BECAUSE OF ADAPTATIONS TO THE LATEST VERSION OF CONAN THAT HAVE NOT YET BEEN COMPLETED**
-
-	git clone https://github.com/bincrafters/conan-freetype
-	cd conan-freetype
-	git checkout testing/2.8.1
-	conan create bincrafters/stable --build missing
-	cd ..
-	
-	git clone https://github.com/bincrafters/conan-gtest
-	cd conan-gtest
-	git checkout testing/1.7.0
-	conan create bincrafters/stable --build missing
-	cd ..
-
 Then, run the following:
 
 	git clone https://github.com/dimi309/small3d
