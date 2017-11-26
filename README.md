@@ -54,9 +54,15 @@ Finally, add the following bintray repository (that's where I get the portaudio 
 	
 **TEMPORARILY, YOU HAVE TO DO THE FOLLOWING BEFORE PROCEEDING. THIS IS BECAUSE OF ADAPTATIONS TO THE LATEST VERSION OF CONAN THAT HAVE NOT YET BEEN COMPLETED**
 
-	git clone https://github.com/dimi309/conan-freetype
+	git clone https://github.com/bincrafters/conan-freetype
 	cd conan-freetype
 	git checkout testing/2.8.1
+	conan create bincrafters/stable --build missing
+	cd ..
+	
+	git clone https://github.com/bincrafters/conan-gtest
+	cd conan-gtest
+	git checkout testing/1.7.0
 	conan create bincrafters/stable --build missing
 	cd ..
 
@@ -92,7 +98,7 @@ In your home directory, make sure that the .conan/profiles/default file contains
 	compiler.version=15
 	compiler.runtime=MDd
 	
-A good configuration for a conan profile file for MinGW is the following:
+If you are using MinGW, you have to link dynamically to gtest (run conan install with -o gtest:shared=True) and MinGW has to have pthreads installed. A good configuration for a conan profile file in that case would be the following:
 
 	[settings]
 	arch=x86
@@ -102,8 +108,6 @@ A good configuration for a conan profile file for MinGW is the following:
 	compiler.version=6.3
 	compiler.libcxx=libstdc++11
 	
-Unfortuntely, the package can only be created and deployed locally in MinGW, not unit-tested as described above, because there is an issue with the gtest package.
-
 Note on 3D models and textures
 ------------------------------
 
