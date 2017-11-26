@@ -48,10 +48,6 @@ Also, add my bintray repository as a remote to your conan configuration:
 
 	conan remote add bintraydimi309 https://api.bintray.com/conan/dimi309/conan-packages
 	
-Finally, add the following bintray repository (that's where I get the portaudio dependency from):
-
-	conan remote add bintrayjgsogo https://api.bintray.com/conan/jgsogo/conan-packages
-	
 **TEMPORARILY, YOU HAVE TO DO THE FOLLOWING BEFORE PROCEEDING. THIS IS BECAUSE OF ADAPTATIONS TO THE LATEST VERSION OF CONAN THAT HAVE NOT YET BEEN COMPLETED**
 
 	git clone https://github.com/bincrafters/conan-freetype
