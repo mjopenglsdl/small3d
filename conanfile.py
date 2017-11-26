@@ -27,7 +27,10 @@ class Small3dConan(ConanFile):
     def build(self):
         
         cmake = CMake(self)
-        cmake.definitions['BUILD_TESTS'] = self.scope.dev
+        if self.scope.dev:
+            cmake.definitions['BUILD_TESTS'] = True
+        else:
+            cmake.definitions['BUILD_TESTS'] = False
         cmake.configure()
         cmake.build()
 
