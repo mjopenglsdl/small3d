@@ -54,7 +54,7 @@ Then, run the following:
 	cd small3d
 	mkdir build
 	cd build
-	conan install ..
+	conan install .. -o small3d:development=True
 	conan build ..
 	cd build
 	

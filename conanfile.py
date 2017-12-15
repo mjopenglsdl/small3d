@@ -7,7 +7,8 @@ class Small3dConan(ConanFile):
     description = "A small, cross-platform 3D game engine (C++, OpenGL, GLFW) - runs on Win/MacOS/Linux"
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
-    default_options = "gtest:shared=False"
+    options = {"development": [True, False]}
+    default_options = "gtest:shared=False", "development=False"
     url="http://github.com/dimi309/conan-packages"
     requires = "glfw/3.2.1@bincrafters/stable", "freetype/2.8.1@bincrafters/stable","glew/2.1.0@dimi309/stable", \
         "glm/0.9.8.5@g-truc/stable", "vorbis/master@dimi309/stable", "portaudio/v190600.20161030@bincrafters/stable"
@@ -21,13 +22,13 @@ class Small3dConan(ConanFile):
         if self.settings.os == "Linux" and self.settings.compiler == "clang" and self.settings.compiler.libcxx != "libstdc++11":
             raise ConanException("When using the clang compiler on Linux, small3d requires libstdc++11 as compiler.libcxx, in the conan.conf file or via the -s parameter.")
 
-        if self.scope.dev:
+        if self.options.development:
             self.requires("gtest/1.7.0@bincrafters/stable")
 
     def build(self):
         
         cmake = CMake(self)
-        if self.scope.dev:
+        if self.options.development:
             cmake.definitions['BUILD_TESTS'] = True
         else:
             cmake.definitions['BUILD_TESTS'] = False
@@ -48,7 +49,7 @@ class Small3dConan(ConanFile):
             self.copy(pattern="*.a", dst="lib", keep_path=False)
 
     def imports(self):
-        if self.scope.dev and self.settings.os == "Windows":
+        if self.options.development and self.settings.os == "Windows":
             self.copy(pattern="*.dll", dst="bin", src="bin")
             self.copy(pattern="*.pdb", dst="bin", src="bin")
             
