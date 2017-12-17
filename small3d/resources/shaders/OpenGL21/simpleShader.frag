@@ -10,7 +10,7 @@ void main()
     gl_FragColor = colour;
   }
   else
-  {
-    gl_FragColor = texture2D(textureImage, textureCoords);
-  }
+    {
+      gl_FragColor = texture2D(textureImage, textureCoords);
+    }
 }

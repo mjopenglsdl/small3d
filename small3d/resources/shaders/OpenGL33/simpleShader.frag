@@ -9,14 +9,14 @@ out vec4 outputColour;
 void main()
 {
 
-if (colour != vec4(0, 0, 0, 0)) {
+  if (colour != vec4(0, 0, 0, 0)) {
     outputColour = vec4(colour.rgb, colour.a);
-}
-else {
+  }
+  else {
 
-  vec4 tcolour = texture(textureImage, textureCoords);
-  outputColour = tcolour;
+    vec4 tcolour = texture(textureImage, textureCoords);
+    outputColour = tcolour;
 
-}
+  }
 
 }

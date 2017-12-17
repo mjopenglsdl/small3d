@@ -7,6 +7,6 @@ varying vec2 textureCoords;
 
 void main()
 {
-    gl_Position = position;
-    textureCoords = uvCoords;
+  gl_Position = position;
+  textureCoords = uvCoords;
 }

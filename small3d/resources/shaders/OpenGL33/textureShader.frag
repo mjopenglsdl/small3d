@@ -10,22 +10,22 @@ out vec4 outputColour;
 
 void main()
 {
-if (colour != vec4(0, 0, 0, 0)) {
+  if (colour != vec4(0, 0, 0, 0)) {
     outputColour = vec4((cosAngIncidence * colour).rgb, colour.a);
-}
-else {
+  }
+  else {
 
-  vec4 tcolour = texture(textureImage, textureCoords);
+    vec4 tcolour = texture(textureImage, textureCoords);
   
-  if (lightIntensity == -1)
-  {
-    outputColour = tcolour;
+    if (lightIntensity == -1)
+      {
+	outputColour = tcolour;
+      }
+    else
+      {
+	vec4 textureWtLight = lightIntensity * cosAngIncidence * tcolour;
+	outputColour = vec4(textureWtLight.rgb, tcolour.a);
+      }
   }
-  else
-  {
-    vec4 textureWtLight = lightIntensity * cosAngIncidence * tcolour;
-    outputColour = vec4(textureWtLight.rgb, tcolour.a);
-  }
-}
 
 }
