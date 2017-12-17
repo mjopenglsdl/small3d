@@ -8,7 +8,7 @@ if __name__ == "__main__":
     for settings, options, env_vars, build_requires in builder.builds:
         if not (settings["compiler"] == "Visual Studio" and (settings["arch"] == "x86" or settings["compiler.runtime"] not in ("MD", "MDd"))) and \
            not ((settings["compiler"] == "gcc" and (settings["arch"] == "x86") or settings["compiler.version"] == "4.6")) and \
-           not (settings["compiler"] == "clang" and (settings["arch"] == "x86"):
+           not (settings["compiler"] == "clang" and settings["arch"] == "x86"):
             if settings["compiler"] == "gcc" or settings["compiler"] == "clang":
                 settings["compiler.libcxx"]="libstdc++11"
             filtered_builds.append([settings, options, env_vars, build_requires])
