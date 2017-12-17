@@ -6,6 +6,5 @@ var searchData=
   ['startanimating',['startAnimating',['../classsmall3d_1_1_scene_object.html#a21bd126617420837019165e892b1ff6b',1,'small3d::SceneObject']]],
   ['stop',['stop',['../classsmall3d_1_1_sound.html#a3b239ef468eae9e89c48351127b329f3',1,'small3d::Sound']]],
   ['stopanimating',['stopAnimating',['../classsmall3d_1_1_scene_object.html#a005d922b169d1922f2f28402cd7a0cf6',1,'small3d::SceneObject']]],
-  ['supportsopengl33',['supportsOpenGL33',['../classsmall3d_1_1_renderer.html#a9396d237dc81fdac6e34e2c177d0d7a3',1,'small3d::Renderer']]],
   ['swapbuffers',['swapBuffers',['../classsmall3d_1_1_renderer.html#a17814ae8b54736fd74b557dd3b3209e5',1,'small3d::Renderer']]]
 ];

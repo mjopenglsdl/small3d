@@ -111,11 +111,8 @@ GLFWwindow *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a471dbd6d387dd162673c53a3fc6ba83f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a471dbd6d387dd162673c53a3fc6ba83f">deleteTexture</a> (const std::string name)</td></tr>
 <tr class="memdesc:a471dbd6d387dd162673c53a3fc6ba83f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the texture indicated by the given name.  <a href="#a471dbd6d387dd162673c53a3fc6ba83f">More...</a><br /></td></tr>
 <tr class="separator:a471dbd6d387dd162673c53a3fc6ba83f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9396d237dc81fdac6e34e2c177d0d7a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a9396d237dc81fdac6e34e2c177d0d7a3">supportsOpenGL33</a> () const</td></tr>
-<tr class="memdesc:a9396d237dc81fdac6e34e2c177d0d7a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is OpenGL 3.3 supported?  <a href="#a9396d237dc81fdac6e34e2c177d0d7a3">More...</a><br /></td></tr>
-<tr class="separator:a9396d237dc81fdac6e34e2c177d0d7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea3580352253f92f8c24d7bbb64953b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#aea3580352253f92f8c24d7bbb64953b6">renderRectangle</a> (const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight, const bool perspective=false, const glm::vec4 colour=glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) const</td></tr>
-<tr class="memdesc:aea3580352253f92f8c24d7bbb64953b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a rectangle, using two of its corners that are diagonally opposed to each other to position it.  <a href="#aea3580352253f92f8c24d7bbb64953b6">More...</a><br /></td></tr>
+<tr class="memdesc:aea3580352253f92f8c24d7bbb64953b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is OpenGL 3.3 supported?  <a href="#aea3580352253f92f8c24d7bbb64953b6">More...</a><br /></td></tr>
 <tr class="separator:aea3580352253f92f8c24d7bbb64953b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a209a28c773fffef687652e6f579f0f97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmall3d_1_1_renderer.html#a209a28c773fffef687652e6f579f0f97">renderRectangle</a> (const glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, const bool perspective=false) const</td></tr>
 <tr class="memdesc:a209a28c773fffef687652e6f579f0f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render a rectangle, using two of its corners that are diagonally opposed to each other to position it.  <a href="#a209a28c773fffef687652e6f579f0f97">More...</a><br /></td></tr>
@@ -620,7 +617,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
       </table>
 </div><div class="memdoc">
 
-<p>Render a rectangle, using two of its corners that are diagonally opposed to each other to position it. </p>
+<p>Is OpenGL 3.3 supported? </p>
+<dl class="section return"><dt>Returns</dt><dd>True if OpenGL 3.3 is supported, false otherwise Render a rectangle, using two of its corners that are diagonally opposed to each other to position it. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">textureName</td><td>The name of the texture to be used (must have been generated with generateTexture()) </td></tr>
@@ -682,26 +680,6 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cla
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a9396d237dc81fdac6e34e2c177d0d7a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9396d237dc81fdac6e34e2c177d0d7a3">&#9670;&nbsp;</a></span>supportsOpenGL33()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool small3d::Renderer::supportsOpenGL33 </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Is OpenGL 3.3 supported? </p>
-<dl class="section return"><dt>Returns</dt><dd>True if OpenGL 3.3 is supported, false otherwise </dd></dl>
 
 </div>
 </div>
