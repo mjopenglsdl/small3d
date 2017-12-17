@@ -474,10 +474,6 @@ namespace small3d {
     }
   }
   
-  bool Renderer::supportsOpenGL33() const {
-    return isOpenGL33Supported;
-  }
-  
   void Renderer::renderRectangle(const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
 				 const bool perspective, const glm::vec4 colour) const {
     

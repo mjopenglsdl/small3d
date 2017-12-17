@@ -159,7 +159,7 @@ namespace small3d
      *
      * @return True if OpenGL 3.3 is supported, false otherwise
      */
-    bool supportsOpenGL33() const;
+    
 
     /**
     * @brief Render a rectangle, using two of its corners that are diagonally opposed to each

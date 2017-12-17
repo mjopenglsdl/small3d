@@ -6,7 +6,7 @@ env:
     - CONAN_USERNAME="dimi309"
     - CONAN_CHANNEL="stable"
     - CONAN_REMOTES="https://api.bintray.com/conan/dimi309/conan-packages, https://api.bintray.com/conan/bincrafters/public-conan"
-    - CONAN_UPLOAD="https://api.bintray.com/conan/dimi309/conan-packages"
+#    - CONAN_UPLOAD="https://api.bintray.com/conan/dimi309/conan-packages"
     - CONAN_REFERENCE="small3d/master"
 
 linux: &linux
@@ -21,13 +21,21 @@ osx: &osx
    language: generic
 matrix:
    include:
-
       - <<: *linux
         env: CONAN_GCC_VERSIONS=4.9 CONAN_DOCKER_IMAGE=lasote/conangcc49
       - <<: *linux
-        env: CONAN_GCC_VERSIONS=5 CONAN_DOCKER_IMAGE=lasote/conangcc54
+        env: CONAN_GCC_VERSIONS=5 CONAN_DOCKER_IMAGE=lasote/conangcc5
       - <<: *linux
-        env: CONAN_GCC_VERSIONS=6 CONAN_DOCKER_IMAGE=lasote/conangcc63
+        env: CONAN_GCC_VERSIONS=6 CONAN_DOCKER_IMAGE=lasote/conangcc6
+      - <<: *linux
+        env: CONAN_GCC_VERSIONS=7 CONAN_DOCKER_IMAGE=lasote/conangcc7
+      - <<: *linux
+        env: CONAN_CLANG_VERSIONS=3.9 CONAN_DOCKER_IMAGE=lasote/conanclang39
+      - <<: *linux
+        env: CONAN_CLANG_VERSIONS=4.0 CONAN_DOCKER_IMAGE=lasote/conanclang40
+      - <<: *osx
+        osx_image: xcode7.3
+        env: CONAN_APPLE_CLANG_VERSIONS=7.3
       - <<: *osx
         osx_image: xcode8.3
         env: CONAN_APPLE_CLANG_VERSIONS=8.1
