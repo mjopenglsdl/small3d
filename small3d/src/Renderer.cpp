@@ -150,15 +150,21 @@ namespace small3d {
 
     GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
       "xRotationMatrix");
-    glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), rotation.x, glm::vec3(-1.0f, 0.0f, 0.0f))));
+    glUniformMatrix4fv(xRotationMatrixUniform, 1, GL_TRUE,
+		       glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), rotation.x,
+						  glm::vec3(-1.0f, 0.0f, 0.0f))));
 
     GLint yRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
       "yRotationMatrix");
-    glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), rotation.y, glm::vec3(0.0f, -1.0f, 0.0f))));
+    glUniformMatrix4fv(yRotationMatrixUniform, 1, GL_TRUE,
+		       glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), rotation.y,
+						  glm::vec3(0.0f, -1.0f, 0.0f))));
 
     GLint zRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
       "zRotationMatrix");
-    glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE, glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), rotation.z, glm::vec3(0.0f, 0.0f, -1.0f))));
+    glUniformMatrix4fv(zRotationMatrixUniform, 1, GL_TRUE,
+		       glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), rotation.z,
+						  glm::vec3(0.0f, 0.0f, -1.0f))));
 
     GLint offsetUniform = glGetUniformLocation(perspectiveProgram, "offset");
     glUniform3fv(offsetUniform, 1, glm::value_ptr(offset));
@@ -177,11 +183,14 @@ namespace small3d {
 
 
     glUniformMatrix4fv(xCameraRotationMatrixUniform, 1, GL_TRUE, 
-      glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), -cameraRotation.x, glm::vec3(-1.0f, 0.0f, 0.0f))));
+      glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), -cameraRotation.x,
+				 glm::vec3(-1.0f, 0.0f, 0.0f))));
     glUniformMatrix4fv(yCameraRotationMatrixUniform, 1, GL_TRUE, 
-      glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), -cameraRotation.y, glm::vec3(0.0f, -1.0f, 0.0f))));
+      glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), -cameraRotation.y,
+				 glm::vec3(0.0f, -1.0f, 0.0f))));
     glUniformMatrix4fv(zCameraRotationMatrixUniform, 1, GL_TRUE, 
-      glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), -cameraRotation.z, glm::vec3(0.0f, 0.0f, -1.0f))));
+      glm::value_ptr(glm::rotate(glm::mat4x4(1.0f), -cameraRotation.z,
+				 glm::vec3(0.0f, 0.0f, -1.0f))));
 
     // Camera position
     GLint cameraPositionUniform = glGetUniformLocation(perspectiveProgram, "cameraPosition");
