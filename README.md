@@ -80,15 +80,17 @@ In your home directory, make sure that the .conan/profiles/default file contains
 	compiler.version=15
 	compiler.runtime=MDd
 	
-If you are using MinGW, you have to link dynamically to gtest (run conan install with -o gtest:shared=True) and MinGW has to have pthreads installed. A good configuration for a conan profile file in that case would be the following:
+If you are using MinGW, a good configuration for a conan profile file for the current version of [mingw-w64](http://mingw-w64.org/doku.php) for example would be the following:
 
 	[settings]
-	arch=x86
-	build_type=Release
 	os=Windows
+	arch=x86_64
 	compiler=gcc
-	compiler.version=6.3
+	compiler.version=7.2
 	compiler.libcxx=libstdc++11
+	build_type=Release
+	
+If you are using MinGW's distribution from [mingw.org](http://mingw.org/), you need to install pthreads for the unit tests to work.
 	
 Note on 3D models and textures
 ------------------------------
