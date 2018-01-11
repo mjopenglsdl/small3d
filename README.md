@@ -79,6 +79,8 @@ In your home directory, make sure that the .conan/profiles/default file contains
 	compiler=Visual Studio
 	compiler.version=15
 	compiler.runtime=MDd
+	arch_build=x86
+	os_build=Windows
 	
 If you are using MinGW, a good configuration for a conan profile file for the current version of [mingw-w64](http://mingw-w64.org/doku.php) for example would be the following:
 
@@ -89,6 +91,8 @@ If you are using MinGW, a good configuration for a conan profile file for the cu
 	compiler.version=7.2
 	compiler.libcxx=libstdc++11
 	build_type=Release
+	arch_build=x86_64
+	os_build=Windows
 	
 If you are using MinGW's distribution from [mingw.org](http://mingw.org/), you need to install pthreads for the unit tests to work.
 	
