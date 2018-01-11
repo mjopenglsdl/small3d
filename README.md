@@ -54,7 +54,7 @@ Then, run the following:
 	cd small3d
 	mkdir build
 	cd build
-	conan install .. -o small3d:development=True
+	conan install .. -o small3d:development=True --build missing
 	conan build ..
 	cd build
 	
@@ -62,7 +62,7 @@ And then execute `./unittests` on MacOS or Linux, or `unittests.exe` if you are 
 
 In order to deploy the package locally, so that you can reference it from your own projects, just run the following from the small3d source directory:
 
-	conan create dimi309/stable --build missing
+	conan create . dimi309/stable --build missing
 
 If you encounter any problems, feel free to [ask me](https://github.com/dimi309/volcanique/issues) and I'll be happy to help.
 

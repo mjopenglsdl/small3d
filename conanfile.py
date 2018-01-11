@@ -38,8 +38,8 @@ class Small3dConan(ConanFile):
     def package(self):
 
         self.copy("FindSMALL3D.cmake", ".", ".")
-        self.copy(pattern="*", dst="shaders", src="%s/small3d/resources/shaders" % self.conanfile_directory, keep_path=True)
-        self.copy(pattern="*.hpp", dst="include", src="%s/small3d/include" % self.conanfile_directory, keep_path=True)
+        self.copy(pattern="*", dst="shaders", src="%s/small3d/resources/shaders" % self.build_folder, keep_path=True)
+        self.copy(pattern="*.hpp", dst="include", src="%s/small3d/include" % self.build_folder, keep_path=True)
         self.copy("LICENSE*", dst="licenses",  ignore_case=True, keep_path=False)
 
         if self.settings.compiler == "Visual Studio":
