@@ -1,7 +1,7 @@
 /*
  * Renderer.cpp
  *
- *  Created on: 2014/10/19
+ *  Created on: 2018/01/21
  *      Author: Dimitri Kourkoulis
  *     License: BSD 3-Clause License (see LICENSE file)
  */

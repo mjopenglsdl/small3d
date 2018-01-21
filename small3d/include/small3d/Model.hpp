@@ -10,7 +10,10 @@
 
 #include <string>
 #include <vector>
+
+#ifndef WITH_VULKAN
 #include <GL/glew.h>
+#endif
 
 namespace small3d {
   /**
@@ -43,7 +46,7 @@ namespace small3d {
     void clear();
 
   public:
-
+#ifndef WITH_VULKAN
     /**
      * @brief OpenGL position buffer object id. It is suggested not to manipulate this directly.
      */
@@ -63,7 +66,7 @@ namespace small3d {
      * @brief OpenGL UV buffer object id. It is suggested not to manipulate this directly.
      */
     GLuint uvBufferObjectId = 0;
-
+#endif
     /**
      * @brief The vertex data. This is an array, which is to be treated as a 4 column table, holding
      * the x, y, z values in each column. The fourth column is there to assist in matrix operations.

@@ -8,7 +8,12 @@
 
 #include <gtest/gtest.h>
 
+#ifdef WITH_VULKAN
+#include <small3d/Vulkan/Renderer.hpp>
+#else
 #include <small3d/OpenGL/Renderer.hpp>
+#endif
+
 #include <small3d/Logger.hpp>
 #include <small3d/Image.hpp>
 #include <small3d/Model.hpp>
