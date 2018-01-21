@@ -12,6 +12,7 @@ v1.3.1
 - Using GLEW 2.1.0.
 - Added MinGW support.
 - [BREAKING] Removed Renderer.supportsOpenGL33 function.
+- Adding Vulkan support.	
 
 v1.3.0
 ------
