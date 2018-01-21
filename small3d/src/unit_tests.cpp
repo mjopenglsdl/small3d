@@ -8,7 +8,7 @@
 
 #include <gtest/gtest.h>
 
-#include <small3d/Renderer.hpp>
+#include <small3d/OpenGL/Renderer.hpp>
 #include <small3d/Logger.hpp>
 #include <small3d/Image.hpp>
 #include <small3d/Model.hpp>
