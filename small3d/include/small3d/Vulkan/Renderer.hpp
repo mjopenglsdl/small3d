@@ -12,10 +12,10 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "Logger.hpp"
-#include "Image.hpp"
-#include "Model.hpp"
-#include "SceneObject.hpp"
+#include "../Logger.hpp"
+#include "../Image.hpp"
+#include "../Model.hpp"
+#include "../SceneObject.hpp"
 
 #include <unordered_map>
 #include <vector>
