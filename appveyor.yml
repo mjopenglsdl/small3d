@@ -12,7 +12,7 @@ environment:
     CONAN_CHANNEL: "stable"
     CONAN_TOTAL_PAGES: 2
     CONAN_REMOTES: "https://api.bintray.com/conan/dimi309/conan-packages, https://api.bintray.com/conan/bincrafters/public-conan"
-#    CONAN_UPLOAD: "https://api.bintray.com/conan/dimi309/conan-packages"
+    CONAN_UPLOAD: "https://api.bintray.com/conan/dimi309/conan-packages"
 
     matrix:
         - CONAN_CURRENT_PAGE: 1
