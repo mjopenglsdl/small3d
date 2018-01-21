@@ -248,17 +248,17 @@ namespace small3d {
     std::string simpleFragmentShaderPath;
 
     if (isOpenGL33Supported) {
-      vertexShaderPath = shadersPath + "OpenGL33/perspectiveMatrixLightedShader.vert";
-      fragmentShaderPath = shadersPath + "OpenGL33/textureShader.frag";
-      simpleVertexShaderPath = shadersPath + "OpenGL33/simpleShader.vert";
-      simpleFragmentShaderPath = shadersPath + "OpenGL33/simpleShader.frag";
+      vertexShaderPath = shadersPath + "GLSL330/perspectiveMatrixLightedShader.vert";
+      fragmentShaderPath = shadersPath + "GLSL330/textureShader.frag";
+      simpleVertexShaderPath = shadersPath + "GLSL330/simpleShader.vert";
+      simpleFragmentShaderPath = shadersPath + "GLSL330/simpleShader.frag";
 
     }
     else {
-      vertexShaderPath = shadersPath + "OpenGL21/perspectiveMatrixLightedShader.vert";
-      fragmentShaderPath = shadersPath + "OpenGL21/textureShader.frag";
-      simpleVertexShaderPath = shadersPath + "OpenGL21/simpleShader.vert";
-      simpleFragmentShaderPath = shadersPath + "OpenGL21/simpleShader.frag";
+      vertexShaderPath = shadersPath + "GLSL120/perspectiveMatrixLightedShader.vert";
+      fragmentShaderPath = shadersPath + "GLSL120/textureShader.frag";
+      simpleVertexShaderPath = shadersPath + "GLSL120/simpleShader.vert";
+      simpleFragmentShaderPath = shadersPath + "GLSL120/simpleShader.frag";
     }
 
     glViewport(0, 0, static_cast<GLsizei>(screenWidth), static_cast<GLsizei>(screenHeight));

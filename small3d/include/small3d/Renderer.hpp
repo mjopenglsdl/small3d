@@ -155,13 +155,6 @@ namespace small3d
     void deleteTexture(const std::string name);
 
     /**
-     * @brief Is OpenGL 3.3 supported?
-     *
-     * @return True if OpenGL 3.3 is supported, false otherwise
-     */
-    
-
-    /**
     * @brief Render a rectangle, using two of its corners that are diagonally opposed to each
     *        other to position it.
     * @param textureName The name of the texture to be used (must have been generated with generateTexture())
