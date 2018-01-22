@@ -912,8 +912,8 @@ namespace small3d {
   }
 
   void Renderer::createGraphicsPipeline() {
-    auto vertShaderCode = readFile("resources/shaders/GLSL4.5/vert.spv");
-    auto fragShaderCode = readFile("resources/shaders/GLSL4.5/frag.spv");
+    auto vertShaderCode = readFile("resources/shaders/GLSL450/vert.spv");
+    auto fragShaderCode = readFile("resources/shaders/GLSL450/frag.spv");
     LOGDEBUG("Vertex shader size: " + intToStr(vertShaderCode.size()));
     LOGDEBUG("Fragment shader size: " + intToStr(fragShaderCode.size()));
 
