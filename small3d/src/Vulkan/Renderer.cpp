@@ -8,6 +8,11 @@
 
 #include "Renderer.hpp"
 
+#ifdef _MSC_VER
+#include <algorithm>
+#include <array>
+#endif
+
 #include <stdexcept>
 #include <fstream>
 #include <cstring>
@@ -244,6 +249,7 @@ VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, GLFWwi
     glfwGetWindowSize(window, &width, &height);
 
     VkExtent2D actualExtent = { width, height };
+	
     actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
     actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));
     return actualExtent;
