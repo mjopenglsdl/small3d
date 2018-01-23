@@ -157,25 +157,31 @@ struct SwapChainSupportDetails {
   std::vector<VkPresentModeKHR> presentModes;
 };
 
-SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device, VkSurfaceKHR surface) {
+SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device,
+					      VkSurfaceKHR surface) {
   SwapChainSupportDetails details;
 
-  vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &details.capabilities);
+  vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface,
+					    &details.capabilities);
 
   uint32_t formatCount;
   vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, nullptr);
 
   if (formatCount != 0) {
     details.formats.resize(formatCount);
-    vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, details.formats.data());
+    vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount,
+					 details.formats.data());
   }
 
   uint32_t presentModeCount;
-  vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount, nullptr);
+  vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount,
+					    nullptr);
 
   if (presentModeCount != 0) {
     details.presentModes.resize(presentModeCount);
-    vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount, details.presentModes.data());
+    vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface,
+					      &presentModeCount,
+					      details.presentModes.data());
   }
 
   return details;
@@ -198,15 +204,20 @@ bool isPhysicalDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface) {
 
   bool swapChainAdequate = false;
   if (extensionsSupported) {
-    SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device, surface);
-    swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+    SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device,
+								     surface);
+    swapChainAdequate = !swapChainSupport.formats.empty() &&
+      !swapChainSupport.presentModes.empty();
   }
   QueueFamilyIndices indices = findQueueFamilies(device, surface);
 
   VkPhysicalDeviceFeatures supportedFeatures;
   vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
 
-  return indices.isComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
+  return indices.isComplete() &&
+    extensionsSupported &&
+    swapChainAdequate &&
+    supportedFeatures.samplerAnisotropy;
 }
 
 VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats) {
@@ -765,13 +776,20 @@ namespace small3d {
 
   void Renderer::createSwapChain() {
 
-    SwapChainSupportDetails swapChainSupport = querySwapChainSupport(vulkanPhysicalDevice, vulkanWindowSurface);
-    VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
-    VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
+    SwapChainSupportDetails swapChainSupport =
+      querySwapChainSupport(vulkanPhysicalDevice, vulkanWindowSurface);
+    
+    VkSurfaceFormatKHR surfaceFormat =
+      chooseSwapSurfaceFormat(swapChainSupport.formats);
+    
+    VkPresentModeKHR presentMode =
+      chooseSwapPresentMode(swapChainSupport.presentModes);
+
     VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities, window);
 
     uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
-    if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount) {
+    if (swapChainSupport.capabilities.maxImageCount > 0 &&
+	imageCount > swapChainSupport.capabilities.maxImageCount) {
       imageCount = swapChainSupport.capabilities.maxImageCount;
     }
 
@@ -786,8 +804,10 @@ namespace small3d {
     createInfo.imageArrayLayers = 1;
     createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-    QueueFamilyIndices indices = findQueueFamilies(vulkanPhysicalDevice, vulkanWindowSurface);
-    uint32_t queueFamilyIndices[] = { (uint32_t)indices.graphicsFamily, (uint32_t)indices.presentFamily };
+    QueueFamilyIndices indices = findQueueFamilies(vulkanPhysicalDevice,
+						   vulkanWindowSurface);
+    uint32_t queueFamilyIndices[] = { (uint32_t)indices.graphicsFamily,
+				      (uint32_t)indices.presentFamily };
 
     if (indices.graphicsFamily != indices.presentFamily) {
       createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
@@ -806,13 +826,15 @@ namespace small3d {
     createInfo.clipped = VK_TRUE;
     createInfo.oldSwapchain = VK_NULL_HANDLE;
 
-    if (vkCreateSwapchainKHR(vulkanDevice, &createInfo, nullptr, &swapChain) != VK_SUCCESS) {
+    if (vkCreateSwapchainKHR(vulkanDevice, &createInfo, nullptr, &swapChain) !=
+	VK_SUCCESS) {
       throw std::runtime_error("Failed to create swap chain!");
     }
 
     vkGetSwapchainImagesKHR(vulkanDevice, swapChain, &imageCount, nullptr);
     swapChainImages.resize(imageCount);
-    vkGetSwapchainImagesKHR(vulkanDevice, swapChain, &imageCount, swapChainImages.data());
+    vkGetSwapchainImagesKHR(vulkanDevice, swapChain, &imageCount,
+			    swapChainImages.data());
 
     swapChainImageFormat = surfaceFormat.format;
     swapChainExtent = extent;
@@ -822,7 +844,9 @@ namespace small3d {
     swapChainImageViews.resize(swapChainImages.size());
 
     for (uint32_t i = 0; i < swapChainImages.size(); i++) {
-      swapChainImageViews[i] = createImageView(vulkanDevice, swapChainImages[i], swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT);
+      swapChainImageViews[i] = createImageView(vulkanDevice, swapChainImages[i],
+					       swapChainImageFormat,
+					       VK_IMAGE_ASPECT_COLOR_BIT);
     }
   }
 
@@ -847,7 +871,8 @@ namespace small3d {
     dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
     dependency.srcAccessMask = 0;
     dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-    dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+    dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT |
+      VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 
     VkAttachmentDescription depthAttachment = {};
     depthAttachment.format = findDepthFormat(vulkanPhysicalDevice);
@@ -1067,7 +1092,8 @@ namespace small3d {
     pipelineInfo.basePipelineHandle = VK_NULL_HANDLE; // Optional
     pipelineInfo.basePipelineIndex = -1; // Optional
 
-    if (vkCreateGraphicsPipelines(vulkanDevice, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &graphicsPipeline) != VK_SUCCESS) {
+    if (vkCreateGraphicsPipelines(vulkanDevice, VK_NULL_HANDLE, 1, &pipelineInfo,
+				  nullptr, &graphicsPipeline) != VK_SUCCESS) {
       throw std::runtime_error("Failed to create graphics pipeline!");
     }
 
@@ -1076,13 +1102,15 @@ namespace small3d {
   }
 
   void Renderer::createCommandPool() {
-    QueueFamilyIndices queueFamilyIndices = findQueueFamilies(vulkanPhysicalDevice, vulkanWindowSurface);
+    QueueFamilyIndices queueFamilyIndices =
+      findQueueFamilies(vulkanPhysicalDevice, vulkanWindowSurface);
     VkCommandPoolCreateInfo poolInfo = {};
     poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
     poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily;
     poolInfo.flags = 0; // optional
 
-    if (vkCreateCommandPool(vulkanDevice, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) {
+    if (vkCreateCommandPool(vulkanDevice, &poolInfo, nullptr, &commandPool) !=
+	VK_SUCCESS) {
       throw std::runtime_error("Failed to create command pool!");
     }
   }
@@ -1090,14 +1118,17 @@ namespace small3d {
   void Renderer::createDepthResources() {
     VkFormat depthFormat = findDepthFormat(vulkanPhysicalDevice);
 
-    createImage(vulkanPhysicalDevice, vulkanDevice, swapChainExtent.width, swapChainExtent.height,
-		depthFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
-		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, depthImage, depthImageMemory);
+    createImage(vulkanPhysicalDevice, vulkanDevice, swapChainExtent.width,
+		swapChainExtent.height,	depthFormat, VK_IMAGE_TILING_OPTIMAL,
+		VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
+		VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, depthImage,
+		depthImageMemory);
     
     depthImageView = createImageView(vulkanDevice, depthImage, depthFormat,
 				     VK_IMAGE_ASPECT_DEPTH_BIT);
 
-    transitionImageLayout(vulkanDevice, vulkanGraphicsQueue, commandPool, depthImage, depthFormat,
+    transitionImageLayout(vulkanDevice, vulkanGraphicsQueue, commandPool,
+			  depthImage, depthFormat,
 			  VK_IMAGE_LAYOUT_UNDEFINED,
 			  VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL);
   }
@@ -1241,9 +1272,7 @@ namespace small3d {
   void Renderer::deleteTexture(const std::string name) {
 
   }
-  
-
-  
+    
   void Renderer::renderRectangle(const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
 				 const bool perspective, const glm::vec4 colour) const {
 
