@@ -86,7 +86,8 @@ VkResult CreateDebugReportCallbackEXT(VkInstance instance,
 
 void DestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback,
   const VkAllocationCallbacks* pAllocator) {
-  auto func = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT");
+  auto func = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(instance,
+								 "vkDestroyDebugReportCallbackEXT");
   if (func != nullptr) {
     func(instance, callback, pAllocator);
   }
@@ -1240,9 +1241,10 @@ namespace small3d {
   }
   
   Renderer& Renderer::getInstance(const std::string windowTitle, const int width, const int height,
-				  const float frustumScale, const float zNear, const float zFar, const float zOffsetFromCamera, 
-				  const std::string shadersPath) {
-    static Renderer instance(windowTitle, width, height, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
+				  const float frustumScale, const float zNear, const float zFar,
+				  const float zOffsetFromCamera, const std::string shadersPath) {
+    static Renderer instance(windowTitle, width, height, frustumScale, zNear, zFar,
+			     zOffsetFromCamera, shadersPath);
     return instance;
   }
   
