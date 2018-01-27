@@ -6,8 +6,6 @@ small3d changelog
 v1.3.1
 ------
 
-(still open)
-
 - Various bug fixes and code improvements.
 - Using GLEW 2.1.0.
 - Added MinGW support.
