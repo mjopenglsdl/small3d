@@ -54,7 +54,7 @@ Then, run the following:
 	cd small3d
 	mkdir build
 	cd build
-	conan install .. -o small3d:development=True
+	conan install .. -o small3d:development=True --build missing
 	conan build ..
 	cd build
 	
@@ -62,7 +62,7 @@ And then execute `./unittests` on MacOS or Linux, or `unittests.exe` if you are 
 
 In order to deploy the package locally, so that you can reference it from your own projects, just run the following from the small3d source directory:
 
-	conan create dimi309/stable --build missing
+	conan create . dimi309/stable --build missing
 
 If you encounter any problems, feel free to [ask me](https://github.com/dimi309/volcanique/issues) and I'll be happy to help.
 
@@ -79,6 +79,8 @@ In your home directory, make sure that the .conan/profiles/default file contains
 	compiler=Visual Studio
 	compiler.version=15
 	compiler.runtime=MDd
+	arch_build=x86
+	os_build=Windows
 	
 If you are using MinGW, a good configuration for a conan profile file for the current version of [mingw-w64](http://mingw-w64.org/doku.php) for example would be the following:
 
@@ -89,6 +91,8 @@ If you are using MinGW, a good configuration for a conan profile file for the cu
 	compiler.version=7.2
 	compiler.libcxx=libstdc++11
 	build_type=Release
+	arch_build=x86_64
+	os_build=Windows
 	
 If you are using MinGW's distribution from [mingw.org](http://mingw.org/), you need to install pthreads for the unit tests to work.
 	

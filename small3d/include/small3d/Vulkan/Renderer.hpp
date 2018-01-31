@@ -2,20 +2,20 @@
  * @file  Renderer.hpp
  * @brief Header of the Renderer class
  *
- *  Created on: 2014/10/19
+ *  Created on: 2018/01/21
  *      Author: Dimitri Kourkoulis
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 
 #pragma once
 
-#include <GL/glew.h>
+#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
-#include "Logger.hpp"
-#include "Image.hpp"
-#include "Model.hpp"
-#include "SceneObject.hpp"
+#include "../Logger.hpp"
+#include "../Image.hpp"
+#include "../Model.hpp"
+#include "../SceneObject.hpp"
 
 #include <unordered_map>
 #include <vector>
@@ -30,7 +30,7 @@ namespace small3d
 
   /**
    * @class Renderer
-   * @brief Renderer class, which can render using either OpenGL v3.3 or v2.1
+   * @brief Renderer class
    */
   class Renderer
   {
@@ -38,47 +38,57 @@ namespace small3d
   private:
 
     GLFWwindow* window;
+    VkInstance vulkanInstance;
+    VkDebugReportCallbackEXT vulkanDebugReportCallback;
+    VkSurfaceKHR vulkanWindowSurface;
+    VkPhysicalDevice vulkanPhysicalDevice = VK_NULL_HANDLE;
 
-    GLuint perspectiveProgram;
-    GLuint orthographicProgram;
-    GLuint vao;
+    VkDevice vulkanDevice;
+    VkQueue vulkanGraphicsQueue;
+    VkQueue vulkanPresentQueue;
 
-    bool isOpenGL33Supported;
-    bool noShaders;
+    VkSwapchainKHR swapChain;
+    std::vector<VkImage> swapChainImages;
+    VkFormat swapChainImageFormat;
+    VkExtent2D swapChainExtent;
+    
+    std::vector<VkImageView> swapChainImageViews;
+    std::vector<VkFramebuffer> swapChainFramebuffers;
 
-    float frustumScale;
-    float zNear;
-    float zFar;
-    float zOffsetFromCamera;
+    VkRenderPass renderPass;
 
-    std::unordered_map<std::string, GLuint> textures;
+    VkDescriptorSetLayout descriptorSetLayout;
 
-    FT_Library library;
-    std::vector<float> textMemory;
-    std::unordered_map<std::string, FT_Face> fontFaces;
+    VkPipeline graphicsPipeline;
+    VkPipelineLayout pipelineLayout;
 
-    std::string loadShaderFromFile(const std::string fileLocation) const;
-    GLuint compileShader(const std::string shaderSourceFile, const GLenum shaderType) const;
-    std::string getProgramInfoLog(const GLuint linkedProgram) const;
-    std::string getShaderInfoLog(const GLuint shader) const;
-    void initOpenGL();
-    void checkForOpenGLErrors(const std::string when, const bool abort) const;
+    VkCommandPool commandPool;
 
-    void positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const;
-    void positionCamera() const;
-    GLuint getTextureHandle(const std::string name) const;
-    GLuint generateTexture(const std::string name, const float *data, const unsigned long width,
-      const unsigned long height);
+    VkImage depthImage;
+    VkDeviceMemory depthImageMemory;
+    VkImageView depthImageView;
 
-    void init(const int width, const int height, const std::string windowTitle,
-              const float frustumScale , const float zNear,
-              const float zFar, const float zOffsetFromCamera,
-              const std::string shadersPath);
-    void initWindow(int &width, int &height, const std::string windowTitle = "");
+    VkSampler textureSampler;
 
-    Renderer(const std::string windowTitle, const int width, const int height, const float frustumScale,
-      const float zNear, const float zFar, const float zOffsetFromCamera, 
-      const std::string shadersPath);
+    void createVulkanInstance(const std::string windowTitle);
+    void createDebugReportCallback();
+    void createVulkanWindowSurface();
+    void selectVulkanPhysicalDevice();
+    void createLogicalVulkanDevice();
+    void createSwapChain();
+    void createImageViews();
+    void createRenderPass();
+    void createDescriptorSetLayout();
+    void createGraphicsPipeline();
+    void createCommandPool();
+    void createDepthResources();
+    void createFrameBuffers();
+    void createTextureSampler();
+
+
+    Renderer(const std::string windowTitle, const int width, const int height,
+	     const float frustumScale, const float zNear, const float zFar,
+	     const float zOffsetFromCamera, const std::string shadersPath);
     
     Renderer() {};
     
@@ -104,10 +114,12 @@ namespace small3d
     float lightIntensity;
 
     /**
-     * @brief Get the isntance of the Renderer (the Renderer is a singleton).
-     * @param windowTitle The title of the game's window
-     * @param width The width of the window. If width and height are not set, or set to 0, the game will run in full screen mode.
-     * @param height The height of the window
+     * @brief Get the instance of the Renderer (the Renderer is a singleton).
+     * @param windowTitle       The title of the game's window
+     * @param width             The width of the window. If width and height are
+     *                          not set or set to 0, the game will run in full screen
+     *                          mode.
+     * @param height            The height of the window
      * @param frustumScale	How much the frustum scales the items rendered
      * @param zNear		Projection plane z coordinate (use positive value)
      * @param zFar		Far end of frustum z coordinate (use positive value)
@@ -121,9 +133,10 @@ namespace small3d
      * 				it and the names of the shaders must remain as provided.
      * 				The shader code can be changed, provided that their inputs
      * 				and outputs are maintained the same.
-     * @return The Renderer object. It can only be assigned to a pointer by its address (Renderer *r = &Renderer::getInstance(...), 
-     *         sicne declaring another Renderer variable and assigning to it would invoke the default constructor, which has 
-     *         been deleted.
+     * @return                  The Renderer object. It can only be assigned to 
+     *                          a pointer by its address (Renderer *r = &Renderer::getInstance(...), 
+     *                          sicne declaring another Renderer variable and assigning to it would
+     *                          invoke the default constructor, which has been deleted.
      */
     static Renderer& getInstance(const std::string windowTitle = "", const int width = 0, 
       const int height = 0, const float frustumScale = 1.0f, const float zNear = 1.0f,
@@ -155,23 +168,22 @@ namespace small3d
     void deleteTexture(const std::string name);
 
     /**
-     * @brief Is OpenGL 3.3 supported?
-     *
-     * @return True if OpenGL 3.3 is supported, false otherwise
-     */
-    
-
-    /**
-    * @brief Render a rectangle, using two of its corners that are diagonally opposed to each
-    *        other to position it.
-    * @param textureName The name of the texture to be used (must have been generated with generateTexture())
-    * @param topLeft Where to place the top left corner
+    * @brief Render a rectangle, using two of its corners that are diagonally
+    *        opposed to each other to position it.
+    * @param textureName The name of the texture to be used (must have been
+    *                    generated with generateTexture())
+    * @param topLeft     Where to place the top left corner
     * @param bottomRight Where to place the bottom right
-    * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
-    * @param colour The colour of the rectangle (RGBA). If this is set, textureName will be ignored.
+    * @param perspective If set to true, use perspective rendering. Otherwise
+    *                    use orthographic rendering.
+    * @param colour      The colour of the rectangle (RGBA). If this is set,
+    *                    textureName will be ignored.
     */
-    void renderRectangle(const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
-      const bool perspective = false, const glm::vec4 colour = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) const;
+    void renderRectangle(const std::string textureName,
+			 const glm::vec3 topLeft,
+			 const glm::vec3 bottomRight,
+			 const bool perspective = false,
+			 const glm::vec4 colour = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) const;
 
     /**
      * @brief Render a rectangle, using two of its corners that are diagonally opposed to each

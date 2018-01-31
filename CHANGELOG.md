@@ -6,12 +6,11 @@ small3d changelog
 v1.3.1
 ------
 
-(still open)
-
 - Various bug fixes and code improvements.
 - Using GLEW 2.1.0.
 - Added MinGW support.
 - [BREAKING] Removed Renderer.supportsOpenGL33 function.
+- Added an option to build small3d with Vulkan support. Vulkan support is not fully implemented yet and it is not a priority. But I am keeping an eye on Vulkan and maintaining the project in a way that would allow me to incorporate Vulkan rendering without affecting the rest of the code too much, should the need arise.
 
 v1.3.0
 ------

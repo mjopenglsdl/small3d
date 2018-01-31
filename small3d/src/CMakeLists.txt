@@ -1,8 +1,20 @@
-add_library(small3d BoundingBoxSet.cpp GetTokens.cpp Image.cpp Logger.cpp Model.cpp Renderer.cpp
-  SceneObject.cpp Sound.cpp ../include/small3d/BoundingBoxSet.hpp
-  ../include/small3d/GetTokens.hpp ../include/small3d/Image.hpp ../include/small3d/Logger.hpp
-  ../include/small3d/Model.hpp ../include/small3d/Renderer.hpp ../include/small3d/SceneObject.hpp
-  ../include/small3d/Sound.hpp)
+if(DEFINED BUILD_FOR_VULKAN AND BUILD_FOR_VULKAN)
+  add_definitions(-DWITH_VULKAN)
+  add_library(small3d BoundingBoxSet.cpp GetTokens.cpp Image.cpp Logger.cpp Model.cpp Vulkan/Renderer.cpp
+    SceneObject.cpp Sound.cpp ../include/small3d/BoundingBoxSet.hpp
+    ../include/small3d/GetTokens.hpp ../include/small3d/Image.hpp ../include/small3d/Logger.hpp
+    ../include/small3d/Model.hpp ../include/small3d/Vulkan/Renderer.hpp ../include/small3d/SceneObject.hpp
+    ../include/small3d/Sound.hpp)
+  find_package(VULKAN REQUIRED)
+  target_include_directories(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d/Vulkan" ${Vulkan_INCLUDE_DIR})
+else(DEFINED BUILD_FOR_VULKAN AND BUILD_FOR_VULKAN)
+  add_library(small3d BoundingBoxSet.cpp GetTokens.cpp Image.cpp Logger.cpp Model.cpp OpenGL/Renderer.cpp
+    SceneObject.cpp Sound.cpp ../include/small3d/BoundingBoxSet.hpp
+    ../include/small3d/GetTokens.hpp ../include/small3d/Image.hpp ../include/small3d/Logger.hpp
+    ../include/small3d/Model.hpp ../include/small3d/OpenGL/Renderer.hpp ../include/small3d/SceneObject.hpp
+    ../include/small3d/Sound.hpp)
+  target_include_directories(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d/OpenGL")
+endif(DEFINED BUILD_FOR_VULKAN AND BUILD_FOR_VULKAN)
 
 target_include_directories(small3d PUBLIC "${small3d_SOURCE_DIR}/small3d/include/small3d")
 
@@ -17,6 +29,9 @@ if(DEFINED BUILD_TESTS AND BUILD_TESTS)
   file(COPY "${small3d_SOURCE_DIR}/small3d/resources" DESTINATION "${small3d_BINARY_DIR}/bin")
   target_include_directories(unittests PUBLIC "${small3d_SOURCE_DIR}/small3d/include")
   target_link_libraries(unittests PUBLIC small3d "${CONAN_LIBS}")
+  if(DEFINED BUILD_FOR_VULKAN AND BUILD_FOR_VULKAN)
+    target_link_libraries(unittests PUBLIC small3d "${Vulkan_LIBRARY}")
+  endif(DEFINED BUILD_FOR_VULKAN AND BUILD_FOR_VULKAN)
   set_target_properties(unittests PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}")
   if(MSVC)
     set_target_properties(unittests PROPERTIES LINK_FLAGS_RELEASE "-NODEFAULTLIB:MSVCRTD")

@@ -7,11 +7,11 @@ class Small3dConan(ConanFile):
     description = "A small, cross-platform 3D game engine (C++, OpenGL, GLFW) - runs on Win/MacOS/Linux"
     generators = "cmake"
     settings = "os", "arch", "build_type", "compiler"
-    options = {"development": [True, False]}
-    default_options = "gtest:shared=False", "development=False"
+    options = {"development": [True, False], "vulkan": [True, False]}
+    default_options = "gtest:shared=False", "development=False", "vulkan=False"
     url="http://github.com/dimi309/conan-packages"
-    requires = "glfw/3.2.1@bincrafters/stable", "freetype/2.8.1@bincrafters/stable","glew/2.1.0@dimi309/stable", \
-        "glm/0.9.8.5@g-truc/stable", "vorbis/master@dimi309/stable", "portaudio/v190600.20161030@bincrafters/stable"
+    requires = "glfw/3.2.1@bincrafters/stable", "freetype/2.8.1@bincrafters/stable", "glm/0.9.8.5@g-truc/stable", \
+               "vorbis/master@dimi309/stable", "portaudio/v190600.20161030@bincrafters/stable"
     license="https://github.com/dimi309/small3d/blob/master/LICENSE"
     exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
 
@@ -25,9 +25,13 @@ class Small3dConan(ConanFile):
         if self.options.development:
             self.requires("gtest/1.7.0@bincrafters/stable")
 
+        if not self.options.vulkan:
+            self.requires("glew/2.1.0@dimi309/stable")
+
     def build(self):
         
         cmake = CMake(self)
+        cmake.definitions['BUILD_FOR_VULKAN'] = self.options.vulkan
         if self.options.development:
             cmake.definitions['BUILD_TESTS'] = True
         else:
@@ -38,8 +42,8 @@ class Small3dConan(ConanFile):
     def package(self):
 
         self.copy("FindSMALL3D.cmake", ".", ".")
-        self.copy(pattern="*", dst="shaders", src="%s/small3d/resources/shaders" % self.conanfile_directory, keep_path=True)
-        self.copy(pattern="*.hpp", dst="include", src="%s/small3d/include" % self.conanfile_directory, keep_path=True)
+        self.copy(pattern="*", dst="shaders", src="%s/small3d/resources/shaders" % self.build_folder, keep_path=True)
+        self.copy(pattern="*.hpp", dst="include", src="%s/small3d/include" % self.build_folder, keep_path=True)
         self.copy("LICENSE*", dst="licenses",  ignore_case=True, keep_path=False)
 
         if self.settings.compiler == "Visual Studio":
