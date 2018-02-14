@@ -227,7 +227,8 @@ VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>
   }
 
   for (const auto& availableFormat : availableFormats) {
-    if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM && availableFormat.colorSpace == VK_COLORSPACE_SRGB_NONLINEAR_KHR) {
+    if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM && availableFormat.colorSpace ==
+	VK_COLORSPACE_SRGB_NONLINEAR_KHR) {
       return availableFormat;
     }
   }
@@ -262,14 +263,17 @@ VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, GLFWwi
 
     VkExtent2D actualExtent = { width, height };
 	
-    actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
-    actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));
+    actualExtent.width = std::max(capabilities.minImageExtent.width,
+				  std::min(capabilities.maxImageExtent.width, actualExtent.width));
+    actualExtent.height = std::max(capabilities.minImageExtent.height,
+				   std::min(capabilities.maxImageExtent.height, actualExtent.height));
     return actualExtent;
   }
 
 }
 
-VkImageView createImageView(VkDevice device, VkImage image, VkFormat format, VkImageAspectFlags aspectFlags) {
+VkImageView createImageView(VkDevice device, VkImage image, VkFormat format,
+			    VkImageAspectFlags aspectFlags) {
   VkImageViewCreateInfo viewInfo = {};
   viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
   viewInfo.image = image;
@@ -289,14 +293,17 @@ VkImageView createImageView(VkDevice device, VkImage image, VkFormat format, VkI
   return imageView;
 }
 
-VkFormat findSupportedFormat(VkPhysicalDevice physicalDevice, const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
+VkFormat findSupportedFormat(VkPhysicalDevice physicalDevice,
+			     const std::vector<VkFormat>& candidates,
+			     VkImageTiling tiling, VkFormatFeatureFlags features) {
   for (VkFormat format : candidates) {
     VkFormatProperties props;
     vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &props);
     if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features) {
       return format;
     }
-    else if (tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features) {
+    else if (tiling == VK_IMAGE_TILING_OPTIMAL &&
+	     (props.optimalTilingFeatures & features) == features) {
       return format;
     }
   }
@@ -305,7 +312,8 @@ VkFormat findSupportedFormat(VkPhysicalDevice physicalDevice, const std::vector<
 
 VkFormat findDepthFormat(VkPhysicalDevice physicalDevice) {
   return findSupportedFormat(physicalDevice,
-			     { VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT },
+			     { VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT,
+				 VK_FORMAT_D24_UNORM_S8_UINT },
 			     VK_IMAGE_TILING_OPTIMAL,
 			     VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT
 			     );
@@ -696,13 +704,15 @@ namespace small3d {
     createInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT;
     createInfo.pfnCallback = debugCallback;
 
-    if (CreateDebugReportCallbackEXT(vulkanInstance, &createInfo, nullptr, &vulkanDebugReportCallback) != VK_SUCCESS) {
+    if (CreateDebugReportCallbackEXT(vulkanInstance, &createInfo, nullptr,
+				     &vulkanDebugReportCallback) != VK_SUCCESS) {
       throw std::runtime_error("Failed to create debug report callback!");
     }
   }
 
   void Renderer::createVulkanWindowSurface() {
-    if (glfwCreateWindowSurface(vulkanInstance, window, nullptr, &vulkanWindowSurface) != VK_SUCCESS) {
+    if (glfwCreateWindowSurface(vulkanInstance, window, nullptr,
+				&vulkanWindowSurface) != VK_SUCCESS) {
       throw std::runtime_error("Failed to create window surface!");
     }
   }
@@ -932,7 +942,8 @@ namespace small3d {
     layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
     layoutInfo.pBindings = bindings.data();
 
-    if (vkCreateDescriptorSetLayout(vulkanDevice, &layoutInfo, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
+    if (vkCreateDescriptorSetLayout(vulkanDevice, &layoutInfo, nullptr, &descriptorSetLayout) !=
+	VK_SUCCESS) {
       throw std::runtime_error("Failed to create descriptor set layout!");
     }
   }
@@ -970,7 +981,8 @@ namespace small3d {
     auto attributeDescriptions = Vertex::getAttributeDescriptions();
 
     vertexInputInfo.vertexBindingDescriptionCount = 1;
-    vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+    vertexInputInfo.vertexAttributeDescriptionCount =
+      static_cast<uint32_t>(attributeDescriptions.size());
     vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
     vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
@@ -1059,7 +1071,8 @@ namespace small3d {
     pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
     pipelineLayoutInfo.pPushConstantRanges = 0; // Optional
 
-    if (vkCreatePipelineLayout(vulkanDevice, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS) {
+    if (vkCreatePipelineLayout(vulkanDevice, &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
+	VK_SUCCESS) {
       throw std::runtime_error("failed to create pipeline layout!");
     }
 
@@ -1275,12 +1288,14 @@ namespace small3d {
 
   }
     
-  void Renderer::renderRectangle(const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+  void Renderer::renderRectangle(const std::string textureName,
+				 const glm::vec3 topLeft, const glm::vec3 bottomRight,
 				 const bool perspective, const glm::vec4 colour) const {
 
   }
 
-  void Renderer::renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+  void Renderer::renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft,
+				 const glm::vec3 bottomRight,
 				 const bool perspective) const {
     this->renderRectangle("", topLeft, bottomRight, perspective, colour);
   }
@@ -1300,7 +1315,8 @@ namespace small3d {
   }
 
   void Renderer::render(SceneObject &sceneObject, const std::string textureName) const {
-    this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
+    this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation,
+		 glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
   
   void Renderer::write(const std::string text, const glm::vec3 colour, const glm::vec2 topLeft, 
