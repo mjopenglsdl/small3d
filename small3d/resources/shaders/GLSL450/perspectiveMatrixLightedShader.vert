@@ -8,7 +8,7 @@ layout(location = 2) in vec2 uvCoords;
 layout(location = 0) smooth out float cosAngIncidence;
 layout(location = 1) out vec2 textureCoords;
 
-layout(location = 2) uniform positioning {
+uniform positioning {
   vec3 offset;
   mat4 perspectiveMatrix;
   mat4 xRotationMatrix;

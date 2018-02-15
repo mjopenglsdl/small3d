@@ -4,8 +4,8 @@
 layout(location = 0) in vec2 textureCoords;
 layout(location = 0) uniform sampler2D textureImage;
 
-layout(location = 1) uniform surface {
-  uniform vec4 colour;
+uniform surface {
+  vec4 colour;
 };
 
 layout(location = 2) out vec4 outputColour;

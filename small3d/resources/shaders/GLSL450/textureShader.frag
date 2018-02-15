@@ -5,7 +5,7 @@ layout(location = 0) smooth in float cosAngIncidence;
 layout(location = 1) in vec2 textureCoords;
 
 layout(location = 0) uniform sampler2D textureImage;
-layout(location = 1) uniform surface {
+uniform surface {
   vec4 colour;
   float lightIntensity;
 };

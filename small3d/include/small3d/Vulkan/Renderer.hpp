@@ -60,6 +60,7 @@ namespace small3d
     VkDescriptorSetLayout descriptorSetLayout;
 
     VkPipeline graphicsPipeline;
+    VkPipeline orthographicPipeline;
     VkPipelineLayout pipelineLayout;
 
     VkCommandPool commandPool;
@@ -80,6 +81,7 @@ namespace small3d
     void createRenderPass();
     void createDescriptorSetLayout();
     void createGraphicsPipeline();
+    void createOrthographicPipeline();
     void createCommandPool();
     void createDepthResources();
     void createFrameBuffers();
