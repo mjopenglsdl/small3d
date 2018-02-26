@@ -119,31 +119,42 @@ namespace small3d
      * @brief Get the instance of the Renderer (the Renderer is a singleton).
      * @param windowTitle       The title of the game's window
      * @param width             The width of the window. If width and height are
-     *                          not set or set to 0, the game will run in full screen
-     *                          mode.
+     *                          not set or set to 0, the game will run in full 
+     *                          screen mode.
      * @param height            The height of the window
      * @param frustumScale	How much the frustum scales the items rendered
-     * @param zNear		Projection plane z coordinate (use positive value)
-     * @param zFar		Far end of frustum z coordinate (use positive value)
-     * @param zOffsetFromCamera	The position of the projection plane with regard to the camera.
-     * @param shadersPath	The path where the shaders will be stored, relative
-     * 				to the application's executing directory. It
-     * 				defaults to the path provided by the engine, but
-     * 				it can be changed, so as to accommodate for executables
-     * 				which are going to be using it. Even though the path to
-     * 				the folder can be changed, the folder structure within
-     * 				it and the names of the shaders must remain as provided.
-     * 				The shader code can be changed, provided that their inputs
-     * 				and outputs are maintained the same.
-     * @return                  The Renderer object. It can only be assigned to 
-     *                          a pointer by its address (Renderer *r = &Renderer::getInstance(...), 
-     *                          sicne declaring another Renderer variable and assigning to it would
-     *                          invoke the default constructor, which has been deleted.
+     * @param zNear		Projection plane z coordinate (use positive
+     *                          value)
+     * @param zFar		Far end of frustum z coordinate (use positive
+     *                          value)
+     * @param zOffsetFromCamera	The position of the projection plane with regard
+     *                          to the camera.
+     * @param shadersPath	The path where the shaders will be stored, 
+     *                          relative to the application's executing 
+     *                          directory. It defaults to the path provided by
+     *                          the engine, but	it can be changed, so as to 
+     *                          accommodate for executables which are going to
+     *                          be using it. Even though the path to the folder
+     *                          can be changed, the folder structure within it
+     *                          and the names of the shaders must remain as
+     *                          provided. The shader code can be changed,
+     *                          provided that their inputs and outputs are
+     *                          maintained the same.
+     * @return                  The Renderer object. It can only be assigned to
+     *                          a pointer by its address (Renderer *r = 
+     *                          &Renderer::getInstance(...), sicne declaring
+     *                          another Renderer variable and assigning to it
+     *                          would invoke the default constructor, which has
+     *                          been deleted.
      */
-    static Renderer& getInstance(const std::string windowTitle = "", const int width = 0, 
-      const int height = 0, const float frustumScale = 1.0f, const float zNear = 1.0f,
-      const float zFar = 24.0f, const float zOffsetFromCamera = -1.0f,
-			const std::string shadersPath = "resources/shaders/");
+    static Renderer& getInstance(const std::string windowTitle = "",
+				 const int width = 0, const int height = 0,
+				 const float frustumScale = 1.0f,
+				 const float zNear = 1.0f,
+				 const float zFar = 24.0f,
+				 const float zOffsetFromCamera = -1.0f,
+				 const std::string shadersPath =
+				 "resources/shaders/");
 
     /**
      * @brief Destructor
@@ -185,18 +196,21 @@ namespace small3d
 			 const glm::vec3 topLeft,
 			 const glm::vec3 bottomRight,
 			 const bool perspective = false,
-			 const glm::vec4 colour = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) const;
+			 const glm::vec4 colour =
+			 glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)) const;
 
     /**
-     * @brief Render a rectangle, using two of its corners that are diagonally opposed to each
-    *         other to position it.
+     * @brief Render a rectangle, using two of its corners that are diagonally
+     *        opposed to each other to position it.
      * @param colour The colour of the rectangle (RGBA)
      * @param topLeft Where to place the top left corner 
      * @param bottomRight Where to place the bottom right corner 
-     * @param perspective If set to true, use perspective rendering. Otherwise use orthographic rendering.
+     * @param perspective If set to true, use perspective rendering. 
+     *        Otherwise use orthographic rendering.
      */
-    void renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight, 
-      const bool perspective = false) const;
+    void renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft,
+			 const glm::vec3 bottomRight,
+			 const bool perspective = false) const;
     
     /**
      * @brief Render a Model
@@ -204,8 +218,10 @@ namespace small3d
      * @param offset The offset (position) where to draw the model
      * @param rotation Rotation (x, y, z)
      * @param colour The colour of the model
-     * @param textureName The name of the texture to attach to the model (optional). The texture has to have been generated already.
-     *                    If this is set, the colour parameter will be ignored
+     * @param textureName The name of the texture to attach to the model
+     *                    (optional). The texture has to have been generated
+     *                    already. If this is set, the colour parameter will
+     *                    be ignored.
      */
     void render(Model &model, const glm::vec3 offset, const glm::vec3 rotation, 
       const glm::vec4 colour, const std::string textureName="") const;
@@ -215,9 +231,10 @@ namespace small3d
      * @param model The model
      * @param offset The offset (position) where to draw the model
      * @param rotation Rotation (x, y, z)
-     * @param textureName The name of the texture to attach to the model. The texture has to have been generated already.
+     * @param textureName The name of the texture to attach to the model. The
+     *                    texture has to have been generated already.
      */
-    void render(Model &model, const glm::vec3 offset, const glm::vec3 rotation, 
+    void render(Model &model, const glm::vec3 offset, const glm::vec3 rotation,
       const std::string textureName) const;
 
     /**
@@ -230,7 +247,8 @@ namespace small3d
     /**
      * @brief Render a SceneObject
      * @param sceneObject The object
-     * @param textureName The name of the texture to attach to the object. The texture has to have been generated already. 
+     * @param textureName The name of the texture to attach to the object. The
+     *                    texture has to have been generated already. 
      */
     void render(SceneObject &sceneObject, const std::string textureName) const;
 
@@ -239,16 +257,20 @@ namespace small3d
      * @param text The text to be rendered
      * @param colour The colour in which the text will be rendered (r, g, b)
      * @param topLeft Where to place the top left corner of the text rectangle
-     * @param bottomRight Where to place the bottom right corner of the text rectangle
+     * @param bottomRight Where to place the bottom right corner of the text
+     *        rectangle
      * @param fontSize The size of the font which will be used
      * @param fontPath Path to the TrueType font (.ttf) which will be used
      */
-    void write(const std::string text, const glm::vec3 colour, const glm::vec2 topLeft, 
-      const glm::vec2 bottomRight, const int fontSize=48,
-      const std::string fontPath = "resources/fonts/CrusoeText/CrusoeText-Regular.ttf");
+    void write(const std::string text, const glm::vec3 colour,
+	       const glm::vec2 topLeft, const glm::vec2 bottomRight,
+	       const int fontSize=48,
+      const std::string fontPath =
+	       "resources/fonts/CrusoeText/CrusoeText-Regular.ttf");
 
     /**
-     * @brief Clear a Model from the GPU buffers (the object itself remains intact)
+     * @brief Clear a Model from the GPU buffers (the object itself remains
+     *        intact)
      * @param model The model
      */
     void clearBuffers(Model &model) const;

@@ -72,7 +72,8 @@ std::vector<const char*> getRequiredExtensions() {
 }
 
 VkResult CreateDebugReportCallbackEXT(VkInstance instance,
-  const VkDebugReportCallbackCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator,
+  const VkDebugReportCallbackCreateInfoEXT* pCreateInfo,
+				      const VkAllocationCallbacks* pAllocator,
   VkDebugReportCallbackEXT* pCallback) {
   auto func = (PFN_vkCreateDebugReportCallbackEXT)vkGetInstanceProcAddr(instance,
     "vkCreateDebugReportCallbackEXT");
@@ -84,10 +85,11 @@ VkResult CreateDebugReportCallbackEXT(VkInstance instance,
   }
 }
 
-void DestroyDebugReportCallbackEXT(VkInstance instance, VkDebugReportCallbackEXT callback,
-  const VkAllocationCallbacks* pAllocator) {
-  auto func = (PFN_vkDestroyDebugReportCallbackEXT)vkGetInstanceProcAddr(instance,
-								 "vkDestroyDebugReportCallbackEXT");
+void DestroyDebugReportCallbackEXT(VkInstance instance,
+				   VkDebugReportCallbackEXT callback,
+				   const VkAllocationCallbacks* pAllocator) {
+  auto func = (PFN_vkDestroyDebugReportCallbackEXT)
+    vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT");
   if (func != nullptr) {
     func(instance, callback, pAllocator);
   }
@@ -102,17 +104,20 @@ struct QueueFamilyIndices {
   }
 };
 
-QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR surface) {
+QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device,
+				     VkSurfaceKHR surface) {
   QueueFamilyIndices indices;
 
   uint32_t queueFamilyCount = 0;
   vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
   std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-  vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
+  vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount,
+					   queueFamilies.data());
 
   int i = 0;
   for (const auto& queueFamily : queueFamilies) {
-    if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+    if (queueFamily.queueCount > 0 &&
+	queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
       indices.graphicsFamily = i;
     }
 
@@ -138,12 +143,15 @@ const std::vector<const char*> deviceExtensions = {
 
 bool checkDeviceExtensionSupport(VkPhysicalDevice device) {
   uint32_t extensionCount;
-  vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+  vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount,
+				       nullptr);
 
   std::vector<VkExtensionProperties> availableExtensions(extensionCount);
-  vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+  vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount,
+				       availableExtensions.data());
 
-  std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
+  std::set<std::string> requiredExtensions(deviceExtensions.begin(),
+					   deviceExtensions.end());
 
   for (const auto& extension : availableExtensions) {
     requiredExtensions.erase(extension.extensionName);
@@ -221,14 +229,16 @@ bool isPhysicalDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface) {
     supportedFeatures.samplerAnisotropy;
 }
 
-VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats) {
-  if (availableFormats.size() == 1 && availableFormats[0].format == VK_FORMAT_UNDEFINED) {
+VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>&
+					   availableFormats) {
+  if (availableFormats.size() == 1 && availableFormats[0].format ==
+      VK_FORMAT_UNDEFINED) {
     return { VK_FORMAT_B8G8R8A8_UNORM, VK_COLORSPACE_SRGB_NONLINEAR_KHR };
   }
 
   for (const auto& availableFormat : availableFormats) {
-    if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM && availableFormat.colorSpace ==
-	VK_COLORSPACE_SRGB_NONLINEAR_KHR) {
+    if (availableFormat.format == VK_FORMAT_B8G8R8A8_UNORM &&
+	availableFormat.colorSpace == VK_COLORSPACE_SRGB_NONLINEAR_KHR) {
       return availableFormat;
     }
   }
@@ -236,7 +246,8 @@ VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>
   return availableFormats[0];
 }
 
-VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> availablePresentModes) {
+VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>
+				       availablePresentModes) {
 
   VkPresentModeKHR bestMode = VK_PRESENT_MODE_FIFO_KHR;
 
@@ -252,9 +263,10 @@ VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> avail
   return bestMode;
 }
 
-VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, GLFWwindow* window) {
+VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities,
+			    GLFWwindow* window) {
 
-  if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
+  if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()){
     return capabilities.currentExtent;
   }
   else {
@@ -264,9 +276,11 @@ VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, GLFWwi
     VkExtent2D actualExtent = { width, height };
 	
     actualExtent.width = std::max(capabilities.minImageExtent.width,
-				  std::min(capabilities.maxImageExtent.width, actualExtent.width));
+				  std::min(capabilities.maxImageExtent.width,
+					   actualExtent.width));
     actualExtent.height = std::max(capabilities.minImageExtent.height,
-				   std::min(capabilities.maxImageExtent.height, actualExtent.height));
+				   std::min(capabilities.maxImageExtent.height,
+					    actualExtent.height));
     return actualExtent;
   }
 
@@ -295,11 +309,13 @@ VkImageView createImageView(VkDevice device, VkImage image, VkFormat format,
 
 VkFormat findSupportedFormat(VkPhysicalDevice physicalDevice,
 			     const std::vector<VkFormat>& candidates,
-			     VkImageTiling tiling, VkFormatFeatureFlags features) {
+			     VkImageTiling tiling,
+			     VkFormatFeatureFlags features) {
   for (VkFormat format : candidates) {
     VkFormatProperties props;
     vkGetPhysicalDeviceFormatProperties(physicalDevice, format, &props);
-    if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features) {
+    if (tiling == VK_IMAGE_TILING_LINEAR &&
+	(props.linearTilingFeatures & features) == features) {
       return format;
     }
     else if (tiling == VK_IMAGE_TILING_OPTIMAL &&
@@ -312,7 +328,8 @@ VkFormat findSupportedFormat(VkPhysicalDevice physicalDevice,
 
 VkFormat findDepthFormat(VkPhysicalDevice physicalDevice) {
   return findSupportedFormat(physicalDevice,
-			     { VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT,
+			     { VK_FORMAT_D32_SFLOAT,
+				 VK_FORMAT_D32_SFLOAT_S8_UINT,
 				 VK_FORMAT_D24_UNORM_S8_UINT },
 			     VK_IMAGE_TILING_OPTIMAL,
 			     VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT
@@ -332,14 +349,16 @@ static std::vector<char> readFile(const std::string& filename) {
   return buffer;
 }
 
-VkShaderModule createShaderModule(VkDevice device, const std::vector<char>& code) {
+VkShaderModule createShaderModule(VkDevice device,
+				  const std::vector<char>& code) {
   VkShaderModuleCreateInfo createInfo = {};
   createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
   createInfo.codeSize = code.size();
   createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
 
   VkShaderModule shaderModule;
-  if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS) {
+  if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) !=
+      VK_SUCCESS) {
     throw std::runtime_error("failed to create shader module!");
       
   }
@@ -352,7 +371,8 @@ struct Vertex {
   glm::vec2 texCoord;
 
   bool operator==(const Vertex& other) const {
-    return pos == other.pos && color == other.color && texCoord == other.texCoord;
+    return pos == other.pos && color == other.color && texCoord ==
+      other.texCoord;
   }
 
   static VkVertexInputBindingDescription getBindingDescription() {
@@ -364,7 +384,8 @@ struct Vertex {
     return bindingDescription;
   }
 
-  static std::array<VkVertexInputAttributeDescription, 3> getAttributeDescriptions() {
+  static std::array<VkVertexInputAttributeDescription, 3>
+  getAttributeDescriptions() {
     std::array<VkVertexInputAttributeDescription, 3> attributeDescriptions = {};
 
     attributeDescriptions[0].binding = 0;
@@ -403,9 +424,12 @@ uint32_t findMemoryType(VkPhysicalDevice physicalDevice, uint32_t typeFilter,
 
 }
 
-void createImage(VkPhysicalDevice physicalDevice, VkDevice device, uint32_t width, uint32_t height,
-		 VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage,
-		 VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory) {
+void createImage(VkPhysicalDevice physicalDevice, VkDevice device,
+		 uint32_t width, uint32_t height,
+		 VkFormat format, VkImageTiling tiling,
+		 VkImageUsageFlags usage,
+		 VkMemoryPropertyFlags properties,
+		 VkImage& image, VkDeviceMemory& imageMemory) {
   VkImageCreateInfo imageInfo = {};
   imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
   imageInfo.imageType = VK_IMAGE_TYPE_2D;
@@ -431,7 +455,8 @@ void createImage(VkPhysicalDevice physicalDevice, VkDevice device, uint32_t widt
   VkMemoryAllocateInfo allocInfo = {};
   allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
   allocInfo.allocationSize = memRequirements.size;
-  allocInfo.memoryTypeIndex = findMemoryType(physicalDevice, memRequirements.memoryTypeBits,
+  allocInfo.memoryTypeIndex = findMemoryType(physicalDevice,
+					     memRequirements.memoryTypeBits,
 					     properties);
 
   if (vkAllocateMemory(device, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS) {
@@ -461,7 +486,8 @@ VkCommandBuffer beginSingleTimeCommands(VkDevice device, VkCommandPool commandPo
   return commandBuffer;
 }
 
-void endSingleTimeCommands(VkDevice device, VkQueue graphicsQueue, VkCommandPool commandPool,
+void endSingleTimeCommands(VkDevice device, VkQueue graphicsQueue,
+			   VkCommandPool commandPool,
 			   VkCommandBuffer commandBuffer) {
   vkEndCommandBuffer(commandBuffer);
 
@@ -478,11 +504,14 @@ void endSingleTimeCommands(VkDevice device, VkQueue graphicsQueue, VkCommandPool
 }
 
 bool hasStencilComponent(VkFormat format) {
-  return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
+  return format == VK_FORMAT_D32_SFLOAT_S8_UINT ||
+    format == VK_FORMAT_D24_UNORM_S8_UINT;
 }
 
-void transitionImageLayout(VkDevice device, VkQueue graphicsQueue, VkCommandPool commandPool,
-			   VkImage image, VkFormat format, VkImageLayout oldLayout,
+void transitionImageLayout(VkDevice device, VkQueue graphicsQueue,
+			   VkCommandPool commandPool,
+			   VkImage image, VkFormat format,
+			   VkImageLayout oldLayout,
 			   VkImageLayout newLayout) {
   VkCommandBuffer commandBuffer = beginSingleTimeCommands(device, commandPool);
 
@@ -539,7 +568,8 @@ void transitionImageLayout(VkDevice device, VkQueue graphicsQueue, VkCommandPool
 
   vkCmdPipelineBarrier(
 		       commandBuffer,
-		       VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT, VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+		       VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+		       VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
 		       0,
 		       0, nullptr,
 		       0, nullptr,
@@ -549,8 +579,9 @@ void transitionImageLayout(VkDevice device, VkQueue graphicsQueue, VkCommandPool
   endSingleTimeCommands(device, graphicsQueue, commandPool, commandBuffer);
 }
 
-void createBuffer(VkPhysicalDevice physicalDevice, VkDevice device, VkDeviceSize size,
-		  VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer,
+void createBuffer(VkPhysicalDevice physicalDevice, VkDevice device,
+		  VkDeviceSize size, VkBufferUsageFlags usage,
+		  VkMemoryPropertyFlags properties, VkBuffer& buffer,
 		  VkDeviceMemory& bufferMemory) {
   VkBufferCreateInfo bufferInfo = {};
   bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -568,7 +599,8 @@ void createBuffer(VkPhysicalDevice physicalDevice, VkDevice device, VkDeviceSize
   VkMemoryAllocateInfo allocInfo = {};
   allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
   allocInfo.allocationSize = memRequirements.size;
-  allocInfo.memoryTypeIndex = findMemoryType(physicalDevice, memRequirements.memoryTypeBits,
+  allocInfo.memoryTypeIndex = findMemoryType(physicalDevice,
+					     memRequirements.memoryTypeBits,
 					     properties);
 
   if (vkAllocateMemory(device, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
@@ -578,8 +610,10 @@ void createBuffer(VkPhysicalDevice physicalDevice, VkDevice device, VkDeviceSize
   vkBindBufferMemory(device, buffer, bufferMemory, 0);
 }
 
-void copyBufferToImage(VkDevice device, VkQueue graphicsQueue, VkCommandPool commandPool,
-		       VkBuffer buffer, VkImage image, uint32_t width, uint32_t height) {
+void copyBufferToImage(VkDevice device, VkQueue graphicsQueue,
+		       VkCommandPool commandPool,
+		       VkBuffer buffer, VkImage image,
+		       uint32_t width, uint32_t height) {
   VkCommandBuffer commandBuffer = beginSingleTimeCommands(device, commandPool);
 
   VkBufferImageCopy region = {};
@@ -651,12 +685,14 @@ namespace small3d {
     const char** glfwExtensions;
 
     glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-    LOGDEBUG("Number of Vulkan extensions required by GLFW: " + intToStr(glfwExtensionCount));
+    LOGDEBUG("Number of Vulkan extensions required by GLFW: " +
+	     intToStr(glfwExtensionCount));
 
     uint32_t extensionCount = 0;
     vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
     std::vector<VkExtensionProperties> instanceExtensions(extensionCount);
-    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, instanceExtensions.data());
+    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount,
+					   instanceExtensions.data());
 
     std::string extensions = "";
     for (const auto& extension : instanceExtensions) {
@@ -671,10 +707,13 @@ namespace small3d {
 	  extFound = true;
       }
       if (extFound) {
-	LOGDEBUG("Extension " + std::string(glfwExtensions[idx]) + " required by GLFW found.");
+	LOGDEBUG("Extension " + std::string(glfwExtensions[idx]) +
+		 " required by GLFW found.");
       }
       else {
-	throw std::runtime_error("Extension " + std::string(glfwExtensions[idx]) + " required by GLFW not found!");
+	throw std::runtime_error("Extension " +
+				 std::string(glfwExtensions[idx]) +
+				 " required by GLFW not found!");
       }
     }
 
@@ -740,10 +779,12 @@ namespace small3d {
   }
 
   void Renderer::createLogicalVulkanDevice() {
-    QueueFamilyIndices indices = findQueueFamilies(vulkanPhysicalDevice, vulkanWindowSurface);
+    QueueFamilyIndices indices = findQueueFamilies(vulkanPhysicalDevice,
+						   vulkanWindowSurface);
 
     std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-    std::set<int> uniqueQueueFamilies = { indices.graphicsFamily, indices.presentFamily };
+    std::set<int> uniqueQueueFamilies = { indices.graphicsFamily,
+					  indices.presentFamily };
 
     float queuePriority = 1.0f;
     for (int queueFamily : uniqueQueueFamilies) {
@@ -760,28 +801,34 @@ namespace small3d {
     deviceFeatures.samplerAnisotropy = VK_TRUE;
     VkDeviceCreateInfo createInfo = {};
     createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-    createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
+    createInfo.queueCreateInfoCount =
+      static_cast<uint32_t>(queueCreateInfos.size());
     createInfo.pQueueCreateInfos = queueCreateInfos.data();
     createInfo.pEnabledFeatures = &deviceFeatures;
     createInfo.enabledExtensionCount = 0;
 
     if (enableValidationLayers) {
-      createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+      createInfo.enabledLayerCount =
+	static_cast<uint32_t>(validationLayers.size());
       createInfo.ppEnabledLayerNames = validationLayers.data();
     }
     else {
       createInfo.enabledLayerCount = 0;
     }
 
-    createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
+    createInfo.enabledExtensionCount =
+      static_cast<uint32_t>(deviceExtensions.size());
     createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
-    if (vkCreateDevice(vulkanPhysicalDevice, &createInfo, nullptr, &vulkanDevice) != VK_SUCCESS) {
+    if (vkCreateDevice(vulkanPhysicalDevice, &createInfo,
+		       nullptr, &vulkanDevice) != VK_SUCCESS) {
       throw std::runtime_error("failed to create logical device!");
     }
 
-    vkGetDeviceQueue(vulkanDevice, indices.graphicsFamily, 0, &vulkanGraphicsQueue);
-    vkGetDeviceQueue(vulkanDevice, indices.presentFamily, 0, &vulkanPresentQueue);
+    vkGetDeviceQueue(vulkanDevice, indices.graphicsFamily, 0,
+		     &vulkanGraphicsQueue);
+    vkGetDeviceQueue(vulkanDevice, indices.presentFamily, 0,
+		     &vulkanPresentQueue);
 
   }
 
@@ -893,7 +940,8 @@ namespace small3d {
     depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
     depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
     depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-    depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+    depthAttachment.finalLayout =
+      VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
     VkAttachmentReference depthAttachmentRef = {};
     depthAttachmentRef.attachment = 1;
@@ -905,7 +953,8 @@ namespace small3d {
     subpass.pColorAttachments = &colorAttachmentRef;
     subpass.pDepthStencilAttachment = &depthAttachmentRef;
 
-    std::array<VkAttachmentDescription, 2> attachments = { colorAttachment, depthAttachment };
+    std::array<VkAttachmentDescription, 2> attachments = { colorAttachment,
+							   depthAttachment };
     VkRenderPassCreateInfo renderPassInfo = {};
     renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
     renderPassInfo.attachmentCount = static_cast<uint32_t>(attachments.size());
@@ -915,7 +964,8 @@ namespace small3d {
     renderPassInfo.dependencyCount = 1;
     renderPassInfo.pDependencies = &dependency;
 
-    if (vkCreateRenderPass(vulkanDevice, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS) {
+    if (vkCreateRenderPass(vulkanDevice, &renderPassInfo,
+			   nullptr, &renderPass) != VK_SUCCESS) {
       throw std::runtime_error("Failed to create render pass!");
     }
 
@@ -936,21 +986,24 @@ namespace small3d {
     samplerLayoutBinding.pImmutableSamplers = nullptr;
     samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
 
-    std::array<VkDescriptorSetLayoutBinding, 2> bindings = { uboLayoutBinding, samplerLayoutBinding };
+    std::array<VkDescriptorSetLayoutBinding, 2> bindings =
+      { uboLayoutBinding, samplerLayoutBinding };
     VkDescriptorSetLayoutCreateInfo layoutInfo = {};
     layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
     layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
     layoutInfo.pBindings = bindings.data();
 
-    if (vkCreateDescriptorSetLayout(vulkanDevice, &layoutInfo, nullptr, &descriptorSetLayout) !=
-	VK_SUCCESS) {
+    if (vkCreateDescriptorSetLayout(vulkanDevice, &layoutInfo, nullptr,
+				    &descriptorSetLayout) != VK_SUCCESS) {
       throw std::runtime_error("Failed to create descriptor set layout!");
     }
   }
 
   void Renderer::createGraphicsPipeline() {
-    auto vertShaderCode = readFile("resources/shaders/GLSL450/perspectiveMatrixLightedShader.spv");
-    auto fragShaderCode = readFile("resources/shaders/GLSL450/textureShader.spv");
+    auto vertShaderCode =
+      readFile("resources/shaders/GLSL450/perspectiveMatrixLightedShader.spv");
+    auto fragShaderCode =
+      readFile("resources/shaders/GLSL450/textureShader.spv");
     LOGDEBUG("Vertex shader size: " + intToStr(vertShaderCode.size()));
     LOGDEBUG("Fragment shader size: " + intToStr(fragShaderCode.size()));
 
@@ -972,10 +1025,12 @@ namespace small3d {
     fragShaderStageInfo.module = fragShaderModule;
     fragShaderStageInfo.pName = "main";
 
-    VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
+    VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo,
+						       fragShaderStageInfo };
 
     VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
-    vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+    vertexInputInfo.sType =
+      VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 
     auto bindingDescription = Vertex::getBindingDescription();
     auto attributeDescriptions = Vertex::getAttributeDescriptions();
@@ -987,7 +1042,8 @@ namespace small3d {
     vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
 
     VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
-    inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+    inputAssembly.sType =
+      VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
     inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
     inputAssembly.primitiveRestartEnable = VK_FALSE;
 
@@ -1011,7 +1067,8 @@ namespace small3d {
     viewportState.pScissors = &scissor;
 
     VkPipelineRasterizationStateCreateInfo rasterizer = {};
-    rasterizer.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
+    rasterizer.sType =
+      VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
     rasterizer.depthClampEnable = VK_FALSE;
     rasterizer.rasterizerDiscardEnable = VK_FALSE;
     rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
@@ -1024,7 +1081,8 @@ namespace small3d {
     rasterizer.depthBiasSlopeFactor = 0.0f; // optional
 
     VkPipelineMultisampleStateCreateInfo multisampling = {};
-    multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
+    multisampling.sType =
+      VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
     multisampling.sampleShadingEnable = VK_FALSE;
     multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
     multisampling.minSampleShading = 1.0f; // optional
@@ -1033,8 +1091,9 @@ namespace small3d {
     multisampling.alphaToOneEnable = VK_FALSE; // optional
 
     VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
-    colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
-      VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+    colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT |
+      VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
+      VK_COLOR_COMPONENT_A_BIT;
     colorBlendAttachment.blendEnable = VK_FALSE;
     colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_ONE; // optional
     colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO; // optional
@@ -1071,13 +1130,15 @@ namespace small3d {
     pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
     pipelineLayoutInfo.pPushConstantRanges = 0; // Optional
 
-    if (vkCreatePipelineLayout(vulkanDevice, &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
+    if (vkCreatePipelineLayout(vulkanDevice, &pipelineLayoutInfo,
+			       nullptr, &pipelineLayout) !=
 	VK_SUCCESS) {
       throw std::runtime_error("failed to create pipeline layout!");
     }
 
     VkPipelineDepthStencilStateCreateInfo depthStencil = {};
-    depthStencil.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
+    depthStencil.sType =
+      VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
     depthStencil.depthTestEnable = VK_TRUE;
     depthStencil.depthWriteEnable = VK_TRUE;
     depthStencil.depthCompareOp = VK_COMPARE_OP_LESS;
@@ -1089,7 +1150,8 @@ namespace small3d {
     depthStencil.back = {}; // Optional
 
     VkGraphicsPipelineCreateInfo pipelineInfo = {};
-    pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+    pipelineInfo.sType =
+      VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
     pipelineInfo.stageCount = 2;
     pipelineInfo.pStages = shaderStages;
     pipelineInfo.pVertexInputState = &vertexInputInfo;
@@ -1116,8 +1178,10 @@ namespace small3d {
   }
 
   void Renderer::createOrthographicPipeline() {
-    auto vertShaderCode = readFile("resources/shaders/GLSL450/simpleVertexShader.spv");
-    auto fragShaderCode = readFile("resources/shaders/GLSL450/simpleShader.spv");
+    auto vertShaderCode =
+      readFile("resources/shaders/GLSL450/simpleVertexShader.spv");
+    auto fragShaderCode =
+      readFile("resources/shaders/GLSL450/simpleShader.spv");
     LOGDEBUG("Vertex shader size: " + intToStr(vertShaderCode.size()));
     LOGDEBUG("Fragment shader size: " + intToStr(fragShaderCode.size()));
 
@@ -1139,10 +1203,12 @@ namespace small3d {
     fragShaderStageInfo.module = fragShaderModule;
     fragShaderStageInfo.pName = "main";
 
-    VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
+    VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo,
+						       fragShaderStageInfo };
 
     VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
-    vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+    vertexInputInfo.sType =
+      VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 
     auto bindingDescription = Vertex::getBindingDescription();
     auto attributeDescriptions = Vertex::getAttributeDescriptions();
@@ -1200,8 +1266,9 @@ namespace small3d {
     multisampling.alphaToOneEnable = VK_FALSE; // optional
 
     VkPipelineColorBlendAttachmentState colorBlendAttachment = {};
-    colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT |
-      VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+    colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT |
+      VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
+      VK_COLOR_COMPONENT_A_BIT;
     colorBlendAttachment.blendEnable = VK_FALSE;
     colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_ONE; // optional
     colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ZERO; // optional
@@ -1238,7 +1305,8 @@ namespace small3d {
     pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
     pipelineLayoutInfo.pPushConstantRanges = 0; // Optional
 
-    if (vkCreatePipelineLayout(vulkanDevice, &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
+    if (vkCreatePipelineLayout(vulkanDevice, &pipelineLayoutInfo,
+			       nullptr, &pipelineLayout) !=
 	VK_SUCCESS) {
       throw std::runtime_error("failed to create pipeline layout!");
     }
@@ -1358,7 +1426,8 @@ namespace small3d {
     samplerInfo.mipLodBias = 0.0f;
     samplerInfo.minLod = 0.0f;
     samplerInfo.maxLod = 0.0f;
-    if (vkCreateSampler(vulkanDevice, &samplerInfo, nullptr, &textureSampler) != VK_SUCCESS) {
+    if (vkCreateSampler(vulkanDevice, &samplerInfo, nullptr,
+			&textureSampler) != VK_SUCCESS) {
       throw std::runtime_error("Failed to create texture sampler!");
     }
 
@@ -1379,10 +1448,12 @@ namespace small3d {
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     
-    GLFWmonitor *monitor = nullptr; // If NOT null, a full-screen window will be created.
+    GLFWmonitor *monitor = nullptr; // If NOT null, a full-screen window will be
+                                    // created.
 
     if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
-      throw std::runtime_error("Screen width and height both have to be equal or not equal to zero at the same time.");
+      throw std::runtime_error("Screen width and height both have to "
+			       "be equal or not equal to zero at the same time.");
     }
     else if (width == 0) {
 
@@ -1392,13 +1463,15 @@ namespace small3d {
       finalWidth = mode->width;
       finalHeight = mode->height;
 
-      LOGINFO("Detected screen width " + intToStr(finalWidth) + " and height " + intToStr(finalHeight));
+      LOGINFO("Detected screen width " + intToStr(finalWidth) +
+	      " and height " + intToStr(finalHeight));
     }
     else {
       glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
     }
 
-    window = glfwCreateWindow(finalWidth, finalHeight, windowTitle.c_str(), monitor, nullptr);
+    window = glfwCreateWindow(finalWidth, finalHeight, windowTitle.c_str(),
+			      monitor, nullptr);
     if (!window) {
       throw std::runtime_error("Unable to create GLFW window");
     }
@@ -1420,11 +1493,14 @@ namespace small3d {
 
   }
   
-  Renderer& Renderer::getInstance(const std::string windowTitle, const int width, const int height,
-				  const float frustumScale, const float zNear, const float zFar,
-				  const float zOffsetFromCamera, const std::string shadersPath) {
-    static Renderer instance(windowTitle, width, height, frustumScale, zNear, zFar,
-			     zOffsetFromCamera, shadersPath);
+  Renderer& Renderer::getInstance(const std::string windowTitle,
+				  const int width, const int height,
+				  const float frustumScale,
+				  const float zNear, const float zFar,
+				  const float zOffsetFromCamera,
+				  const std::string shadersPath) {
+    static Renderer instance(windowTitle, width, height, frustumScale, zNear,
+			     zFar, zOffsetFromCamera, shadersPath);
     return instance;
   }
   
@@ -1435,7 +1511,8 @@ namespace small3d {
     vkDestroyCommandPool(vulkanDevice, commandPool, nullptr);
     vkDestroyDescriptorSetLayout(vulkanDevice, descriptorSetLayout, nullptr);
     vkDestroyDevice(vulkanDevice, nullptr);
-    DestroyDebugReportCallbackEXT(vulkanInstance, vulkanDebugReportCallback, nullptr);
+    DestroyDebugReportCallbackEXT(vulkanInstance, vulkanDebugReportCallback,
+				  nullptr);
     vkDestroySurfaceKHR(vulkanInstance, vulkanWindowSurface, nullptr);
     vkDestroyInstance(vulkanInstance, nullptr);
     glfwDestroyWindow(window);
@@ -1456,38 +1533,50 @@ namespace small3d {
   }
     
   void Renderer::renderRectangle(const std::string textureName,
-				 const glm::vec3 topLeft, const glm::vec3 bottomRight,
-				 const bool perspective, const glm::vec4 colour) const {
+				 const glm::vec3 topLeft,
+				 const glm::vec3 bottomRight,
+				 const bool perspective,
+				 const glm::vec4 colour) const {
 
   }
 
-  void Renderer::renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft,
+  void Renderer::renderRectangle(const glm::vec4 colour,
+				 const glm::vec3 topLeft,
 				 const glm::vec3 bottomRight,
 				 const bool perspective) const {
     this->renderRectangle("", topLeft, bottomRight, perspective, colour);
   }
   
-  void Renderer::render(Model &model, const glm::vec3 offset, const glm::vec3 rotation, 
-			const glm::vec4 colour, const std::string textureName) const {
+  void Renderer::render(Model &model, const glm::vec3 offset,
+			const glm::vec3 rotation, 
+			const glm::vec4 colour,
+			const std::string textureName) const {
     
   }
 
-  void Renderer::render(Model &model, const glm::vec3 offset, const glm::vec3 rotation,
+  void Renderer::render(Model &model, const glm::vec3 offset,
+			const glm::vec3 rotation,
 			const std::string textureName) const {
-    this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
+    this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
+		 textureName);
   }
 
   void Renderer::render(SceneObject &sceneObject, const glm::vec4 colour) const {
-    this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, colour, "");
+    this->render(sceneObject.getModel(), sceneObject.offset,
+		 sceneObject.rotation, colour, "");
   }
 
-  void Renderer::render(SceneObject &sceneObject, const std::string textureName) const {
-    this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation,
+  void Renderer::render(SceneObject &sceneObject,
+			const std::string textureName) const {
+    this->render(sceneObject.getModel(), sceneObject.offset,
+		 sceneObject.rotation,
 		 glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
   }
   
-  void Renderer::write(const std::string text, const glm::vec3 colour, const glm::vec2 topLeft, 
-		       const glm::vec2 bottomRight, const int fontSize, std::string fontPath) {
+  void Renderer::write(const std::string text, const glm::vec3 colour,
+		       const glm::vec2 topLeft, 
+		       const glm::vec2 bottomRight,
+		       const int fontSize, std::string fontPath) {
     
     
     /*std::string textureName = intToStr(fontSize) + "text_" + text;
