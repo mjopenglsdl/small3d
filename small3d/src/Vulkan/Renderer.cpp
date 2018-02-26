@@ -949,8 +949,8 @@ namespace small3d {
   }
 
   void Renderer::createGraphicsPipeline() {
-    auto vertShaderCode = readFile("resources/shaders/GLSL450/vert.spv");
-    auto fragShaderCode = readFile("resources/shaders/GLSL450/frag.spv");
+    auto vertShaderCode = readFile("resources/shaders/GLSL450/perspectiveMatrixLightedShader.spv");
+    auto fragShaderCode = readFile("resources/shaders/GLSL450/textureShader.spv");
     LOGDEBUG("Vertex shader size: " + intToStr(vertShaderCode.size()));
     LOGDEBUG("Fragment shader size: " + intToStr(fragShaderCode.size()));
 
@@ -1107,7 +1107,7 @@ namespace small3d {
     pipelineInfo.basePipelineIndex = -1; // Optional
 
     if (vkCreateGraphicsPipelines(vulkanDevice, VK_NULL_HANDLE, 1, &pipelineInfo,
-				  nullptr, &graphicsPipeline) != VK_SUCCESS) {
+				  nullptr, &orthographicPipeline) != VK_SUCCESS) {
       throw std::runtime_error("Failed to create graphics pipeline!");
     }
 
@@ -1116,8 +1116,8 @@ namespace small3d {
   }
 
   void Renderer::createOrthographicPipeline() {
-    auto vertShaderCode = readFile("resources/shaders/GLSL450/vert.spv");
-    auto fragShaderCode = readFile("resources/shaders/GLSL450/frag.spv");
+    auto vertShaderCode = readFile("resources/shaders/GLSL450/simpleVertexShader.spv");
+    auto fragShaderCode = readFile("resources/shaders/GLSL450/simpleShader.spv");
     LOGDEBUG("Vertex shader size: " + intToStr(vertShaderCode.size()));
     LOGDEBUG("Fragment shader size: " + intToStr(fragShaderCode.size()));
 
