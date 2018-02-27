@@ -15,8 +15,9 @@ class Small3dConan(ConanFile):
                "freetype/2.8.1@bincrafters/stable", "glm/0.9.8.5@g-truc/stable",\
                "vorbis/master@dimi309/stable",\
                "portaudio/v190600.20161030@bincrafters/stable"
-    license="https://github.com/dimi309/small3d/blob/master/LICENSE"
-    exports = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt", "LICENSE"]
+    license = "https://github.com/dimi309/small3d/blob/master/LICENSE"
+    exports_sources = ["small3d/*", "FindSMALL3D.cmake", "CMakeLists.txt"]
+    exports = ["LICENSE"]
 
     def configure(self):
         if self.settings.compiler == "gcc" and \
@@ -44,10 +45,7 @@ class Small3dConan(ConanFile):
         
         cmake = CMake(self)
         cmake.definitions['BUILD_FOR_VULKAN'] = self.options.vulkan
-        if self.options.development:
-            cmake.definitions['BUILD_TESTS'] = True
-        else:
-            cmake.definitions['BUILD_TESTS'] = False
+        cmake.definitions['BUILD_TESTS'] = self.options.development
         cmake.configure()
         cmake.build()
 
