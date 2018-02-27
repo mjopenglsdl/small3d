@@ -71,12 +71,16 @@ std::vector<const char*> getRequiredExtensions() {
   return extensions;
 }
 
-VkResult CreateDebugReportCallbackEXT(VkInstance instance,
-  const VkDebugReportCallbackCreateInfoEXT* pCreateInfo,
-				      const VkAllocationCallbacks* pAllocator,
-  VkDebugReportCallbackEXT* pCallback) {
-  auto func = (PFN_vkCreateDebugReportCallbackEXT)vkGetInstanceProcAddr(instance,
-    "vkCreateDebugReportCallbackEXT");
+VkResult
+CreateDebugReportCallbackEXT(VkInstance instance,
+			     const VkDebugReportCallbackCreateInfoEXT*
+			     pCreateInfo,
+			     const VkAllocationCallbacks* pAllocator,
+			     VkDebugReportCallbackEXT* pCallback) {
+  
+  auto func = (PFN_vkCreateDebugReportCallbackEXT)
+    vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT");
+  
   if (func != nullptr) {
     return func(instance, pCreateInfo, pAllocator, pCallback);
   }
