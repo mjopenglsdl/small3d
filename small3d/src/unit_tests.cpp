@@ -45,7 +45,8 @@ TEST(ImageTest, LoadImage) {
   
   Image image("resources/images/testImage.png");
   
-  cout << "Image width " << image.getWidth() << ", height " << image.getHeight() << endl;
+  cout << "Image width " << image.getWidth() << ", height " <<
+    image.getHeight() << endl;
   
   const float *imageData = image.getData();
   
@@ -128,7 +129,8 @@ TEST(BoundingBoxesTest, LoadBoundingBoxes) {
       bboxes.facesVertexIndexes[idx][3] << ", " << endl;
   }
   
-  EXPECT_FALSE(bboxes.collidesWith(glm::vec3(0.1f, 0.1f, 0.1f), glm::vec3(0.0f, 0.1f, 0.1f), 
+  EXPECT_FALSE(bboxes.collidesWith(glm::vec3(0.1f, 0.1f, 0.1f),
+				   glm::vec3(0.0f, 0.1f, 0.1f), 
 				   glm::vec3(0.0f, 0.0f, 0.0f)));
   
 }
@@ -142,7 +144,9 @@ TEST(RendererTest, StartAndUse) {
   SceneObject object("cube", "resources/models/Cube/CubeNoTexture.obj");
   object.offset = glm::vec3(0.0f, -1.0f, -8.0f);
   renderer->render(object, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-  renderer->renderRectangle(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), glm::vec3(-1.0f, 0.0f, 1.0f), glm::vec3(-0.5f, -0.5f, 1.0f), false);
+  renderer->renderRectangle(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+			    glm::vec3(-1.0f, 0.0f, 1.0f),
+			    glm::vec3(-0.5f, -0.5f, 1.0f), false);
 
   SceneObject object2("texutredCube", "resources/models/Cube/Cube.obj");
   object2.offset = glm::vec3(-2.0f, -1.0f, -7.0f);
@@ -153,7 +157,8 @@ TEST(RendererTest, StartAndUse) {
 
   renderer->render(object2, "cubeTexture");
 
-  renderer->write("small3d :)", glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(-1.0f, 0.0f), glm::vec2(0.5f, -0.5f));
+  renderer->write("small3d :)", glm::vec3(0.0f, 1.0f, 0.0f),
+		  glm::vec2(-1.0f, 0.0f), glm::vec2(0.5f, -0.5f));
   
   renderer->swapBuffers();
   

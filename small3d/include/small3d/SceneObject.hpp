@@ -24,10 +24,11 @@
 namespace small3d
 {
   /**
-   * @class	SceneObject
+   * @class SceneObject
    *
-   * @brief	An object that appears on the 3D scene. It is made up of one or more models (the latter for animation),
-   * 			together with information about positioning and rotation and collision detection functionality.
+   * @brief An object that appears on the 3D scene. It is made up of one or more
+   *        models (the latter for animation), together with information about
+   *        positioning and rotation and collision detection functionality.
    *
    */
 
@@ -49,14 +50,18 @@ namespace small3d
      *
      * @param name      The name of the object
      * @param modelPath The path to the file containing the object's model
-     * @param numFrames The number of frames, if the object is animated. A single animation
-     * 				          sequence is supported per object and the first frame is considered to
-     * 				          be the non-moving state.
-     * @param boundingBoxSetPath The path to the file containing the object's bounding box set. If no such
-     * 				                   path is given, the object cannot be checked for collision detection.
+     * @param numFrames The number of frames, if the object is animated. A
+     *                  single animation sequence is supported per object and
+     *                  the first frame is considered to be the non-moving state.
+     *
+     * @param boundingBoxSetPath The path to the file containing the object's
+     *                           bounding box set. If no such path is given, the
+     *                           object cannot be checked for collision
+     *                           detection.
      */
-    SceneObject(const std::string name, const std::string modelPath, const int numFrames = 1, 
-      const std::string boundingBoxSetPath = "");
+    SceneObject(const std::string name, const std::string modelPath,
+		const int numFrames = 1,
+		const std::string boundingBoxSetPath = "");
 
     /**
      * @brief Destructor
@@ -70,7 +75,8 @@ namespace small3d
     Model& getModel() ;
 
     /**
-     * Is this an animated or a static object (is it associated with more than one frames/models)?
+     * @brief Is this an animated or a static object (is it associated with more than
+     *        one frames/models)?
      * @return True if animated, False otherwise.
      */
     bool isAnimated() const;
@@ -108,7 +114,8 @@ namespace small3d
 
     /**
      * @brief Set the animation speed
-     * @param delay The delay between each animation frame, expressed in number of game frames
+     * @param delay The delay between each animation frame, expressed in number
+     *              of game frames
      */
     void setFrameDelay(const int delay);
 
@@ -118,17 +125,15 @@ namespace small3d
     void animate();
 
     /**
-     * @brief	The bounding boxes for the object, used for collision detection.
+     * @brief The bounding boxes for the object, used for collision detection.
      */
 
     BoundingBoxSet boundingBoxSet;
 
     /**
      * @brief Check if the object collides with a given point
-     *
-     * @param	point	The point
-     *
-     * @return	true if a collision is detected, false otherwise.
+     * @param  point The point
+     * @return True if a collision is detected, False otherwise.
      */
 
     bool collidesWith(const glm::vec3 point) const;
@@ -136,10 +141,8 @@ namespace small3d
     /**
      *
      * @brief	Check if the object collides with another given object.
-     *
-     * @param	otherObject	The other object.
-     *
-     * @return	true if there is a collision, false if not.
+     * @param	otherObject The other object.
+     * @return	True if there is a collision, False if not.
      */
 
     bool collidesWith(SceneObject otherObject) const;

@@ -105,7 +105,8 @@ namespace small3d {
 
     if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA) {
       throw std::runtime_error(
-        "Image format not recognised. Only RGB / RGBA png images are supported.");
+        "Image format not recognised. Only RGB / RGBA png images are "
+	"supported.");
     }
 
     unsigned int numComponents = colorType == PNG_COLOR_TYPE_RGB ? 3 : 4;
