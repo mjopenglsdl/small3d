@@ -48,7 +48,6 @@ namespace small3d {
 
   public:
     
-#ifndef WITH_VULKAN
     /**
      * @brief OpenGL position buffer object id. It is suggested not to manipulate
      *        this directly.
@@ -72,7 +71,6 @@ namespace small3d {
      *        directly.
      */
     GLuint uvBufferObjectId = 0;
-#endif
     
     /**
      * @brief The vertex data. This is an array, which is to be treated as a 4

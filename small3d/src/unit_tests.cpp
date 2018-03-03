@@ -8,12 +8,7 @@
 
 #include <gtest/gtest.h>
 
-#ifdef WITH_VULKAN
-#include <small3d/Vulkan/Renderer.hpp>
-#else
-#include <small3d/OpenGL/Renderer.hpp>
-#endif
-
+#include <small3d/Renderer.hpp>
 #include <small3d/Logger.hpp>
 #include <small3d/Image.hpp>
 #include <small3d/Model.hpp>
@@ -21,7 +16,8 @@
 #include <small3d/GetTokens.hpp>
 #include <small3d/Sound.hpp>
 #include <small3d/BoundingBoxSet.hpp>
-#include <GLFW/glfw3.h>
+
+
 
 
 using namespace small3d;
