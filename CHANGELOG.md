@@ -3,6 +3,12 @@ small3d changelog
 
 [small3d](https://github.com/dimi309/small3d)'s latest changes are listed below. The source code is always available on [GitHub](https://github.com/dimi309/small3d).
 
+v1.3.2
+------
+
+- Some formatting and minor improvements.
+- Removed Vulkan support. This project is fine without Vulkan for now and there's no point in leaving a half-finished job in the codebase.
+
 v1.3.1
 ------
 

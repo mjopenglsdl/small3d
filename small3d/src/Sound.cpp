@@ -49,15 +49,20 @@ namespace small3d {
     }
     
     SAMPLE_DATATYPE *out = static_cast<SAMPLE_DATATYPE *>(outputBuffer);
-    unsigned long startPos = soundData->currentFrame * static_cast<unsigned long>(soundData->channels);
-    unsigned long endPos = startPos + framesPerBuffer * static_cast<unsigned long>(soundData->channels);
+    unsigned long startPos = soundData->currentFrame *
+      static_cast<unsigned long>(soundData->channels);
+    unsigned long endPos = startPos + framesPerBuffer *
+      static_cast<unsigned long>(soundData->channels);
     
-    if (endPos > static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels) {
-      endPos = static_cast<unsigned long>(soundData->samples) * WORD_SIZE * soundData->channels;
+    if (endPos > static_cast<unsigned long>(soundData->samples) * WORD_SIZE *
+	soundData->channels) {
+      endPos = static_cast<unsigned long>(soundData->samples) * WORD_SIZE *
+	soundData->channels;
       result = paAbort;
     }
     
-    for (unsigned long i = startPos; i < endPos; i += static_cast<unsigned long>(soundData->channels)) {
+    for (unsigned long i = startPos; i < endPos;
+	 i += static_cast<unsigned long>(soundData->channels)) {
       for (int c = 0; c < soundData->channels; ++c) {
         *out++ = (reinterpret_cast<short *>(soundData->data.data()))[i + c];
       }
@@ -136,7 +141,8 @@ namespace small3d {
       this->soundData.rate = (int) vi->rate;
       this->soundData.samples = static_cast<long>(ov_pcm_total(&vorbisFile, -1));
       this->soundData.size = soundData.channels * soundData.samples * WORD_SIZE;
-      this->soundData.duration = static_cast<double>(soundData.samples) / static_cast<double>(soundData.rate);
+      this->soundData.duration = static_cast<double>(soundData.samples) /
+	static_cast<double>(soundData.rate);
       
       char pcmout[4096];
       int current_section;
@@ -144,14 +150,16 @@ namespace small3d {
       long pos = 0;
       
       do {
-        ret = ov_read(&vorbisFile, pcmout, sizeof(pcmout), 0, WORD_SIZE, 1, &current_section);
+        ret = ov_read(&vorbisFile, pcmout, sizeof(pcmout), 0, WORD_SIZE, 1,
+		      &current_section);
         if (ret < 0) {
           
           LOGERROR("Error in sound stream.");
           
         } else if (ret > 0) {
           
-          this->soundData.data.insert(soundData.data.end(), &pcmout[0], &pcmout[ret]);
+          this->soundData.data.insert(soundData.data.end(), &pcmout[0],
+				      &pcmout[ret]);
           
           pos += ret;
           
@@ -164,11 +172,15 @@ namespace small3d {
       
       char soundInfo[100];
 #if defined(_WIN32) && !defined(__MINGW32__)
-      sprintf_s(soundInfo, "Loaded sound - channels %d - rate %d - samples %ld - size in bytes %ld",
-                this->soundData.channels, this->soundData.rate, this->soundData.samples, this->soundData.size);
+      sprintf_s(soundInfo, "Loaded sound - channels %d - rate %d - samples %ld "
+		"- size in bytes %ld", this->soundData.channels,
+		this->soundData.rate, this->soundData.samples,
+		this->soundData.size);
 #else
-      sprintf(soundInfo, "Loaded sound - channels %d - rate %d - samples %ld - size in bytes %ld",
-              this->soundData.channels, this->soundData.rate, this->soundData.samples, this->soundData.size);
+      sprintf(soundInfo, "Loaded sound - channels %d - rate %d - samples %ld "
+	      "- size in bytes %ld", this->soundData.channels,
+	      this->soundData.rate, this->soundData.samples,
+	      this->soundData.size);
 #endif
       LOGDEBUG(std::string(soundInfo));
     }
@@ -197,7 +209,8 @@ namespace small3d {
 			  1024, paNoFlag,
 			  Sound::audioCallback, &this->soundData);
     if (error != paNoError) {
-      throw std::runtime_error("Failed to open PortAudio stream: " + std::string(Pa_GetErrorText(error)));
+      throw std::runtime_error("Failed to open PortAudio stream: " +
+			       std::string(Pa_GetErrorText(error)));
     }
   }
   
@@ -210,7 +223,8 @@ namespace small3d {
       if (Pa_IsStreamStopped(stream) == 0) {
 	error = Pa_AbortStream(stream);
 	if (error != paNoError) {
-	  throw std::runtime_error("Failed to abort stream on play: " + std::string(Pa_GetErrorText(error)));
+	  throw std::runtime_error("Failed to abort stream on play: " +
+				   std::string(Pa_GetErrorText(error)));
 	}
       }
 
@@ -220,7 +234,8 @@ namespace small3d {
         
       error = Pa_StartStream(stream);
       if (error != paNoError) {
-	throw std::runtime_error("Failed to start stream: " + std::string(Pa_GetErrorText(error)));
+	throw std::runtime_error("Failed to start stream: " +
+				 std::string(Pa_GetErrorText(error)));
       }
         
     }

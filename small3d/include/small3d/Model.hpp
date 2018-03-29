@@ -38,40 +38,44 @@ namespace small3d {
     void loadNormalsData();
     void loadTextureCoordsData();
 
-    // Make sure that no texture coordinate information is lost when the data buffers get created (vertexData,
-    // indexData, normalsData and textureCoordsData) by realigning the data vectors, in order to ensure unique
-    // vertex - texture coordinates pairs
+    // Make sure that no texture coordinate information is lost when the data
+    // buffers get created (vertexData, indexData, normalsData and
+    // textureCoordsData) by realigning the data vectors, in order to ensure
+    // unique vertex - texture coordinates pairs.
     void correctDataVectors();
 
     void clear();
 
   public:
     
-#ifndef WITH_VULKAN
     /**
-     * @brief OpenGL position buffer object id. It is suggested not to manipulate this directly.
+     * @brief OpenGL position buffer object id. It is suggested not to manipulate
+     *        this directly.
      */
     GLuint positionBufferObjectId = 0;
 
     /**
-     * @brief OpenGL index buffer object id. It is suggested not to manipulate this directly.
+     * @brief OpenGL index buffer object id. It is suggested not to manipulate
+     *        this directly.
      */
     GLuint indexBufferObjectId = 0;
 
     /**
-     * @brief OpenGL normals buffer object id. It is suggested not to manipulate this directly.
+     * @brief OpenGL normals buffer object id. It is suggested not to manipulate
+     *        this directly.
      */
     GLuint normalsBufferObjectId = 0;
 
     /**
-     * @brief OpenGL UV buffer object id. It is suggested not to manipulate this directly.
+     * @brief OpenGL UV buffer object id. It is suggested not to manipulate this
+     *        directly.
      */
     GLuint uvBufferObjectId = 0;
-#endif
     
     /**
-     * @brief The vertex data. This is an array, which is to be treated as a 4 column table, holding
-     * the x, y, z values in each column. The fourth column is there to assist in matrix operations.
+     * @brief The vertex data. This is an array, which is to be treated as a 4
+     *        column table, holding the x, y, z values in each column. The
+     *        fourth column is there to assist in matrix operations.
      */
     std::vector<float> vertexData;
 
@@ -81,8 +85,8 @@ namespace small3d {
     int vertexDataByteSize;
 
     /**
-     * @brief 3 column table. Each element refers to a "row" in the vertex data table. Each "row"
-     * in the index data table forms a triangle.
+     * @brief 3 column table. Each element refers to a "row" in the vertex data
+     *        table. Each "row" in the index data table forms a triangle.
      *
      */
     std::vector<unsigned int> indexData;
@@ -93,9 +97,10 @@ namespace small3d {
     int indexDataByteSize;
 
     /**
-     * @brief Array, to be treated as a 3 column table. Each "row" contains the x, y and z components
-     * of the vector representing the normal of a vertex. The position of the "row" in the array
-     * is the same as the position of the corresponding vertex "row" in the vertexData array.
+     * @brief Array, to be treated as a 3 column table. Each "row" contains the
+     *        x, y and z components of the vector representing the normal of a
+     *        vertex. The position of the "row" in the array is the same as the
+     *        position of the corresponding vertex "row" in the vertexData array.
      */
     std::vector<float> normalsData;
 
@@ -105,9 +110,10 @@ namespace small3d {
     int normalsDataByteSize;
 
     /**
-     * @brief Array, to be treated as a 2 column table. Each "row" contains the x and y components
-     * of the pixel coordinates on the model's texture image for the vertex in the corresponding
-     * "row" of the vertex data "table"
+     * @brief Array, to be treated as a 2 column table. Each "row" contains the
+     *        x and y components of the pixel coordinates on the model's texture
+     *        image for the vertex in the corresponding "row" of the vertex data
+     *        "table"
      */
     std::vector<float> textureCoordsData;
 
@@ -118,7 +124,8 @@ namespace small3d {
 
     /**
      * @brief constructor
-     * @param fileLocation Location of the Wavefront file from which to load the model.
+     * @param fileLocation Location of the Wavefront file from which to load the
+     *                     model.
      */
     Model(const std::string fileLocation);
 

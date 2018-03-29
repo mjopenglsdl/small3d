@@ -2,8 +2,8 @@
  * @file Sound.hpp
  * @brief Header of the Sound class
  *
- * Created on: 2017-07-17
- *     Author: Dimitri Kourkoulis
+ *  Created on: 2017-07-17
+ *      Author: Dimitri Kourkoulis
  *     License: BSD 3-Clause License (see LICENSE file)
  */
 

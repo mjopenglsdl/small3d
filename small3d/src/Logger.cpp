@@ -82,7 +82,8 @@ namespace small3d {
       break;
     }
 
-    *logStream << dateTimeOstringstream.str().c_str() << " - " << indicator << ": " << message.c_str() << std::endl;
+    *logStream << dateTimeOstringstream.str().c_str() << " - " << indicator
+	       << ": " << message.c_str() << std::endl;
   }
 
   void initLogger() {

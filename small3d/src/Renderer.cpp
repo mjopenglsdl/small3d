@@ -23,7 +23,8 @@ namespace small3d {
   
   static std::string openglErrorToString(GLenum error);
 
-  std::string Renderer::loadShaderFromFile(const std::string fileLocation) const {
+  std::string Renderer::loadShaderFromFile(const std::string fileLocation)
+    const {
     initLogger();
     std::string shaderSource = "";
     std::ifstream file(fileLocation.c_str());
@@ -36,11 +37,13 @@ namespace small3d {
     return shaderSource;
   }
 
-  GLuint Renderer::compileShader(const std::string shaderSourceFile, const GLenum shaderType) const {
+  GLuint Renderer::compileShader(const std::string shaderSourceFile,
+				 const GLenum shaderType) const {
     GLuint shader = glCreateShader(shaderType);
     std::string shaderSource = this->loadShaderFromFile(shaderSourceFile);
     if (shaderSource.length() == 0) {
-      throw std::runtime_error("Shader source file '" + shaderSourceFile + "' is empty or not found.");
+      throw std::runtime_error("Shader source file '" + shaderSourceFile +
+			       "' is empty or not found.");
     }
     const char *shaderSourceChars = shaderSource.c_str();
     glShaderSource(shader, 1, &shaderSourceChars, NULL);
@@ -107,14 +110,16 @@ namespace small3d {
       throw std::runtime_error("Error initialising GLEW");
     }
     else {
-      std::string glewVersion = reinterpret_cast<char *>(const_cast<GLubyte*>(glewGetString(GLEW_VERSION)));
+      std::string glewVersion = reinterpret_cast<char *>
+	(const_cast<GLubyte*>(glewGetString(GLEW_VERSION)));
       LOGINFO("Using GLEW version " + glewVersion);
     }
 
     checkForOpenGLErrors("initialising GLEW", false);
 
     LOGDEBUG("OpenGL version supported by machine: " +
-      std::string(reinterpret_cast<char *>(const_cast<GLubyte*>(glGetString(GL_VERSION)))));
+      std::string(reinterpret_cast<char *>
+		  (const_cast<GLubyte*>(glGetString(GL_VERSION)))));
 
     if (glewIsSupported("GL_VERSION_3_3")) {
       LOGINFO("Using OpenGL 3.3");
@@ -130,7 +135,8 @@ namespace small3d {
     }
   }
 
-  void Renderer::checkForOpenGLErrors(const std::string when, const bool abort) const {
+  void Renderer::checkForOpenGLErrors(const std::string when, const bool abort)
+    const {
     GLenum errorCode = glGetError();
     if (errorCode != GL_NO_ERROR) {
       LOGERROR("OpenGL error while " + when);
@@ -145,7 +151,8 @@ namespace small3d {
     }
   }
 
-  void Renderer::positionNextObject(const glm::vec3 offset, const glm::vec3 rotation) const {
+  void Renderer::positionNextObject(const glm::vec3 offset,
+				    const glm::vec3 rotation) const {
     // Rotation
 
     GLint xRotationMatrixUniform = glGetUniformLocation(perspectiveProgram,
@@ -193,7 +200,8 @@ namespace small3d {
 				 glm::vec3(0.0f, 0.0f, -1.0f))));
 
     // Camera position
-    GLint cameraPositionUniform = glGetUniformLocation(perspectiveProgram, "cameraPosition");
+    GLint cameraPositionUniform = glGetUniformLocation(perspectiveProgram,
+						       "cameraPosition");
     glUniform3fv(cameraPositionUniform, 1, glm::value_ptr(cameraPosition));
   }
 
@@ -206,8 +214,9 @@ namespace small3d {
     return handle;
   }
 
-  GLuint Renderer::generateTexture(const std::string name, const float* data, const unsigned long width,
-    const unsigned long height) {
+  GLuint Renderer::generateTexture(const std::string name, const float* data,
+				   const unsigned long width,
+				   const unsigned long height) {
 
     GLuint textureHandle;
     glGenTextures(1, &textureHandle);
@@ -225,10 +234,11 @@ namespace small3d {
     return textureHandle;
   }
 
-  void Renderer::init(const int width, const int height, const std::string windowTitle,
-    const float frustumScale, const float zNear,
-    const float zFar, const float zOffsetFromCamera,
-    const std::string shadersPath) {
+  void Renderer::init(const int width, const int height,
+		      const std::string windowTitle,
+		      const float frustumScale, const float zNear,
+		      const float zFar, const float zOffsetFromCamera,
+		      const std::string shadersPath) {
 
     int screenWidth = width;
     int screenHeight = height;
@@ -248,20 +258,23 @@ namespace small3d {
     std::string simpleFragmentShaderPath;
 
     if (isOpenGL33Supported) {
-      vertexShaderPath = shadersPath + "GLSL330/perspectiveMatrixLightedShader.vert";
+      vertexShaderPath = shadersPath +
+	"GLSL330/perspectiveMatrixLightedShader.vert";
       fragmentShaderPath = shadersPath + "GLSL330/textureShader.frag";
       simpleVertexShaderPath = shadersPath + "GLSL330/simpleShader.vert";
       simpleFragmentShaderPath = shadersPath + "GLSL330/simpleShader.frag";
 
     }
     else {
-      vertexShaderPath = shadersPath + "GLSL120/perspectiveMatrixLightedShader.vert";
+      vertexShaderPath = shadersPath +
+	"GLSL120/perspectiveMatrixLightedShader.vert";
       fragmentShaderPath = shadersPath + "GLSL120/textureShader.frag";
       simpleVertexShaderPath = shadersPath + "GLSL120/simpleShader.vert";
       simpleFragmentShaderPath = shadersPath + "GLSL120/simpleShader.frag";
     }
 
-    glViewport(0, 0, static_cast<GLsizei>(screenWidth), static_cast<GLsizei>(screenHeight));
+    glViewport(0, 0, static_cast<GLsizei>(screenWidth),
+	       static_cast<GLsizei>(screenHeight));
 
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
@@ -272,7 +285,8 @@ namespace small3d {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     GLuint vertexShader = compileShader(vertexShaderPath, GL_VERTEX_SHADER);
-    GLuint fragmentShader = compileShader(fragmentShaderPath, GL_FRAGMENT_SHADER);
+    GLuint fragmentShader = compileShader(fragmentShaderPath,
+					  GL_FRAGMENT_SHADER);
 
     perspectiveProgram = glCreateProgram();
     glAttachShader(perspectiveProgram, vertexShader);
@@ -283,7 +297,8 @@ namespace small3d {
     GLint status;
     glGetProgramiv(perspectiveProgram, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-      throw std::runtime_error("Failed to link program:\n" + this->getProgramInfoLog(perspectiveProgram));
+      throw std::runtime_error("Failed to link program:\n" +
+			       this->getProgramInfoLog(perspectiveProgram));
     }
     else {
       LOGDEBUG("Linked main rendering program successfully");
@@ -335,7 +350,8 @@ namespace small3d {
 
     glGetProgramiv(orthographicProgram, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-      throw std::runtime_error("Failed to link program:\n" + this->getProgramInfoLog(orthographicProgram));
+      throw std::runtime_error("Failed to link program:\n" +
+			       this->getProgramInfoLog(orthographicProgram));
     }
     else {
       LOGDEBUG("Linked orthographic rendering program successfully");
@@ -347,7 +363,8 @@ namespace small3d {
     glUseProgram(0);
   }
 
-  void Renderer::initWindow(int &width, int &height, const std::string windowTitle) {
+  void Renderer::initWindow(int &width, int &height,
+			    const std::string windowTitle) {
 
     glfwSetErrorCallback(error_callback);
 
@@ -364,10 +381,12 @@ namespace small3d {
 
     bool fullScreen = false;
 
-    GLFWmonitor *monitor = nullptr; // If NOT null, a full-screen window will be created.
+    GLFWmonitor *monitor = nullptr; // If NOT null, a full-screen window will
+                                    // be created.
 
     if ((width == 0 && height != 0) || (width != 0 && height == 0)) {
-      throw std::runtime_error("Screen width and height both have to be equal or not equal to zero at the same time.");
+      throw std::runtime_error("Screen width and height both have to be equal "
+			       "or not equal to zero at the same time.");
     }
     else if (width == 0) {
 
@@ -379,10 +398,12 @@ namespace small3d {
       width = mode->width;
       height = mode->height;
 
-      LOGINFO("Detected screen width " + intToStr(width) + " and height " + intToStr(height));
+      LOGINFO("Detected screen width " + intToStr(width) + " and height " +
+	      intToStr(height));
     }
 
-    window = glfwCreateWindow(width, height, windowTitle.c_str(), monitor, nullptr);
+    window = glfwCreateWindow(width, height, windowTitle.c_str(), monitor,
+			      nullptr);
     if (!window) {
       throw std::runtime_error("Unable to create GLFW window");
     }
@@ -391,9 +412,10 @@ namespace small3d {
 
   }
   
-  Renderer::Renderer(const std::string windowTitle, const int width, const int height,
-                     const float frustumScale , const float zNear,
-                     const float zFar, const float zOffsetFromCamera,
+  Renderer::Renderer(const std::string windowTitle, const int width,
+		     const int height, const float frustumScale,
+		     const float zNear, const float zFar,
+		     const float zOffsetFromCamera,
                      const std::string shadersPath) {
     
     isOpenGL33Supported = false;
@@ -406,7 +428,8 @@ namespace small3d {
     cameraRotation = glm::vec3(0, 0, 0);
     lightIntensity = 1.0f;
     
-    init(width, height, windowTitle, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
+    init(width, height, windowTitle, frustumScale, zNear, zFar,
+	 zOffsetFromCamera, shadersPath);
     
     FT_Error ftError = FT_Init_FreeType( &library );
     
@@ -424,10 +447,14 @@ namespace small3d {
 
   }
   
-  Renderer& Renderer::getInstance(const std::string windowTitle, const int width, const int height,
-				  const float frustumScale, const float zNear, const float zFar, const float zOffsetFromCamera, 
+  Renderer& Renderer::getInstance(const std::string windowTitle, const int width,
+				  const int height, const float frustumScale,
+				  const float zNear, const float zFar,
+				  const float zOffsetFromCamera, 
 				  const std::string shadersPath) {
-    static Renderer instance(windowTitle, width, height, frustumScale, zNear, zFar, zOffsetFromCamera, shadersPath);
+    
+    static Renderer instance(windowTitle, width, height, frustumScale, zNear,
+			     zFar, zOffsetFromCamera, shadersPath);
     return instance;
   }
   
@@ -471,7 +498,8 @@ namespace small3d {
   }
  
   void Renderer::generateTexture(const std::string name, const Image image) {
-    this->generateTexture(name, image.getData(), image.getWidth(), image.getHeight());
+    this->generateTexture(name, image.getData(), image.getWidth(),
+			  image.getHeight());
   }
   
   void Renderer::deleteTexture(const std::string name) {
@@ -483,8 +511,11 @@ namespace small3d {
     }
   }
   
-  void Renderer::renderRectangle(const std::string textureName, const glm::vec3 topLeft, const glm::vec3 bottomRight,
-				 const bool perspective, const glm::vec4 colour) const {
+  void Renderer::renderRectangle(const std::string textureName,
+				 const glm::vec3 topLeft,
+				 const glm::vec3 bottomRight,
+				 const bool perspective,
+				 const glm::vec4 colour) const {
     
     float vertices[16] = {
       bottomRight.x, bottomRight.y, bottomRight.z, 1.0f,
@@ -516,7 +547,8 @@ namespace small3d {
     
     glGenBuffers(1, &indexBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 6, vertexIndexes, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 6,
+		 vertexIndexes, GL_STATIC_DRAW);
     
     GLuint coordBuffer = 0;
 
@@ -525,7 +557,8 @@ namespace small3d {
       GLuint textureHandle = getTextureHandle(textureName);
 
       if (textureHandle == 0) {
-        throw std::runtime_error("Texture " + textureName + "has not been generated");
+        throw std::runtime_error("Texture " + textureName +
+				 "has not been generated");
       }
 
       glBindTexture(GL_TEXTURE_2D, textureHandle);
@@ -548,7 +581,9 @@ namespace small3d {
     
     }
     
-    GLint colourUniform = glGetUniformLocation(perspective ? perspectiveProgram : orthographicProgram, "colour");
+    GLint colourUniform =
+      glGetUniformLocation( perspective ? perspectiveProgram :
+			    orthographicProgram, "colour");
     glUniform4fv(colourUniform, 1, glm::value_ptr(colour));
 
     if (perspective) {
@@ -559,10 +594,12 @@ namespace small3d {
       glUniform3fv(lightDirectionUniform, 1,
                    glm::value_ptr(lightDirection));
       
-      GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
+      GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram,
+							 "lightIntensity");
       glUniform1f(lightIntensityUniform, lightIntensity);
       
-      positionNextObject(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+      positionNextObject(glm::vec3(0.0f, 0.0f, 0.0f),
+			 glm::vec3(0.0f, 0.0f, 0.0f));
       positionCamera();
     }
     
@@ -585,13 +622,17 @@ namespace small3d {
     checkForOpenGLErrors("rendering rectangle", true);
   }
 
-  void Renderer::renderRectangle(const glm::vec4 colour, const glm::vec3 topLeft, const glm::vec3 bottomRight,
+  void Renderer::renderRectangle(const glm::vec4 colour,
+				 const glm::vec3 topLeft,
+				 const glm::vec3 bottomRight,
 				 const bool perspective) const {
     this->renderRectangle("", topLeft, bottomRight, perspective, colour);
   }
   
-  void Renderer::render(Model &model, const glm::vec3 offset, const glm::vec3 rotation, 
-			const glm::vec4 colour, const std::string textureName) const {
+  void Renderer::render(Model &model, const glm::vec3 offset,
+			const glm::vec3 rotation, 
+			const glm::vec4 colour,
+			const std::string textureName) const {
     
     glUseProgram(perspectiveProgram);
     
@@ -643,7 +684,8 @@ namespace small3d {
     if (textureName != "") {
       
       // "Disable" colour since there is a texture
-      glUniform4fv(colourUniform, 1, glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
+      glUniform4fv(colourUniform, 1,
+		   glm::value_ptr(glm::vec4(0.0f, 0.0f, 0.0f, 0.0f)));
       
       GLuint textureId = this->getTextureHandle(textureName);
       
@@ -675,7 +717,8 @@ namespace small3d {
     glUniform3fv(lightDirectionUniform, 1,
                  glm::value_ptr(lightDirection));
     
-    GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram, "lightIntensity");
+    GLint lightIntensityUniform = glGetUniformLocation(perspectiveProgram,
+						       "lightIntensity");
     glUniform1f(lightIntensityUniform, lightIntensity);
     
     positionNextObject(offset, rotation);
@@ -706,21 +749,30 @@ namespace small3d {
     
   }
 
-  void Renderer::render(Model &model, const glm::vec3 offset, const glm::vec3 rotation,
+  void Renderer::render(Model &model, const glm::vec3 offset,
+			const glm::vec3 rotation,
 			const std::string textureName) const {
-    this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
+    this->render(model, offset, rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
+		 textureName);
   }
 
   void Renderer::render(SceneObject &sceneObject, const glm::vec4 colour) const {
-    this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, colour, "");
+    this->render(sceneObject.getModel(), sceneObject.offset,
+		 sceneObject.rotation, colour, "");
   }
 
-  void Renderer::render(SceneObject &sceneObject, const std::string textureName) const {
-    this->render(sceneObject.getModel(), sceneObject.offset, sceneObject.rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), textureName);
+  void Renderer::render(SceneObject &sceneObject,
+			const std::string textureName) const {
+    this->render(sceneObject.getModel(), sceneObject.offset,
+		 sceneObject.rotation, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),
+		 textureName);
   }
   
-  void Renderer::write(const std::string text, const glm::vec3 colour, const glm::vec2 topLeft, 
-		       const glm::vec2 bottomRight, const int fontSize, std::string fontPath) {
+  void Renderer::write(const std::string text, const glm::vec3 colour,
+		       const glm::vec2 topLeft, 
+		       const glm::vec2 bottomRight,
+		       const int fontSize,
+		       std::string fontPath) {
     
     std::string faceId = intToStr(fontSize) + fontPath;
     
@@ -781,13 +833,20 @@ namespace small3d {
         for (int row = 0; row < static_cast<int>(slot->bitmap.rows); ++row){
           for (int col = 0; col < static_cast<int>(slot->bitmap.width); ++col) {
             glm::vec4 colourAlpha = glm::vec4(colour, 0.0f);
-            colourAlpha.a = floorf(100.0f *
-                                   (static_cast<float>(slot->bitmap.buffer[row * slot->bitmap.width + col]) / 255.0f) + 0.5f) / 100.0f;
-            memcpy(
-                   &textMemory[4 * width * (height - static_cast<unsigned long>(slot->bitmap_top)
-                                            + static_cast<unsigned long>(row)) // row position
-                               + totalAdvance + 4 * (static_cast<unsigned long>(col)
-                                                     + static_cast<unsigned long>(slot->bitmap_left)) // column position
+            colourAlpha.a =
+	      floorf(100.0f * (static_cast<float>
+			       (slot->bitmap.buffer[row * slot->bitmap.width +
+						    col]) /
+			       255.0f) + 0.5f) / 100.0f;
+            memcpy(&textMemory[4 *
+			       width *
+			       (height - static_cast<unsigned long>
+				(slot->bitmap_top) +
+				static_cast<unsigned long>(row)) // row position
+                               + totalAdvance + 4 *
+			       (static_cast<unsigned long>(col) +
+				static_cast<unsigned long>
+				(slot->bitmap_left)) // column position
                                ],
                    glm::value_ptr(colourAlpha),
                    4 * sizeof(float));
@@ -850,28 +909,41 @@ namespace small3d {
     
     switch (error) {
     case GL_NO_ERROR:
-      errorString = "GL_NO_ERROR: No error has been recorded. The value of this symbolic constant is guaranteed to be 0.";
+      errorString = "GL_NO_ERROR: No error has been recorded. "
+	"The value of this symbolic constant is guaranteed to be 0.";
       break;
     case GL_INVALID_ENUM:
-      errorString = "GL_INVALID_ENUM: An unacceptable value is specified for an enumerated argument. The offending command is ignored and has no other side effect than to set the error flag.";
+      errorString = "GL_INVALID_ENUM: An unacceptable value is specified for "
+	"an enumerated argument. The offending command is ignored and has no "
+	"other side effect than to set the error flag.";
       break;
     case GL_INVALID_VALUE:
-      errorString = "GL_INVALID_VALUE: A numeric argument is out of range. The offending command is ignored and has no other side effect than to set the error flag.";
+      errorString = "GL_INVALID_VALUE: A numeric argument is out of range. "
+	"The offending command is ignored and has no other side effect than "
+	"to set the error flag.";
       break;
     case GL_INVALID_OPERATION:
-      errorString = "GL_INVALID_OPERATION: The specified operation is not allowed in the current state. The offending command is ignored and has no other side effect than to set the error flag.";
+      errorString = "GL_INVALID_OPERATION: The specified operation is not "
+	"allowed in the current state. The offending command is ignored "
+	"and has no other side effect than to set the error flag.";
       break;
     case GL_INVALID_FRAMEBUFFER_OPERATION:
-      errorString = "GL_INVALID_FRAMEBUFFER_OPERATION: The framebuffer object is not complete. The offending command is ignored and has no other side effect than to set the error flag.";
+      errorString = "GL_INVALID_FRAMEBUFFER_OPERATION: The framebuffer "
+	"object is not complete. The offending command is ignored and has "
+	"no other side effect than to set the error flag.";
       break;
     case GL_OUT_OF_MEMORY:
-      errorString = "GL_OUT_OF_MEMORY: There is not enough memory left to execute the command. The state of the GL is undefined, except for the state of the error flags, after this error is recorded.";
+      errorString = "GL_OUT_OF_MEMORY: There is not enough memory left to "
+	"execute the command. The state of the GL is undefined, except for "
+	"the state of the error flags, after this error is recorded.";
       break;
     case GL_STACK_UNDERFLOW:
-      errorString = "GL_STACK_UNDERFLOW: An attempt has been made to perform an operation that would cause an internal stack to underflow.";
+      errorString = "GL_STACK_UNDERFLOW: An attempt has been made to perform "
+	"an operation that would cause an internal stack to underflow.";
       break;
     case GL_STACK_OVERFLOW:
-      errorString = "GL_STACK_OVERFLOW: An attempt has been made to perform an operation that would cause an internal stack to overflow.";
+      errorString = "GL_STACK_OVERFLOW: An attempt has been made to perform "
+	"an operation that would cause an internal stack to overflow.";
       break;
     default:
       errorString = "Unknown error";

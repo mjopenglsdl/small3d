@@ -10,8 +10,9 @@
 
 namespace small3d {
 
-  SceneObject::SceneObject(const std::string name, const std::string modelPath, const int numFrames, 
-    const std::string boundingBoxSetPath) :
+  SceneObject::SceneObject(const std::string name, const std::string modelPath,
+			   const int numFrames,
+			   const std::string boundingBoxSetPath) :
     offset(0,0,0), rotation(0,0,0), boundingBoxSet(boundingBoxSetPath) {
     
     initLogger();
@@ -80,26 +81,34 @@ namespace small3d {
 
   bool SceneObject::collidesWith(const glm::vec3 point) const {
     if (boundingBoxSet.vertices.size() == 0) {
-      throw std::runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
+      throw std::runtime_error("No bounding boxes have been provided for " +
+			       name +
+			       ", so collision detection is not enabled.");
     }
     return boundingBoxSet.collidesWith(point, this->offset, this->rotation);
   }
 
   bool SceneObject::collidesWith(SceneObject otherObject) const {
     if (boundingBoxSet.vertices.size() == 0) {
-      throw std::runtime_error("No bounding boxes have been provided for " + name + ", so collision detection is not enabled.");
+      throw std::runtime_error("No bounding boxes have been provided for " +
+			       name +
+			       ", so collision detection is not enabled.");
     }
 
     if (otherObject.boundingBoxSet.vertices.size() == 0) {
-      throw std::runtime_error("No bounding boxes have been provided for " + otherObject.name + 
-        ", so collision detection is not enabled.");
+      throw std::runtime_error("No bounding boxes have been provided for " +
+			       otherObject.name +
+			       ", so collision detection is not enabled.");
     }
 
-    // Checking whether the boxes of this object are within the boxes of the other object or vice versa
-    return boundingBoxSet.collidesWith(otherObject.boundingBoxSet, this->offset, this->rotation,
-      otherObject.offset, otherObject.rotation) ||
-      otherObject.boundingBoxSet.collidesWith(boundingBoxSet, otherObject.offset, otherObject.rotation,
-        this->offset, this->rotation);
+    // Checking whether the boxes of this object are within the boxes of the
+    // other object or vice versa
+    return boundingBoxSet.collidesWith(otherObject.boundingBoxSet, this->offset,
+				       this->rotation, otherObject.offset,
+				       otherObject.rotation) ||
+      otherObject.boundingBoxSet.collidesWith(boundingBoxSet, otherObject.offset,
+					      otherObject.rotation,
+					      this->offset, this->rotation);
   }
 
   bool SceneObject::isAnimated() const {

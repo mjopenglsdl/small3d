@@ -7,4 +7,5 @@ add_executable(test_small3d main.cpp)
 
 target_link_libraries(test_small3d ${CONAN_LIBS})
 
-set_target_properties(test_small3d PROPERTIES LINK_FLAGS "${CONAN_EXE_LINKER_FLAGS}")
+set_target_properties(test_small3d PROPERTIES LINK_FLAGS
+  "${CONAN_EXE_LINKER_FLAGS}")
